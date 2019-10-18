@@ -1,0 +1,84 @@
+<style>
+#swidth{
+    width:320px;
+}
+</style>
+<app-card id="tab">
+        <div class="sub-title">Expired Stock 
+                <i class="fa fa-warning ficon"></i>
+            </div><br>
+    <form [formGroup]="registerForm">
+
+                <div formArrayName="stkexp" style="max-height:280px" class="flow">
+                    <!--. table  start-->
+                    <div>
+                <table class="table styletab">
+                    <thead class="stylehead">
+                        <tr>
+                            <th>Select</th>
+                            <th>S.No</th>
+                            <th>Prod Name</th>
+                            <th>Batch No</th>
+                            <th>Expired Date</th>
+                            <th>Stock Qty</th>
+                            <!-- <th>Box</th>
+                            <th>Strip</th> -->
+                            <th>No Of Qty</th>
+                            <th>Exp Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody class="stylebody">
+                    <tr *ngFor="let address of registerForm.controls.stkexp.controls; let i=index" [formGroupName]="i">
+                        <td><input type="checkbox" class="tabcheck" id="width1" formControlName="delflag" /></td>
+                        <td><input value={{i+1}} id="width2" /></td>
+                        <td><input formControlName="drugname" id="swidth" style="text-align:left" /></td>
+                        <td><input formControlName="batchnumber" id="width5" style="text-align:left"/></td>
+                        <td><input formControlName="stkexpirydate"  /></td>
+                        <td><input formControlName="actualstockqty" (keydown)="calc($event)" /></td>
+                        <!-- <td><input formControlName="expboxqty" /></td>
+                        <td><input formControlName="expstripqty" (keydown)="calc($event)" /></td> -->
+                        <td><input formControlName="exptabqty" (keydown)="calc($event)" /></td>
+                        <td><input formControlName="expstockqty" /></td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+        </div><br>
+        <!--. table     end-->
+        
+        <div class="row">
+               
+            <div class="col-lg-4">
+                <label class="form-label"> To Loc Type
+                </label>
+            
+                <select class="form-control" formControlName="tolocname" (change)="getlocrefname()">
+                    <option value="opt1" selected disabled>---Select Loc Type---</option>
+                    <option *ngFor="let coun of tolocname1 " value={{coun[0]}}>{{coun[1]}}</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label"> To Loc Name</label>
+            
+                <select class="form-control" formControlName="tolocrefid">
+                    <option value="opt1" selected disabled>---Select Loc Name---</option>
+                    <option *ngFor="let coun of tolocrefid1 " value={{coun[0]}}>{{coun[1]}}</option>
+                </select>
+            </div>
+           
+        </div>
+        <br>
+        
+        <div class="form-group row">
+            <div class="col-lg-1"></div>
+                <div class="col-lg-3">
+                    <button type="submit" class="btn btn-round"  (click)="onSubmit()">Save</button>
+                </div>
+                <div class="col-lg-3">
+                        <button type="submit" class="btn btn-round" [routerLink]="['/ExpiredStock/stkexpEdit' ]">Edit</button>
+                    </div>
+            </div>
+        
+        <!-- row end-->
+    </form>
+</app-card>

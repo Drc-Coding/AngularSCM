@@ -1,0 +1,199 @@
+    <app-card>
+    
+    <div class="sub-title">Stock Return Details
+        <i class="fa fa-undo ficon"></i>
+    </div><br>
+        <form [formGroup]="registerForm">
+    
+    
+            <div class="box-typical box-typical-padding">
+    
+    
+                <div class="row">
+                    <!-- splitcolumn  start-->
+                        
+                            <div class="col-lg-3">
+    
+    
+                                <label class="form-label semibold" for="exampleInput"> Stock Transfer Number
+                                </label>
+    
+    
+                                <select class="form-control" formControlName="stktrans" (change)="viewStkTransfProducts( )">
+    
+    
+                                    <option *ngFor="let item of  stktransno; let i = index" value={{i}}>{{item[1]}}</option>
+                                </select>
+    
+    
+    
+                            </div>
+
+                            <div class="col-lg-3">
+    
+    
+                                    <label class="form-label semibold" for="exampleInput">Stock Return Date
+                                    </label>
+    
+        
+                                    <input type="date" class="form-control" formControlName="date" />
+        
+        
+                                </div>
+        
+
+                            <div class="col-lg-3">
+    
+    
+                                    <label class="form-label semibold" for="exampleInput"> To Business Type
+                                    </label>
+        
+                                    <select class="form-control" formControlName="tolocname">
+        
+                                        <option value="1"> Shop </option>
+        
+                                        <option value="2">warehouse</option>
+        
+                                        <option value="3"> hospital </option>
+        
+                                    </select>
+        
+        
+                                </div>
+                                
+                                <div class="col-lg-3">
+        
+        
+                                    <label class="form-label semibold" for="exampleInput"> To Business Name
+                                    </label>
+        
+        
+                                    <input type="text" class="form-control" formControlName="tolocrefidname" />
+        
+        
+                                </div>
+   
+                </div><br>
+                <!-- splitcolumn  end-->
+    
+                <div class="title1"><u> Stock Return Table</u></div><br>
+              
+                <div formArrayName="stkretn" class="flow">
+                    <!--. table  start-->
+              
+                
+                        <table class="table styletab">
+
+                            <thead class="stylehead">
+                                <tr>
+    
+                                    <th>Select </th>
+                                    <th>S. No </th>
+                                    <th>Prod Name</th>
+                                    <th>BatchNo</th>
+                                    <th> Exp Date</th>
+    
+                                    <th>Transfer</th>
+    
+    
+                                    <th   *ngIf="registerForm.controls.boxdispflag.value=='1'">Return Box </th>
+                                    <th   *ngIf="registerForm.controls.stripdispflag.value=='1'">Return Strip </th>
+                                    <th   *ngIf="registerForm.controls.tabdispflag.value=='1'">Return Unit </th>
+
+
+                                    
+                                    <th>Total Return </th>
+                                    <th>Remarks </th>
+    
+    
+    
+                                </tr>
+                            </thead>
+
+                            <tbody class="stylebody">
+    
+                            <tr *ngFor="let address of registerForm.controls.stkretn.controls; let i=index" [formGroupName]="i">
+                                <td>
+                                    <input type="checkbox" class="tabcheck" id="width1" formControlName="delflag" />
+                                </td>
+    
+                                <td>
+                                    <input value={{i+1}} id="width2" readonly/>
+                                </td>
+                                <td>
+                                    <input formControlName="drugname" id="width6" style="text-align:left"  readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="batchname" id="width4" style="text-align:left" readonly />
+                                </td>
+    
+    
+                                <td>
+                                    <input formControlName="expirydate" readonly />
+                                </td>
+    
+    
+    
+                                <td>
+                                    <input formControlName="transfertotalqty" (keydown)="calc($event)" readonly/>
+                                </td>
+    
+    
+                                <td   *ngIf="registerForm.controls.boxdispflag.value=='1'">
+                                    <input formControlName="retboxqty"   (keydown)="calc($event)" type="number" />
+                                </td>
+                                <td   *ngIf="registerForm.controls.stripdispflag.value=='1'">
+                                    <input formControlName="retstripqty" (keydown)="calc($event)" type="number" />
+                                </td>
+                                <td   *ngIf="registerForm.controls.tabdispflag.value=='1'">
+                                    <input formControlName="rettabqty" (keydown)="calc($event)" type="number" />
+                                </td>
+                                <td>
+                                    <input formControlName="returntotalqty" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="remarks" id="width4" style="text-align:left" />
+                                </td>
+
+    
+                            </tr>
+
+                            </tbody>
+    
+                        </table>
+    
+                </div><br>
+                <!--. table     end-->
+    
+    
+                <div class="col-lg-3">
+                    <button type="button" class="btn btn-round" (click)="remove()"> Remove </button>
+                </div><br>
+    
+
+            </div>
+            <!-- box-typical-->
+            <ng2-toasty [position]="position"></ng2-toasty>
+    
+            <div class="row">
+                <!-- row Start-->
+                <div class="col-lg-1"></div>
+
+                <div class="col-lg-2">
+                    <button type="button" class="btn btn-round" (click)="onSubmit()"> Save </button>
+                </div>
+
+                <div class="col-lg-2">
+                    <button type="button" class="btn btn-round" [routerLink]="['/StockReturn/stkretEdit' ]"> View </button>
+                </div>
+
+            </div>
+            <!-- row end-->
+    
+
+        </form>
+    
+    
+    </app-card>
+    
+ 

@@ -1,0 +1,221 @@
+<app-card>
+	<form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+		<div class="sub-title" style="font-size: 20px;">Basic Details</div>
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Company Name</h6></label>
+					<input type="text" class="form-control" placeholder="Enter Company Name" formControlName="companyname">
+					<div class="messages text-danger" *ngIf="companyForm.controls.companyname.errors?.required">Enter Company Name</div>
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class=" col-form-label"><h6>Short Name</h6></label>
+					<input type="text" class="form-control" placeholder="Enter Short Name" formControlName="shortname">
+					<div class="messages text-danger" *ngIf="companyForm.controls.shortname.errors?.required">Enter Short Name</div>
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class=" col-form-label"><h6>Contact person</h6></label>
+					<input type="text" class="form-control" placeholder="Enter Contact_Person Name" formControlName="contactperson">
+				</fieldset>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Designation</h6></label>
+					<input type="text" class="form-control" placeholder="Designation" formControlName="desgination">
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Email</h6></label>
+					<input type="text" class="form-control" placeholder="Enter Email Id" formControlName="email">
+				</fieldset>
+				<div class="messages text-danger" *ngIf="companyForm.controls.email.errors?.pattern">Invalid Email..</div>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Mobile Number</h6></label>
+					<input type="text" class="form-control" placeholder="Enter Mobile Number" formControlName="mobileno">
+				</fieldset>
+				<div class="messages text-danger" *ngIf="companyForm.controls.mobileno.errors?.pattern">Numerical Only Allowed Here</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+
+
+		
+
+
+
+			<!-- <div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>CST</h6></label>
+					<input type="text" class="form-control" placeholder="Cetntral Service Tax" formControlName="cstno">
+				</fieldset>
+			</div> -->
+
+			<!-- <div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>PAN</h6></label>
+					<input type="text" class="form-control" placeholder="permanent Account Number" formControlName="panno">
+				</fieldset>
+			</div>  -->
+
+
+
+
+
+		</div>
+
+		<div class="form-group row">
+
+				<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="col-form-label"><h6>TIN</h6></label>
+							<input type="text" class="form-control" placeholder="Tax Identification Number" formControlName="tinno">
+						</fieldset>
+					</div>
+			
+			<!-- <div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>GST</h6></label>
+					<input type="text" class="form-control" placeholder="Goods And Service Tax" formControlName="gstno">
+				</fieldset>
+			</div> -->
+
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Address 1</h6></label>
+					<input type="text" class="form-control" placeholder="Address 1" formControlName="address1">
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Address 2</h6></label>
+					<input type="text" class="form-control" placeholder="Address 2" formControlName="address2">
+				</fieldset>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Country</h6></label>
+					<select name="select" class="form-control" formControlName="country" (change)="getValues()" (change)="getState()">
+						<option value="0">---Select Country---</option>
+						<option *ngFor="let country of countries" value={{country[0]}}>{{country[1]}}</option>
+					</select>
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>State</h6></label>
+					<select name="select" class="form-control" formControlName="state" (change)="getCity()">
+						<option value="0">---Select State---</option>
+						<option *ngFor="let state of states" value={{state[0]}}>{{state[2]}}</option>
+					</select>
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>City</h6></label>
+					<select name="select" class="form-control" formControlName="city">
+						<option value="0">---Select City---</option>
+						<option *ngFor="let city of cities" value={{city[0]}}>{{city[1]}}</option>
+					</select>
+				</fieldset>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>ZIP Code/PIN Code</h6></label>
+					<input type="text" class="form-control" id="pincode" placeholder="Pincode" formControlName="pincode">
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Phone Number</h6></label>
+					<input type="text" class="form-control" placeholder="Phone Number" formControlName="phoneno">
+				</fieldset>
+				<div class="messages text-danger" *ngIf="companyForm.controls.phoneno.errors?.pattern">Numerical Only Allowed Here</div>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Country Code</h6></label>
+					<select name="select" class="form-control" id="countrycode" formControlName="countrycode">
+						<option value="0">---Select CountryCode---</option>
+						<option *ngFor="let code of ccode" value={{code}}>{{code}}</option>
+					</select>
+				</fieldset>
+			</div>
+		</div>
+
+		<div class="sub-title" style="font-size: 20px;">Product Details</div>
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Product Name</h6></label>
+					<select name="select" class="form-control" formControlName="productrefid" (change)="getDomain()" (click)="getDomain()">
+						<option value="0">---Select Product---</option>
+						<option *ngFor="let product of productinfo" value={{product[1]}}>{{product[0]}}</option>
+					</select>
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Domain</h6></label>
+					<select name="select" class="form-control" formControlName="domainrefid" (change)="getsubDomain()" (click)="getsubDomain()">
+						<option value="0">---Select Domain---</option>
+						<option *ngFor="let domains of domain" value={{domains[0]}}>{{domains[1]}}</option>
+					</select>
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Sub Domain</h6></label>
+					<select name="select" class="form-control" formControlName="subdomainrefid" (change)="getEdition()" (click)="getEdition()">
+						<option value="0">---Select SubDomain---</option>
+						<option *ngFor="let subdomains of subdomain" value={{subdomains[0]}}>{{subdomains[1]}}</option>
+					</select>
+				</fieldset>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Edition Type</h6></label>
+					<select name="select" class="form-control" formControlName="editionrefid">
+						<option value="0">---Select EditionType---</option>
+						<option *ngFor="let editions of edition" value={{editions[0]}}>{{editions[1]}}</option>
+					</select>
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>User Name</h6></label>
+					<input type="text" class="form-control" placeholder="Enter UserName" formControlName="username">
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label"><h6>Password</h6></label>
+					<input type="password" class="form-control" placeholder="****************" formControlName="password">
+				</fieldset>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<button [disabled]="!companyForm.valid" type="submit" class="btn btn-success btn-round btnlinklist" style="margin: 26px;">Save</button>
+			</div>
+		</div>
+	</form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

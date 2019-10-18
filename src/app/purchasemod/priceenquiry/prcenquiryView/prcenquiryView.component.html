@@ -1,0 +1,139 @@
+<style>
+	.nodata {
+		text-align: center;
+		width: 100%;
+		padding: 10px;
+		font-size: 25px;
+		color: rgb(245, 50, 50);
+		font-family: Verdana, Geneva, sans-serif;
+	}
+
+	.action {
+		font-size: 15px;
+		color: green;
+	}
+
+	.action1 {
+		font-size: 15px;
+		color: red;
+	}
+
+
+</style>
+<app-card>
+
+	<br>
+	<form [formGroup]="priceenquiry">
+	<div class="row">
+	
+		<div class="col-lg-1"></div>
+		<div class="col-lg-3">
+			<fieldset class="form-group">
+				<label class="form-label">Distributor Name</label>
+				<select name="select" class="form-control" formControlName="distributor"  (change)="getorderdate()"> 
+					<option value="opt" selected disabled>---Select Distributor Name---</option>
+					<option *ngFor="let distlist of dist " value={{distlist[0]}}>{{distlist[1]}}</option>
+				</select>
+			</fieldset>
+		</div>
+
+		<div class="col-lg-3">
+			<fieldset class="form-group">
+				<label class="form-label">Order Date</label>
+				<select name="select" class="form-control" formControlName="clientcdate" (change)="getpriceenquirypro()"  onfocus="if(this.options.length>5){this.size=5;}" onmousedown="if(this.options.length>5){this.size=5;}" onchange='this.size=0;' onblur="this.size=0;">
+					<option value="opt1" selected disabled>---Select Order Date---</option>
+					<option *ngFor="let date of orderdate" value={{date}}>{{date}}</option>
+				</select>
+			</fieldset>
+		</div>
+		<!-- <div class="col-lg-3">
+			<button class="btn btn-success btn-round" (click)="peprint()"  >Print</button>
+	</div>
+
+	<div class="col-lg-3">
+		<button class="btn btn-success btn-round">Send Mail</button>
+	</div> -->
+	</div><br>
+</form>
+	<!-- <div class="row">
+		<div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
+			<div>
+				<label class="label-control">Show
+					<select class="form-control input-sm full-data-show-entry" [(ngModel)]="rowsOnPage">
+						<option [ngValue]="1">1</option>
+						<option [ngValue]="25">25</option>
+						<option [ngValue]="50">50</option>
+						<option [ngValue]="100">100</option>
+					</select>
+					Entries
+				</label>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
+			<div style="text-align:right;">
+				<label>
+					Search : 
+					<input type="search" [(ngModel)]="filterQuery" class="form-control input-sm data-search" placeholder="Search Domain">
+				</label>
+			</div>
+		</div>
+	</div> -->
+	<div class="dt-responsive">
+		<div style="overflow-x: auto">
+			<table class="table table-striped table-bordered table-responsive full-data-table">
+				<thead>
+					<tr>
+						<th>S.No</th>
+						<th>Price Number</th>
+						<th>Description</th>
+						<th>Expected Quantity</th>
+						<th>Expected Price</th>
+						<th>Distributor Price</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+
+					<tr *ngIf="(prcproduct | dataFilter : filterQuery) == 0">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="nodata">No matching Records found....</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr *ngFor="let item of prcproduct;let i=index">
+						<td>{{i+1}}</td>
+						<td>{{item[0]}}</td>
+						<td>{{item[1]}}</td>
+						<td>{{item[2]}}</td>
+						<td class="right">{{item[3]}}</td>
+						<td class="right">{{item[4]}}</td>
+						
+					    <td ngbDropdown class="text-center">
+							<a ngbDropdownToggle="" class="dropdown-toggle addon-btn" data-toggle="dropdown" aria-expanded="true">
+								<i class="icofont icofont-ui-settings"></i>
+							</a>
+							<div ngbDropdownMenu="" class="dropdown-menu dropdown-menu-right">
+								<a class="dropdown-item" href="javascript:;" [routerLink]="['/PriceEnquiry/prcenquiryEdit',item[0]]" skipLocationChange>
+									<i class="icofont icofont-ui-edit"></i>Edit</a>
+								<a class="dropdown-item" href="javascript:;" (click)="0">
+									<i class="icofont icofont-send-mail"></i>Send Mail</a>
+								<div role="separator" class="dropdown-divider"></div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="7">
+							<mfBootstrapPaginator class="pagination-main f-right"></mfBootstrapPaginator>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</app-card>

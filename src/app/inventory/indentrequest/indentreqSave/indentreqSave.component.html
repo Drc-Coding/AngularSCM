@@ -1,0 +1,276 @@
+<style>
+  
+    #autolist {
+
+        border: 1px solid rgba(0, 0, 0, .15);
+        position: absolute;
+        z-index: 21;
+        background-color: #ffffff;
+        width: 23em;
+        max-height: 200px;
+        overflow-y: scroll;
+
+    }
+
+#autolist .prodvalue{
+   
+    width:300px;
+}
+
+#autolist .prodvalue:focus{
+    background-color: rgba(0, 0, 0, .15);
+}
+  
+
+    /* li input:nth-child(1) {
+
+        border: transparent;
+
+    } */
+
+
+
+    
+</style>
+
+
+
+<app-card>
+
+    <div class="sub-title">Requisition Details
+        <i class="fa fa-reply ficon"></i>
+    </div><br>
+
+    <form [formGroup]="registerForm">
+
+
+        <div class="box-typical box-typical-padding">
+
+   
+                    <div class="row">
+
+                        <div class="col-lg-4">
+                            <label class="form-label semibold" for="exampleInput"> Reorder Number</label>
+                    
+
+                            <select class="form-control" (change)="viewStkMinQty()" formControlName="stkminid">
+
+                                <option *ngFor="let item of stkminqty; let i = index" value={{item[0]}}>{{item[1]}}
+                                </option>
+
+                            </select>
+                        </div>
+
+
+
+                        
+                        <div class="col-lg-4">
+
+
+                                <label class="form-label semibold" for="exampleInput"> Business Type
+                                </label>
+    
+    
+                                <select class="select2" class="form-control" (change)="viewDestination()"
+                                    formControlName="tolocname">
+    
+    
+                                    <option value="1"> Shop </option>
+    
+                                    <option value="2">warehouse</option>
+    
+                                    <option value="3"> hospital </option>
+    
+                                </select>
+    
+    
+                            </div>
+    
+
+                            <div class="col-lg-4">
+
+
+                                    <label class="form-label semibold" for="exampleInput"> Business Name
+                                    </label>
+        
+                                    <select class="form-control" (change)="viewLocationId2()" formControlName="tolocrefid">
+                                        <option *ngFor="let item of destination; let i = index" value={{item[0]}}>{{item[1]}}
+                                        </option>
+                                    </select>
+        
+        
+                                    <p class="messages text-danger marginzero"
+                                        *ngIf="registerForm.controls.tolocrefid.errors?.required">Select Location
+                                    </p>
+        
+        
+                                </div>
+
+
+                    </div>
+                    <!-- rrghghf-->
+
+
+           
+
+                    <div class="row mt-2">
+
+
+                        
+                            <div class="col-lg-4">
+
+
+                                    <label class="form-label semibold" for="exampleInput">Request Date
+                                    </label>
+        
+                                    <input type="Date" name="doctorName" class="form-control" formControlName="date" />
+        
+        
+                                </div>
+
+                            <div class="col-lg-4 drugname">
+
+
+                                    <label class="form-label semibold" for="exampleInput"> Product Name
+                                    </label>
+        
+        
+                                    <input type="text" class="form-control" id="autoname" (focus)="autofocusin()"
+                                        (focusout)="autofocusout()" autocomplete="off" (keydown)="autokeyselect($event,0)"
+                                        formControlName="autonamenew" placeholder=" Type here to Search Drug"/>
+        
+                                    <div id="autolist">
+                                        <ul>
+                                            <li *ngFor="let address of    autodata; let i=index" [formGroupName]="i"
+                                                (keydown)="autokeyselect($event,i+1)">
+                                                <input class="prodvalue"  value={{address[1]}} readonly/>
+                                               
+                                            </li>
+        
+                                        </ul>
+        
+                                    </div>
+        
+        
+                                </div>
+        
+
+                   
+
+
+                    </div><br>
+                    <!-- end -->
+
+
+    <div class="title1"><u>Reorder Table</u>
+        
+    </div><br>
+        
+
+
+            <div formArrayName="indreq" class="flow">
+                <!--. table  start-->
+      
+                    <table class="table styletab">
+                        <thead class="stylehead">
+                            <tr>
+                                <th>Select </th>
+                                <th>S.No </th>
+                                <th>Prod Code</th>
+
+                                <th>Prod Name</th>
+                                <th  *ngIf="registerForm.controls.boxdispflag.value=='1'"> Required Box</th>
+                                <th  *ngIf="registerForm.controls.stripdispflag.value=='1'"> Required Strip</th> 
+
+
+                                <th  *ngIf="registerForm.controls.tabdispflag.value=='1'" >Request Qty </th>
+                                <th>Approved Qty </th>
+                                <th>Remarks </th>
+
+
+
+
+
+                            </tr>
+                        </thead>
+
+                        <tbody class="stylebody">
+
+                        <tr *ngFor="let address of registerForm.controls.indreq.controls; let i=index"
+                            [formGroupName]="i">
+                            <td>
+                                <input type="checkbox" class="tabcheck" id="width1" formControlName="delflag" />
+                            </td>
+                            <td>
+                                <input value={{i+1}} id="width2" readonly />
+                            </td>
+
+                            <td>
+                                <input formControlName="drugprdrefid"  readonly />
+                            </td>
+
+                            <td>
+                                <input formControlName="drugname" id="width6" style="text-align:left" (keydown)="calc($event)" readonly />
+                            </td>
+
+                             
+                            <td  *ngIf="registerForm.controls.boxdispflag.value=='1'"  >
+                                <input formControlName="boxqty" type="number"  (keydown)="calc($event)" />
+                            </td>
+                            <td  *ngIf="registerForm.controls.stripdispflag.value=='1'"  >
+                                <input formControlName="stripqty" (keydown)="calc($event)" type="number" />
+                            </td> 
+
+                            <td  *ngIf="registerForm.controls.tabdispflag.value=='1'">
+                                <input formControlName="tabqty" (keydown)="calc($event)" type="number" />
+                            </td>
+                            <td>
+                                <input formControlName="qty" readonly />
+                            </td>
+
+                            <td>
+                                <input formControlName="remarks" id="width5"/>
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+            </div><br>
+            <!--  table     end-->
+
+
+
+            <div class="col-lg-3">
+                <button type="button" class="btn btn-round" (click)="remove()"> Remove </button>
+            </div><br>
+
+
+
+        </div>
+        <!-- box-typical-->
+        <ng2-toasty [position]="position"></ng2-toasty>
+
+    </form>
+
+    <div class="row">
+        <!-- row Start-->
+        <div class="col-lg-1"></div>
+        <div class="col-lg-2">
+            <button type="button" class="btn btn-round" (click)="onSubmit()"
+                [disabled]="!registerForm.valid"> Save </button>
+        </div>
+        <div class="col-lg-2">
+            <button type="button" class="btn btn-round" [routerLink]="['/RequisitionForm/indentreqEdit' ]">
+                Edit </button>
+        </div>
+
+
+    </div>
+    <!-- row end-->
+
+
+</app-card>
+

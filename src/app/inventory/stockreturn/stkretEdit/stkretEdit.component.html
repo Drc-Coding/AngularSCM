@@ -1,0 +1,133 @@
+
+
+<app-card>
+
+  <div class="sub-title">View Details
+    <i class="fa fa-eye ficon"></i>
+  </div><br>
+
+  <form [formGroup]="registerForm">
+
+
+    <div class="box-typical box-typical-padding">
+
+
+      <div class="row">
+        <!-- splitcolumn  start-->
+
+            <div class="col-lg-4" *ngIf="registerForm.controls.invdispflag.value=='0' ">
+
+              <label class="form-label semibold" for="exampleInput">Stock Return No </label>
+
+              <select class="form-control" (change)="viewEdit()" formControlName="id">
+
+                <option *ngFor="let item of editdata; let i = index" value={{item[0]}}>{{item[1]}}</option>
+
+              </select>
+            </div>
+
+
+            <div class="col-lg-4" *ngIf="registerForm.controls.invdispflag.value=='1' ">
+
+              <label class="form-label semibold" for="exampleInput">Stock Return No
+              </label>
+
+              <input type="text" class="form-control" formControlName="formno" />
+
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+
+              <label class="form-label semibold" for="exampleInput"> Stock Return Date
+              </label>
+
+              <input type="date" class="form-control" formControlName="date" />
+
+
+            </div>
+
+
+      </div> <br><!-- splitcolumn  end-->
+
+      <div class="title1"><u>Stock Return Table</u></div><br>
+
+
+      <div formArrayName="stkretn" class="flow">
+        <!-- table  start-->
+     
+          <table class="table styletab">
+            <thead class="stylehead">
+              <tr>
+                <!--   <th>S. No </th>   -->
+                <th> Prod Code </th>
+                <th>Prod Name</th>
+                <th>BatchNo</th>
+                <th>Transfer </th>
+
+
+                <th *ngIf="registerForm.controls.boxdispflag.value=='1'">Return Box </th>
+                <th *ngIf="registerForm.controls.stripdispflag.value=='1'">Return Strip </th>
+                <th *ngIf="registerForm.controls.tabdispflag.value=='1'">Return Unit </th>
+                <th>Total Return </th>
+                <th>Remarks </th>
+
+              </tr>
+            </thead>
+
+            <tbody class="stylebody">
+
+            <tr *ngFor="let address of registerForm.controls.stkretn.controls; let i=index" [formGroupName]="i">
+              <!--      <td><input   value={{i+1}}   readonly/></td>     -->
+
+              <td><input formControlName="drugproductrefid" readonly /></td>
+              <td><input formControlName="drugname" id="width6" style="text-align:left" readonly /></td>
+              <td><input formControlName="batchname" id="width4" style="text-align:left" readonly /></td>
+              <td><input formControlName="transfertotalqty" (keydown)="calc($event)" readonly /></td>
+
+
+              <td *ngIf="registerForm.controls.boxdispflag.value=='1'"><input formControlName="retboxqty" type="number"
+                  readonly /></td>
+              <td *ngIf="registerForm.controls.stripdispflag.value=='1'"><input formControlName="retstripqty"
+                  type="number" readonly /></td>
+              <td *ngIf="registerForm.controls.tabdispflag.value=='1'"><input formControlName="rettabqty" type="number"
+                  readonly /></td>
+              <td><input formControlName="returntotalqty" readonly /></td>
+              <td><input formControlName="remarks" id="width4" style="text-align: left" readonly /></td>
+            </tr>
+            </tbody>
+
+          </table>
+
+    
+      </div>
+      <!--. table     end-->
+
+
+    </div><br>
+    <!-- box-typical-->
+
+
+    <div class="row">
+      <!-- row Start-->
+
+      <div class="col-lg-1"></div>
+      <!-- <div class="col-lg-2"> <button type="button" class="btn btn-round" (click)="onSubmit()"> Update
+        </button> </div> -->
+      <div class="col-lg-2"> <button type="button" class="btn btn-round" (click)="deleteStockExpiry()"   (click) = "deleteStockExpiry1()">
+          Delete </button> </div>
+
+
+      <div class="col-lg-2"> <button type="button" class="btn btn-round"
+          [routerLink]="['/StockReturn/ViewStockReturn' ]"> Back </button> </div>
+
+
+    </div> <!-- row end-->
+
+
+  </form>
+
+
+</app-card>

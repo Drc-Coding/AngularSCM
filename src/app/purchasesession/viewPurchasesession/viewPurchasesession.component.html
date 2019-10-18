@@ -1,0 +1,123 @@
+<style>
+    .nodata {
+        text-align: center;
+        width: 100%;
+        padding: 10px;
+        font-size: 25px;
+        color: rgb(230, 56, 56);
+        font-family:  'Mada', sans-serif;
+    }
+
+    .iconadd {
+        font-size: 25px;
+        color: green;
+    }
+
+ </style>
+ 
+<app-card>
+    <div class="row">
+        <div class="col-lg-6">
+            <fieldset class="form-group">
+                <label class="col-form-label searchlabel">Session Number :</label>
+                <input type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search By Session Number..." style="font-family: Garamond;font-size: 140%;"
+                />
+            </fieldset>
+        </div>
+    </div>
+    <div class="dt-responsive table-bordered" style="overflow: auto">
+        <table width="100%" border="0" class="table">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Session Number</th>
+                    <th>Session Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                <tr>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="(data | category: searchText).length === 0">
+                    <td></td>
+                    <td></td>
+                    <td class="nodata">No matching Record(s) found</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr *ngFor="let item of data | category : searchText | paginate: { id: 'listing_pagination',
+              itemsPerPage: 10,
+              currentPage: page,
+              totalItems: totalRec } let i = index">
+                    <th scope="row" class="index">{{i+1}}</th>
+                    <td>{{item[0]}}</td>
+                    <td>{{item[1]}}</td>
+                    <td>
+                        <span class="label label-warning" *ngIf="item[2]=='0'" style="font-size: 16px;">pending</span>
+                        <span class="label label-danger" *ngIf="item[2]=='2'" style="font-size: 16px;">close</span>
+                    </td>
+
+                    <td ngbDropdown class="text-center">
+                        <a ngbDropdownToggle="" class="dropdown-toggle addon-btn" data-toggle="dropdown" aria-expanded="true" style="cursor: pointer;">
+                            <i class="icofont icofont-ui-settings"></i>
+                        </a>
+                        <div ngbDropdownMenu="" class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item iconadd" href="javascript:;" (click)="openMyModal('effect-1',item[3])">
+                                <i class="icofont icofont-washing-machine"></i>View</a>
+
+                            <div role="separator" class="dropdown-divider"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="12">
+                        <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <app-modal-animation [modalID]="'effect-1'" [modalClass]="'md-effect-1'">
+        <h3 style="background-color: green; font-family: Lucida Sans Unicode, Lucida Grande, sans-serif">Session View</h3>
+        <div style="overflow:scroll;max-height:350px;width:100%;">
+            <table class="table table-bordered table-hover" style="overflow: scroll;">
+                <thead>
+                    <tr>
+                        <th>S.no</th>
+                        <th>Product Name</th>
+                        <th>Waiting BoxQty</th>
+                        <th>Waiting StripQty</th>
+                        <th>Waiting TabletQty</th>
+                        <th>Total Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="sessiondetails.length === 0">
+                        <td></td>
+                        <td class="nodata">The Purchase Session Data is Already Updated....</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr *ngFor="let data of sessiondetails;let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{data[0]}}</td>
+                        <td>{{data[1]}}</td>
+                        <td>{{data[2]}}</td>
+                        <td>{{data[3]}}</td>
+                        <td>{{data[4]}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button (click)="closeMyModal($event)" aria-label="Close" class="md-close-btn">
+            <i class="icofont icofont-ui-close"></i>
+        </button>
+    </app-modal-animation>
+</app-card>

@@ -1,0 +1,647 @@
+<style>
+
+
+
+
+
+
+
+    .row input,
+    .row label,
+    .row select {
+        margin-bottom: 6px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-right: 0px;
+        margin-left: 0px;
+
+    }
+
+
+
+
+   /* .row label {
+
+        font-size: 1.2em;
+
+        font-family: sans-serif;
+
+        font-stretch: expanded;
+
+        font-weight: 500;
+
+
+    }*/
+
+
+
+    .tablenew {
+
+        border: 1px solid rgba(0, 0, 0, .15);
+        height: 300px;
+        max-width: 100%;
+        box-sizing: border-box;
+        max-height: 300px;
+        overflow-y: scroll;
+        overflow-x: scroll;
+
+
+
+
+    }
+
+
+    .tablenew table th {
+        padding: 0.43em 0em 0.43em 0em;
+
+        margin: 0em;
+        text-align: center;
+
+        vertical-align: top;
+        border: 1px solid rgba(0, 0, 0, .15);
+
+        font-family: sans-serif;
+
+        color: black;
+        background-color: rgb(151, 156, 151);
+
+    }
+
+    .tablenew table td {
+        vertical-align: top;
+        padding: 0.43em 0em 0em 0em;
+        text-align: center;
+        margin: 0em;
+        border: 1px solid rgba(0, 0, 0, .15);
+    }
+
+
+
+
+    .tablenew table p {
+
+        padding: 0em;
+        margin: 0em;
+    }
+
+
+
+    .tablenew table td input {
+        width: 4em;
+        text-align: center;
+        border: #FFFFFF;
+    }
+
+
+
+    .tablenew table th label {
+
+
+        text-align: center;
+        border: #FFFFFF;
+    }
+
+
+    .tablenew table td label {
+
+        margin: 0em;
+        padding: 0em;
+
+        text-align: center;
+        border: #FFFFFF;
+    }
+
+
+    .tablenew table tr {
+        margin: 0em;
+        width: 100%;
+        border: 1px solid rgba(0, 0, 0, .15);
+    }
+
+
+
+
+
+    .tablenew table td input:focus {
+
+        background-color: rgba(0, 0, 0, .15);
+    }
+
+
+
+
+    .tablenew input[type="checkbox"] {
+
+        width: 1.7em;
+        height: 1.7em;
+
+        padding: 0em;
+
+        margin: 0em;
+    }
+
+
+
+    #autolist {
+
+        border: 1px solid rgba(0, 0, 0, .15);
+        position: absolute;
+        z-index: 21;
+        background-color: #ffffff;
+
+
+
+        width: 16.5em;
+        max-height: 200px;
+        overflow-y: scroll;
+
+    }
+
+
+
+
+
+
+
+    li input:nth-child(1):focus {
+
+        background-color: rgba(0, 0, 0, .15);
+    }
+
+    li input:nth-child(1) {
+
+        border: transparent;
+
+    }
+
+
+
+
+
+
+    li input:nth-child(2) {
+
+        display: none;
+
+    }
+
+
+
+    #gridContainer {
+
+
+        height: 369px;
+    }
+
+
+    .scrollnew {
+
+        height: 3000px;
+
+        background-color: transparent;
+    }
+
+
+    .button input {
+        background-color: #0073aa;
+        color: #FFFFFF;
+        cursor: pointer;
+        width: 7.34em;
+    }
+
+
+
+
+
+    .button {
+        padding-top: 16px;
+
+    }
+
+
+
+
+
+
+    .cursorremove {
+
+        width: 4.23em;
+        background-color: #0073aa;
+        color: #FFFFFF;
+        cursor: pointer;
+
+        border: #FFFFFF;
+
+        text-align: center;
+
+        margin-left: -2em;
+
+        margin-right: -2em;
+
+
+    }
+
+
+
+    #rem {
+        background-color: #FFFFFF;
+
+    }
+
+
+
+
+
+    #inputwidth1,
+    #inputwidth2,
+    #inputwidth3,
+    #inputwidth4,
+    #inputwidth5 {
+
+        width: 9.23em;
+        margin-left: -2em;
+
+        margin-right: -2em;
+
+    }
+
+
+
+
+    #input7width1,
+    #input7width2 {
+
+        width: 7em;
+        margin-left: -1em;
+
+        margin-right: -1em;
+
+    }
+</style>
+
+
+<app-card [headerContent]="'Indentreq'">
+
+
+    <form [formGroup]="registerForm">
+
+
+        <div class="box-typical box-typical-padding">
+
+
+            <div class="row">
+                <!--.row1start-->
+
+
+                <div class="col-lg-6"style="margin-top:15px">
+                    <div class="row">
+
+
+
+
+
+
+                        <div class="col-lg-5" *ngIf="registerForm.controls.invdispflag.value=='0'  ">
+                            <label class="form-label semibold" for="exampleInput"> INDENT REQNO </label>
+                        </div>
+                        <div class="col-lg-7" style="margin-top:-17px"  *ngIf="registerForm.controls.invdispflag.value=='0'  ">
+
+
+                            <select class="form-control" (change)="viewEdit()" formControlName="id">
+
+                                <option *ngFor="let item of editdata; let i = index" value={{item[0]}}>{{item[1]}}</option>
+
+                            </select>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="col-md-5" *ngIf="registerForm.controls.invdispflag.value=='1' ">
+
+
+                            <label class="form-label semibold" for="exampleInput"> Indent Req No
+                            </label>
+
+
+
+                        </div>
+                        <div class="col-md-7" *ngIf="registerForm.controls.invdispflag.value=='1' ">
+                            <input type="text" class="form-control" formControlName="indentno" />
+
+
+                        </div>
+
+
+                        <div class="col-md-5">
+                                            
+                                    
+                            <label class="form-label semibold" style="margin-top:14px" for="exampleInput">REQUESTED DATE  
+                                                         </label> 
+                                              
+                                       
+                                          
+                                          </div>
+
+
+                        <div class="col-md-7">
+                            <input type="Date" class="form-control" formControlName="date" />
+
+
+                        </div>
+
+
+
+
+                        <div class="col-md-5 drugname">
+                                                
+                                        
+                            <label class="form-label semibold" style="margin-top:10px" for="exampleInput">DRUG NAME 
+                         </label> 
+                                  
+                           
+                              
+                 </div>
+             
+
+                        <div class="col-md-7 drugname">
+
+
+                            <input type="text" class="form-control" id="autoname" (focus)="autofocusin()" (focusout)="autofocusout()" autocomplete="off"
+                                (keydown)="autokeyselect($event,0)"  placeholder="SEARCH DRUG " formControlName="autonamenew" />
+
+                            <div id="autolist">
+                                <ul>
+
+
+                                    <li *ngFor="let address of    autodata; let i=index" (keydown)="autokeyselect($event,i)">
+                                        <input readonly value={{address[1]}} />
+                                        <input />
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-lg-6"  style="margin-top:15px">
+                    <div class="row">
+
+                        <div class="col-md-5">
+                                        
+                                
+                            <label class="form-label semibold" for="exampleInput"> LOC TYPE
+                                   </label> 
+                        
+                 
+                    
+                    </div>
+                        <div class="col-md-7"  style="margin-top:-17px">
+                            <select class="select2"    class="form-control" 
+                            (change)="viewDestination()"     formControlName="tolocname"  > 
+                            <option  value="opt1" disabled>----SELECT LOCTYPE----</option> 
+                                <option  value="1" >store</option>
+
+                                <option  value="2" >warehouse </option>
+
+                                <option  value="3" >hospital  </option>
+                                    
+                            </select>
+                      
+                    
+                        </div> 
+                        <div class="col-md-5">
+                                        
+                                
+                            <label class="form-label semibold"  style="margin-top:14px" for="exampleInput">LOC NAME  
+                                   </label> 
+                        
+                 
+                    
+                    </div>
+                        <div class="col-md-7">
+                            <select class="form-control" formControlName="tolocrefid">
+                                <option value="opt1" disabled>----SELECT LOCNAME----</option>
+                                <option *ngFor="let item of destination; let i = index" value={{item[0]}}>{{item[1]}}</option>
+                            </select>
+
+
+                        </div>
+
+                        <div class="col-lg-5">
+                            <label class="form-label semibold" style="margin-top:10px" for="exampleInput">PO NUMBER</label>
+                        </div>
+
+
+                        <div class="col-lg-7">
+
+
+                            <select class="form-control" (change)="purchaseOrder()" formControlName="pono">
+                                <option value="opt1" disabled>----SELECT PONUMBER----</option>
+                                <option *ngFor="let pono  of ponos; let i = index" value={{pono[1]}}>{{pono[1]}}</option>
+
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="col-lg-2">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control " style=" border-color:transparent;" /> </div>
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control " style=" border-color:transparent;" /> </div>
+
+                        <div class="col-md-5"> </div>
+                        <div class="col-md-7"> </div>
+
+
+                    </div>
+                    <!-- rrghghf-->
+
+
+                </div>
+
+            </div>
+            <!-- rrghghf 1-->
+
+
+
+
+            <div formArrayName="indreq" class="tablenew ">
+                <!--. table  start-->
+                <div>
+                    <table class="table ">
+                        <thead class="thead-default">
+                            <tr>
+                                <th id="rem">
+                                    <input class="cursorremove" (click)="remove()" value="Remove" /> </th>
+                                <th>S. No </th>
+                                <th>Product Code</th>
+                                <th>Product Name</th>
+                                <th>Box</th>
+                                <th>Strip </th>
+
+
+                                <th>No Of Qty </th>
+                                <th>Req Qty </th>
+                                <th>Remarks </th>
+
+
+
+
+
+
+                            </tr>
+                        </thead>
+
+                        <tr *ngFor="let address of registerForm.controls.indreq.controls; let i=index" [formGroupName]="i">
+                            <td>
+                                <input type="checkbox" formControlName="delflag" />
+                            </td>
+                            <td>
+                                <input value={{i+1}} />
+                            </td>
+                            <td>
+                                <input formControlName="drugprdrefid" />
+                            </td>
+                            <td>
+                                <input formControlName="drugname" (keydown)="calc($event)" id="inputwidth1" />
+                            </td>
+                            <td>
+                                <input formControlName="boxqty" />
+                            </td>
+                            <td>
+                                <input formControlName="stripqty" (keydown)="calc($event)" />
+                            </td>
+
+
+
+
+
+                            <td>
+                                <input formControlName="tabqty" (keydown)="calc($event)" />
+                            </td>
+                            <td>
+                                <input formControlName="qty" />
+                            </td>
+
+                            <td>
+                                <input formControlName="remarks" id="inputwidth2" />
+                            </td>
+
+
+
+
+
+
+
+                        </tr>
+
+                    </table>
+
+                </div>
+            </div>
+            <!--. table     end-->
+
+
+
+
+
+
+            <h5></h5>
+
+            <div class="row">
+                <!--.row1start-->
+
+
+                <div class="col-lg-4">
+                    <div class="row">
+
+
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-lg-4">
+                    <div class="row">
+
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="col-lg-4">
+                    <div class="row">
+
+
+                        <ng2-toasty [position]="position"></ng2-toasty>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- rrghghf 1-->
+
+        </div>
+        <!-- box-typical-->
+
+    </form>
+
+
+    <div class="row button">
+        <!-- row Start-->
+
+        <div class="col-lg-3">
+            <input class="btn btn-primary" (click)="onSubmit()" value="Update" /> </div>
+        <div class="col-lg-3">
+            <input class="btn btn-primary" (click)="deleteIndReq()" value="Delete" /> </div>
+
+
+        <div class="col-lg-3">
+            <input class="btn btn-primary" [routerLink]="['/IndentRequest/IndentRequestCloud' ]" value="Back" />
+        </div>
+
+
+    </div>
+    <!-- row end-->
+
+
+
+</app-card>
+
+
+<div class="scrollnew"> </div>

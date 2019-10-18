@@ -1,0 +1,379 @@
+   
+    
+
+
+
+
+<app-card>
+
+    <div class="sub-title">Packing Details
+        <i class="fa fa-cube ficon"></i>
+    </div><br>
+
+    <form [formGroup]="PackingForm" (ngSubmit)="onSubmit()" class="mx-3">
+
+
+        <div class="box-typical box-typical-padding">
+
+            <div class="row">
+
+                <div class="col-lg-4">
+
+                    <fieldset class="form-group">
+                        <label class="form-label">Picking Id</label>
+                        <select name="select" class="form-control" formControlName="picklistrefid"
+                            (change)="getpackingdata()">
+                            <option value="opt1">---Select Id---</option>
+                            <option *ngFor="let val of picklist" value={{val[0]}}>{{val[1]}}</option>
+                        </select>
+                    </fieldset>
+
+                </div>
+
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput">Order No</label>
+                        <input type="text" class="form-control" placeholder=" " formControlName="sorefno" />
+                    </fieldset>
+                </div>
+
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput">Order Date</label>
+                        <input type="date" class="form-control" placeholder=" " formControlName="orderdate" />
+
+                    </fieldset>
+                </div>
+
+            </div>
+            <!--.row1end-->
+
+            <div class="row mt-3">
+                <!--    row2start -->
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput">Sales Invoice No</label>
+                        <input type="text" class="form-control" placeholder=" " formControlName="sinvoice" />
+
+                    </fieldset>
+                </div>
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput">SalesOrder Type</label>
+                        <input type="text" class="form-control" placeholder=" " formControlName="sotypename" />
+
+                    </fieldset>
+                </div>
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput">Customer Name</label>
+                        <input type="text" class="form-control" placeholder=" " formControlName="customername" />
+
+                    </fieldset>
+                </div>
+
+            </div>
+            <!--Row 2 End-->
+
+            <div class="row mt-3">
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput">Employee Name and Code</label>
+                        <select name="select" class="form-control" placeholder="Select Employee"
+                            formControlName="emprefid">
+                            <option value="opt1" selected disabled>-----Select Sales Order-----</option>
+                            <option *ngFor="let en of empname" value="{{en[1]}}">{{en[0]}}</option>
+                        </select>
+
+                    </fieldset>
+                </div>
+
+                <div class="col-lg-4 mt-3">
+
+                    <input type="radio" (click)="open(packing)" name="shank" value="1">Packing
+                    <!-- <input type="radio" (click)="open(wrapping);openwrappinglist()" name="shank" value="2">
+                    Wrapping
+                    <input type="radio" (click)="open(labelling)" name="shank" value="3"> Labelling -->
+
+                </div>
+
+                <div class="col-lg-4" style="display:none">
+                    <fieldset class="form-group">
+                        <label class="form-label semibold" for="exampleInput">Video record</label>
+                        <input type="text" class="form-control" placeholder="  " />
+
+                    </fieldset>
+                </div>
+
+            </div> <br>
+            <!---Row 3 End-->
+
+
+
+            <div class="flow" formArrayName="packingpro">
+                <!--. table  start-->
+
+                <table class="table styletab">
+
+                    <thead class="stylehead">
+                        <tr>
+                            <th>S. No </th>
+                            <th>Prod Code</th>
+                            <th>Prod Name</th>
+                            <th>Batch No</th>
+                            <th>Expiry Date</th>
+                            <th>Dosage</th>
+
+                            <!-- <th>Packing Type</th> -->
+                            <th>Qty </th>
+
+                            <th>Return Qty</th>
+                            <th>Remarks </th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="stylebody">
+
+                        <!-- <tr *ngFor="let address of registerForm.controls.invoice.controls; let i=index" [formGroupName]="i"> -->
+                        <tr *ngFor="let val of PackingForm.controls.packingpro.controls; let i = index"
+                            [formGroupName]="i">
+
+
+                            <td id="width2">
+                               {{i+1}}
+                            </td>
+                            <td>
+                                <input type="text" formControlName="drugproductrefid" readonly />
+                            </td>
+                            <td>
+                                <input type="text" id="width6" style="text-align:left" formControlName="brandname"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input type="text" formControlName="batchno" id="width4" readonly />
+                            </td>
+                            <td>
+                                <input type="text" formControlName="expirydate" />
+                            </td>
+                            <td>
+                                <input id="width3" type="text" formControlName="dosage" id="width4" />
+                            </td>
+                            <!-- <td>
+                                <input type="text" formControlName="packingtype" readonly />
+                            </td> -->
+                            <td>
+                                <input type="text"  formControlName="qty" readonly />
+                            </td>
+                            <td>
+                                <input type="text" formControlName="returnqty" />
+                            </td>
+                            <td>
+                                <input type="text" formControlName="remarks" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" id="width2">
+                            </td>
+                            <td>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <input type="text" id="width4">
+                            </td>
+                            <td>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <input type="text" id="width4">
+                            </td>
+                            <td>
+                                <input type="text" id="width3">
+                            </td>
+                            <!-- <td>
+                                <input type="text" id="width3">
+                            </td> -->
+                            <td>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <input type="text">
+                            </td>
+                            <td>
+                                <input type="text">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!--. table     end-->
+            </div><br>
+
+
+        </div>
+        <!-- box-typical-->
+
+        <div class="row">
+
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-round">Save</button>
+                </div>
+            </div>
+<!-- 
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-round">Edit</button>
+                </div>
+            </div> -->
+
+
+        </div><br>
+
+
+        <ng-template #packing let-c="close" let-d="dismiss">
+            
+
+            <div class="modal-header">
+                <label class="form-label">Select Package</label>
+                <i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer;color:white"></i>
+            </div>
+            <img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+
+            <div class="modal-body mx-3">
+
+                <label class="form-label">Package Material</label>
+                <input type="text" class="form-control" formControlName="Pack_materila"
+                    placeholder="" /><br>
+                <!-- <select  name="select" class="form-control" formControlName="packid">
+                <option value="opt1">---Select No---</option>
+                <option *ngFor="let companyrefid of companies" value={{companyrefid[0]}}>{{companyrefid[1]}}</option> 
+              </select><br> -->
+
+                <label class="form-label">Package Size</label>
+                <input type="text" class="form-control" formControlName="Package_size" placeholder="" /><br>
+
+                <label class="form-label">Package Qty</label>
+                <input type="text" class="form-control" formControlName="qty" placeholder="" />
+            </div>
+
+            <div class="modal-footer">
+                <label class="btn modbtn" id="type" (click)="savepackageno(c)">Save </label>
+            </div>
+        </ng-template>
+
+
+        <ng-template #wrapping let-c="close" let-d="dismiss">
+
+            <div class="modal-header">
+                <label class="form-label">Wrapping</label>
+                <i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer;color:white"></i>
+            </div>
+            <img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+
+            <div class="modal-body">
+
+                <div class="flow" formArrayName="wrappingpro">
+                    <!--. table  start-->
+
+                    <table class="table styletab">
+
+                        <thead class="stylehead">
+                            <tr>
+                                <th>S. No </th>
+                                <!-- <th>Prod Code</th> -->
+                                <th>Prod Name</th>
+                                <th>Batch No</th>
+                                <!-- <th>Expiry Date</th>
+                                <th>Dosage</th> -->
+                                <th>Qty</th>
+                                <th>Select</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="stylebody">
+
+                            <!-- <tr *ngFor="let address of registerForm.controls.invoice.controls; let i=index" [formGroupName]="i"> -->
+                            <tr *ngFor="let val of PackingForm.controls.wrappingpro.controls; let i = index"
+                                [formGroupName]="i">
+
+
+                                <td>
+                                    <input value={{i+1}} id="width1" readonly />
+                                </td>
+
+                                <!-- <td>
+                                    <input type="text" id="width5" style="text-align:left" formControlName="drugproductrefid" readonly />
+                                </td> -->
+
+                                <td>
+                                    <input type="text" formControlName="brandname" readonly />
+                                </td>
+                                <td>
+                                    <input type="text" id="width3" formControlName="batchno" readonly />
+                                </td>
+                                <!-- <td>
+                                    <input type="text" id="width3" readonly formControlName="expirydate" />
+                                </td> -->
+                                <!-- <td>
+                                    <input type="text" id="width3" readonly formControlName="dosage" />
+                                </td> -->
+                                <td>
+                                    <input type="text" id="width2" readonly formControlName="qty" />
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="tabcheck" formControlName="checkbox" id="width1" />
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!--. table     end-->
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <label class="btn modbtn" id="type" (click)="savewrapping(c)">Save</label>
+            </div>
+        </ng-template>
+
+
+
+
+        <ng-template #labelling let-c="close" let-d="dismiss">
+
+            <div class="modal-header">
+                <label class="form-label">Labelling</label>
+                <i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer;color:white"></i>
+            </div>
+            <img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+
+            <div class="modal-body">
+                <input class="form-control" id="docphonenumber" formControlName="phindvdivision"
+                    placeholder=" Add Label" />
+            </div>
+
+            <div class="modal-footer">
+                <label class="btn modbtn" id="type" (click)="saveIndvComptype(c)">Save</label>
+              
+            </div>
+        </ng-template>
+
+
+
+
+
+    </form>
+
+</app-card>
+    <ng2-toasty [position]="position"></ng2-toasty>

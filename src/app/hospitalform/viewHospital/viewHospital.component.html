@@ -1,0 +1,145 @@
+<style>
+  .nodata {
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    font-size: 25px;
+    color: rgb(245, 50, 50);
+    font-family: Verdana, Geneva, sans-serif;
+  }
+
+  .action {
+    font-size: 15px;
+    color: green;
+  }
+
+  .action1 {
+    font-size: 15px;
+    color: red;
+  }
+</style>
+<app-card>
+  <div class="dt-responsive">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
+        <div>
+          <label class="label-control">Show
+            <select class="form-control input-sm full-data-show-entry" [(ngModel)]="rowsOnPage">
+              <option [ngValue]="1">1</option>
+              <option [ngValue]="25">25</option>
+              <option [ngValue]="50">50</option>
+              <option [ngValue]="100">100</option>
+            </select>
+            Entries
+          </label>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-6">
+        <div class="form-inline" >
+	
+					<strong style="margin-left:65px">Search :</strong>
+					<input type="search" [(ngModel)]="filterQuery" class="form-control ml-2 w-75" placeholder="Search Hospital Name">
+				
+			</div>
+      </div>
+    </div> <br>
+    <div style="overflow-x:auto">
+      <table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery"
+        #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+        <thead>
+          <tr>
+            <th>
+              S.No
+            </th>
+            <th>
+             Hospital Name
+            </th>
+            <th>
+              Registration Number
+            </th>
+            <th>
+             Speciality
+            </th>
+            <th>
+             Head Quarter
+            </th>
+            <th>
+             Address
+            </th>
+            <th>
+              Country
+            </th>
+           
+            <th>
+              Phone Number
+            </th>
+            <th>
+              E-mail Id
+            </th>
+            <th>
+             Action
+            </th>
+          </tr>
+          <tr>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="(data | dataFilter : filterQuery) == 0">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="nodata">No matching Records found....</td>
+            <td></td>
+            <td></td>
+            <td></td>
+           
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr *ngFor="let val of mf.data;let i=index">
+            <td>{{i+1}}</td>
+            <td>{{val[0]}}</td>
+            <td>{{val[1]}}</td>
+            <td>{{val[2]}}</td>
+            <td>{{val[3]}}</td>
+            <td>{{val[4]}}</td>
+            <td>{{val[5]}}</td>
+            
+            <td>{{val[7]}}</td>
+            <td>{{val[8]}}</td>
+            <td>
+              <div ngbDropdown class="dropdown-secondary dropdown">
+                <button style="color:deepskyblue;" ngbDropdownToggle class="btn btn-mini dropdown-toggle waves-light b-none txt-muted dropDownbutton"
+                  type="button" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="icofont icofont-navigation-menu"></i>
+                </button>
+                <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown10" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                  <a class="dropdown-item waves-light waves-effect" href="javascript:;" [routerLink]="['/Registration/editHospitaldetails',val[9]]"
+                    skipLocationChange>
+                    <i class="icofont icofont-ui-edit action" title="Edit Company">&nbsp;
+                      <span class="tdspan">Edit</span>
+                    </i>
+                  </a>
+                  <a class="dropdown-item waves-light waves-effect" href="javascript:;" (click)="deleteHospital(val[9])">
+                    <i class="icofont icofont-delete-alt action1" title="Delete">&nbsp;
+                      <span class="tdspan">delete</span>
+                    </i>
+                  </a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="11">
+              <mfBootstrapPaginator class="pagination-main f-right"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

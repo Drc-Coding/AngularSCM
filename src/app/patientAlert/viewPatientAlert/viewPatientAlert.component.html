@@ -1,0 +1,137 @@
+<style>
+    .nodata {
+      text-align: center;
+      width: 100%;
+      padding: 10px;
+      font-size: 25px;
+      color: rgb(245, 50, 50);
+      font-family: Verdana, Geneva, sans-serif;
+    }
+    .action
+      {
+        font-size: 15px;
+        color: #5aa02c; 
+      }
+      .action1
+      {
+        font-size: 15px;
+        color: red;
+      } 
+     
+    </style>
+
+<app-card>
+  <br>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
+      <div>
+        <label class="label-control">Show
+          <select class="form-control input-sm full-data-show-entry" [(ngModel)]="rowsOnPage">
+            <option [ngValue]="1">1</option>
+            <option [ngValue]="25">25</option>
+            <option [ngValue]="50">50</option>
+            <option [ngValue]="100">100</option>
+          </select>
+          Entries
+        </label>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      
+      <div class="form-inline justify-content-end" >
+	
+        <strong class="searchstyle">Search :</strong>
+        <input type="search" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Search Patient Name" autofocus>
+      
+    </div>
+
+    </div>
+  </div><br>
+  <!-- <div class="panel-heading">User information</div>-->
+  <div class="dt-responsive" style="overflow-x:auto">
+    <table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery"
+      #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+      <thead>
+        <tr>
+          <th>
+            <mfDefaultSorter by="sno">S.No</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="empfirstname">Patient Name</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="emplastname">Last Name</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="department">Message</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="department">Company Name</mfDefaultSorter>
+          </th>   
+          <th>
+            <mfDefaultSorter by="department">Branch Name</mfDefaultSorter>
+          </th>          
+          <th>
+            <mfDefaultSorter by="desgination">Address 1</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="desgination">Address 2</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="desgination">Location</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="desgination">Name</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="Action">Action</mfDefaultSorter>
+          </th>
+        </tr>
+        <tr>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngIf="(data | dataFilter : filterQuery) == 0">
+							<td></td>
+							<td class="nodata">No matching Records found....</td>
+							<td></td>
+							<td></td> 
+              <td></td> 
+              <td></td>
+							<td></td> 
+              <td></td>     
+              <td></td> 
+              <td></td>  
+              <td></td>   
+							</tr>  	
+        <tr *ngFor="let val of mf.data;let i=index">
+          <td>{{i+1}}</td>
+          <td>{{val[0]}}</td>
+          <td>{{val[1]}}</td>
+          <td>{{val[2]}}</td>
+          <td>{{val[3]}}</td>
+          <td>{{val[4]}}</td>
+          <td>{{val[5]}}</td>
+          <td>{{val[6]}}</td>
+          <td>{{val[7]}}</td>
+          <td>{{val[8]}}</td>
+          <td ngbDropdown class="text-center">
+            <a ngbDropdownToggle class="dropdown-toggle addon-btn" data-toggle="dropdown" aria-expanded="true">
+              <i class="icofont icofont-ui-settings"></i>
+            </a>
+            <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+              
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="12">
+            <mfBootstrapPaginator class="pagination-main f-right"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</app-card>

@@ -1,0 +1,655 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+        
+        
+            
+            
+    
+    
+    
+                .row input ,.row label ,.row select{
+                 margin-bottom: 6px;
+                 padding-right: 0px;
+                 padding-left: 0px;
+                 margin-right: 0px;
+                 margin-left: 0px;
+                 
+             }
+         
+    /*  .row label {
+
+font-size: 1.2em; 
+
+font-family: sans-serif  ;
+
+font-stretch: expanded ;
+
+font-weight: 500 ; 
+
+
+ }       */
+
+              .tablenew{
+               
+                border: 1px solid rgba(0,0,0,.15);
+                height:300px;
+                max-width:  100%;
+                box-sizing:border-box;
+                max-height: 300px;
+                 overflow-y: scroll;
+                 overflow-x: scroll;
+    
+    
+            
+         
+                 }
+         
+     
+        
+               .tablenew  table th {
+                 padding: 0.43em   0em     0.43em   0em;
+            
+                 margin:  0em; 
+                 text-align:center;
+              
+                 vertical-align: top;
+
+                   /*    border: 1px solid rgba(0,0,0,.15);
+
+    font-family: sans-serif  ;
+    color: black;
+    background-color: rgb(151, 156, 151);  */
+
+
+             
+             }
+                
+                 .tablenew table td{
+                        border: 1px solid rgba(0,0,0,.15);
+
+                 vertical-align: top;
+                 padding: 0.43em   0em      0.43em   0em;
+                 text-align:center;
+                 margin:  0em; 
+                }
+         
+     
+    
+    
+    
+       
+               
+             .tablenew  table p{
+         
+                         padding: 0em;   
+                         margin:  0em; 
+                 }
+        
+    
+    
+    
+             .tablenew table th input{
+               width:6em;
+                 background-color:  #cccccc ;
+                 border: #FFFFFF;
+                 text-align:center;
+             }
+           
+    
+    
+    
+             
+             .tablenew table td input{
+               width:4em;
+                 text-align:center;
+                 border: #FFFFFF;
+             }
+                
+             
+         
+    
+    
+    
+            .tablenew table td label  {
+          
+                margin:  0em; 
+                padding: 0em ;
+        
+                text-align:center;
+                border: #FFFFFF;
+            }
+        
+         
+           .tablenew table tr {
+               margin:  0em; 
+                 width: 100%;
+                 border: 1px solid rgba(0,0,0,.15);
+             }
+           
+         
+    
+       
+     
+             .tablenew   table td input:focus{
+        
+                background-color:  rgba(0,0,0,.15);
+            }
+        
+        
+    
+         
+      .tablenew    input[type="checkbox"]  {
+    
+          width: 1.7em  ;
+          height :    1.7em  ;
+    
+          padding: 0em ;
+    
+          margin:  0em; 
+       }
+    
+
+
+       .tablenew select{
+    border: 1px solid rgba(0,0,0,.25);
+             
+         }
+
+
+
+    
+    
+         #autolist {
+        
+                border: 1px solid rgba(0,0,0,.15);
+                position: absolute;
+                z-index: 21;
+                background-color: #ffffff;
+    
+    
+    
+                width:   16.5em;
+        
+                max-height: 200px;
+                overflow-y: scroll;
+         
+            }
+            
+    
+         #autolist1 {
+        
+                border: 1px solid rgba(0,0,0,.15);
+                position: absolute;
+                z-index: 21;
+                background-color: #ffffff;
+    
+    
+    
+                width:   16.5em;
+                height: 200px;
+    
+                max-height: 200px;
+                overflow-y: scroll;
+         
+            }
+    
+    
+           
+            li input:nth-child(1):focus{
+        
+                background-color:  rgba(0,0,0,.15);
+            }
+    
+            li input:nth-child(3):focus{
+        
+                background-color:  rgba(0,0,0,.15);
+            }
+    
+    
+    
+            li input:nth-child(1) {
+     
+                border: transparent;
+        
+            }
+    
+            li input:nth-child(3) {
+     
+                width:6em;  
+                border: transparent;
+        
+    
+                text-align:center;
+    
+    
+            }
+    
+    
+    
+    
+            li input:nth-child(2) {
+     
+                display: none;
+        
+            }
+    
+    
+        #gridContainer  {
+    
+    
+           height:369px;
+          }
+    
+    
+    
+
+    
+  .button  input{
+        background-color: #0073aa ; 
+       color:#FFFFFF ; 
+       cursor:pointer; 
+       width:   7.34em;
+     }
+
+     .button  {  
+        padding-top: 16px ;
+
+    }
+
+     
+    #inputwidth1  ,#inputwidth2 , #inputwidth3  ,#inputwidth4 {
+
+      width:9.23em;
+        margin-left: -2em;
+
+        margin-right: -2em;
+
+  }
+
+
+
+  #input7width1  ,#input7width2 {
+
+        width:7em;
+        margin-left: -1em;
+
+        margin-right: -1em;
+
+  }
+
+            </style>
+                
+                
+           
+                <app-card>
+                
+                
+                <form [formGroup]="registerForm"  >
+                
+                
+                    <div class="box-typical box-typical-padding">
+                
+            
+                        <div class="row"><!-- splitcolumn   start--> 
+            
+                            <div class="col-lg-4">
+                                    <div class="row">
+                    
+                                          <div class="col-md-5">
+                                                
+                                        
+                                              <label class="form-label semibold" for="exampleInput"> Journal date 
+                                                                           </label> 
+                                                                
+                                                         
+                                                            
+                                                            </div>
+                                            <div class="col-md-7">
+                                                    <input type="date" 
+                                                    class="form-control"   formControlName="date"
+                                                    />
+                                          
+                                        
+                                            </div> 
+            
+            
+                                    
+            
+                
+                                            <div class="col-md-5 ">
+                                                
+                                        
+                                                          <label class="form-label semibold" for="exampleInput">Invoice No 
+                                                       </label> 
+                                                                
+                                                         
+                                                            
+                                               </div>
+                                                  
+                                               <div class="col-md-7 ">
+                                                
+                                         
+                                                <input type="text" 
+                                                class="form-control" id="autoname"    (focus)="autofocusin()"    (focusout)="autofocusout()"   autocomplete="off"  
+                                                (keydown)="autokeyselect($event,0)"      formControlName="autonamenew"   #inp  />
+                                        
+                                                <div id="autolist" >
+                                                      <ul >  
+    
+    
+                                                     <li  *ngFor="let address of    autodata; let i=index"     (keydown)="autokeyselect($event,i)" >
+                                                          <input   readonly value={{address[1]}}  /> 
+                                                     </li>
+                                                   
+                                                      </ul>  
+    
+                                                 </div>
+                                                                
+                                                                                                           
+                                             </div> 
+                                             
+                                                         
+                                        </div> 
+                    
+                    
+                               </div> 
+            
+            
+                                 <div class="col-lg-4">
+                                    <div class="row" >
+
+                                              
+                                        <div class="col-md-7  autolistall1">
+                                            
+                                     
+                                            <input type="text" 
+                                            class="form-control treetable" id="autoname1"    (focus)="autofocusin1()"    (focusout)="autofocusout1()"   autocomplete="off"  
+                                            (keydown)="autokeyselect1($event,0)"      formControlName="autonamenew1"      />
+                                    
+                                            <div id="autolist1" >
+                                                  <ul >  
+
+
+                                                 <li  *ngFor="let address of    autodata1; let i=index"     (keydown)="autokeyselect1($event,i)" >
+                                                      <input   readonly value={{address[1]}}  /> 
+                                                 </li>
+                                               
+                                                  </ul>  
+
+                                             </div>
+                                                     
+                                           </div>
+
+                                              <div class="col-md-5 autolistall1"> 
+                                                  
+                                                    <button    class="btn btn-primary"      (click)="ignore()" 
+                                                    >Ignore</button>
+                                            
+                                            
+                                            </div>
+                                                
+                                                  <div class="col-lg-12" >       <input type="text"   style=" border-color:transparent;"  class="form-control"       /> </div> 
+                                                  <div class="col-lg-4" >
+                                                    
+                                                    
+                                                           <div   >
+                                                               <select   class="form-control"    (change)="viewLoadDefault()"    formControlName="typeflag"    >
+                                                                  
+                                                                   <option  value="1" >SInv</option>
+                                                                   <option  value="2" >PurcRetn</option>
+                                                                   <option  value="3" >GenJrnl</option>
+                                                               </select>
+                                                           </div>
+                                            
+                                                   </div> 
+                                                         
+                                                            
+                                               
+    
+    
+                                         
+                                      
+                                        </div> 
+                    
+                    
+                               </div> 
+                               
+              
+            
+                               <div class="col-lg-4">
+                                    <div class="row">
+                    
+       
+                                        <div class="col-md-5">
+                                            
+                                    
+                                          <label class="form-label semibold" for="exampleInput"> Payment Type  
+                                                                       </label> 
+                                                            
+                                                     
+                                                        
+                                         </div>
+                                        <div class="col-md-7">
+                                            <select   class="form-control"   formControlName="paymenttype"     >
+                                                
+                                                 <option  value="1" >Cash</option>
+                                                 <option  value="2" >Card</option>
+                                                 <option  value="3" >Cheque</option>
+                                             </select>
+                                      
+                                    
+                                        </div> 
+    
+                                        <div class="col-md-5">
+                                            
+                                    
+                                             <label class="form-label semibold" for="exampleInput"> Ref No  
+                                                                       </label> 
+                                                            
+                                                     
+                                                        
+                                                        </div>
+                                        <div class="col-md-7">
+                                                <input type="text" 
+                                                class="form-control"   formControlName="ptrefno" 
+                                                />
+                                      
+                                    
+                                        </div> 
+                                      
+                                                                                                     
+                                    </div> 
+                    
+                    
+                               </div> 
+            
+                            </div>    <!-- splitcolumn   end--> 
+                        
+         
+                   
+    
+    
+                   
+                          
+    
+             
+                                           <div [formGroup]="registerForm"  >   <!-- table start-->
+                                            
+                                         
+                                             <div  class="tablenew "   >
+                                                   <div   >
+                                                        <label class="form-label semibold"  > Receipt     
+                                                    </label> 
+
+                                                    
+                                                    <table class="table "  id="knowledgeTreeTable"     (keydown)="autocleartable1()" >
+                                                        <thead class="thead-default">
+                                                        <tr >
+                                                                                                         
+                                                               <!--    <th>S.No</th>  -->
+                                                               <th>Debit Account</th>
+                                                               <th>Credit Account </th> 
+                                                               <th>Debit Amount</th>
+                                                               <!--     <th>Credit Amount</th>  -->
+                                                                
+                                                                  <th>Invoice No</th>
+                                                <!--            <th>Bal Amt  </th>   -->
+                                                           <th>Ref Person</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                   
+                                                    <tr    >
+                                                        
+                                                  <!--    <td><input   value={{i+1}}  readonly/></td>      -->
+            
+
+                                                     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                  <td *ngIf="registerForm.controls.accdispflag.value==1" ><input  formControlName="draccname" readonly    id="inputwidth1"    /></td>
+                                                    <td *ngIf="registerForm.controls.accdispflag.value==1" ><input  formControlName="craccname" readonly     id="inputwidth2"    /></td> 
+                                                    
+
+
+                                                <td  *ngIf="registerForm.controls.accdispflag.value==2" >   <select formControlName="debitaccountemp"   (change)="viewDebitAcc()" >   <option *ngFor="let item of   accounts ; let i = index" value={{i}}>{{item[1]}}</option>   </select>   </td>
+                                                 <td   *ngIf="registerForm.controls.accdispflag.value==2"  >   <select  formControlName="creditaccountemp"   (change)="viewCreditAcc()"  >   <option *ngFor="let item of   accounts ; let i = index" value={{i}}>{{item[1]}}</option>   </select>   </td>
+                                                
+                                                    
+                                                    <td   ><input  formControlName="debitamount"     type="number"   /></td>
+                                                  <!--      <td    ><input  formControlName="creditamount"    type="number"  /></td>  -->
+                                                    <td><input  formControlName="invoicename"    id="inputwidth3"  /></td>
+                                           <!--         <td><input  formControlName="invoicebalamt"   /></td>  -->
+                                                     <td><input      formControlName="personname"   id="inputwidth4"     /></td>
+             
+                                                     </tr>
+                                                
+
+                                                   <tr *ngFor="let item of   tempdata ; let i = index" >
+                                                      <td> <input       />  </td> <td> </td>  <td> </td> <td> </td> <td> </td>  <td> </td>
+                                                        </tr>
+                                                       
+
+
+                                                    </table>
+                               
+                                             </div>
+                                           </div>
+                                             </div>  <!-- table  end--> 
+    
+        
+                
+                        <h5></h5>
+                  
+                        <div class="row">   <!-- splitcolumn   start--> 
+                            
+                            
+                                            <div class="col-lg-4">
+                                                    <div class="row">
+                                    
+                                                       
+                                                                               
+                                               </div> 
+                                    
+                                    
+                                               </div> 
+                            
+                            
+                                               <div class="col-lg-4">
+                                                    <div class="row">
+                                    
+                                                     
+                                                        <ng2-toasty [position]="position"></ng2-toasty>                     
+                                                        </div> 
+                                    
+                                    
+                                               </div> 
+                                               
+                              
+                            
+                                               <div class="col-lg-4">
+                                                    <div class="row">
+                                    
+                                                           
+                                                                   
+                                                                               
+                                                        </div>
+                                    
+                                    
+                                               </div> 
+                            
+                                            </div>   <!-- splitcolumn   end--> 
+                                            
+                  </div>
+                    <!-- box-typical-->
+                
+                </form>
+           
+
+                
+            
+
+             <div class="row button">   <!-- row Start--> 
+                
+                <div class="col-lg-3">        <button  type="button" class="btn btn-success btn-round" 
+                      (click)="onSubmit()"    > Save  </button>   </div>     
+                <div class="col-lg-3">      <button type="button" class="btn btn-success btn-round"
+                      [routerLink]="['/Receipt/receiptEdit' ]"  
+                     > Edit  </button>  </div>
+        
+            
+                                                                                                 
+             </div>  <!-- row end--> 
+            
+            
+                </app-card>
+                
+                
+            
+        

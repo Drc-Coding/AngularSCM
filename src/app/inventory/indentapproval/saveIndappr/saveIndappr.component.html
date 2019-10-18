@@ -1,0 +1,303 @@
+
+
+
+<app-card>
+    <div class="sub-title">Requisition Receiving
+        <i class="fa fa-check ficon"></i>
+    </div><br>
+
+    <form [formGroup]="registerForm">
+
+
+        <div class="box-typical box-typical-padding">
+
+
+            <div class="row">
+                <!--.row1start-->
+
+
+                <div class="col-lg-3">
+
+
+                            <label class="form-label semibold" for="exampleInput"> Requisition Number
+                            </label>
+
+                            <select class="form-control" (change)="viewIndreqProd()" formControlName="indselrefid">
+                                <option *ngFor="let item of  indentrequests ;let i=index  " value={{i}}>{{item[1]}}
+                                </option>
+                            </select>
+
+
+                 </div>
+
+
+                        <div class="col-lg-3">
+
+
+                            <label class="form-label semibold" for="exampleInput">Req Approval Date
+                            </label>
+
+
+                            <input type="Date" class="form-control" formControlName="date" />
+
+
+                        </div>
+
+
+                       <div class="col-lg-3">
+
+
+                            <label class="form-label semibold" for="exampleInput"> From Business Type
+                            </label>
+
+
+                            <select class="form-control" formControlName="fromlocname">
+
+                                <option value="1"> Shop </option>
+
+                                <option value="2">warehouse</option>
+
+                                <option value="3"> hospital </option>
+
+                            </select>
+
+
+                        </div>
+
+                        
+                        <div class="col-lg-3">
+
+
+                                <label class="form-label semibold" for="exampleInput"> From Business Name
+                                </label>
+    
+    
+    
+                                <input type="text" class="form-control" formControlName="fromlocrefidname" />
+    
+    
+                            </div>
+                    </div>
+
+<br>
+  
+
+                    
+                    <!-- rrghghf-->
+
+
+                
+
+
+<!--
+                <div class="col-lg-2">
+                    <div class="row">
+
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control " style=" border-color:transparent;" /> </div>
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control " style=" border-color:transparent;" /> </div>
+
+                        <div class="col-md-5"> </div>
+                        <div class="col-md-7"> </div>
+
+                    </div>
+                    <!-rrghghf-->
+
+
+                
+            
+           
+            <!-- rrghghf 1-->
+
+
+
+
+
+            <div class="title1">
+
+              <u>  Requisition Approval Table </u>
+             
+          </div>
+           <br>
+
+
+
+            <div formArrayName="indappr" class="flow ">
+                <!--. table  start-->
+                <div>
+                   
+                    <table class="table styletab">
+                        <thead class="stylehead">
+                            <tr>
+                                <th>S.No </th>
+
+
+                                <th>Prod Code </th>
+
+                                <th>Prod Name</th>
+
+                                <th *ngIf="registerForm.controls.boxdispflag.value=='1'"> Approved Box</th>
+                                <th *ngIf="registerForm.controls.stripdispflag.value=='1'"> Approved Strip</th>
+                                <th *ngIf="registerForm.controls.tabdispflag.value=='1'"> Approved No Of Qty </th>
+
+
+
+
+
+                                <th>Required Qty</th>
+                                <th>Min Qty </th>
+
+
+                                <!-- <th>MaxQty </th> -->
+
+                                <th>Total Approved </th>
+                                <th>Remarks </th>
+
+
+
+                            </tr>
+                        </thead>
+                        <tbody class="stylebody">
+                        <tr *ngFor="let address of registerForm.controls.indappr.controls; let i=index"
+                            [formGroupName]="i">
+                            <td>
+                                <input value={{i+1}} id="width2" readonly />
+                            </td>
+
+
+                            <td>  <input formControlName="drugprdrefid" readonly /> </td>
+
+                            <td>
+                                <input formControlName="drugname" id="width6" style="text-align:left" readonly />
+                            </td>
+
+                            <td *ngIf="registerForm.controls.boxdispflag.value=='1'">
+                                <input formControlName="apprboxqty" (keydown)="calc($event)" type="number" />
+                            </td>
+
+                            <td *ngIf="registerForm.controls.stripdispflag.value=='1'">
+                                <input formControlName="apprstripqty" (keydown)="calc($event)" type="number" />
+                            </td>
+                            <td *ngIf="registerForm.controls.tabdispflag.value=='1'">
+                                <input formControlName="apprtabqty" (keydown)="calc($event)" type="number" />
+                            </td>
+
+                            <td>
+                                <input formControlName="qty" readonly />
+                            </td>
+
+                            <td>
+                                <input formControlName="minqty" readonly />
+                            </td>
+
+
+
+
+                            <!-- <td>
+                                <input formControlName="maxqty" id="width3" readonly />
+                            </td> -->
+
+
+                            <td>
+                                <input formControlName="approvedqty" readonly />
+                            </td>
+                            <td>
+                                <input formControlName="remarks" id="width5" style="text-align:left" />
+                            </td>
+
+
+                        </tr>
+</tbody>
+                    </table>
+
+                </div>
+            </div>
+            <!--. table     end-->
+
+
+
+
+
+            <h5></h5>
+
+            <div class="row">
+                <!--.row1start-->
+
+
+                <div class="col-lg-4">
+                    <div class="row">
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                    <!-- rrghghf-->
+
+
+                </div>
+
+
+                <div class="col-lg-4">
+                    <div class="row">
+
+
+
+                    </div>
+                    <!-- rrghghf-->
+
+
+                </div>
+
+
+
+                <div class="col-lg-4">
+                    <div class="row">
+
+
+
+                        <ng2-toasty [position]="position"></ng2-toasty>
+                    </div>
+                    <!-- rrghghf-->
+
+
+                </div>
+
+            </div>
+            <!-- rrghghf 1-->
+
+        </div>
+        <!-- box-typical-->
+
+    </form>
+
+
+
+    <div class="row">
+        <!-- row Start-->
+
+        <div class="col-lg-3">
+            <button type="button" class="btn btn-round" (click)="onSubmit()"> Approve </button>
+        </div>
+
+        <div class="col-lg-3">
+            <button type="button" class="btn btn-round"
+                [routerLink]="['/RequisitionApproval/EditIndentApproval' ]">
+                Edit </button>
+        </div>
+
+
+
+    </div>
+    <!-- row end-->
+
+
+</app-card>

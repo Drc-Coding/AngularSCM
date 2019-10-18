@@ -1,0 +1,146 @@
+
+<section class="login p-fixed d-flex text-center bg-primary common-img-bg">
+  <div class="auth-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="login-card card-body auth-body">
+          <form [formGroup]="forgotForm" class="md-float-material">
+            <div class="text-center">
+              <img src="assets/images/auth/logo.png" alt="logo.png">
+            </div>
+            <div class="auth-box">       
+              <div class="row m-b-20">
+                <div class="col-md-12">
+                  <h3 class="text-left">You forgot your Password? Don't worry. </h3>                  
+                </div>
+              </div> 
+              <p class="text-inverse b-b-default text-right">Back to <a [routerLink]="['/userlogin/login']">Login.</a></p>                          
+              <div *ngIf="form1">
+                <div class="input-group">
+                <div class="form-radio" style="margin-left: 100px;">                 
+                    <div class="radio radio-inline">
+                      <label>
+                        <input type="radio" name="radio" checked="checked" value="0" (click)="showForm($event)">
+                        <i class="helper"></i>Phone
+                      </label>
+                    </div>
+                    <div class="radio radio-inline">
+                      <label>
+                        <input type="radio" name="radio" value="1" (click)="showForm($event)">
+                        <i class="helper"></i>Email
+                      </label>
+                    </div>
+                </div>
+
+              </div>             
+              <div  *ngIf="email">
+                  <div class="input-group">
+                      <select  name="select" class="form-control"  formControlName="emailcompanyid">
+                      <option value="opt1">---Select Company---</option>
+                      <option *ngFor="let comp of data" value="{{comp[0]}}">{{comp[1]}}</option></select>
+                      </div>
+                <div class="input-group"> <input type="text" class="form-control" placeholder="User Name" formControlName="emailusername">
+                  <span class="md-line"></span> </div>
+                    <div class="input-group"><input type="text" class="form-control" placeholder="Your Email Address" formControlName="email" #email>                
+                      <span class="md-line"></span> </div>                      
+                      <div class="messages text-danger input-group"
+                      *ngIf="forgotForm.controls.email.errors?.pattern">Invalid Email..</div>                                      
+                      </div>
+              <div class="row" *ngIf="email">
+                <div class="col-md-12">
+                  <button type="button"  class="btn btn-inverse btn-round" [disabled]="!forgotForm.valid" (click)="getEmail()">Search Email</button>
+                </div>
+              </div>
+              <div  *ngIf="phone"> 
+                  <div class="input-group">
+                      <select  name="select" class="form-control"  formControlName="phonecompanyid">
+                      <option value="opt1">---Select Company---</option>
+                      <option *ngFor="let comp of data" value="{{comp[0]}}">{{comp[1]}}</option></select>
+                      </div>
+                  <div class="input-group"> <input type="text" class="form-control" placeholder="User Name" formControlName="phoneusername">
+                    <span class="md-line"></span> </div>
+                      <div class="input-group"><input type="text" class="form-control" placeholder="Your Phone Address" formControlName="phone" #phonenumber>                
+                        <span class="md-line"></span> </div>                       
+              </div>
+              <div class="row" *ngIf="phone">
+                <div class="col-md-12">
+                  <button type="button" class="btn btn-inverse btn-round" (click)="getPhone()">Search Phone</button>
+                </div>
+              </div> 
+            </div>
+
+            <div *ngIf="form2">                 
+                <div class="form-radio">  
+                    <div class="radio radiofill radio-inline">                        
+                      <label>
+                          <h3>Send Code Via SMS</h3>  
+                        <input type="radio" name="radio" checked="checked">
+                        <i class="helper"></i><strong style="font-size: 22px;margin: 34px;">{{txtPhonenumber}}</strong>
+                      </label></div>  </div>
+        <button type="button" class="btn btn-inverse btn-round" (click)="getOtp('phone')" [disabled]="showOtp">Send Otp</button>
+        <br>
+         <div class="input-group" *ngIf="showOtp"> <input type="text" class="form-control" placeholder="Enter Your Six -Digit Code" style="margin: 5px;"> 
+          <button type="button" class="btn btn-success btn-round" (click)="resetPassword('effect-1')" style="margin: 4px;">Reset Password</button>
+        </div>
+            </div>
+
+            <div *ngIf="form3">                 
+            <div class="form-radio">  
+                <div class="radio radiofill radio-inline">                        
+                  <label>
+                      <h3>Send Code Via Email</h3>  
+                    <input type="radio" name="radio" checked="checked">
+                    <i class="helper"></i><strong style="font-size: 22px;margin: 34px;">{{txtEmail}}</strong>
+                  </label></div>  </div>
+    <button type="button" class="btn btn-inverse btn-round" (click)="getOtp('mail')" [disabled]="showOtp">Send Otp</button>
+    <br>
+     <div class="input-group" *ngIf="showOtp"> 
+       <input type="text" class="form-control" placeholder="Enter Your Six -Digit Code" style="margin: 5px;" maxlength="6" formControlName="otpmail" #otp> 
+      <button type="button" class="btn btn-success btn-round" (click)="resetPassword('effect-1')"  style="margin: 4px;">Reset Password</button>
+    </div>
+        </div>
+              <hr/>
+              <div class="row">
+                <div class="col-md-10">
+                  <p class="text-inverse text-left m-b-0">Thank you and enjoy our Medeil Cloud.</p>
+                  <p class="text-inverse text-left"><b>Your Autentification Medeil Team</b></p>
+                </div>
+                <div class="col-md-2">
+                  <img src="assets/images/auth/Logo-small-bottom.png" alt="small-logo.png">
+                </div>
+              </div> 
+            </div>   
+          <app-modal-animation [modalID]="'effect-1'" [modalClass]="'md-effect-1'">
+            <h3 style="background-color: rgb(159, 165, 159); font-family: Lucida Sans Unicode, Lucida Grande, sans-serif">Reset Password!</h3>
+          <div class="app-modal-body">
+            <div class="form-group row">
+              <div class="col-lg-4">
+                <fieldset class="form-group">
+                  <label class="col-form-label"><strong>New Password</strong></label> <input
+                    type="password" class="form-control" 
+                    placeholder="Enter New Password"  formControlName="newpassword">					
+                </fieldset>
+              </div>
+              <div class="col-lg-4">
+                <fieldset class="form-group">
+                  <label class=" col-form-label"><strong>Confirm Password</strong></label> <input
+                    type="password" class="form-control"
+                    placeholder="Enter Confirm Password" formControlName="confirmpassword">					
+                </fieldset>
+              </div>		
+              <div class="col-lg-4">
+                <fieldset class="form-group">
+                  <button type="button" class="btn btn-success btn-round" (click)="updatePassword()" aria-label="Close"  style="margin: 30px;">Update Password</button>         			
+                </fieldset>
+              </div>		
+            </div>
+          </div>                                                                         
+            <button (click)="closeMyModal($event)" aria-label="Close" class="md-close-btn"><i class="icofont icofont-ui-close"></i></button>
+        </app-modal-animation>               
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<ng2-toasty [position]="position"></ng2-toasty>

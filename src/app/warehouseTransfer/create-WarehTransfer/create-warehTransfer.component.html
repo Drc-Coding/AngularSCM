@@ -1,0 +1,208 @@
+<h3>Stock Transfer</h3>
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [title]="'Stock Transfer'">
+      <form [formGroup]="warehousetrans" (ngSubmit)="onSubmit()"> <!-- [formGroup]="mywarehouse" -->
+        
+        <div class="form-group row">
+          <div class="col-sm-4">
+            <h6>Stock Transfer Number</h6>
+              <input type="text" class="form-control" placeholder="Enter Transfer Number" id="whstktrfno" formControlName="whstktrfno" [(ngModel)]="warehousetransfer.whstktrfno" name="whstktrfno">
+               
+            </div>
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-4">
+                <h6>Stock Transfer Date</h6>
+                  <input type="date" class="form-control" placeholder="Enter Transfer Date" id="transferdate" formControlName="transferdate" [(ngModel)]="warehousetransfer.transferdate" name="transferdate">
+                </div>
+        </div>
+         <div class="form-group row">
+         <div class="col-sm-4">
+            <h6>From</h6>
+              <select type="text" class="form-control"  id="fromwarehouserefid" formControlName="fromwarehouserefid" [(ngModel)]="warehousetransfer.fromwarehouserefid" name="fromwarehouserefid">
+               <option *ngFor="let trans of warehouselist" value={{trans[25]}}>
+                {{trans [4]}}
+                
+                  </option> 
+              
+              </select> 
+            </div>
+         
+         </div>
+         <div class="form-group row">
+         <div class="col-sm-4">
+            <h6>To Store</h6>
+              <select type="text" class="form-control"  id="tostorerefid" formControlName="tostorerefid" [(ngModel)]="warehousetransfer.tostorerefid" name="tostorerefid">
+               <option *ngFor="let trans of storelist" value={{trans[0]}}>
+                {{trans [1]}}
+                
+                  </option> 
+             
+              </select>
+            </div>
+            <div class="col-sm-4">
+            <h6>To Company</h6>
+              <select type="text" class="form-control"  id="ToCompanyRefID" formControlName="tocompanyrefid" [(ngModel)]="warehousetransfer.tocompanyrefid" name="tocompanyrefid">
+               <option *ngFor="let trans of companylist" value={{trans[0]}}>
+                {{trans [1]}}
+                 
+                  </option> 
+              
+              </select>
+            </div>
+             <div class="col-sm-4">
+              <h6>To Hospital</h6>
+              <select type="text" class="form-control"  id="tohospitalrefid" formControlName="tohospitalrefid" [(ngModel)]="warehousetransfer.tohospitalrefid" name="tohospitalrefid">
+               <option *ngFor="let trans of hosplist" value={{trans[0]}}>
+                {{trans [38]}}
+                
+                  </option> 
+              
+              </select>
+             
+             </div>
+         
+         </div>
+         
+          <div class="form-group row">
+            <div class="card-header">
+             <h5>List Of Stocks</h5>
+          </div></div>
+          <div class="form-group row">
+           <div class="col-sm-4">
+            <h6>Stock</h6>
+              <select type="text" class="form-control" id="stockname" formControlName="stockname" [(ngModel)]="stockvalues.stockname" (change)="getbatchstockid()">
+               <option *ngFor="let trans of stocklist" value={{trans[2]}}>
+                {{trans [0]}}
+                
+                  </option>  
+              
+              </select>
+            </div>
+             <div class="col-sm-4">
+            <h6>Batch No</h6>
+              <select type="text"  class="form-control" id="stockbatch" formControlName="stockbatch" [(ngModel)]="stockvalues.stockbatch">
+               <option *ngFor="let trans of batchstockid" value={{trans[1]}}>
+                {{trans [6]}}
+                
+                  </option>  
+              
+              </select>
+            </div>
+            <div class="col-sm-4">
+            <h6>Stock Qty</h6>
+              <input type="text"  class="form-control" placeholder="Enter Stock Qty" id="stockqty" formControlName="stockqty" [(ngModel)]="stockvalues.stockqty">
+            </div>
+          
+           
+          
+          </div>
+           <div class="form-group row">
+             <div class="col-sm-4">
+              <button size="2" class="btn" type="button" (click)="addFieldValue()">Add</button>
+             </div>
+          </div>
+         
+        <div class="form-group row">
+       
+         <div class="card-header">
+             <h5>List Of Products</h5>
+          </div>
+        <table class="table table-striped table-responsive table-bordered"  id="tbl">
+        <thead>
+        <tr>
+        <th>
+        Id
+        
+        </th>
+        <th>
+        Product Name
+        </th>
+        <th>
+       Batch No
+        </th>
+        <th>
+        Qty
+        
+        </th>
+        <th>
+        Purchase Price
+        </th>
+        <th>
+        Selling Price
+        </th>
+        <th>Actions</th>
+</tr>
+        
+        
+        
+        </thead>
+        <tbody>
+        <tr *ngFor="let trans of warehousetrans.controls.productviews.controls; let i=index" [formGroupName]="i" >
+        
+      <td> <input     formControlName="whstktrfproid" ></td>
+        <td> <input   formControlName="drugproductrefid" ></td>
+          <td> <input  formControlName="batchno"></td>
+        <td><input  formControlName="qty" ></td>
+       
+         <td><input  formControlName="purchaseprice"></td>
+          <td><input  formControlName="sellingprice">
+            
+          </td>
+        
+          
+          <td>
+                <button class="btn" type="button" (click)="addFieldValue()">+</button>
+                  
+                <button class="btn"  type="button" (click)="deleteFieldValue(i)">-</button>
+           
+            </td>
+        </tr>
+        
+        </tbody>
+        </table>
+        
+        
+        
+       
+        
+        
+        
+        </div>
+          <div class="form-group row">
+           <div class="card-header">
+             <h6>Mode Of Transfer</h6>
+             </div>
+          </div>
+          <div class="form-group row">
+               
+           <div class="col-sm-4">
+                <h6>Transport No</h6>
+                  <input type="text" class="form-control" placeholder="Enter Transfer No" id="transportno" formControlName="transportno" [(ngModel)]="warehousetransfer.transportno" name="transportno">
+                </div>
+                
+              <div class="col-sm-4">
+                <h6>Transport Charge</h6>
+                  <input type="text" class="form-control" placeholder="Enter Transport charge" id="transportcharge" formControlName="transportcharge" [(ngModel)]="warehousetransfer.transportcharge" name="transportcharge">
+                </div>
+                <div class="col-sm-4">
+                <h6>Transport Details</h6>
+                  <input type="text" class="form-control" placeholder="Enter Transport Details" id="transportdetails" formControlName="transportdetails" [(ngModel)]="warehousetransfer.transportdetails" name="transportdetails">
+                </div>
+          
+          </div>
+
+
+        <div class="col-sm-6">
+         <button class="btn btn-success"><i class="icofont icofont-check-circled"></i>Submit</button>
+         </div>  
+        
+         
+              </form>
+    </app-card>
+  </div>
+</div>
+
+
+ 

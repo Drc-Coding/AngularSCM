@@ -1,0 +1,35 @@
+<app-card>
+<div class="sub-title">Role Details
+  <i class="fa fa-tasks ficon"></i>
+</div><br>
+  <div align="right">
+    <button class="btn btn-round" (click)="view()">View</button>
+  </div><br>
+  <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+    <div class="form-group row">
+      <div class="col-lg-4">
+        <fieldset class="form-group">
+          <label class="form-label"><h6>Company Name</h6></label>
+          <select name="select" class="form-control" formControlName="companyid" autofocus>
+            <option value="opt1" selected disabled>---Select Company Name---</option>
+            <option *ngFor="let comp of companylist" value={{comp[0]}}>{{comp[1]}}</option>
+          </select>
+        </fieldset>
+      </div>
+      <div class="col-lg-4">
+        <fieldset class="form-group mt-2">
+          <label class="form-label"><h6>Role Name</h6></label>
+          <input type="text" class="form-control" formControlName="rolename" placeholder="Role Name" #role/>
+        </fieldset>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-3">
+        <button type="submit" class="btn btn-round">Save</button>
+      </div>
+    </div>
+  </form>
+</app-card>
+
+<ng2-toasty [position]="position"></ng2-toasty>

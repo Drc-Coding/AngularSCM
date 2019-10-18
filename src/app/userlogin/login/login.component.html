@@ -1,0 +1,155 @@
+<style>
+	.buttonload {
+		background-color: #4CAF50;
+		/* Green background */
+		border: none;
+		/* Remove borders */
+		color: white;
+		/* White text */
+		padding: 12px 24px;
+		/* Some padding */
+		font-size: 16px;
+		/* Set a font-size */
+	}
+	/* Add a right margin to each icon */
+	.fa {
+		margin-left: -12px;
+		margin-right: 8px;
+	}
+</style>
+<section class="login p-fixed d-flex text-center bg-primary common-img-bg" style="overflow-y: scroll">
+	<div class="auth-fluid">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="login-card card-body auth-body">
+					<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+						<div class="auth-box">
+							<div class="row m-b-20">
+								<div class="col-md-12">
+									<div class="text-center">
+										<img src="assets/images/auth/logo.png" alt="logo.png">
+									</div>
+								</div>
+							</div>
+							<hr />
+							<h3 class="text-center txt-primary">Sign In</h3>
+							<br>
+							<div class="input-group">
+								<select name="select" class="form-control" formControlName="companyid">
+									<option value="opt1" selected disabled>---Select Company---</option>
+									<option *ngFor="let comp of companylist" value="{{comp[0]}}">{{comp[1]}}</option>
+								</select>
+							</div>
+							<div class="input-group">
+								<input type="text" class="form-control" id="version" placeholder="User Name"
+									required="true" formControlName="username" name="username"
+									[(ngModel)]="user.username" />
+								<span class="md-line"></span>
+							</div>
+							<div class="input-group">
+								<input type="password" class="form-control" id="password" placeholder="***************"
+									required="true" formControlName="password" name="password"
+									[(ngModel)]="user.password" />
+								<span class="md-line"></span>
+							</div>
+							<div class="row m-t-25 text-left">
+								<div class="col-sm-7 col-xs-12">
+									<div class="checkbox-fade fade-in-primary">
+										<label>
+											<input type="checkbox" value="">
+											<span class="cr">
+												<i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+											</span>
+											<span class="text-inverse">Remember me</span>
+										</label>
+									</div>
+								</div>
+								<div class="col-sm-5 col-xs-12 forgot-phone text-right">
+									<a [routerLink]="['/authentication/forgot']"
+										class="text-right f-w-600 text-inverse"> Forgot Your Password?</a>
+								</div>
+							</div>
+							<div class="row m-t-30">
+								<div class="col-md-12">
+									<input type="Submit"
+										class="btn btn-round btn-md btn-block waves-effect text-center m-b-20 btn-submit"
+										[ngClass]="{'progress-bar progress-bar-striped progress-bar-animated':loader}" value="Sign In" style="font-size: 20px; height:45">
+									<!-- <input type="Submit" id="sinuprogg"
+										class="btn btn-round btn-md btn-block waves-effect text-center m-b-20 btn-submit progress-bar progress-bar-striped progress-bar-animated"
+										value="Sign In" style="font-size: 20px; height:45">  -->
+									<!-- <a [routerLink]="['sinup/addsinup']" class="text-right f-w-600 text-inverse"> Forgot Your Password?</a> -->
+									<p class="text-right f-w-600 text-inverse">Create an Account? <a
+											[routerLink]="['/sinup/addsinup']"> Sign Up</a>
+									</p>
+								</div>
+							</div>
+							<!-- <hr />
+							<div class="row">								
+								<div class="col-md-12">
+									<h1><strong>Follwing Us..</strong></h1>
+									<a href="javascript:;" class="btn btn-facebook"><i class="icofont icofont-social-facebook"></i></a>
+									<a href="javascript:;" class="btn btn-twitter"><i class="icofont icofont-social-twitter"></i></a>
+									<a href="javascript:;" class="btn btn-linkedin"><i class="icofont icofont-brand-linkedin"></i></a>									
+									<a href="javascript:;" class="btn btn-google-plus"><i class="icofont icofont-social-google-plus"></i></a>									
+								</div>
+							  </div> -->
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<form [formGroup]="chooseSection">
+	<app-modal-animation [modalID]="'effect-1'" [modalClass]="'md-effect-1'">
+		<div class="modal-header" style="font-size:27px">Choose Session
+		</div><br>
+		<div class="form-group row">
+			<div class="col-sm-6">
+				<fieldset class="form-group">
+					<label class="form-label">Business Type</label>
+					<select name="select" class="form-control" formControlName="branchid" (change)="getBranchWise()">
+						<option value="0" selected disabled>---Select Business Name---</option>
+						<option *ngFor="let br of userbranch" value="{{br[0]}}">{{br[1]}}</option>
+					</select>
+				</fieldset>
+			</div>
+			<div class="col-sm-6">
+				<fieldset class="form-group">
+					<label class="form-label">Business Name</label>
+					<select name="select" class="form-control" formControlName="shopid">
+						<option value="0" selected>---Select Business Type---</option>
+						<option *ngFor="let sh of userShop" value="{{sh[0]}}">{{sh[1]}}</option>
+					</select>
+				</fieldset>
+			</div>
+			<!--	<div class="col-sm-6">
+				<fieldset class="form-group">
+					<label class="col-form-label">Hospital</label>
+					<select name="select" class="form-control" formControlName="hospitalid">
+						<option value="0" selected>---Select Hospital---</option>
+						<option *ngFor="let hosp of userHospital" value="{{hosp[0]}}">{{hosp[1]}}</option>
+					</select>
+				</fieldset>
+			</div>
+			<div class="col-sm-6">
+				<fieldset class="form-group">
+					<label class="col-form-label">Warehouse</label>
+					<select name="select" class="form-control" formControlName="warehouseid">
+						<option value="0" selected>---Select Warehouse---</option>
+						<option *ngFor="let ware of userWarehouse" value="{{ware[0]}}">{{ware[1]}}</option>
+					</select>
+				</fieldset>
+			</div>-->
+		</div>
+	
+	<div class="modal-footer">
+	<label id="enter" class="btn modbtn"
+		(click)="chooseModel()">Enter</label>				
+	</div>
+
+		<button (click)="closeMyModal($event);loader=false" aria-label="Close" class="md-close-btn">
+			<i class="icofont icofont-ui-close" style="font-size:12px"></i>
+		</button>
+	</app-modal-animation>
+</form>

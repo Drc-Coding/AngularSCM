@@ -1,0 +1,42 @@
+<style>
+	
+</style>
+		<app-card>
+	<form [formGroup]="domainForm" (ngSubmit)="onSubmit()">
+		<div class="form-group row" style="float: right; ">
+			<input type="button" class="btn btn-round btnlinklist" (click)="viewDomain()" value="View">
+		</div>
+		<br>
+		<br>
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label class="form-label semibold"><h6>Country Name</h6></label>
+				<select name="select" class="form-control" formControlName="countryid" (change)="getproduct()">
+					<option value="opt1" selected disabled>---Select Country---</option>
+					<option *ngFor="let coun of country " value={{coun[0]}}>{{coun[1]}}</option>
+				</select>
+			</div>
+			<div class="col-sm-4">
+				<label class="form-label semibold"><h6>Product Name</h6></label>
+				<select name="select" class="form-control" formControlName="productid">
+					<option value="opt1" selected disabled>---Select Product---</option>
+					<option *ngFor="let coun of product" value={{coun[0]}}>{{coun[1]}}</option>
+				</select>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label semibold"><h6>Domain Name</h6></label>
+					<input type="text" class="form-control" placeholder="Enter your Domain Name" formControlName="domainname"
+					 #domainName/>
+				</fieldset>
+				<div class="messages text-danger" *ngIf="domainForm.controls.domainname.errors?.minlength">DomainName must be at least 3 characters long...</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<button [disabled]="!domainForm.valid" type="submit" class="btn btn-success btn-round button btnlinklist" style="margin: 26px;">Save</button>
+			</div>
+		</div>
+	</form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

@@ -1,0 +1,27 @@
+
+<style>
+
+	input[type=radio]{
+	margin:5px;
+	
+	}
+</style>
+		<app-card>
+			<form [formGroup]="EditTherapeutic" (ngSubmit)="onSubmit()">
+					<input type="hidden" class="form-control" formControlName="id" placeholder="id">
+				<div class="form-group row">
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class=" col-form-label">Therapeutic Name</label> <input
+								type="text" class="form-control" 
+								placeholder="Enter the Therapeutic Name"
+								formControlName="therapeuticname">
+						</fieldset>
+					</div>
+					<div class="col-lg-4">
+						<button type="submit" style="margin-top: 32px" class="btn btn-success btn-round" >UPDATE</button>
+					  </div>	
+				</div>
+			</form>
+		</app-card>
+		<ng2-toasty [position]="position"></ng2-toasty>

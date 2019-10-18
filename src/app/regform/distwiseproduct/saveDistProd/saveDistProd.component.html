@@ -1,0 +1,183 @@
+<style>
+ 
+  #swidth{
+    width:295px !important;
+  }
+   
+  #ptdlist{
+        padding-left:5px;
+        text-align:center;
+        font-size:15px;
+        font-family:Montserrat;
+    }
+
+
+</style>
+
+<app-card >
+    <div class="sub-title">ADD Distributor Wise Product Details
+        <i class="fa fa-users ficon"></i>
+    </div><br>
+
+    <form [formGroup]="registerForm">
+
+        <div class="box-typical box-typical-padding">
+
+       
+            <div class="row">
+                <!--.row1start-->
+                        <div class="col-md-1"></div>
+
+                       
+                        <div class="col-md-3">
+                            <label class="form-label semibold" for="exampleInput"> Distributor Name
+                            </label>
+
+                            <select class="form-control" (change)="clearProd()" formControlName="distrefid">
+                                    <option *ngFor="let item of distributors; let i = index" value={{item[0]}}>{{item[1]}}
+                                    </option>
+                                </select>
+                                <p class="messages text-danger marginzero" *ngIf="registerForm.controls.distrefid.errors?.required">Select Vendor
+                                </p>
+                        </div>
+                       
+
+                        <div class="col-md-3">
+                            <label class="form-label semibold" for="exampleInput"> Manufacturer Name
+                            </label>
+
+                            <select  class="form-control" (change)="viewProductPhComp()" formControlName="phcompanyid">
+                                    <option *ngFor="let item of phcompany; let i = index" value={{item[0]}}>{{item[1]}}
+                                    </option>
+                                </select>
+                        </div>
+                       
+
+
+                        <div class="col-md-3">
+                            <label class="form-label semibold mt-1" for="exampleInput"> Product Name
+                            </label>
+
+                            <input type="text" class="form-control" id="autoname" (focus)="autofocusin()" (focusout)="autofocusout()" autocomplete="off"
+                            (keydown)="autokeyselect($event,0)" formControlName="autonamenew" placeholder="Type Search Product Name"/>
+                            <div id="autolist" style="height:135px;overflow:auto;position:absolute;z-index:1">
+                            <ul id="ptdlist">
+                                <li *ngFor="let address of    autodata; let i=index" (keydown)="autokeyselect($event,i+1)">
+                                    <input readonly value={{address[1]}} />
+                                </li>
+                            </ul>
+                        </div>
+                        </div>
+
+
+                    <div class="col-md-2"></div>     
+
+            </div><br>
+            <!-- rrghghf 1-->
+            <div class="row">
+
+                <div class="col-md-1"></div>
+             
+            <div class="col-md-9">
+
+            <div formArrayName="distprod" class="flow">
+                <!--. table  start-->
+                <div>
+                    <table class="table styletab" id="hishowtable">
+        <!---Id not be Delete & alter It's create for hide & Show options to create customize grid-->
+                        <thead class="stylehead">
+                            <tr>
+                                <th>Select </th>
+                                <th>S.No </th>
+                                <th>Product Code</th>
+                                <th>Product Name</th>
+                                <th>Distributor Price</th>
+                              
+                                
+                                <!--        <th>CreditDays</th>
+                                         <th>LeadTime</th>    -->
+                                <!--     <th>Select </th> -->
+
+                            </tr>
+                        </thead>
+                        <tbody class="stylebody">
+                        <tr *ngFor="let address of registerForm.controls.distprod.controls; let i=index" [formGroupName]="i">
+                            <td>
+                                <input type="checkbox" class="tabcheck" formControlName="delflag" id="width1" />
+                            </td>
+                            <td>
+                                <input value={{i+1}} id="width2" readonly />
+                            </td>
+                            <td>
+                                <input readonly formControlName="drugprdid" id="width4" />
+                            </td>
+                            <td>
+                                <input readonly formControlName="productname" id="swidth" style="text-align:left" />
+                            </td>
+                            <td>
+                                <input formControlName="distprice"/>
+                            </td>
+                            
+        
+                            <!--     <td><input      formControlName="creditdays"     /></td>
+                            <td><input      formControlName="leadtime"     /></td>   -->
+                            <!--   <td><input  formControlName="selectflag"    type="checkbox"       /></td>     -->
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div><br>
+                <!--Table End-->
+                        <button type="button" class="btn btn-round" (click)="remove()"> Remove </button>
+                      
+                       
+            </div>
+
+
+              <div class="col-md-2">
+
+                
+              </div>
+
+              </div><br><!--Row End-->
+
+            
+
+
+            <div class="row">
+                <!--.row1start-->
+                <div class="col-lg-4">
+                    <div class="row">
+                    </div>
+                    <!-- rrghghf-->
+                </div>
+                <div class="col-lg-4">
+                    <div class="row">
+                    </div>
+                    <!-- rrghghf-->
+                </div>
+                <div class="col-lg-4">
+                    <div class="row">
+                        <ng2-toasty [position]="position"></ng2-toasty>
+                    </div>
+                    <!-- rrghghf-->
+                </div>
+            </div>
+            <!-- rrghghf 1-->
+
+        </div>
+        <!-- box-typical-->
+    </form>
+
+    <div class="row button mb-3">
+        <!-- row Start-->
+        <div align=right class="col-lg-10">
+            <button type="button" class="btn btn-round" (click)="onSubmit()" [disabled]="!registerForm.valid"> Save </button>
+        </div>
+        <!--     <div class="col-lg-3">     <button  type="button" class="btn btn-success btn-round"
+                      [routerLink]="['/DistributorwiseProduct/editDistProd' ]"     > Edit  </button>  </div>  -->
+
+    </div>
+    <!-- row end -->
+</app-card>

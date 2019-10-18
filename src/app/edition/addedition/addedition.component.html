@@ -1,0 +1,98 @@
+<app-card>
+  <div align="right">
+    <button class="btn btn-success btn-round btnlinklist" (click)="view()">View</button>
+  </div>
+  <form [formGroup]="editionForm" (ngSubmit)="onSubmit()">
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <label class="form-label semibold"><h6>Country Name</h6></label>
+        <select name="select" class="form-control" formControlName="countryid" (change)="getProduct()" autofocus>
+          <option value="opt1" selected disabled>---Select Country Name---</option>
+          <option *ngFor="let coun of country" value={{coun[0]}}>{{coun[1]}} </option>
+        </select>
+      </div>
+
+      <div class="col-sm-4">
+        <label class="form-label semibold"><h6>Product Name</h6></label>
+        <select name="select" class="form-control" formControlName="productid" (change)="getDomains()">
+          <option value="opt1" selected disabled>---Select Product Name---</option>
+          <option *ngFor="let product of prodcutlist" value="{{product[0]}}">{{product[1]}}</option>
+        </select>
+      </div>
+
+      <div class="col-sm-4">
+        <label class="form-label semibold"><h6>Domain Name</h6></label>
+        <select name="select" class="form-control" formControlName="domainrefid" (change)="getSubdomain()">
+          <option value="opt1" selected disabled>---Select Domain Name---</option>
+          <option *ngFor="let dname of domainlist" value="{{dname[0]}}">{{dname[1]}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <label class="form-label semibold"><h6>Sub-Domain Name</h6></label>
+        <select type="text" class="form-control" formControlName="subdomainrefid">
+          <option value="opt1" selected disabled>---Select Sub-Domain Name---</option>
+          <option *ngFor="let subdomain of subdomainlist" value="{{subdomain[0]}}">{{subdomain[1]}} </option>
+        </select>
+      </div>
+      <div class="col-lg-4">
+        <fieldset class="form-group">
+          <label class="form-label semibold"><h6>Edition Name</h6></label>
+          <input type="text" class="form-control" placeholder="Enter Edition Name" formControlName="editionname" #editionName/>
+        </fieldset>
+      </div>
+      <div class="col-lg-4">
+        <fieldset class="form-group">
+          <label class="form-label semibold"><h6>Version</h6></label>
+          <input type="text" class="form-control" placeholder="Enter your Version" formControlName="version" />
+        </fieldset>
+        <div class="messages text-danger" *ngIf="editionForm.controls.version.errors?.pattern">Numbers Only Allowed..</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-lg-4">
+        <fieldset class="form-group">
+          <label class="form-label semibold"><h6>Release Date</h6></label>
+          <input type="date" class="form-control" formControlName="releasedate" />
+        </fieldset>
+      </div>
+      <div class="col-lg-4">
+        <fieldset class="form-group">
+          <label class="form-label semibold"><h6>Edition Type</h6></label>
+          <select name="editiontype" class="form-control form-control-default" formControlName="editiontype">
+            <option value="Yearly">Yearly</option>
+            <option value="Monthly">Monthly</option>
+            <option value="Trial">Trial</option>
+          </select>
+        </fieldset>
+      </div>
+      <div class="col-lg-4">
+        <fieldset class="form-group">
+          <label class="form-label semibold"><h6>Number-of-Days</h6></label>
+          <input type="text" class="form-control" placeholder="Number of Days" formControlName="days" />
+        </fieldset>
+        <div class="messages text-danger" *ngIf="editionForm.controls.days.errors?.pattern">Numbers Only Allowed..</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-lg-4">
+        <fieldset class="form-group">
+          <label class="form-label semibold"><h6>Status</h6></label>
+          <select name="status" class="form-control form-control-default" formControlName="status">
+            <option value="0">Active</option>
+            <option value="1">Inactive</option>
+          </select>
+        </fieldset>
+      </div>
+      <div class="col-lg-4">
+        <fieldset class="form-group">
+          <button [disabled]="!editionForm.valid" type="submit" class="btn btn-success btn-round button btnlinklist" style="margin: 26px;">Save</button>
+        </fieldset>
+      </div>
+    </div>
+  </form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

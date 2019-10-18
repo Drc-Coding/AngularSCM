@@ -1,0 +1,136 @@
+<style>
+#swidth{
+    width:320px;
+}
+</style>
+
+<app-card>
+    <div class="sub-title">Purchase Approve Details
+        <i class="fa fa-shopping-cart ficon"></i>
+    </div><br>
+    <form [formGroup]="purchaseApproval" (ngSubmit)="onSubmit()">
+
+        <div class="form-group row">
+            <!-- <div class="col-lg-4">
+                <label class="col-form-label labal">Purchase Approval Number</label>
+                <input type="text" class="form-control inputline" placeholder="---Purchase Approval Number---" formControlName="approvalno" autofocus>
+            </div> -->
+            <div class="col-lg-4">
+                <label class="form-label">Purchase Invoice Number</label>
+                <select name="select" class="form-control inputline" formControlName="invoicenumber" (change)="getPurcAppdata($event)">
+                    <option value="opt1" selected disabled>---Select InvoiceNumber---</option>
+                    <option *ngFor="let inv of invoicenumber" value="{{inv[0]}}">{{inv[1]}}</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label">Purchase Approval Date</label>
+                <input type="date" class="form-control inputline" placeholder="---purchase Approval Date---" formControlName="approvaldate">
+                <div class="messages text-danger" *ngIf="purchaseApproval.controls.approvaldate.errors?.required">Approval Date must be filled out..</div>
+            </div>
+        </div>
+        <div class="flow" formArrayName="purcApproval">
+            <table class="table styletab">
+                <thead class="stylehead">
+                    <tr>
+                        <th >
+                            <input type="checkbox" class="checkAll" style="width:1.3em;height:1.4em" name="checkAll">
+                        </th>
+                        <th>S.No</th>
+                        <th>Prod Code</th>
+
+                        <th>Prod Name</th>
+                        <th>Batch Name</th>
+                        <!-- <th>Box Quantity</th>
+                        <th>Strip Quantity</th> -->
+                        <th>Tablet Qty</th>
+                        <th>Total Qty</th>
+                        <th>Approval Qty</th>
+                        <th>Damage Qty</th>
+                        <th>Pending Qty</th>
+                    </tr>
+                </thead>
+                <tbody class="stylebody">
+                    <tr *ngFor="let PurcApp of purchaseApproval.controls.purcApproval.controls; let i = index" [formGroupName]="i">
+                        <td>
+                            <input type="checkbox" name="check" class="tabcheck" id="width1">
+                        </td>
+                        <td id="width2">{{i+1}}</td>
+                        <td>
+                            <input type="text"  formControlName="productid" readonly>
+                        </td>
+                        <td>
+                            <input type="text" formControlName="brandname" id="swidth" style="text-align:left" readonly>
+                        </td>
+                        <td>
+                                <input type="text"  formControlName="batchname" id="width4" style="text-align:left" readonly>
+                        </td>
+                        <!-- <td>
+                            <input type="text"  formControlName="boxqty" disabled>
+                        </td>
+                        <td>
+                            <input type="text"  formControlName="stripqty" disabled>
+                        </td> -->
+                        <td>
+                            <input type="text"  formControlName="tabletqty" readonly>
+                        </td>
+                        <td>
+                            <input type="text"  formControlName="totqty" readonly>
+                        </td>
+                        <td>
+                            <input type="text"  id="approval" formControlName="approvalqty" (click)="approvalCalculation($event)" (change)="approvalCalculation($event)">
+                        </td>
+                        <td>
+                            <input type="text"  id="damage" style="width:105px" formControlName="damageqty" (click)="approvalCalculation($event)" (change)="approvalCalculation($event)">
+                        </td>
+                        <td>
+                            <input type="text"  id="pendding" formControlName="penddingqty" (click)="approvalCalculation($event)" (change)="approvalCalculation($event)">
+                        </td>
+                    </tr>
+              
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="check" class="tabcheck" id="width1" />
+                            </td>
+                            <td>
+                                <input type="text" id="width2" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" id="width2" >
+                            </td>
+                           <td>
+                                <input type="text" >
+                            </td> 
+                    </tr>
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
+        <br>
+        <div class="form-group row">
+            <div class="col-lg-2 ml-4">
+                <button [disabled]="!purchaseApproval.valid" type="submit" class="btn btn-round ">Save</button>
+            </div>
+        </div>
+    </form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

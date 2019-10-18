@@ -1,0 +1,598 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    
+    
+    
+    
+    
+   
+    .row input ,.row label ,.row select{
+        margin-bottom: 6px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-right: 0px;
+        margin-left: 0px;
+        
+    }
+
+
+
+/*  .row label {
+
+font-size: 1.2em; 
+
+font-family: sans-serif  ;
+
+font-stretch: expanded ;
+
+font-weight: 500 ; 
+
+
+ }       */
+
+
+
+     .tablenew{
+      
+       border: 1px solid rgba(0,0,0,.15);
+       height:300px;
+       max-width:  100%;
+       box-sizing:border-box;
+       max-height: 300px;
+        overflow-y: scroll;
+        overflow-x: scroll;
+
+
+   
+
+        }
+
+
+      .tablenew  table th {
+        padding: 0.43em   0em      0.43em     0em;
+     
+        margin:  0em; 
+        text-align:center;
+      
+        vertical-align: top;
+        border: 1px solid rgba(0,0,0,.15);
+
+        font-family: sans-serif  ;
+
+        color: black;
+        background-color: rgb(151, 156, 151);
+    
+    }
+       
+        .tablenew table td{
+        vertical-align: top;
+        padding: 0.43em   0em      0em    0em;
+        text-align:center;
+        margin:  0em; 
+        border: 1px solid rgba(0,0,0,.15);
+       }
+
+
+
+
+    .tablenew  table p{
+
+                padding: 0em;   
+                margin:  0em; 
+        }
+
+
+
+    .tablenew table td input{
+      width:4em;
+        text-align:center;
+        border: #FFFFFF;
+    }
+       
+    
+
+    .tablenew table th label  {
+ 
+
+       text-align:center;
+       border: #FFFFFF;
+   }
+
+
+   .tablenew table td label  {
+ 
+       margin:  0em; 
+       padding: 0em ;
+
+       text-align:center;
+       border: #FFFFFF;
+   }
+
+
+   .tablenew table tr {
+      margin:  0em; 
+        width: 100%;
+        border: 1px solid rgba(0,0,0,.15);
+    }
+  
+
+
+
+
+    .tablenew   table td input:focus{
+
+       background-color:  rgba(0,0,0,.15);
+   }
+
+
+
+
+.tablenew    input[type="checkbox"]  {
+
+ width: 1.7em  ;
+ height :    1.7em  ;
+
+ padding: 0em ;
+
+ margin:  0em; 
+}
+      
+
+ 
+        #autolist {
+    
+            border: 1px solid rgba(0,0,0,.15);
+            position: absolute;
+            z-index: 21;
+            background-color: #ffffff;
+
+
+
+            width:   16.5em;
+            max-height: 200px;
+            overflow-y: scroll;
+     
+        }
+        
+
+
+       
+        li input:nth-child(1):focus{
+    
+            background-color:  rgba(0,0,0,.15);
+        }
+
+        li input:nth-child(3):focus{
+    
+            background-color:  rgba(0,0,0,.15);
+        }
+
+
+
+        li input:nth-child(1) {
+ 
+            border: transparent;
+    
+        }
+
+        li input:nth-child(3) {
+ 
+            width:6em;  
+            border: transparent;
+    
+
+            text-align:center;
+
+
+        }
+
+
+
+
+        li input:nth-child(2) {
+ 
+            display: none;
+    
+        }
+      
+
+
+             
+  #gridContainer  {
+
+
+    height:369px;
+      }
+
+
+      .scrollnew{
+
+    height:3000px;
+
+    background-color:   transparent  ;
+  }
+
+
+
+
+
+
+  .button  input{
+    background-color: #0073aa ; 
+   color:#FFFFFF ; 
+   cursor:pointer; 
+   width:   7.34em;
+ }
+
+
+
+
+ .button  {  
+    padding-top: 0px ;
+
+}
+
+
+
+
+
+
+
+     .cursorremove {
+        
+               width:5.23em;
+                background-color: #0073aa;
+                color: #FFFFFF;
+                cursor: pointer;
+        
+                border: #FFFFFF;
+        
+                 text-align:center;
+        
+                margin-left: -2em;
+        
+                margin-right: -2em;
+        
+        
+            }
+        
+        
+        
+          #rem{
+            padding-top: 0.5em ;
+            padding-left: 2em ;
+           background-color: #FFFFFF;
+        
+          }
+        
+
+
+
+  #inputwidth1  ,#inputwidth2 {
+
+      width:9.23em;
+        margin-left: -2em;
+
+        margin-right: -2em;
+
+  }
+
+
+
+
+  #input7width1  ,#input7width2 {
+
+        width:7em;
+        margin-left: -1em;
+
+        margin-right: -1em;
+
+  }
+
+
+        </style>
+            
+            
+      
+            <app-card>
+            
+            
+            <form [formGroup]="registerForm" >
+            
+            
+                <div class="box-typical box-typical-padding">
+            
+        
+                    <div class="row">   <!-- splitcolumn  start-->  
+        
+        
+                          <div class="col-md-5">
+                                <div class="row">
+                
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                   
+
+
+
+
+
+
+
+                                    <div class="col-md-5">
+                                        
+                                
+                                                            <label class="form-label semibold" for="exampleInput">StkAdj Date 
+                                                                   </label> 
+                                                        
+                                                 
+                                                    
+                                                    </div>
+                                    <div class="col-md-7">
+                                          <input type="date" 
+                                          class="form-control"  formControlName="date"
+                                         />
+                                  
+                                
+                                    </div> 
+
+
+
+
+
+
+                                                             
+                                                 <div class="col-md-5 drugname">
+                                                    
+                                            
+                                                              <label class="form-label semibold" for="exampleInput">   Drug  Name 
+                                                           </label> 
+                                                                    
+                                                             
+                                                                
+                                                   </div>
+                                                      
+                                                <div class="col-md-7 drugname">
+                                                    
+                                             
+                                                    <input type="text" 
+                                                    class="form-control" id="autoname"    (focus)="autofocusin()"    (focusout)="autofocusout()"   autocomplete="off"  
+                                                    (keydown)="autokeyselect($event,0)"      formControlName="autonamenew"  />
+                                            
+                                                    <div id="autolist"  >
+                                                          <ul >  
+    
+    
+                                                         <li  *ngFor="let address of    autodata; let i=index"    (keydown)="autokeyselect($event,i)" >
+                                                              <input   readonly value={{address[0]}}  /> <input />   {{address[3]}} 
+                                                         </li>
+                                                       
+                                                          </ul>  
+        
+                                                     </div>
+                                                                    
+                                                                                                               
+                                                 </div>  
+                                                 
+                                          
+        
+                                                
+
+                                                
+                                                     
+                                    </div> 
+                
+                
+                           </div> 
+        
+        
+                      <div class="col-md-5">
+                                <div class="row">
+                
+                                      
+        
+                  
+                                                          
+                          </div>
+                
+                
+                  </div> 
+                           
+          
+        
+                           <div class="col-lg-2">
+                                <div class="row">
+                 
+                                        <div class="col-lg-12">  <input type="text"   class="form-control "  style=" border-color:transparent;"      />    </div> 
+                             <div class="col-lg-12">  <input type="text"   class="form-control "  style=" border-color:transparent;"      />    </div> 
+                
+                   <div class="col-md-5">  </div>
+                    <div class="col-md-7">      </div>   
+                                                 
+                        </div>
+                
+                
+                           </div> 
+        
+                        </div>     <!-- splitcolumn   end--> 
+           
+  
+
+
+                                                                         
+                        <div formArrayName="stkadj"  class="tablenew "   >  <!--. table  start--> 
+                            <div   >
+                             <table class="table "  >
+                                 <thead class="thead-default">
+                                 <tr >
+                                    <th >Select   </th>  
+                                     <th>S. No </th>                                          
+
+                                     <th>Product Name</th> 
+                                     <th>BatchNo</th>
+                                     <th>ActQty</th>
+                                
+                                     <th>Box</th>
+                                     <th>Strip </th>
+                                     <th>No Of Qty </th>
+                                     <th>PhyQty </th>
+                                     <th>adjstkval </th>
+                               
+                                
+            
+                           
+                                     
+
+         
+
+                                 </tr>
+                             </thead>
+                            
+                             <tr *ngFor="let address of registerForm.controls.stkadj.controls; let i=index" [formGroupName]="i">
+                            <td   ><input   type="checkbox"    formControlName="delflag"   /></td>
+                             <td><input   value={{i+1}}  /></td>   
+                             <td><input  formControlName="drugname"     id="inputwidth1"   /></td>
+                             <td ><input  formControlName="batchrefid"      id="input7width1"    /></td>
+                              <td ><input  formControlName="actualstock"    (keydown)="calc($event)"  /></td>
+                           
+                               <td><input  formControlName="physicalboxstock"    /></td>
+                              <td><input  formControlName="physicalstripstock"  (keydown)="calc($event)"  /></td>
+                             <td><input  formControlName="physicaltabstock"  (keydown)="calc($event)"    /></td>
+                             <td><input  formControlName="physicalstock"    /></td>
+                         
+                                                                        
+                            
+                              <td><input  formControlName="adjustedstkvalue"    /></td>
+                      
+                      
+                                                              
+
+                              </tr>
+                         
+                             </table>
+        
+                      </div>
+                    </div>     <!--. table     end--> 
+
+                    <div class="col-lg-5"  id="rem" >   
+                        <input class="cursorremove" (click)="remove()" value="Remove" />     
+                    </div>  
+                                  
+
+                             
+            
+                    <h5></h5>
+              
+                    <div class="row    ">    <!-- splitcolumn  start--> 
+                        
+                        
+                                        <div class="col-lg-4">
+                                                <div class="row">
+                                
+                                        
+                                            </div> 
+                                
+                                
+                                           </div> 
+                        
+                        
+                                           <div class="col-lg-4">
+                                                <div class="row">
+                                
+     
+      
+                                                         
+                                                 </div>
+                                
+                                
+                                           </div> 
+                                           
+                          
+                        
+                                           <div class="col-lg-4">
+                                                <div class="row">
+                                
+                                                    <ng2-toasty [position]="position"></ng2-toasty>         
+                                                         
+                                                               
+                                                                       
+                                               </div> 
+                                
+                                
+                                           </div> 
+                        
+                                        </div>     <!-- splitcolumn  end--> 
+             
+              </div>
+                <!-- box-typical-->
+              
+
+                
+
+                
+     
+                <div class="row button">   <!-- row Start--> 
+                    
+                    <div class="col-lg-3">   
+                        <button  type="button" class="btn btn-success btn-round"   (click)="onSubmit()"   value="Save" > Edit  </button> </div>     
+                    <div class="col-lg-3">      
+                        <button  type="button" class="btn btn-success btn-round" 
+                           [routerLink]="['/StockAdjustment/stkadjEdit' ]"    value="Edit"   > Edit  </button>  </div> 
+                      
+                      <!--      <div class="col-lg-3">   <input class="btn btn-primary"    (click)="set1()"   value="Save" /> </div>  
+                        
+                           <div class="col-lg-3">   <input class="btn btn-primary"    (click)="set2()"   value="Save" /> </div>   --> 
+                                                                                                     
+                 </div>  <!-- row end--> 
+
+                                             
+            
+            </form>
+        
+        
+            </app-card>
+            
+            
+          <div class="scrollnew">   </div> 
+
+        

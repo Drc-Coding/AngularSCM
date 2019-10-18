@@ -1,0 +1,295 @@
+<app-card>
+  <form [formGroup]="stockForm" (ngSubmit)="onSubmit()" class="mx-2">
+      <div class="sub-title">Edit Details
+          <i class="fa fa-edit ficon"></i>
+				</div><br>
+    <div class="form-group row">
+      <div class="col-sm-12 col-xl-4">
+        <fieldset class="form-group">
+          <label class="form-label">Product Name</label>         
+          <input type="text" class="form-control" placeholder="Drug Name" disabled formControlName="brandname">
+        </fieldset>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Dosage Value</label>
+          <input type="text" class="form-control" placeholder="Dosage" disabled formControlName="dosageid">
+        </fieldset>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Formulation Name</label>
+          <select name="select" class="form-control" formControlName="formulationid">
+            <option value="opt1">---Select Formulation---</option>
+            <option *ngFor="let form of stockFormulation" value="{{form[0]}}">{{form[1]}}</option>
+          </select>
+        </fieldset>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Rack Number</label>
+          <input type="text" class="form-control" placeholder="Rack Number" formControlName="rackno">
+        </fieldset>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Shelf Number</label>
+          <input type="text" class="form-control" placeholder="Shelf Number" formControlName="shelfno">
+        </fieldset>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Expiry Date</label>
+          <input type="date" class="form-control" placeholder="Expiry Date" formControlName="expirydate">
+        </fieldset>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">LOT/Batch Number</label>
+          <input type="text" class="form-control" placeholder="Batch Number" formControlName="batchrefname" disabled>
+        </fieldset>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Cold Storage</label>
+          <input type="text" class="form-control" placeholder="Cold Storage" formControlName="coldstorage">
+        </fieldset>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Min Quantity</label>
+          <input type="text" class="form-control" placeholder="Min-Qty" formControlName="minqty">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.minqty.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Strip Per Box</label>
+          <input type="text" class="form-control" placeholder="Strip Per Box" formControlName="boxperstrip">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.boxperstrip.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Tablet Per Strip</label>
+          <input type="text" class="form-control" placeholder="Tablet Per Strip" formControlName="strippertablet">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.strippertablet.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Box Quantity</label>
+          <input type="text" class="form-control" placeholder="Qty Quantity" formControlName="boxqty">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.boxqty.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Strip Quantity</label>
+          <input type="text" class="form-control" placeholder="Strip Quantity" formControlName="stripqty">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.stripqty.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Tablet Quantity</label>
+          <input type="text" class="form-control" placeholder="Tablet Quantity" formControlName="tabletqty" (change)="getQuantity()">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.tabletqty.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Total Quantity</label>
+          <input type="text" class="form-control" placeholder="Total Quantity" formControlName="qty" (click)="getQuantity()">
+        </fieldset>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Box Free-Quantity</label>
+          <input type="text" class="form-control" placeholder="Box Free-Quantity" formControlName="freeboxqty">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.freeboxqty.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Strip Free-Quantity</label>
+          <input type="text" class="form-control" placeholder="Strip Free-Quantity" formControlName="freestripqty">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.freestripqty.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Tablet Free-Quantity</label>
+          <input type="text" class="form-control" placeholder="Tablet Free-Quantity" formControlName="freetabletqty" (change)="getFreeQuantity()">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.freetabletqty.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Total Free-Quantity</label>
+          <input type="text" class="form-control" placeholder="Total Free-Quantity" formControlName="freetotalqty" (click)="getFreeQuantity()">
+        </fieldset>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Acquisition Cost</label>
+          <input type="text" class="form-control" placeholder="Purchase Price" formControlName="purchaseprice">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.purchaseprice.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">SRP</label>
+          <input type="text" class="form-control" placeholder="Selling Retail Price" formControlName="mrp" (input)="showPrice($event.target.value)" (change) = "showUnitprice()">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.mrp.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+    </div>
+    <div class="form-group row">
+       
+        <div class="col-sm-4">
+            <fieldset class="form-group">
+              <label class="form-label">Unit Price</label>
+              <input type="text" class="form-control" placeholder="Unit Price" formControlName="unitprice">
+            </fieldset>
+            <!-- <div class="messages text-danger" *ngIf="stockForm.controls.sellingprice.errors?.pattern">Numerical Only Allowed Here</div> -->
+        </div>
+      
+        <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Selling Price</label>
+          <input type="text" class="form-control" placeholder="Selling Price" formControlName="sellingprice">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.sellingprice.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+      
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Whole Selling-price</label>
+          <input type="text" class="form-control" placeholder="Whole Selling-price" formControlName="wholesellingprice">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.wholesellingprice.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+    </div> 
+      <div class="form-group row">
+       <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Retailer Selling-Price</label>
+          <input type="text" class="form-control" placeholder="Retailer Selling-Price" formControlName="retailersellingprice">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.retailersellingprice.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+   
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Margin %</label>
+          <input type="number" class="form-control" placeholder="Margin Percentage" formControlName="margin" (input)="showMargin($event.target.value)">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.margin.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+      
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label">Margin Amount</label>
+          <input type="text" class="form-control" placeholder="Margin Amount" formControlName="marginamt" (input)="showmarginAmt($event.target.value)">
+        </fieldset>
+        <div class="messages text-danger" *ngIf="stockForm.controls.marginamt.errors?.pattern">Numerical Only Allowed Here</div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-4">
+          <fieldset class="form-group">
+            <label class="form-label">VAT</label>
+            <select type="text" class="form-control" placeholder="Enter unitsgst" formControlName="vat">
+              <option value="0">---Select VAT---</option>
+              <option *ngFor="let va of vat" value={{va[1]}}> {{va[1]}}%</option>
+            </select>
+          </fieldset>
+        </div>
+        
+        <div class="col-sm-4">
+          <fieldset class="form-group">
+            <label class="form-label">Manufactured Date</label>
+            <input type="date" class="form-control" placeholder="Manufactured Date" formControlName="manufactureddate">
+          </fieldset>
+        </div>
+      </div>
+      <!-- <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="col-form-label">SGST</label>
+          <select type="text" class="form-control" placeholder="Enter unitsgst" formControlName="unitsgst">
+            <option value="0">---Select SGST---</option>
+            <option *ngFor="let sgst of unitsgst" value={{sgst[1]}}>{{sgst[1]}}%</option>
+          </select>
+        </fieldset>
+      </div> -->
+
+
+    <div class="form-group row">
+
+      <!-- <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="col-form-label">CGST</label>
+          <select type="text" class="form-control" placeholder="Enter unitsgst" formControlName="unitcgst">
+            <option value="0">---Select CGST---</option>
+            <option *ngFor="let cgst of unitcgst" value={{cgst[1]}}> {{cgst[1]}}%</option>
+          </select>
+        </fieldset>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="col-form-label">IGST</label>
+          <select type="text" class="form-control" placeholder="Enter unitsgst" formControlName="unitigst">
+            <option value="0">---Select IGST---</option>
+            <option *ngFor="let igst of unitigst" value={{igst[1]}}> {{igst[1]}}%</option>
+          </select>
+        </fieldset>
+      </div>
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="col-form-label">UTGST</label>
+          <select type="text" class="form-control" placeholder="Enter unitsgst" formControlName="unitutgst">
+            <option value="0">---Select UTGST---</option>
+            <option *ngFor="let utgst of unitutgst" value={{utgst[1]}}> {{utgst[1]}}%</option>
+          </select>
+        </fieldset>
+      </div> -->
+    </div>
+
+    <div class="form-group row">
+
+      <!-- <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="col-form-label">GST</label>
+          <select type="text" class="form-control" placeholder="Enter unitsgst" formControlName="unitgst">
+            <option value="0">---Select GST---</option>
+            <option *ngFor="let gst of unitgst" value={{gst[1]}}> {{gst[1]}}%</option>
+          </select>
+        </fieldset>
+      </div> -->
+
+    
+      <div class="col-sm-4">
+        <fieldset class="form-group">
+          <label class="form-label"></label>
+          <button [disabled]="!stockForm.valid" type="submit" class="btn btn-round" style="margin: 26px;">Update</button>
+        </fieldset>
+      </div>
+    </div>
+  </form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

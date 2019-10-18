@@ -1,0 +1,334 @@
+
+
+<div class="row">
+	<div class="col-sm-12">
+		<app-card>
+			<div class="sub-title">Employee Details
+				<i class="fa fa-user ficon"></i>
+			</div><br>
+
+			<form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="mx-2">
+
+
+				<div class="form-group row">
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label">Company Name</label>
+							<select name="select" class="form-control" id="company" formControlName="companyid" (change)="getBranche()" (click)="getBranche()" 
+							 onfocus="if(this.options.length>5){this.size=5;}" onmousedown="if(this.options.length>5){this.size=5;}" onkeypress="if(this.options.length>5){this.size=5;}" onchange='this.size=0;' onblur="this.size=0;" autofocus>
+								<option value="opt1" selected disabled>--Select Company Name--</option>
+								<option *ngFor="let companyid of companies" value={{companyid[0]}}>{{companyid[1]}}</option>
+							</select>
+						</fieldset>
+					</div>
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label">Branch Name</label>
+							<select name="select" class="form-control" id="branch" formControlName="branchid"  (change)="getLoc()"
+							onfocus="if(this.options.length>5){this.size=5;}" onmousedown="if(this.options.length>5){this.size=5;}" onkeypress="if(this.options.length>5){this.size=5;}" onchange='this.size=0;' onblur="this.size=0;">
+								<option value="opt1" selected disabled>--Select Branch Name--</option>
+								<option *ngFor="let branchid of branches" value={{branchid[0]}}>{{branchid[1]}}</option>
+							</select>
+						</fieldset>
+					</div>
+					<div class="col-lg-2">
+						<fieldset class="form-group">
+							<label class="form-label">Location Name</label>
+							<select name="select" class="form-control" formControlName="locname" (change)="getLoc()" (change)="getFirm()">
+									<option  value="opt1" selected disabled>--Select Location Name--</option>	
+							     	<option  value="1" >Shop</option>
+									<option  value="2" >Warehouse</option>
+									<option  value="3" >Hospital</option>
+							</select>
+						</fieldset>
+					</div>
+					<div class="col-lg-2">
+
+						<fieldset class="form-group">
+							<label class="form-label">Firm Name</label>
+							<select name="select" class="form-control" formControlName="locrefid" (click)="getFirm()" 
+							onfocus="if(this.options.length>5){this.size=5;}" onmousedown="if(this.options.length>5){this.size=5;}" onkeypress="if(this.options.length>5){this.size=5;}" onchange='this.size=0;' onblur="this.size=0;">
+								<option value="opt1" selected disabled>--Select Firm Name--</option>
+								<option *ngFor="let locrefid of firms" value={{locrefid[0]}}>{{locrefid[1]}}</option>
+
+							</select>
+						</fieldset>
+					</div>
+
+				</div>
+
+				<div class="form-group row">
+
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label">Employee Code</label>
+							<input type="text" onkeyup="this.value = this.value.toUpperCase();" class="form-control" formControlName="employeecode" placeholder="Enter the EmployeeCode">
+						</fieldset>
+					</div>
+
+					<div class="col-lg-4">
+							<fieldset class="form-group">
+								<label class="form-label">Employee Mode</label>
+								<select name="select" class="form-control" formControlName="employeemode" >
+									<option  value="optone" selected disabled>-- Select Title --</option>	
+									 <option  value="Permanent" >Permanent</option>
+									 <option  value="Contract" >Contract</option>
+									<option  value="Temprorary" >Temprorary</option>
+							</select>
+								
+							</fieldset>
+						</div>
+	
+						<div class="col-lg-4">
+							<fieldset class="form-group">
+								<label class="form-label">Employee Type</label>
+								<input type="text" class="form-control" placeholder="Enter Employee type" formControlName="employeetype">
+							</fieldset>
+						</div>	
+
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label">Employee Title</label>
+							<select name="select" class="form-control" formControlName="emptitle" >
+								<option  value="optone" selected disabled>-- Select Title --</option>	
+								 <option  value="Mr" >Mr.</option>
+								<option  value="Mrs" >Mrs.</option>
+								<option  value="Ms" >Ms.</option>
+						</select>
+							
+						</fieldset>
+					</div>
+
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label">First Name</label>
+							<input type="text" class="form-control" placeholder="Enter Employee First Name" formControlName="empfirstname">
+							<div class="messages text-danger" *ngIf="myForm.controls.empfirstname.errors?.required">This Field is Required*</div>
+							<div class="messages text-danger" *ngIf="myForm.controls.empfirstname.errors?.pattern">Text Only Accepts!</div>
+						</fieldset>
+					</div>
+
+					<div class="col-lg-4">
+							<fieldset class="form-group">
+								<label class="form-label">Last Name</label>
+								<input type="text" class="form-control" placeholder="Enter Employee Last Name" formControlName="emplastname">
+								<div class="messages text-danger" *ngIf="myForm.controls.emplastname.errors?.pattern">Text Only Accepts!</div>
+	
+							</fieldset>
+						</div>
+					
+				</div>
+
+				<!-- <div class="form-group row">
+					
+					 <div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label">Employee Mode</label>
+							<input type="text" class="form-control" placeholder="Enter Employee Mode" formControlName="employeemode">
+						</fieldset>
+					</div> 
+
+					
+				</div> -->
+
+				<div class="form-group row">
+
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label">Department</label>
+							<input type="text" class="form-control" id="department" placeholder="Enter Employee Department"
+							 formControlName="department">
+							 <div class="messages text-danger" *ngIf="myForm.controls.department.errors?.pattern">Text only Accepts!</div>
+						</fieldset>
+					</div>
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label">Division</label>
+							<input type="text" class="form-control" id="division" placeholder="Enter Employee Division" formControlName="division">
+							<!-- <div class="messages text-danger" *ngIf="myForm.controls.division.errors?.pattern">Text only Allowed!</div> -->
+						</fieldset>
+					</div>
+
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label">Designation</label>
+							<input type="text" class="form-control" id="desgination" placeholder="Enter Employee Desgination"
+							 formControlName="desgination">
+							<div class="messages text-danger" *ngIf="myForm.controls.desgination.errors?.pattern">Text only Accepts!</div>
+						</fieldset>
+					</div>
+				</div>
+				<div class="form-group row">
+
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label semibold">Date Of Join</label>
+							<input type="date" class="form-control" placeholder="Enter your joining date" required="true"
+							 formControlName="joiningdate">
+							<div class="messages text-danger" *ngIf="myForm.controls.joiningdate.errors?.required">This Field is Required*</div>
+						</fieldset>
+					</div>
+
+					<div class="col-lg-4">
+							<fieldset class="form-group">
+								<label class="form-label semibold">Gender</label>
+								<br>
+								<label>
+									<input type="radio" value="Male" name="gender" formControlName="gender"> Male
+								</label>
+								<label>
+									<input type="radio" value="Female" name="gender" formControlName="gender">Female
+								</label>
+							</fieldset>
+						</div>
+	
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label semibold">Allow Login</label>
+						<br>
+						<label>
+							<input type="radio" value="Yes" name="allowlogin" formControlName="allowlogin">Yes
+						</label>
+						<label>
+							<input type="radio" value="No" name="allowlogin" formControlName="allowlogin">No
+						</label>
+					</fieldset>
+				</div>
+					
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label semibold">Date Of Birth </label>
+							<input type="date" class="form-control" placeholder="Enter Employee DOB" formControlName="dob">
+							
+						</fieldset>
+					</div>
+
+					<div class="col-lg-4">
+							<fieldset class="form-group">
+								<label class="form-label semibold">Age</label>
+								<input type="number" class="form-control" formControlName="age">
+								
+							</fieldset>
+					</div>
+
+					<div class="col-lg-4">
+							<fieldset class="form-group">
+								<label class="form-label semibold">Mobile No </label>
+								<input type="number" class="form-control" placeholder="Enter Employee MobileNo" required="true" formControlName="mobileno">
+								<div class="messages text-danger" *ngIf="myForm.controls.mobileno.errors?.required">This Field is Required*</div>
+							</fieldset>
+						</div>
+
+				</div>
+				<div class="form-group row">
+
+						<div class="col-lg-4">
+								<fieldset class="form-group">
+									<label class="form-label">Employee Email Id</label>
+									<input type="text"   onkeyup="this.value = this.value.toLowerCase();" class="form-control" id="email" placeholder="Enter Employee Mail id" formControlName="email">
+									<div class="messages text-danger" *ngIf="myForm.controls.email.errors?.pattern">Enter Correct Mail!</div>
+		
+								</fieldset>
+							</div>
+
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label">Blood Group</label>
+							<input type="text" class="form-control" placeholder="Enter Employee Blood Group" formControlName="bloodgroup">
+							<div class="messages text-danger" *ngIf="myForm.controls.bloodgroup.errors?.required">This Field is Required*</div>
+						</fieldset>
+					</div>
+
+					<div class="col-lg-4">
+							<fieldset class="form-group">
+								<label class="form-label">Current Salary Per Month</label>
+								<input type="text" class="form-control" placeholder="Enter Employee Salary" formControlName="empsalary">
+							</fieldset>
+						</div>
+				
+				</div>
+
+				<div class="form-group row">
+
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label">Company Email Id</label>
+							<input type="text" onkeyup="this.value = this.value.toLowerCase();" class="form-control" id="compemail" placeholder="Enter Company Mail id"
+							 formControlName="compemail">
+							 <div class="messages text-danger" *ngIf="myForm.controls.compemail.errors?.pattern">Enter Correct Mail!</div>
+						</fieldset>
+					</div>
+
+					<div class="col-lg-4">
+							<fieldset class="form-group">
+								<label class="form-label">Passport No</label>
+								<input type="text"  onkeyup="this.value = this.value.toUpperCase();" class="form-control" id="passport" placeholder="Enter Employee Passport Number"
+								 formControlName="passport">
+							</fieldset>
+						</div>
+
+						<div class="col-lg-4">
+
+								<div class="form-inline">
+									<label class="form-label">Employee Photo (Max File Upload 500kb)</label>
+									<input type="file" formControlName="emphoto" #file class="form-control"
+										  (change)="preview(file.files)" accept="image/*"/>
+										 <span class="fa fa-eye mt-2" style="cursor: pointer" id="viewimg"></span>
+										 <span class="fa fa-trash mt-2 ml-2" style="cursor: pointer" (click)="reset()"></span>
+								</div><br>
+
+								<div class="imageview" id="imgdisplay" style="display:none">
+								<img [src]="imgURL" height="180" width="260" *ngIf="imgURL"> 
+								<i class="fa fa-times" style="cursor:pointer;position:absolute" id="hideimg"></i>
+								</div>
+			
+								<span style="color:red;" *ngIf="message">{{message}}</span>
+						</div>
+			
+					<!-- <div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class=" col-form-label">PAN Card</label>
+							<input type="text"  onkeyup="this.value = this.value.toUpperCase();" class="form-control" id="pancard" placeholder="Enter Employee Pancard Number" formControlName="pancard">
+							
+						</fieldset>
+					</div> -->
+
+				</div><br>
+
+				<div class="form-group row">
+					
+
+					<!-- <div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class=" col-form-label">Aadhar Card</label>
+							<input type="text" class="form-control" id="aadharcard" placeholder="Enter Employee AdharCard Number"
+							 formControlName="aadharcard">
+							<div class="messages text-danger" *ngIf="myForm.controls.aadharcard.errors?.pattern">Number only allowed..</div>
+						</fieldset>
+					</div> -->
+				</div>
+
+			
+				
+				<div class="form-group row mt-2">
+
+					<div class="col-lg-1"></div>
+					<div class="col-lg-3">
+						<button type="submit" [disabled]="!myForm.valid" class="btn btn-round">Save</button>
+					</div>
+
+					<div class="col-lg-3">
+						<button type="submit" class="btn btn-round" [routerLink]="['/Employee/ViewEmployee']">View</button>
+					</div>
+
+				</div>
+
+			</form>
+			<!-- <div id="google_translate_element"></div> -->
+
+
+		</app-card>
+		<ng2-toasty [position]="position"></ng2-toasty>
+	</div>
+</div>

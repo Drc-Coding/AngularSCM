@@ -1,0 +1,134 @@
+
+
+<app-card>
+  <div class="sub-title">Distributor Details
+    <i class="fa fa-industry ficon"></i>
+  </div><br>
+
+<form [formGroup]="registerForm">
+
+ <div class="box-typical box-typical-padding">
+
+       
+          <div class="row">
+
+          <div class="col-md-4">
+
+
+              <label class="form-label semibold" for="exampleInput"> Price Enquiry No
+              </label>
+            
+              <select class="form-control" (change)="viewPriceEnquiry()" formControlName="prcenq">
+
+                <option *ngFor="let item of    prcenqno; let i = index" value={{item[0]}}>{{item[1]}}</option>
+              </select>
+        </div>
+
+        <div class="col-md-4">
+
+            <label class="form-label semibold" for="exampleInput">Dist Select Date
+                 </label>
+   
+                 <input type="date" class="form-control" formControlName="date" />
+   
+           </div>
+
+      </div> <!-- splitcolumn  end-->
+<br>
+
+  <div [formGroup]="registerForm">
+      <!-- table1 start-->
+      <div class="title1"><u>Select Distributor</u>
+      </div><br>
+
+        <!--addresses-->
+        <div formArrayName="dstslct">
+          <div class="table flow">
+          
+
+            <table class="table styletab" (focus)="myFunction()">
+              <thead class="stylehead">
+                <tr>
+
+                  <!--        <th>S.No</th>       -->
+
+                  <th> Select</th>
+                  <th>Prod Code </th>
+                  <th>Prod Name </th>
+
+                  <th> Vendor Name </th>
+                  <th> Expc Order Qty </th>
+
+                  <th> Expc Price </th>
+                  <th>Updated Date</th>
+
+                  <th> Vendor Price </th>
+
+                  <th> Vendor Remarks </th>
+                  <th> Credit Terms </th>
+                  <th> Lead Time </th>
+
+                  <th>Remarks </th>
+
+                 
+
+
+                </tr>
+              </thead>
+              <tbody class="stylebody">
+              <tr *ngFor="let address of registerForm.controls.dstslct.controls; let i=index" [formGroupName]="i">
+
+
+                <!--    <td><input   value={{i+1}}  readonly/></td>     -->
+
+                <td><input type="checkbox" formControlName="vendorslctflag" class="tabcheck" id="width1"/></td>
+                <td><input formControlName="drugcode"  readonly /></td>
+
+                <td><input formControlName="drugname" id="width6" style="text-align:left" readonly /></td>
+
+
+                <td><input formControlName="vendorname" id="width6" style="text-align:left" readonly /></td>
+                <td><input formControlName="exppoqty" readonly /></td>
+
+
+                <td><input formControlName="exppoprice" class="right" readonly /></td>
+                <td><input formControlName="pudate" readonly /></td>
+                <td><input formControlName="distfinalprice" class="right" readonly /></td>
+                <td><input formControlName="distremarks" id="width4" readonly /></td>
+
+                <td><input formControlName="creditdays" id="width3" readonly /></td>
+                <td><input formControlName="leadtime" id="width3" readonly /></td>
+                <td><input formControlName="remarks" id="width4" /></td>
+               
+
+
+              </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div> <!-- table1  end-->
+
+
+    </div>
+    <!-- box-typical-->
+
+
+    <div class="row">
+      <!-- row Start-->
+      <div class="col-lg-1"></div>
+      <div class="col-lg-2"> <button type="button" class="btn btn-round" (click)="onSubmit()"> Save
+        </button> </div>
+      <div class="col-lg-2"> <button type="button" class="btn btn-round"
+          [routerLink]="['/DistributorSelection/distslctEdit' ]"> View </button> </div>
+
+    </div> <!-- row end-->
+
+    <ng2-toasty [position]="position"></ng2-toasty>
+
+
+  </form>
+
+
+</app-card>

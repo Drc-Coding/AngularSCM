@@ -1,0 +1,845 @@
+<!--  -->
+<style>
+  a:hover{
+    color:white;
+  }
+  .btn.btn-round{
+    margin-top: 35px;
+  }
+  </style>
+<app-card>
+    <div class="sub-title">Sales Reports
+        <i class="fa fa-print ficon"></i>
+      </div>
+ 
+  <div class="row">
+    <div class=" col-lg-4">
+      <label class="form-label semibold">
+      
+        <div  class="title1"><u>Sales By customer</u>
+        </div>
+      
+      </label>
+    </div>
+  </div>
+  <form [formGroup]="myForm">
+    <div class="row"> 
+      <div class="col-lg-3">
+ 
+        <label class="form-label">
+          <h6>Customer Name</h6>
+        </label>
+        <select name="select" class="form-control" formControlName="custname" (change)="getCustomer()">
+          <option value="opt1">---Select Customer Name---</option>
+          <option *ngFor="let cust of patientid" value={{cust[0]}}>{{cust[1]}}</option>
+        </select>
+ 
+      </div>
+      <div class='col-lg-3'>
+        <div class='date' id='datetimepicker6'>
+          <label class="form-label">
+            <h6>From Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+        </div>
+ 
+      </div>
+      <div class='col-lg-3'>
+        <div class='date' id='datetimepicker7'>
+          <label class="form-label">
+            <h6>To Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+        </div>
+ 
+      </div>
+      <div class=" col-lg-2" align="right">
+        <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Sales%20By%20Customer/CustwiseSales.rptdesign&branchrefid={{branchid}}&locname={{locname}}&locrefid={{locrefid}}&companyrefid={{companyrefid}}&fromdate={{reportvar}}&todate={{reportvar1}}&customerid={{patname}}&status=0"
+          class="btn btn-round" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+      </div>
+    </div>
+  </form>
+ 
+ </app-card>
+
+  <!-- <app-card>
+  <div class="row">
+    <div class=" col-lg-4">
+      <label class="form-label semibold">
+        <h6>Sales Cancellation</h6>
+      </label>
+    </div>
+  </div>
+  <form [formGroup]="myForm">
+    <div class="row">
+ 
+      <div class='col-lg-4'>
+        <div class='date' id='datetimepicker6'>
+          <label class="col-form-label">
+            <h6>From Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+        </div>
+ 
+      </div>
+      <div class='col-lg-4'>
+        <div class='date' id='datetimepicker7'>
+          <label class="col-form-label">
+            <h6>To Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+        </div>
+ 
+      </div>
+      <div class=" col-lg-3" align="right">
+        <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/sales_cancellation/sales_cancellation.rptdesign&branchid={{branchid}}&locname={{locname}}&locrefid={{locrefid}}&companyrefid={{companyrefid}}&from_date={{reportvar}}&to_date={{reportvar1}}&status=0"
+          class="btn btn-success btn-round active" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+      </div>
+    </div>
+  </form>
+
+ </app-card>  -->
+ 
+ <!-- <app-card>
+ 
+  <div class="row">
+    <div class=" col-lg-6">
+      <label class="form-label semibold">
+        <h6>Today sales Return</h6>
+      </label>
+    </div>
+    <div class=" col-lg-5" align="right">
+      <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/sales_return/sales_return.rptdesign&branchid={{branchid}}&locname={{locname}}&locrefid={{locrefid}}&companyrefid={{companyrefid}}&billtype=1&status=0"
+        class="btn btn-success btn-round active" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+    </div>
+ 
+  </div>
+ </app-card>
+  -->
+ <app-card>
+  <div class="row">
+    <div class=" col-lg-4">
+      <label class="form-label semibold">
+          <div  class="title1"><u>Sales by location</u>
+          </div>
+    
+      </label>
+    </div>
+  </div>
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-lg-4">
+        <label class="form-label">
+          <h6>Country</h6>
+        </label>
+        <select name="select" class="form-control" placeholder="Select Country" formControlName="countryid" (change)="getState()">
+          <option selected disabled value="0">---Select Country---</option>
+          <option *ngFor="let coun of country" value={{coun[0]}}>{{coun[1]}}</option>
+        </select>
+      </div>
+      <div class="col-lg-4">
+        <label class="form-label">
+          <h6>State</h6>
+        </label>
+        <select name="select" class="form-control" placeholder="Select State" formControlName="stateid" (change)="getCity()">
+          <option selected disabled value="0">---Select State---</option>
+          <option *ngFor="let coun of state" value={{coun[0]}}>{{coun[2]}}</option>
+        </select>
+      </div>
+      <div class="col-lg-4">
+        <label class="form-label">
+          <h6>Location/City</h6>
+        </label>
+        <select name="select" class="form-control" placeholder="Select City" (change)="view()" (click)="view()" formControlName="city">
+          <option selected disabled value="0">---Select City---</option>
+          <option *ngFor="let coun of city" value={{coun[0]}}> {{coun[1]}} </option>
+        </select>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class='col-lg-4'>
+        <div class='date' id='datetimepicker6'>
+          <label class="form-label">
+            <h6>From Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+        </div>
+ 
+      </div>
+      <div class='col-lg-4'>
+        <div class='date' id='datetimepicker7'>
+          <label class="form-label">
+            <h6>To Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+        </div>
+      </div>
+      <div class=" col-lg-3" align="right">
+          <button type="submit" class="btn btn-round">view</button> 
+        </div>
+    </div>
+  </form>
+ </app-card>
+ <!--<app-card>
+  <div class="row">
+    <div class=" col-lg-4">
+      <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/productsales/productsales.rptdesign"
+        target="_blank">product sales</a>
+    </div>
+  </div>
+ </app-card>-->
+ 
+ <!--<app-card>
+  <div class="row">
+    <div class=" col-lg-4">
+      <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/salesinvoice/salesinvoice.rptdesign"
+        target="_blank">sales Invoice</a>
+    </div>
+  </div>
+ </app-card>-->
+ <!-- <app-card>
+  <div class="row">
+    <div class=" col-lg-4">
+      <label class="form-label semibold">
+        <h6>HQ Distributorwise sales</h6>
+      </label>
+    </div>
+  </div>
+  <form [formGroup]="myForm">
+    <div class="row">
+ 
+      <div class='col-lg-4'>
+        <div class='date' id='datetimepicker6'>
+          <label class="col-form-label">
+            <h6>From Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+        </div>
+ 
+      </div>
+      <div class='col-lg-4'>
+        <div class='date' id='datetimepicker7'>
+          <label class="col-form-label">
+            <h6>To Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+        </div>
+ 
+      </div>
+      <div class=" col-lg-3" align="right">
+        <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/HqDistributorwiseSales/DistributorwiseSales.rptdesign&branchrefid={{branchid}}&locname={{locname}}&locrefid={{locrefid}}&companyrefid={{companyrefid}}&fromdate={{reportvar}}&todate={{reportvar1}}&status=0"
+          class="btn btn-success btn-round active" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+      </div>
+    </div>
+  </form>
+ </app-card>
+ 
+ <app-card>
+  <div class="row">
+    <div class=" col-lg-4">
+      <label class="form-label semibold">
+        <h6>Hq Complete Distributor Sales</h6>
+      </label>
+    </div>
+  </div>
+  <form [formGroup]="myForm">
+    <div class="row">
+ 
+      <div class='col-lg-4'>
+        <div class='date' id='datetimepicker6'>
+          <label class="col-form-label">
+            <h6>From Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+        </div>
+ 
+      </div>
+      <div class='col-lg-4'>
+        <div class='date' id='datetimepicker7'>
+          <label class="col-form-label">
+            <h6>To Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+        </div>
+ 
+      </div>
+      <div class=" col-lg-3" align="right">
+        <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/HqCompleteDistributorSales/CompleteDistributorSalesreport.rptdesign&branchrefid={{branchid}}&companyrefid={{companyrefid}}&fromdate={{reportvar}}&todate={{reportvar1}}&status=0"
+          class="btn btn-success btn-round active" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+      </div>
+    </div>
+  </form>
+ </app-card> -->
+ 
+ 
+ <!--<app-card>
+  <div class="row">
+    <div class=" col-lg-4">
+      <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/HqCompleteDistributorSales/CompleteDistributorSalesreport.rptdesign"
+        target="_blank">HQ completeDistributorwise sales</a>
+    </div>
+  </div>
+ </app-card> -->
+ 
+ 
+ <app-card>
+  <div class="sub-title">Sales Register</div>
+  <div class="row">
+    <div class=" col-lg-4">
+      <label class="form-label semibold">
+          <div  class="title1"><u>Detailed Sales Register</u></div>
+ 
+      
+      </label>
+    </div>
+  </div>
+  <form [formGroup]="myForm">
+    <div class="row">
+ 
+      <div class='col-lg-4'>
+        <div class='date' id='datetimepicker6'>
+          <label class="form-label">
+            <h6>From Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+        </div>
+ 
+      </div>
+      <div class='col-lg-4'>
+        <div class='date' id='datetimepicker7'>
+          <label class="form-label">
+            <h6>To Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+        </div>
+ 
+      </div>
+      <div class=" col-lg-3" align="right">
+        <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Sales Register/DetailedSalesRegister.rptdesign&branchrefid={{branchid}}&locname={{locname}}&locrefid={{locrefid}}&companyrefid={{companyrefid}}&fromdate={{reportvar}}&todate={{reportvar1}}&status=0"
+          class="btn btn-round" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+      </div>
+    </div>
+  </form>
+ </app-card>
+ 
+ <!--<app-card>
+    <div class="row">
+        <div class=" col-lg-4">
+          <label class="form-label semibold">
+            <h6>Sales Register With bill Type</h6>
+          </label>
+        </div>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="row">
+   
+          <div class='col-lg-4'>
+            <div class='date' id='datetimepicker6'>
+              <label class="col-form-label">
+                <h6>From Date:</h6>
+              </label>
+              <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+            </div>
+   
+          </div>
+          <div class='col-lg-4'>
+            <div class='date' id='datetimepicker7'>
+              <label class="col-form-label">
+                <h6>To Date:</h6>
+              </label>
+              <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+            </div>
+   
+          </div>
+          <div class=" col-lg-3" align="right">
+            <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Sales Register/SalesRegisterWithbillType.rptdesign&branchrefid={{branchid}}&locname={{locname}}&locrefid={{locrefid}}&companyrefid={{companyrefid}}&fromdate={{reportvar}}&todate={{reportvar1}}&billtype=1&status=0"
+              class="btn btn-success btn-round active" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+          </div>
+        </div>
+      </form>
+ </app-card>  -->
+ <app-card>
+    <div class="row">
+        <div class=" col-lg-4">
+          <label class="form-label semibold">
+              <div  class="title1"><u>Today Sales Register</u></div>
+ 
+          
+          </label>
+        </div>
+    
+ 
+    <div class=" col-lg-7" align="right">
+        <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Sales Register/TodaySalesRegister.rptdesign&branchrefid={{branchid}}&locname={{locname}}&locrefid={{locrefid}}&companyrefid={{companyrefid}}&billdate={{date}}&status=0"
+          class="btn btn-round" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+      </div>
+    </div>
+ </app-card>
+ <app-card>
+  <div class="sub-title">Sales Return</div>
+    <div class="row">
+        <div class=" col-lg-4">
+          <label class="form-label semibold">
+              <div  class="title1"><u>Complete Sales Return List</u></div>
+ 
+          
+          </label>
+        </div>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="row">
+   
+          <div class='col-lg-4'>
+            <div class='date' id='datetimepicker6'>
+              <label class="form-label">
+                <h6>From Date:</h6>
+              </label>
+              <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+            </div>
+   
+          </div>
+          <div class='col-lg-4'>
+            <div class='date' id='datetimepicker7'>
+              <label class="form-label">
+                <h6>To Date:</h6>
+              </label>
+              <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+            </div>
+   
+          </div>
+          <div class=" col-lg-3" align="right">
+            <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Sales Return/CompleteSalesReturnList.rptdesign&branchrefid={{branchid}}&locname={{locname}}&locrefid={{locrefid}}&companyrefid={{companyrefid}}&fromdate={{reportvar}}&todate={{reportvar1}}&status=0"
+              class="btn btn-round" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+          </div>
+        </div>
+      </form>
+ 
+ </app-card>
+ 
+ <app-card>
+    <div class="row">
+        <div class=" col-lg-4">
+          <label class="form-label semibold">
+              <div  class="title1"><u>Today Sales Return List</u></div>
+ 
+            
+          </label>
+        </div>
+    
+ 
+    <div class=" col-lg-7" align="right">
+        <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Sales Return/TodaySalesReturnList.rptdesign&branchrefid={{branchid}}&locname={{locname}}&locrefid={{locrefid}}&companyrefid={{companyrefid}}&srdate={{date}}&status=0"
+          class="btn btn-round" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+      </div>
+    </div>
+ 
+ </app-card>
+ <!-- <app-card>
+    <div class="row">
+        <div class=" col-lg-4">
+          <label class="form-label semibold">
+            <h6>Hq Complete ShopSales</h6>
+          </label>
+        </div>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="row">
+   
+          <div class='col-lg-4'>
+            <div class='date' id='datetimepicker6'>
+              <label class="col-form-label">
+                <h6>From Date:</h6>
+              </label>
+              <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+            </div>
+   
+          </div>
+          <div class='col-lg-4'>
+            <div class='date' id='datetimepicker7'>
+              <label class="col-form-label">
+                <h6>To Date:</h6>
+              </label>
+              <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+            </div>
+   
+          </div>
+          <div class=" col-lg-3" align="right">
+            <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/HqCompleteShopSales/CompleteShopSalesReport.rptdesign&branchrefid={{branchid}}&companyrefid={{companyrefid}}&fromdate={{reportvar}}&todate={{reportvar1}}&status=0"
+              class="btn btn-success btn-round active" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+          </div>
+        </div>
+      </form>
+ 
+ </app-card>
+ 
+ <app-card>
+    <div class="row">
+        <div class=" col-lg-4">
+          <label class="form-label semibold">
+            <h6>Hq Shopwise Sales</h6>
+          </label>
+        </div>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="row">
+   
+          <div class='col-lg-4'>
+            <div class='date' id='datetimepicker6'>
+              <label class="col-form-label">
+                <h6>From Date:</h6>
+              </label>
+              <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+            </div>
+   
+          </div>
+          <div class='col-lg-4'>
+            <div class='date' id='datetimepicker7'>
+              <label class="col-form-label">
+                <h6>To Date:</h6>
+              </label>
+              <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+            </div>
+   
+          </div>
+          <div class=" col-lg-3" align="right">
+            <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/HqShopwiseSales/ShopwiseSalesReport.rptdesign&branchrefid={{branchid}}&companyrefid={{companyrefid}}&locname={{locname}}&locrefid={{locrefid}}&fromdate={{reportvar}}&todate={{reportvar1}}&status=0"
+              class="btn btn-success btn-round active" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+          </div>
+        </div>
+      </form>
+ </app-card>
+ <app-card>
+    <div class="row">
+        <div class=" col-lg-4">
+          <label class="form-label semibold">
+            <h6>Hq Complete Sales</h6>
+          </label>
+        </div>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="row">
+   
+          <div class='col-lg-4'>
+            <div class='date' id='datetimepicker6'>
+              <label class="col-form-label">
+                <h6>From Date:</h6>
+              </label>
+              <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+            </div>
+   
+          </div>
+          <div class='col-lg-4'>
+            <div class='date' id='datetimepicker7'>
+              <label class="col-form-label">
+                <h6>To Date:</h6>
+              </label>
+              <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+            </div>
+   
+          </div>
+          <div class=" col-lg-3" align="right">
+            <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/HqCompleteSales/HqCompleteSales.rptdesign&companyrefid={{companyrefid}}&fromdate={{reportvar}}&todate={{reportvar1}}&status=0"
+              class="btn btn-success btn-round active" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+          </div>
+        </div>
+      </form>
+</app-card> -->
+ 
+<app-card>
+  <div class="sub-title">Sales Overview</div> 
+    <div class="row">
+        <div class=" col-lg-4">
+          <label class="form-label semibold">
+              <div  class="title1"><u>Monthly Sales Overview Report</u></div>
+ 
+            
+          </label>
+        </div>
+      </div>
+      <form [formGroup]="myForm">
+          <div class="row">
+    <div class='col-lg-4'>
+        <div class='date' id='datetimepicker6'>
+          <label class="form-label">
+            <h6>Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+        </div>
+
+      </div>
+      <div class=" col-lg-7" align="right">
+          <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Monthly Sales Overview Report/Monthof Shop Sales Report.rptdesign&branchrefid={{branchid}}&companyrefid={{companyrefid}}&clientcdate={{reportvar}}&status=0"
+            class="btn btn-round" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+        </div>
+</div>
+</form>
+
+</app-card>
+<app-card>
+    <div class="row">
+        <div class=" col-lg-4">
+          <label class="form-label semibold">
+              <div  class="title1"><u>Today Sales Overview Report</u></div>
+ 
+            
+          </label>
+        </div>
+    
+ 
+    <div class=" col-lg-7" align="right">
+        <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Today Sales Overview Report/Today Shop SalesReport.rptdesign&branchrefid={{branchid}}&companyrefid={{companyrefid}}&clientcdate={{date}}&status=0"
+          class="btn btn-round" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+      </div>
+    </div>
+ 
+</app-card>
+
+<app-card>
+  <div class="sub-title"> Emedsure</div>
+    <div class="row">
+        <div class=" col-lg-4">
+          <label class="form-label semibold">
+              <div  class="title1"><u>Online Orders Details</u></div>
+ 
+          
+          </label>
+        </div>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="row">
+          <div class="col-lg-4">
+     
+            <label class="form-label">
+              <h6>Customer Name</h6>
+            </label>
+            <select name="select" class="form-control" formControlName="custname" (change)="getCustomer()">
+              <option value="opt1">---Select Customer Name---</option>
+              <option *ngFor="let cust of patientid" value={{cust[0]}}>{{cust[1]}}</option>
+            </select>
+     
+          </div>
+         
+          <div class=" col-lg-7" align="right">
+            <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Emedsure/onlineorderdetails.rptdesign&BranchRefID={{branchid}}&CompanyRefID={{companyrefid}}&LocName={{locname}}&LocRefID={{locrefid}}&PatientID={{patname}}&Status=0"
+              class="btn btn-round" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+          </div>
+        </div>
+      </form>
+
+</app-card>
+
+
+<app-card>
+  <div class="row">
+    <div class=" col-lg-4">
+      <label class="form-label semibold">
+          <div  class="title1"><u>Sales Orders</u></div>
+            
+      </label>
+    </div>
+  </div>
+  <form [formGroup]="myForm">
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="form-label"><h6>Sales Order Type</h6></label>
+            <select name="select" class="form-control" (change)="view()" formControlName="sotype">
+              <option value="0" selected disabled>---Select SO Type---</option>
+           <option *ngFor="let sales of sotype" value="{{sales[0]}}">{{sales[1]}}</option>
+
+            </select>
+          </div>
+
+      <div class='col-lg-3'>
+        <div class='date' id='datetimepicker6'>
+          <label class="form-label">
+            <h6>From Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+        </div>
+
+      </div>
+      <div class='col-lg-3'>
+        <div class='date' id='datetimepicker7'>
+          <label class="form-label">
+            <h6>To Date:</h6>
+          </label>
+          <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+        </div>
+
+      </div>
+      <div class=" col-lg-2" align="right">
+        <a href="http://204.93.193.244:8080/birt/frameset?__report=MedeilReports/Emedsure/sales_order.rptdesign&Branch={{branchid}}&Company={{companyrefid}}&locname={{locname}}&locrefid={{locrefid}}&fromdate={{reportvar}}&todate={{reportvar1}}&type={{stype}}&status=0"
+          class="btn btn-round" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+      </div>
+    </div>
+  </form>
+  
+</app-card>
+<app-card>
+    <div class="row">
+        <div class=" col-lg-4">
+                <label class="form-label semibold">
+                    <div  class="title1"><u>Complete Sales Report</u></div>
+                      </label>
+        </div>
+</div>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+<div class="row">
+       
+        <div class="col-lg-3">
+			
+						<label class="form-label"><h6>Manufacturer Name</h6></label>
+							<ng-select [options]="Manufacturername" placeholder="Search Manufacturer Name"
+								formControlName="Manufacturernameid" (input)="getmanufacturer($event.target.value)" (click)="view()">
+							</ng-select>
+					
+		
+				</div>
+        <div class='col-lg-3'>
+            <div class='date' id='datetimepicker6'>
+              <label class="form-label">
+                <h6>From Date:</h6>
+              </label>
+              <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+            </div>
+   
+          </div>
+          <div class='col-lg-3'>
+            <div class='date' id='datetimepicker7'>
+              <label class="form-label">
+                <h6>To Date:</h6>
+              </label>
+              <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+            </div>
+          </div>
+              <div class=" col-lg-2" align="right">
+                <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/medc_sales/mfr_salesbyproduct.rptdesign&BranchRefID={{branchid}}&CompanyRefID={{companyrefid}}&LocName={{locname}}&LocRefID={{locrefid}}&fromdate={{reportvar}}&todate={{reportvar1}}&PCompanyName={{phcompany}}&status=0" 
+                class="btn btn-round" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+              </div> 
+            
+           </div> 
+</form>
+
+</app-card>
+
+<app-card>
+  <div class="sub-title">VAT Reports</div>
+    <div class="row">
+            <div class=" col-lg-4">
+       <br>
+              <label class="form-label semibold">
+                  <div  class="title1"><u>Sales VAT Report</u></div>
+                    </label>
+                 </div>
+            </div>
+          
+                <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+                        <div class ="row">
+                                <div class="col-lg-3" >
+                                        <label class="form-label"><h6> VAT</h6></label>
+                                          <!-- <input type="text"  (change)="view()" class="form-control" formControlName="vat"/> -->
+                                          <select name="select" class="form-control" (change)="view()" formControlName="vat">
+                                              <option value="opt1" selected disabled>---Select VAT %---</option>
+                                              <option value="0">0</option>
+                                              <option value="5">5 </option>
+                                              <option value="12">12 </option>
+                                              
+                                            </select>
+                                        </div>
+                                   
+             
+               
+                    <div class='col-lg-3'>
+         
+                 
+                        <div class='date' id='datetimepicker6'>
+                          
+                          <label class="form-label"><h6>From Date:</h6></label>
+                               
+                             <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+                     
+                        </div>
+                  
+                </div>
+                <div class='col-lg-3'>
+           
+                    <div class='date' id='datetimepicker7'>
+                       
+                        <label class="form-label"><h6>To Date:</h6></label>
+                           
+                             <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+                   
+                    
+                    </div>
+              
+            </div>
+            
+                <div class=" col-lg-2" align="right">
+                  <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/VAT/vat_sales.rptdesign&BranchRefID={{branchid}}&LocName={{locname}}&LocRefID={{locrefid}}&CompanyRefID={{companyrefid}}&fromdate={{reportvar}}&todate={{reportvar1}}&UnitVAT={{vatno}}&Status=0"
+                  class="btn btn-round" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+                </div>
+             </div>
+            </form>
+    
+        </app-card>
+    
+        <app-card>
+                <div class="row">
+                        <div class=" col-lg-4">
+                            <label class="form-label semibold">
+                                <div  class="title1"><u>
+                                  Sales Return VAT Report</u></div></label>
+                             </div>
+                        </div>
+                      
+                            <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+                                    <div class ="row">
+                                            <div class="col-lg-3" >
+                                                    <label class="form-label"><h6> VAT</h6></label>
+                                                      <!-- <input type="text"  (change)="view()" class="form-control" formControlName="vat"/> -->
+                                                      <select name="select" class="form-control" (change)="view()" formControlName="vat">
+                                                          <option value="opt1" selected disabled>---Select VAT %---</option>
+                                                          <option value="0">0</option>
+                                                          <option value="5">5 </option>
+                                                          <option value="12">12 </option>
+                                                          
+                                                        </select>
+            
+                                                    </div>
+                                               
+                         
+                           
+                                <div class='col-lg-3'>
+                     
+                             
+                                    <div class='date' id='datetimepicker6'>
+                                      
+                                      <label class="form-label"><h6>From Date:</h6></label>
+                                           
+                                         <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="from_date" />
+                                 
+                                    </div>
+                              
+                            </div>
+                            <div class='col-lg-3'>
+                       
+                                <div class='date' id='datetimepicker7'>
+                                   
+                                    <label class="form-label"><h6>To Date:</h6></label>
+                                       
+                                         <input type="date" (click)="datefetch()" (change)="datefetch()" class="form-control" formControlName="to_date" />
+                               
+                                
+                                </div>
+                          
+                        </div>
+                        
+                            <div class=" col-lg-2" align="right">
+                              <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/VAT/vat_salesreturn.rptdesign&BranchRefID={{branchid}}&LocName={{locname}}&LocRefID={{locrefid}}&CompanyRefID={{companyrefid}}&fromdate={{reportvar}}&todate={{reportvar1}}&UnitVAT={{vatno}}&Status=0"
+                              class="btn btn-round" role="submit" aria-pressed="true" routerLinkActive="active" target="_blank">View</a>
+                            </div>
+                         </div>
+                        </form>
+            </app-card>

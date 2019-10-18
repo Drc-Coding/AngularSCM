@@ -1,0 +1,49 @@
+<app-card>
+<dx-data-grid 
+    id="gridContainer"
+    [dataSource]="dataSource"
+    [columnAutoWidth]="true"
+    [showRowLines]="true"
+    [allowColumnResizing]="true"
+    [columnResizingMode]="columnResizingMode"
+    [columnMinWidth]="50"
+    parentIdExpr="Head_ID"
+    [showRowLines]="true"
+    [columnHidingEnabled]="true">
+
+    <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+    <dxo-paging [enabled]="false"></dxo-paging>
+    <dxo-editing 
+         mode="batch"
+         [allowUpdating]="true"
+         [allowAdding]="true">
+    </dxo-editing>
+  
+    <dxi-column dataField="FirstName">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+
+    <dxi-column dataField="LastName">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+
+    <dxi-column dataField="Position">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+
+    <dxi-column dataField="Phone">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule 
+            type="pattern"
+            [pattern]="pattern" message="Your phone must have &#34;(555) 555-5555&#34; format!"
+            ></dxi-validation-rule>
+    </dxi-column>
+
+    <dxi-column dataField="Email">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule type="email"></dxi-validation-rule>
+    </dxi-column>
+
+</dx-data-grid>
+
+</app-card>

@@ -1,0 +1,466 @@
+
+
+
+
+
+
+
+
+
+
+<style>
+    
+    
+        
+        
+
+
+
+            .row input ,.row label ,.row select{
+             margin-bottom: 6px;
+             padding-right: 0px;
+             padding-left: 0px;
+             margin-right: 0px;
+             margin-left: 0px;
+             
+         }
+     
+    
+       .row label {
+
+    font-size: 1.2em; 
+
+     }
+    
+          .tablenew{
+           
+            border: 1px solid rgba(0,0,0,.15);
+            height:300px;
+            max-width:  100%;
+            box-sizing:border-box;
+            max-height: 300px;
+             overflow-y: scroll;
+             overflow-x: scroll;
+
+
+        
+     
+             }
+     
+ 
+    
+           .tablenew  table th {
+             padding: 0.43em   0em     0.43em   0em;
+             background-color:#0073aa	 ;
+               color:#FFFFFF ;
+             margin:  0em; 
+             text-align:center;
+          
+             vertical-align: top;
+         
+         }
+            
+             .tablenew table td{
+             vertical-align: top;
+             padding: 0.43em   0em      0.43em   0em;
+             text-align:center;
+             margin:  0em; 
+            }
+     
+ 
+
+
+
+   
+           
+         .tablenew  table p{
+     
+                     padding: 0em;   
+                     margin:  0em; 
+             }
+    
+
+
+
+         .tablenew table th input{
+           width:6em;
+             background-color:  #cccccc ;
+             border: #FFFFFF;
+             text-align:center;
+         }
+       
+
+
+
+         
+         .tablenew table td input{
+           width:4em;
+             text-align:center;
+             border: #FFFFFF;
+         }
+            
+         
+     
+
+
+
+        .tablenew table td label  {
+      
+            margin:  0em; 
+            padding: 0em ;
+    
+            text-align:center;
+            border: #FFFFFF;
+        }
+    
+     
+       .tablenew table tr {
+           margin:  0em; 
+             width: 100%;
+             border: 1px solid rgba(0,0,0,.15);
+         }
+       
+     
+
+   
+ 
+         .tablenew   table td input:focus{
+    
+            background-color:  rgba(0,0,0,.15);
+        }
+    
+    
+
+     
+  .tablenew    input[type="checkbox"]  {
+
+      width: 1.7em  ;
+      height :    1.7em  ;
+
+      padding: 0em ;
+
+      margin:  0em; 
+   }
+
+
+
+     #autolist {
+    
+            border: 1px solid rgba(0,0,0,.15);
+            position: absolute;
+            z-index: 21;
+            background-color: #ffffff;
+
+
+
+            width:   16.5em;
+    
+            max-height: 200px;
+            overflow-y: scroll;
+     
+        }
+        
+
+     #autolist1 {
+    
+            border: 1px solid rgba(0,0,0,.15);
+            position: absolute;
+            z-index: 21;
+            background-color: #ffffff;
+
+
+
+            width:   16.5em;
+            height: 200px;
+
+            max-height: 200px;
+            overflow-y: scroll;
+     
+        }
+
+
+       
+        li input:nth-child(1):focus{
+    
+            background-color:  rgba(0,0,0,.15);
+        }
+
+        li input:nth-child(3):focus{
+    
+            background-color:  rgba(0,0,0,.15);
+        }
+
+
+
+        li input:nth-child(1) {
+ 
+            border: transparent;
+    
+        }
+
+        li input:nth-child(3) {
+ 
+            width:6em;  
+            border: transparent;
+    
+
+            text-align:center;
+
+
+        }
+
+
+
+
+        li input:nth-child(2) {
+ 
+            display: none;
+    
+        }
+
+
+    #gridContainer  {
+
+
+       height:369px;
+      }
+
+
+
+
+        </style>
+            
+         
+            <app-card>
+            
+            
+            <form [formGroup]="registerForm"  >
+            
+            
+                <div class="box-typical box-typical-padding">
+            
+        
+                    <div class="row"> <!--.row1start--> 
+        
+                        <div class="col-lg-5">
+                                <div class="row">
+                
+                                      <div class="col-md-5">
+                                            
+                                    
+                                          <label class="form-label semibold" for="exampleInput"> ProdmapDate 
+                                                                       </label> 
+                                                            
+                                                     
+                                                        
+                                                        </div>
+                                        <div class="col-md-7">
+                                                <input type="date" 
+                                                class="form-control"    formControlName="date"
+                                                />
+                                      
+                                    
+                                        </div> 
+        
+        
+                                
+        
+            
+                                        <div class="col-md-5 ">
+                                            
+                                    
+                                                      <label class="form-label semibold" for="exampleInput">   Drug  Name 
+                                                   </label> 
+                                                            
+                                                     
+                                                        
+                                           </div>
+                                              
+                                           <div class="col-md-7 ">
+                                            
+                                     
+                                            <input type="text" 
+                                            class="form-control" id="autoname"    (focus)="autofocusin()"    (focusout)="autofocusout()"   autocomplete="off"  
+                                            (keydown)="autokeyselect($event,0)"      formControlName="autonamenew"   #inp  />
+                                    
+                                            <div id="autolist" >
+                                                  <ul >  
+
+
+                                                 <li  *ngFor="let address of    autodata; let i=index"     (keydown)="autokeyselect($event,i)" >
+                                                      <input   readonly value={{address[1]}}  /> 
+                                                 </li>
+                                               
+                                                  </ul>  
+
+                                             </div>
+                                                            
+                                                                                                       
+                                         </div> 
+                                         
+                                                     
+                                    </div> <!-- rrghghf--> 
+                
+                
+                           </div> 
+        
+        
+                             <div class="col-lg-5">
+                                <div class="row" >
+                
+                                      
+                                     <div class="col-md-7  autolistall1">
+                                            
+                                     
+                                            <input type="text" 
+                                            class="form-control treetable" id="autoname1"    (focus)="autofocusin1()"    (focusout)="autofocusout1()"   autocomplete="off"  
+                                            (keydown)="autokeyselect1($event,0)"      formControlName="autonamenew1"      />
+                                    
+                                            <div id="autolist1" >
+                                                  <ul >  
+
+
+                                                 <li  *ngFor="let address of    autodata1; let i=index"     (keydown)="autokeyselect1($event,i)" >
+                                                      <input   readonly value={{address[1]}}  /> 
+                                                 </li>
+                                               
+                                                  </ul>  
+
+                                             </div>
+                                                     
+                                           </div>
+
+                                              <div class="col-md-5 autolistall1">
+                                            
+                                
+                                                     
+                                                        
+                                           </div>
+
+
+                                     
+                                  
+                                    </div> <!-- rrghghf--> 
+                
+                
+                           </div> 
+                           
+          
+        
+                           <div class="col-lg-2">
+                                <div class="row">
+                
+                                  
+                                                                                                 
+                                </div> <!-- rrghghf--> 
+                
+                
+                           </div> 
+        
+                        </div>   <!-- rrghghf 1-->
+           
+                    
+     
+               
+
+
+               
+                      
+
+         
+                                       <div [formGroup]="registerForm"  >   <!-- table1 start-->
+                                        
+                                         <!--addresses-->
+                                         <div formArrayName="prodmap"  class="tablenew "   >
+                                               <div   >
+                                                <table class="table "  id="knowledgeTreeTable"     (keydown)="autocleartable1()" >
+                                                    <thead class="thead-default">
+                                                    <tr >
+                                                                                                     
+                                                        <th>S.No</th>
+                                                       <th> DrugName  </th>      
+                                                        <th>  Drug Id   </th>
+                                                        <th >New DrugName </th>
+                                                        <th > New Drug Id </th>
+    
+                                                        <th > Remove   </th>
+                                                    </tr>
+                                                </thead>
+                                               
+                                                <tr *ngFor="let address of registerForm.controls.prodmap.controls; let i=index" [formGroupName]="i">
+                                                    
+                                                <td><input   value={{i+1}}  readonly/></td>   
+        
+                                                <td><input  formControlName="brandname" readonly/></td>
+                                                <td><input  formControlName="productdrugid" readonly/></td>
+                                                
+                                                <td ><input  formControlName="brandname1"      (keydown)="autoOpenselect1($event , i)"    /></td>
+                                                <td><input  formControlName="productdrugid1"   /></td>
+
+                                                <td><input   type="checkbox"     (click)="remove(i)"  /></td>
+                
+                                                 </tr>
+                                            
+                                                </table>
+                           
+                                                    </div>
+                                                   </div>
+                                         </div>  <!-- table1  end--> 
+
+    
+            
+                    <h5></h5>
+              
+                    <div class="row"> <!--.row1start--> 
+                        
+                        
+                                        <div class="col-lg-4">
+                                                <div class="row">
+                                
+                                                   
+                                                                           
+                                           </div> <!-- rrghghf--> 
+                                
+                                
+                                           </div> 
+                        
+                        
+                                           <div class="col-lg-4">
+                                                <div class="row">
+                                
+                                                 
+                                                                    
+                                                    </div> <!-- rrghghf--> 
+                                
+                                
+                                           </div> 
+                                           
+                          
+                        
+                                           <div class="col-lg-4">
+                                                <div class="row">
+                                
+                                                  <ng2-toasty [position]="position"></ng2-toasty>        
+                                                               
+                                                                           
+                                                    </div> <!-- rrghghf--> 
+                                
+                                
+                                           </div> 
+                        
+                                        </div>   <!-- rrghghf 1-->
+                                        
+              </div>
+                <!-- box-typical-->
+            
+            </form>
+            <button    class="btn btn-primary"      (click)="onSubmit()" 
+              >submit</button>
+            
+        
+        
+            </app-card>
+            
+            
+        
+    

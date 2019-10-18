@@ -1,0 +1,121 @@
+<style>
+	th {
+		font-family: 'Mada', sans-serif;
+		font-size: 16px;
+		color: #487742;
+		background-color: lightgray;
+	}
+
+	td {
+		background-color: whitesmoke;
+	}
+
+	.nodata {
+		text-align: center;
+		width: 100%;
+		padding: 10px;
+		font-size: 25px;
+		color: rgb(245, 50, 50);
+		font-family: Verdana, Geneva, sans-serif;
+	}
+</style>
+<app-card [title] = '"Add Appointment"'>
+	<form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+		<div class="sub-title" style="font-size: 20px;">Appointment</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">Appointment Date</label>
+			<div class="col-sm-4">
+				<input type="date" class="form-control" formControlName="appointmentdate" style="background-color: cornsilk;">
+			</div>
+			<label class="col-sm-2 col-form-label">Emergency Level</label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" placeholder="Emergency Level" formControlName="emergencylevel">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">Physician</label>
+			<div class="col-sm-4">
+				<select name="select" class="form-control" formControlName="doctorrefid" style="background-color: cornsilk;">
+					<option value="opt1">---Select Physician---</option>
+					<option *ngFor="let doc of physicianlist" value="{{doc[0]}}">{{doc[1]}}</option>
+				</select>
+			</div>
+			<label class="col-sm-2 col-form-label">Appointment Reason</label>
+			<div class="col-sm-4">
+				<textarea rows="3" cols="5" class="form-control" placeholder="Appointment Reason" formControlName="appointreason" style="background-color: cornsilk;"></textarea>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">Patient Name</label>
+			<div class="col-sm-4">
+				<select name="select" class="form-control" formControlName="patientrefid" style="background-color: cornsilk;">
+					<option value="opt1">---Select PatientName---</option>
+					<option *ngFor="let pt of patientlist" value="{{pt[0]}}">{{pt[1]}}</option>
+				</select>
+			</div>
+			<label class="col-sm-2 col-form-label">Appointment Duration</label>
+			<div class="col-sm-2">
+				<input type="text" class="form-control" placeholder="Duration" formControlName="appointduration" disabled>
+			</div>
+			<label class="col-sm-0 col-form-label">Amount</label>
+			<div class="col-sm-1">
+				<input type="text" class="form-control" formControlName="appointmentcharge">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">Appointment Time</label>
+			<div class="col-sm-3">
+				<ngb-timepicker formControlName="appointfromtime" [(ngModel)]="timefrom1" [meridian]="meridian" (click)="checkfromTime()"
+				 (change)="checkfromTime()"></ngb-timepicker>
+			</div>
+			<label class="col-sm-1 col-form-label">To</label>
+			<div class="col-sm-3">
+				<ngb-timepicker formControlName="appointtotime" [(ngModel)]="timeto1" [meridian]="meridian" (click)="checktoTime()" (change)="checktoTime()"></ngb-timepicker>
+			</div>
+			<div class="col-lg-3">
+				<label class="col-sm-1 col-form-label"></label>
+				<button type="submit" class="btn btn-success btn-round" style="margin-top: 27px;">Save</button>
+			</div>
+		</div>
+		<hr>
+		<div class="sub-title" style="font-size: 15px;">View Appointment Schedule By Date</div>
+		<div class="form-group row">
+			<label class="col-sm-1 col-form-label">Time Period</label>
+			<div class="col-sm-2">
+				<ngb-timepicker formControlName="appointviewfromtime" [(ngModel)]="viewtimefrom" [meridian]="meridian" (change)="viewTime()"></ngb-timepicker>
+			</div>
+			<label class="col-sm-1 col-form-label">To</label>
+			<div class="col-sm-2">
+				<ngb-timepicker formControlName="appointviewtotime" [(ngModel)]="viewtimeto" [meridian]="meridian" (change)="viewTime()"></ngb-timepicker>
+			</div>
+			<label class="col-sm-2 col-form-label" style="margin-left: 40px;">Visiting Hour</label>
+			<div class="col-sm-3">
+				<select name="select" class="form-control" formControlName="visitinghours" style="background-color: cornsilk;">
+					<option value="opt1">---Select Visiting Hours---</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-lg-3">
+				<input type="button" class="btn btn-inverse btn-round" style="margin-top: 27px;margin-left: 100px" value="Search" (click)="getSearch()">
+			</div>
+			<div class="col-lg-3">
+				<input type="button" class="btn btn-primary btn-round" style="margin-top: 27px;" value="Set as Visiting Hours" (click)="setVistinghours()">
+			</div>
+		</div>
+		<hr>
+		<div id="data-grid-demo">
+			<dx-data-grid id="gridContainer" [dataSource]="dataSource" keyExpr="ID" (onRowClick)="getClick($event)">
+				<dxo-paging [enabled]="false"></dxo-paging>
+				<dxo-editing mode="batch" [allowUpdating]="false"> </dxo-editing>
+				<dxi-column dataField="id" caption="S.No" [width]="50"></dxi-column>
+				<dxi-column dataField="appointno" caption="Appointment Number"></dxi-column>
+				<dxi-column dataField="patientinfo" caption="Patient Name"></dxi-column>
+				<dxi-column dataField="appointfrom" caption="Appointment From"></dxi-column>
+				<dxi-column dataField="appointto" caption="Appointment To"></dxi-column>
+			</dx-data-grid>
+		</div>
+	</form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

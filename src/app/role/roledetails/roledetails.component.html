@@ -1,0 +1,40 @@
+<app-card [title]='"Role Assign"'>
+  <br>
+  <div align="right">
+    <button class="btn btn-round" (click)="viewRole()">View Role</button>
+  </div><br>
+  <form [formGroup]="roleAssignForm" (ngSubmit)="onSubmit()">
+    <div class="form-group row">
+      <div class="col-lg-4">
+        <fieldset class="form-group">
+          <label class="form-label semibold"><h6>Role Name</h6></label>
+          <input type="text" class="form-control" formControlName="rolename" readonly style="background-color: white" />
+        </fieldset>
+      </div>
+      <div class="col-sm-4">
+        <label class="form-label semibold"><h6>Module Name</h6></label>
+        <select type="select" class="form-control" placeholder="Enter Module folder" formControlName="moduleid" (change)="getSubmodule()">
+          <option value="opt1" selected disabled>---Select Module</option>
+          <option *ngFor="let mod of module" value={{mod[0]}}>{{mod[1]}}</option>
+        </select>
+      </div>
+      <div class="col-lg-4">
+        <div class="form-group">
+          <label><h6>Sub Modules</h6></label>
+          <br>
+          <select multiple type="select" class="form-control" formControlName="submoduleid" #submod>
+            <option selected disabled value="opt1">---Select Submodules---</option>
+            <option *ngIf="submodule==''" value="noData" style="color: black">SubModule Not Available</option>
+            <option *ngFor="let sb of submodule" value={{sb[0]}}>{{sb[1]}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-lg-4">
+        <button type="submit" class="btn btn-success btn-round button btnlinklist" style="margin: 26px;">Save</button>
+      </div>
+    </div>
+  </form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

@@ -1,0 +1,194 @@
+<style>
+ 
+  .borderform {
+    border: 2px solid #b3b3b3;
+    border-radius: 5px;
+    padding:1em;
+  }
+ 
+</style>
+<app-card>
+    <div class="sub-title">Edit Details
+        <i class="fa fa-edit ficon"></i>
+    </div><br>
+  <form [formGroup]="registerForm">
+    <div class="box-typical box-typical-padding">
+      
+      <div class="borderform">
+        <!-- splitcolumnbefore1   start-->
+        <div class="row">
+          <!-- splitcolumn start-->
+        
+              <div class="col-lg-4" *ngIf="registerForm.controls.invdispflag.value=='0' ">
+                <label class="form-label semibold" for="exampleInput">Purchase Return No
+                </label>
+             
+                <select class="form-control" (change)="viewPRinvoiceProducts()" formControlName="purcretnid">
+                  <option *ngFor="let item of prinvoices; let i = index" value={{item[0]}}>{{item[1]}}</option>
+                </select>
+              </div>
+
+              <div class="col-md-4" *ngIf="registerForm.controls.invdispflag.value=='1' ">
+                <label class="form-label semibold" for="exampleInput">Purchase Return No
+                </label>
+              
+                <input type="text" class="form-control" formControlName="prno" />
+              </div>
+
+              <div class="col-md-4">
+                  <label class="form-label semibold" for="exampleInput">Vendor name
+                  </label>
+               
+                  <input type="text" name="doctorName" class="form-control" id="docid" placeholder=""
+                    formControlName="vendorname" />
+                </div>
+
+              <div class="col-md-4">
+                <label class="form-label semibold" for="exampleInput"> Invoice Date
+                </label>
+             
+                <input type="date" name="doctorName" class="form-control" id="docid" placeholder=""
+                  formControlName="prdate" />
+              </div>
+       
+        </div> <!-- rrghghf 1-->
+
+      </div> <!-- splitcolumnbefore1   start-->
+      <br>
+
+    
+        <div formArrayName="invoice" class="flow">
+          <!--. table  start-->
+     
+            <table class="table styletab" id="knowledgeTreeTable" (keydown)="autocleartable1()">
+              <thead class="stylehead">
+                <tr>
+                  <th>Select </th>
+                  <th>S. No </th>
+                  <th>Prod Code</th>
+                  <th>Prod Name</th>
+                  <th>Batch No </th>
+                  <th>Purchase Qty</th>
+                  <th  *ngIf="registerForm.controls.boxdispflag.value=='1'" >Return Box</th>
+                  <th  *ngIf="registerForm.controls.stripdispflag.value=='1'">Return Strip   </th>
+                  <th  *ngIf="registerForm.controls.tabdispflag.value=='1'">Return Unit  </th>
+                  <th>Total Return </th>
+                  <th>Dis %</th>
+                  <th>Purchase Price </th>
+                  <th>Amount </th>
+                </tr>
+              </thead>
+              <tbody class="stylebody">
+              <tr *ngFor="let address of registerForm.controls.invoice.controls; let i=index" [formGroupName]="i">
+                <td><input type="checkbox" class="tabcheck" id="width1" formControlName="delflag" /></td>
+                <td><input value={{i+1}} id="width2" readonly /></td>
+                <td><input formControlName="drugproductid" readonly /></td>
+                <td><input formControlName="productname" id="width6" style="text-align:left" readonly /></td>
+                <td><input formControlName="batchrefid" id="width4" style="text-align:left" readonly /></td>
+                <td><input formControlName="piqty" readonly /></td>
+                <td  *ngIf="registerForm.controls.boxdispflag.value=='1'"><input  formControlName="boxquantity"    (keydown)="calc($event)" type="number" /></td>
+                <td *ngIf="registerForm.controls.stripdispflag.value=='1'" ><input  formControlName="stripquantity"  type="number"/></td>
+                <td  *ngIf="registerForm.controls.tabdispflag.value=='1'"><input  formControlName="tabletquantity" (keydown)="calc($event)"   /></td>
+                
+                <td><input formControlName="totalquantity" readonly /></td>
+                <td><input formControlName="discount" id="width2" readonly /></td>
+                <td><input formControlName="unitprice" class="right" type="number" /></td>
+                <td><input formControlName="subtotal" class="right" readonly /></td>
+              </tr>
+            </tbody>
+            </table>
+         
+        </div>
+        <!--. table     end-->
+        <br>
+
+      <div class="col-lg-2 ml-4">
+        <button type="button" class="btn btn-round" (click)="remove()"> Remove </button>
+      </div><br>
+
+      <div class="borderform">
+        <!-- splitcolumnbefore1   start-->
+      
+
+            <div class="row">
+
+              <div class="col-md-3">
+                <label class="form-label semibold" for="exampleInput">Total Product
+                </label>
+           
+                <input type="text" class="form-control" formControlName="totalitems" disabled/>
+              </div>
+
+              <div class="col-md-3">
+                <label class="form-label semibold" for="exampleInput">Grand Total
+                </label>
+           
+                <input type="text" class="form-control" formControlName="grandtotal" disabled/>
+              </div>
+
+              <div class="col-md-3">
+                  <label class="form-label semibold" for="exampleInput">Sub Total
+                  </label>
+           
+                  <input type="text" class="form-control" formControlName="totalsubtotal" disabled/>
+                </div>
+                
+                
+            <div class="col-md-3">
+                <label class="form-label semibold" for="exampleInput">Total Discountamt
+                </label>
+          
+                <input type="text" class="form-control" formControlName="totaldiscountamt" disabled/>
+            </div>
+               
+            </div>
+       
+
+            <div class="row mt-2">
+
+                <div class="col-md-3">
+                    <label class="form-label semibold" for="exampleInput">Taxable Amt
+                    </label>
+               
+                    <input type="text" class="form-control" formControlName="totaltaxableamt" disabled/>
+                  </div>
+    
+                  <div class="col-md-3">
+                    <label class="form-label semibold" for="exampleInput">Total Tax Amount
+                    </label>
+                 
+                    <input type="text" class="form-control" formControlName="totaltaxamt" disabled/>
+                  </div>
+                  
+                
+                  <div class="col-md-3">
+                      <label class="form-label semibold" for="exampleInput">Rounded Off
+                      </label>
+              
+                      <input type="text" class="form-control" formControlName="roundedoff" disabled/>
+                  </div>
+    
+
+
+            </div>
+   
+      </div> <!-- borderform  end-->
+
+    </div>
+    <!-- box-typical-->
+    <ng2-toasty [position]="position"></ng2-toasty>
+  </form>
+  <!--addresses-->
+
+  <div class="row">
+    <!-- row Start-->
+    <div class="col-lg-1"></div>
+    <div class="col-lg-2"> <button type="button" class="btn btn-round" (click)="onSubmit()"> Update
+      </button> </div>
+    <div class="col-lg-2"> <button type="button" class="btn btn-round" (click)="deletePurchReturn()"> Delete
+      </button> </div>
+    <div class="col-lg-2"> <button type="button" class="btn btn-round"
+        [routerLink]="['/PurchaseReturn/ViewPurchaseReturn']"> Back </button> </div>
+  </div> <!-- row end-->
+
+</app-card>

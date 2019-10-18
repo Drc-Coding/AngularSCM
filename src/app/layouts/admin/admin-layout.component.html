@@ -1,0 +1,307 @@
+<style>
+  .pcoded .pcoded-navbar[navbar-theme="themelight1"] .pcoded-item>li>a:hover {
+    background: #31c37c;
+    color: white;
+  }
+
+  .pcoded-micon i {
+    background-color: #52aa0c;
+    color: #ffffff;
+    padding: 15px;
+    margin-left: -15px;
+  }
+
+  /*Prasad*/
+
+  .main-menu {
+    height: 1100px;
+    overflow-y: auto;
+  }
+
+  .element {
+    width: 92%;
+    overflow-x: hidden; 
+  }
+
+  /*.ng-tns-c1-0 i{
+  color:white;
+ }*/
+
+  /* selva2*/
+
+  .header-navbar .navbar-wrapper .navbar-container .nav-left a,
+  .header-navbar .navbar-wrapper .navbar-container .nav-right a {
+    color: white;
+  }
+
+  .navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+    margin-top: -10px;
+    font-size: 20px;
+    color: rgb(238, 238, 238);
+
+  }
+</style>
+
+
+<div id="pcoded" (window:resize)="onResize($event)" class="pcoded iscollapsed" theme-layout="vertical" vertical-placement="left"
+  vertical-layout="wide" [attr.pcoded-device-type]="deviceType" [attr.vertical-nav-type]="verticalNavType" [attr.vertical-effect]="verticalEffect"
+  vnavigation-view="view1">
+  <div class="pcoded-overlay-box"></div>
+  <div class="pcoded-container navbar-wrapper">
+    <nav class="navbar header-navbar pcoded-header" header-theme="theme4">
+      <div class="navbar-wrapper">
+        <div class="navbar-logo" navbar-theme="theme4">
+          <a class="mobile-menu" id="mobile-collapse" href="javascript:;" (click)="toggleOpened()" [exclude]="'#main_navbar'" (clickOutside)="onClickedOutside($event)">
+            <i class="ti-menu"></i>
+          </a>
+          <a [routerLink]="['/']">
+            <img class="img-fluid2 img-fluid" src="assets/images/TEST.png" alt="Theme-Logo" />
+          </a>
+          <a (click)="onMobileMenu()" class="mobile-options">
+            <i class="ti-more"></i>
+          </a>
+        </div>
+
+        <div class="navbar-container">
+          <div>
+            <ul class="nav-left">
+              <li>
+                <div class="sidebar_toggle">
+                  <a href="javascript:;" (click)="toggleOpened()">
+                    <i class="ti-menu f-18"></i>
+                  </a>
+                </div>
+              </li>
+              <li>
+                <a href="javascript:;" appToggleFullscreen>
+                  <i class="ti-fullscreen"></i>
+                </a>
+              </li>
+
+            </ul>
+
+            <ul [@mobileMenuTop]="isCollapsedMobile" class="nav-right" [ngClass]="isCollapsedMobile">
+              <ul class="navbar-nav navbar-center">
+                <li class="header-notification lng-dropdown">
+                  <!-- <input type="text" class="input" formControlName="shopname" value=""/> -->
+                  {{shop}}
+                </li>
+              </ul>
+              <li class="header-notification lng-dropdown">
+                <a href="javascript:;" id="dropdown-active-item">Choose Language</a>
+                <ul class="show-notification">
+                  <li>
+                    <a href="javascript:;" id="English" onclick="translateLanguage(this.id);">
+                      <span>English
+                      </span>
+                      <i class="flag-icon flag-icon-gb m-r-5"></i>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="javascript:;" id="Tamil" onclick="translateLanguage(this.id);" onchange="translateLanguage(this.id);">
+                      <span>தமிழ்</span>
+                      <i class="flag-icon flag-icon-in m-r-5"></i>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="javascript:;" id="German" onclick="translateLanguage(this.id);">
+                      <span>German </span>
+                      <i class="flag-icon flag-icon-de m-r-5"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:;" id="Italian" onclick="translateLanguage(this.id);">
+                      <span>Italian
+                      </span>
+                      <i class="flag-icon flag-icon-it m-r-5"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:;" id="Hindi" onclick="translateLanguage(this.id);">
+                      <span>Hindi </span>
+                      <i class="flag-icon flag-icon-in m-r-5"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:;" id="French" onclick="translateLanguage(this.id);">
+                      <span>French </span>
+                      <i class="flag-icon flag-icon-fr m-r-5"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:;" id="Spanish" onclick="translateLanguage(this.id);">
+                      <span>Spanish
+                      </span>
+                      <i class="flag-icon flag-icon-es m-r-5"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:;" id="Russian" onclick="translateLanguage(this.id);">
+                      <span>Russian
+                      </span>
+                      <i class="flag-icon flag-icon-ru m-r-5"></i>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="header-notification">
+                <a href="javascript:;" (click)="getNotification()">
+                  <i class="ti-bell"></i>
+                  <span class="badge">5</span>
+                </a>
+                <ul class="show-notification">
+                  <li *ngIf="messageCondition">
+                    <div class="media">
+                      <img class="d-flex align-self-center" src="assets/images/notification.png" alt="Generic placeholder image">
+                      <div class="media-body">
+                        <h5 class="notification-user">{{module}}</h5>
+                        <p class="notification-msg">{{message}}</p>
+                        <span class="notification-time" style="font-size: 17px;">{{date}}</span>
+                      </div>
+                    </div>
+                  </li>
+                  <li *ngIf="errormessageCondition">
+                    <div>
+                      <p class="notification-msg" style="font-size: 17px;color:black">{{noMessage}}</p>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+
+
+              <li class="user-profile header-notification">
+
+                <img src="assets/images/user.png" alt="User-Profile-Image">
+                <span>{{username}}</span>
+                <i class="ti-angle-down"></i>
+
+                <ul class="show-notification profile-notification">
+
+                  <li>
+                    <a [routerLink]="['/']">
+                      <i class="ti-layout-sidebar-left"></i> Logout
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- rightbar chat start -->
+
+    <!-- rightbar inner chat start-->
+
+    <!-- rightbar inner chat end-->
+    <!-- rightbar chat end-->
+    <div class="pcoded-main-container">
+      <div class="pcoded-wrapper">
+        <nav id="main_navbar" class="pcoded-navbar element" (clickOutside)="onClickedOutside($event)" [exclude]="'#mobile-collapse'"
+          navbar-theme="themelight1" active-item-theme="theme4" sub-item-theme="theme2" active-item-style="style0" pcoded-navbar-position="absolute" 
+          >
+
+          <div class="sidebar_toggle">
+            <a href="javascript:;">
+              <i class="icon-close icons"></i>
+            </a>
+          </div>
+          <div class="pcoded-inner-navbar main-menu" appAccordion width="100%" height="100%" size="4px" color="#fff" opacity="0.3"
+            allowPageScroll="false" (mouseover)="clickinsidemenu()">
+            <ul class="pcoded-item pcoded-left-item" item-border="none" item-border-style="solid" subitem-border="solid" appAccordionLink
+              group="" *ngFor="let label of modLabel">
+              <li [routerLinkActive]="['active']" class="pcoded-hasmenu" dropdown-icon="style1" subitem-icon="style6" appAccordionLink
+                group="" *ngIf="label.split('_')[0]!=='none';else other_content">
+                <a href="javascript:;" appAccordionToggle>
+                  <span class="pcoded-micon">
+
+                    <i class="{{label.split('_').pop()}}"></i>
+
+
+
+                    <!--  <img src="{{label.split('_').pop()}}" background-color="red" alt="{{label.split('_').pop()}}" height="20" width="20"> -->
+                  </span>
+                  <span class="pcoded-mtext">{{label.split('_')[0]}}</span>
+                </a>
+                <ul class="pcoded-submenu" *ngFor="let asideItems of menu">
+                  <li [routerLinkActive]="['active']" class="pcoded-hasmenu" dropdown-icon="style1" subitem-icon="style6" appAccordionLink
+                    group="sub-toggled" *ngIf="label.split('_')[0]==asideItems[2]">
+                    <a href="javascript:;" appAccordionToggle>
+                      <span class="pcoded-micon">
+                        <i class="{{asideItems[0].split('_')[0]}}"></i>
+                      </span>
+                      <span class="pcoded-mtext">{{asideItems[0].split('_')[0]}}</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                      <li [routerLinkActive]="['active']" *ngFor="let asideItem of asideItems[1]" appAccordionLink group="{{asideItems[0]}}">
+                        <a [routerLink]="['/', asideItems[0].split('_')[0].replace(' ',''), asideItem.split('_')[0].replace(' ','')]" appAccordionToggle>
+                          <span class="pcoded-micon">
+                            <i class="{{asideItem.split('_').pop()}}"></i>
+                          </span>
+                          <span class="pcoded-mtext">{{ asideItem.split('_')[0]}}</span>
+                          <span class="pcoded-mcaret"></span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+
+              <ng-template #other_content>
+                <div *ngFor="let asideItems of menu">
+                  <ul class="pcoded-item pcoded-left-item" item-border="none" item-border-style="solid" subitem-border="solid" appAccordionLink
+                    group="{{asideItems[0].split('_')[0]}}">
+                    <li [routerLinkActive]="['active']" class="pcoded-hasmenu" dropdown-icon="style1" subitem-icon="style6" appAccordionLink
+                      group="sub-toggled" *ngIf="asideItems[2]=='none'">
+                     
+                      <a href="javascript:;" appAccordionToggle>
+                        <span class="pcoded-micon">
+                          <i class="{{asideItems[0].split('_').pop()}}"></i>
+                        </span>
+                        <span class="pcoded-mtext">{{asideItems[0].split('_')[0]}}</span>
+                      </a>
+
+                      <ul class="pcoded-submenu">
+                        <li [routerLinkActive]="['active']" *ngFor="let asideItem of asideItems[1]" appAccordionLink group="{{asideItems[0]}}">
+                          <a [routerLink]="['/', asideItems[0].split('_')[0].replace(' ',''), asideItem.split('_')[0].replace(' ','')]" appAccordionToggle>
+                            <span class="pcoded-micon">
+                              <i class="{{asideItem.split('_').pop()}}"></i>
+                            </span>
+                            <span class="pcoded-mtext">{{ asideItem.split('_')[0]}}</span>
+                            <span class="pcoded-mcaret"></span>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </ng-template>
+            </ul>
+          </div>
+        </nav>
+        <div class="pcoded-content">
+          <div class="pcoded-inner-content" (click)="onClicked3($event)">
+            <div class="main-body">
+              <div class="page-wrapper">
+                <app-title></app-title>
+                <app-breadcrumbs></app-breadcrumbs>
+                <div class="page-body">
+                  <router-outlet>
+                    <spinner></spinner>
+                  </router-outlet>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

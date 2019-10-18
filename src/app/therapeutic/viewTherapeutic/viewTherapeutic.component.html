@@ -1,0 +1,101 @@
+<style>
+    .nodata {
+      text-align: center;
+      width: 100%;
+      padding: 10px;
+      font-size: 25px;
+      color: rgb(245, 50, 50);
+      font-family: Verdana, Geneva, sans-serif;
+    }
+    .action
+      {
+        font-size: 15px;
+        color: green; 
+      }
+      .action1
+      {
+        font-size: 15px;
+        color: red;
+      } 
+      .data-search
+        {
+           width: 350px;
+           margin-left: 0.5em;
+           display: inline-block;
+        }
+    </style>
+<app-card [title]="' ViEW THERAPEUTIC'">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
+      <div>
+        <label class="label-control">Show
+          <select class="form-control input-sm full-data-show-entry" [(ngModel)]="rowsOnPage">
+            <option [ngValue]="1">1</option>
+            <option [ngValue]="25">25</option>
+            <option [ngValue]="50">50</option>
+            <option [ngValue]="100">100</option>
+          </select>
+          entries
+        </label>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      <div style="text-align: right;">
+        <label>Search:
+          <input type="search" [(ngModel)]="filterQuery" class="form-control input-sm full-data-search" placeholder="Search name">
+        </label>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="panel-heading">User information</div>-->
+  <div class="dt-responsive" style="overflow:scroll">
+    <table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery"
+      #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+      <thead>
+        <tr>
+          <th>
+            <mfDefaultSorter by="sno">SNO</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="empfirstname">THERAPEAUTIC NAME</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="Action">Action</mfDefaultSorter>
+          </th>
+        </tr>
+        <tr>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngIf="(data | dataFilter : filterQuery) == 0">
+							<td></td>
+							<td class="nodata">No matching Records found....</td>
+							<td></td>
+							<td></td> 
+							</tr>  	
+        <tr *ngFor="let val of mf.data;let i=index">
+          <td>{{i+1}}</td>
+          <td>{{val[1]}}</td>
+          <td ngbDropdown class="text-center">
+            <a ngbDropdownToggle class="dropdown-toggle addon-btn" data-toggle="dropdown" aria-expanded="true">
+              <i class="icofont icofont-ui-settings"></i>
+            </a>
+            <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:;" [routerLink]="['/therapeutic/editTherapeutic',val[0]]" skipLocationChange>
+                <i class="icofont icofont-ui-edit"></i>Edit</a>
+              <a class="dropdown-item" href="javascript:;" (click)="DeleteTherapeutic(val[0])">
+                <i class="icofont icofont-attachment"></i>Delete</a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="12">
+            <mfBootstrapPaginator class="pagination-main f-right"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</app-card>

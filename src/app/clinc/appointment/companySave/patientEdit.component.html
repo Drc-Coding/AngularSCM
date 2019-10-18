@@ -1,0 +1,219 @@
+
+
+<h2>PatientEdit</h2>
+<app-card id="tab56">
+<div id="form">
+	<!-- form-->
+
+	<form [formGroup]="patientEdit" (ngSubmit)="onSubmit()">
+
+
+		<div class="box-typical box-typical-padding">
+
+			<div class="row">
+
+				<div class="col-lg-4">
+
+					<fieldset class="form-group">
+						<label class="form-label semibold" for="exampleInput">
+							Patient Id </label> <input type="text" name="doctorName"
+							class="form-control" id="docid" placeholder="customerid"
+							formControlName="id" readonly />
+						<p class="messages text-danger"
+							*ngIf="patientEdit.controls.id.errors">This field is
+							required!</p>
+
+
+					</fieldset>
+				</div>
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label semibold" for="exampleInput">
+							Patient Code </label> <input type="text" name="doctorName"
+							class="form-control" id="docid" placeholder="PatientId"
+							formControlName="customerCode" />
+						<p class="messages text-danger"
+							*ngIf="patientEdit.controls.customerCode.errors">This field
+							is required!</p>
+
+
+					</fieldset>
+				</div>
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Patient name
+						</label> <input type="text" class="form-control" id="docregistrationid"
+							placeholder="doctorregid" formControlName="patientName" />
+						<p class="messages text-danger"
+							*ngIf="patientEdit.controls.patientName.errors">This field is
+							required!</p>
+
+					</fieldset>
+				</div>
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput"> Patient Type
+						</label> <input type="text" class="form-control" id="docname"
+							placeholder="PatientType" formControlName="customerType" />
+						<p class="messages text-danger"
+							*ngIf="patientEdit.controls.customerType.errors">This field
+							is required!</p>
+
+
+					</fieldset>
+				</div>
+
+
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Gender </label> <input
+							type="text" class="form-control" id="dochospitalname"
+							placeholder="gender" formControlName="gender" />
+
+
+					</fieldset>
+				</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput"> Age </label> <input
+							type="text" class="form-control" id="docspecialist"
+							placeholder="specialist" formControlName="age" />
+
+					</fieldset>
+				</div>
+			</div>
+			<!--.row1end-->
+			<h4>Contact Details :</h4>
+			<div class="row">
+				<!--.row2start-->
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Address
+						</label> <input type="text" class="form-control" id="doc_address1"
+							placeholder="doc_address1" formControlName="address1" />
+						<p class="messages text-danger"
+							*ngIf="patientEdit.controls.address1.errors">This field
+							is required!</p>
+
+					</fieldset>
+				</div>
+
+				<div class="col-lg-4" id="country">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">City </label> <input
+							type="text" class="form-control" id="doc_address1"
+							placeholder="City" formControlName="city" />
+
+
+					</fieldset>
+				</div>
+
+				<div class="col-lg-4" id="country">
+					<section>
+						<label class="form-label" for="country">Country</label>
+						<div id="country">
+							<select class="select2" id="doccountry" class="form-control"
+								formControlName="country" (change)="chg()">
+								<option *ngFor="let item of countries; let i = index"
+									value={{item[0]}}>{{item[1]}}</option>
+
+							</select>
+						</div>
+					</section>
+				</div>
+
+				<div class="col-lg-4" id="state">
+					<section class="form-group">
+						<label class="form-label" for="state">State</label>
+						<div id="state">
+							<select class="select2" id="docstate" class="form-control"
+								formControlName="state">
+								<option *ngFor="let item of states; let i = index"
+									value={{item[0]}}>{{item[2]}}</option>
+							</select>
+						</div>
+					</section>
+				</div>
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Pin code</label> <input
+							type="text" class="form-control" id="docpincode"
+							placeholder="Enter Pin Code" formControlName="pincode" />
+
+
+					</fieldset>
+				</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label semibold" for="exampleInput">Phone
+							No</label> <input type="number" class="form-control" id="docphonenumber"
+							placeholder="Enter Phone Number" formControlName="phoneNumber" />
+
+
+					</fieldset>
+				</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Mobile No</label> <input
+							class="form-control" id="docmobile"
+							placeholder="Enter Mobile Number" formControlName="mobileNumber" />
+						<p class="messages text-danger"
+							*ngIf="patientEdit.controls.mobileNumber.errors">This field
+							is required!</p>
+					</fieldset>
+				</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInputEmail1">Email
+							Address</label> <input type="text" class="form-control" id="docemail"
+							placeholder="Enter Email Address" formControlName="emailid" />
+						<p class="messages text-danger"
+							*ngIf="patientEdit.controls.emailid.errors">This field is
+							required!</p>
+
+
+					</fieldset>
+				</div>
+
+
+				<div class="col-lg-4" style="text-align: center"></div>
+
+
+				<div class="col-lg-4" style="text-align: center">
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary"
+							[disabled]="!patientEdit.valid">Patient Update</button>
+
+
+					</div>
+				</div>
+
+				<div class="col-lg-4" style="text-align: center">
+					<div class="form-group">
+
+						<a [routerLink]="['/patient/patientview']" class="btn btn-primary">Patient
+							View</a>
+
+					</div>
+				</div>
+
+			</div>
+			<!--.row2-->
+
+		</div>
+		<!-- box-typical-->
+
+	</form>
+
+</div>
+<!-- form  end--> </app-card>
+

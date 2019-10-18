@@ -1,0 +1,134 @@
+<style>
+#swidth{
+    width:325px;
+}
+</style>
+<app-card>
+        <div class="sub-title">Edit Details 
+                <i class="fa fa-edit ficon"></i>
+            </div><br>
+    <form [formGroup]="registerForm">
+
+        <div class="box-typical box-typical-padding">
+            
+                    <div class="row">
+                          <div class="col-lg-4" *ngIf="registerForm.controls.invdispflag.value=='0' ">
+                                <label class="form-label semibold" for="exampleInput">StkExp No </label>
+                            <select class="form-control" (change)="viewEdit()" formControlName="id">
+                                <option *ngFor="let item of editdata; let i = index" value={{item[0]}}>{{item[1]}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-4" *ngIf="registerForm.controls.invdispflag.value=='1' ">
+                                <label class="form-label semibold" for="exampleInput">StkExp No
+                                    </label>
+                            <input type="text" class="form-control" formControlName="formno" />
+                        </div>
+
+                       
+                        <div class="col-md-4">
+                                <label class="form-label semibold" for="exampleInput">Date
+                                    </label>
+        
+                            <input type="date" class="form-control" formControlName="date" />
+                        </div>
+
+            </div> <!-- splitcolumn  end--><br>
+
+            <div formArrayName="stkexp" style="max-height:280px"  class="flow">
+                <!--. table  start-->
+                <div>
+                    <table class="table styletab">
+                        <thead class="stylehead">
+                            <tr>
+                                <th>Select </th>
+                                <th>S. No </th>
+                                <th>Prod Name</th>
+                                <th>BatchNo</th>
+                                <th>StkQty</th>
+                                <!-- <th>Box</th>
+                                <th>Strip </th> -->
+                                <th>No Of Qty </th>
+                                <th>Exp Qty </th>
+                            </tr>
+                        </thead>
+                        <tbody class="stylebody">
+                        <tr *ngFor="let address of registerForm.controls.stkexp.controls; let i=index"
+                            [formGroupName]="i">
+                            <td><input type="checkbox" class="tabcheck" id="width1" formControlName="delflag" /></td>
+                            <td><input value={{i+1}} id="width2"/></td>
+                            <td><input formControlName="drugname" id="swidth" style="text-align:left" /></td>
+                            <td><input formControlName="batchrefid" id="width4" style="text-align:left"  /></td>
+                            <td><input formControlName="actualstockqty" (keydown)="calc($event)" /></td>
+                            <!-- <td><input formControlName="expboxqty" /></td>
+                            <td><input formControlName="expstripqty" (keydown)="calc($event)" /></td> -->
+                            <td><input formControlName="exptabqty" (keydown)="calc($event)" /></td>
+                            <td><input formControlName="expstockqty" /></td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+            </div><br>
+            <!--. table     end-->
+
+            <div class="col-lg-3">
+                    <button class="btn btn-round" (click)="remove()" >Remove</button>
+            </div><br>
+            
+            <div class="row ml-3">
+                    <div class="col-lg-4">
+                            <label class="form-label"> To Loc Type
+                            </label>
+                            <select class="form-control" formControlName="tolocname" (change)="getlocrefname()">
+                                <option value="opt1" selected disabled>---Select Loc Type---</option>
+                                <option *ngFor="let coun of tolocname1 " value={{coun[0]}}>{{coun[1]}}</option>
+                            </select>
+                        </div>
+                    <div class="col-lg-4">
+                            <label class="form-label"> To Loc Name</label>
+                       
+                            <select class="form-control" formControlName="tolocrefid">
+                                <option value="opt1" selected disabled>---Select Loc Name---</option>
+                                <option *ngFor="let coun of tolocrefid1 " value={{coun[0]}}>{{coun[1]}}</option>
+                            </select>
+                        </div>
+                
+               
+            </div><br>
+          
+            <div class="row    ">
+                <!-- splitcolumn  start-->
+                <div class="col-lg-4">
+                    <div class="row">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="row">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="row">
+                        <ng2-toasty [position]="position"></ng2-toasty>
+                    </div>
+                </div>
+            </div> <!-- splitcolumn   end-->
+
+        </div>
+        <!-- box-typical-->
+        <div class="row">
+            <!-- row Start-->
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+            <button class="btn btn-round" (click)="onSubmit()">Update</button>
+            </div>
+            <div class="col-lg-2">
+            <button class="btn btn-round" (click)="deleteStockExpiry()" [routerLink]="['/ExpiredStock/ViewExpiredStock' ]">Delete</button>
+            </div>
+            <div class="col-lg-2">
+            <button class="btn btn-round" [routerLink]="['/ExpiredStock/ViewExpiredStock' ]">
+                Back</button></div>
+        </div> <!-- row end-->
+    </form>
+</app-card>
+<div class="scrollnew"> </div>

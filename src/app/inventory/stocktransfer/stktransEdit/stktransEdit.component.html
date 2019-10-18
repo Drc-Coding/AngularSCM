@@ -1,0 +1,155 @@
+
+
+<style>
+    
+        </style>
+            
+  
+            <app-card>
+            <div class="sub-title">Edit Details
+              <i class="fa fa-edit ficon"></i>
+            </div><br>
+            
+            <form [formGroup]="registerForm" >
+            
+            
+                <div class="box-typical box-typical-padding">
+            
+        
+                 
+                                <div class="row">
+              
+                                    
+                                    <div class="col-lg-4"  *ngIf="registerForm.controls.invdispflag.value=='0' "  >
+                                        <label class="form-label semibold" for="exampleInput">Stock Transfer No </label> 
+                                
+                              
+                                          <select  class="form-control"  (change)="viewEdit()"    formControlName="id">
+                                            
+                                              <option *ngFor="let item of editdata; let i = index"    value={{item[0]}}>{{item[1]}}</option>
+                                                
+                                          </select>
+                                   </div> 
+
+                                   
+                                      <div class="col-md-4"  *ngIf="registerForm.controls.invdispflag.value=='1' "  >
+                                            
+                                    
+                                          <label class="form-label semibold" for="exampleInput"> Stock Transfer No 
+                                                                       </label> 
+                                                            
+                                                    
+                                                <input type="text" 
+                                                class="form-control"  formControlName="formno" 
+                                                  />
+                                      
+                                    
+                                        </div> 
+        
+        
+                                        <div class="col-md-4">
+                                            
+                                    
+                                          <label class="form-label semibold" for="exampleInput">Date 
+                                                                       </label> 
+                                                            
+                                            
+                                              <input type="date" 
+                                              class="form-control"  formControlName="date" 
+                                             />
+                                      
+                                    
+                                        </div>           
+                                                    
+                                                     
+                                    </div><br>
+
+                                    <div class="title1"><u>Stock Transfer Products</u></div><br>
+                
+                                                                         
+                                       <div formArrayName="stktrans"  class="flow">  <!--. table  start--> 
+                                        
+                                          
+                                         <table class="table styletab">
+                                             <thead class="stylehead">
+                                             <tr >
+                                                <th >S.No</th>
+                                                <th> Prod Code </th>
+                                                <th> Prod Name  </th>
+                                             
+
+                                                <th> Required </th>
+                                                <th> Available </th>
+                                                <th>  Approved  </th>
+                                                <th> Waiting </th>
+                                                
+
+                                                <th> Rejected </th>
+                                              
+                                                <th > Batchno </th>                                                              
+                                                <th >Transfer Qty </th>
+                                   
+                                                <th> RejectedReason </th>                                              
+                                                 
+            
+                     
+            
+                                             </tr>
+                                         </thead>
+                                        
+                                         <tbody class="stylebody">
+
+                                         <tr *ngFor="let address of registerForm.controls.stktrans.controls; let i=index" [formGroupName]="i">
+                                            <td><input   value={{i+1}} id="width2"  readonly/></td>
+                                            <td><input  formControlName="drugproductrefid"    readonly/></td>
+                                            <td><input  formControlName="drugname"   id="width6" style="text-align:left" readonly/></td>
+                                            
+                                            <td><input  formControlName="prodreqqty" readonly/></td>
+                                            <td><input  formControlName="prodavailqty" readonly/></td>
+                                            <td><input  formControlName="apprtotalqty" readonly/></td>
+                                            <td><input  formControlName="waitingtotalqty" readonly/></td>
+                                         
+                                         
+                                            <td><input  formControlName="rejectqty" readonly/></td>
+                                    
+                                              <td><input  formControlName="batchname"   id="input7width1"    readonly/></td>
+                                              <td><input  formControlName="transfertotalqty" /></td>  
+
+                             
+                                              <td><input  formControlName="rejectreason" id="width4" /></td>  
+                                          </tr>
+
+                                          </tbody>
+                                     
+                                         </table>
+                    
+                                </div>     <!--. table     end--> 
+            
+      
+              </div><br>
+                <!-- box-typical-->
+              
+                                                                    
+              <div class="row">   <!-- row Start--> 
+                
+              <div class="col-lg-1"></div>
+     
+               <div class="col-lg-3">  
+                   <button  type="button" class="btn btn-round"
+                  [routerLink]="['/StockTransfer/ViewStockTransfer' ]"    > Back  </button> 
+                 </div>     
+            
+                                                                                                 
+             </div>  <!-- row end--> 
+                                    
+            
+        
+
+         </form>
+
+            </app-card>
+            
+        
+
+        
+        

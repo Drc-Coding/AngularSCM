@@ -1,0 +1,19 @@
+<div *ngIf="warehousetrans">
+
+<app-card [title]="'Update/Delete'">
+      <form (ngSubmit)="onSubmit()"> 
+        
+       
+        
+       
+        
+       
+         <div class="col-sm-6">
+         <button class="btn btn-success"><i class="icofont icofont-check-circled"></i>Submit</button>
+         <button class="btn btn-danger" (click)="delete()">Delete</button>
+         <button type="submit" class="btn btn-info">Update</button>
+         </div>
+              </form>
+    </app-card>
+
+</div>

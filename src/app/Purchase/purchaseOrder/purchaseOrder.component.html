@@ -1,0 +1,276 @@
+
+
+<app-card >
+        <div class="sub-title">Purchase Order
+                <i class="fa fa-shopping-cart" style="float: right;" aria-hidden="true"></i> 
+              </div><br>
+        <form [formGroup]="purchaseOrder" name="form_a">
+            <div>
+                <!-- <div class="card-header bg-info">Order Number</div> -->
+                <div>
+        <div class="form-group row">   
+            <!-- <div style='display:none;'>                       
+                <label for="email" class="col-sm-2 col-form-label">Order Number#</label>
+                <div class="col-sm-4">
+                    <input type="text"  class="form-control inputline"  formControlName="poautoincr" disabled>   
+                </div>
+                </div> -->
+                <label for="email" class="col-sm-2 form-label">Purchase Order Date</label>
+                <div class="col-sm-3">
+                    <input type="date"  class="form-control inputline"  placeholder="Enter the date" required="true" formControlName="podate" >
+                  </div>
+                  <label for="stock"  class="col-sm-2 form-label">Distributor Name</label>
+                  <div class="col-sm-3">
+                 <ng-select [options]="distributors" placeholder="Search Distributor" (change)="getDistributorProduct()" (click)="getDistributorProduct()" (input)="getDist($event.target.value)"
+                   formControlName="distributor">
+                 </ng-select>
+                </div>
+         </div>
+      
+         <div class="form-group row">                           
+             
+                <label for="password" class="col-sm-2 form-label">Product Barcode</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" formControlName="barcode" placeholder="Scan Barcode" (keyup)="getBarcodeProduct($event)">
+                </div>
+                <label for="email" class="col-sm-2 form-label">Purchase Session</label>
+                <div class="col-sm-3">
+                    <angular2-multiselect class="form-control inputline" [data]="hospitallist" [settings]="dropdownSettings3"  [(ngModel)]="selectedItems" formControlName="hospitalid"
+                        (click)="getHosp()">
+                    </angular2-multiselect>                  
+            </div> 
+            <div class="col-sm-2">
+                <input type="button" class="btn btn-round" (click)="getPurchaseSession()" value="LoadSession Data">                  
+      </div>  
+           </div>
+           
+      <div class="form-group row">
+            <label class="col-sm-2 form-label">Product Name</label>
+            <div class="col-sm-3">
+            <ng-select [options]="characters"  placeholder="Search Drug Name"  (input)="getProduct($event.target.value)"
+            formControlName="drug" >
+        </ng-select>
+        </div>
+        <label class="col-sm-2 form-label">Quantity</label>
+        <div class="col-sm-3">
+            <input type="text"  class="form-control inputline" (keydown)="getDrugs($event)"  placeholder="Enter Quantity" formControlName="qty" >
+          </div>
+      </div> 
+
+    </div>
+</div>
+      
+            <div class="flow" style="overflow:auto;" formArrayName="brandDetails">
+              <table class="table styletab">
+                  <thead class="stylehead">
+                      <tr>
+                          <th>
+                              <input type="checkbox" class="checkAll" style="height:1.4em;width:1.3em" name="checkAll" />
+                          </th>
+
+                          <th>S.No</th>
+                          <th>Purchase SessionID</th>
+                          <th>Prod Code</th>
+                          <th>Prod Name</th>
+                          <th>Dosage       </th>   
+                          
+                          <th>UOM</th>
+                          <th>Equal To</th>
+                          <!-- <th>Box Quantity</th>
+                          <th>Strip Quantity</th>
+                          <th>Tablet Quantity</th>     -->
+                          <th>Total Qty</th>
+                          <th>Acquisition Cost</th>
+                          <th>Total Cost</th>
+                          <th>Abc Analysis</th>
+                          <th>Prod Rank</th>
+                          <th>Prod Remark</th>       
+                          <th>Action</th>                                                                                                                                                                     
+                      </tr>
+                  </thead>
+                  <tbody class="stylebody">
+                      <tr *ngFor="let brand of purchaseOrder.controls.brandDetails.controls; let i = index" [formGroupName]="i">
+                          <td>
+                              <input type="checkbox" name="check" class="tabcheck" id="width1" /></td>
+                              <td id="width2">{{i+1}}</td>
+                              <td>
+                                  <input type="text" formControlName="pursessionno" id="width5" readonly>
+                              </td>
+                              <td>
+                                  <input type="text" formControlName="itemcode"  readonly>
+                              </td>
+                              <td>
+                                  <input type="text" formControlName="itemname" id="width6"  readonly>
+                              </td>   
+                              <td>
+                                  <input type="text" formControlName="dosage" id="width4"  readonly>
+                              </td>                                 
+                              <!-- <td>
+                                  <input type="hidden" align="center" formControlName="boxqty" class="tds boxqfocus" (change)="getSum()" (click)="getSum()">
+                                  <div *ngIf="brand.hasError('pattern', 'boxqty')" style="color:red;">Invalid Charcters..</div>
+                              </td>
+                              <td>
+                                  <input type="hidden" formControlName="stripqty" class="tds stripqfocus" (change)="getSum()" (click)="getSum()">
+                                  <div *ngIf="brand.hasError('pattern', 'stripqty')" style="color:red;">Invalid Charcters..</div>
+                              </td> -->
+                              <td>
+
+                       <select style="border-width: 0px;" name="select" formControlName="uom">
+                      <option value="opt" selected disabled>-select UOM-</option>
+                      <option *ngFor="let list of unitofMsr " value={{list[0]}}>{{list[1]}}</option></select>
+
+                              </td>
+                              <td>
+                                <input type="text" formControlName="equalto" class="tabqfocus">
+                                <div *ngIf="brand.hasError('pattern', 'equalto')" style="color:red;">Invalid Charcters..</div>
+                       
+                              </td>
+                              <td>
+                                  <input type="text" formControlName="tabletqty" class="tabqfocus" (keydown)="calc($event)" (change)="getSum()" (click)="getSum()" autofocus>
+                                  <div *ngIf="brand.hasError('pattern', 'tabletqty')" style="color:red;">Invalid Charcters..</div>
+                              </td> 
+                              <!-- <td>
+                                  <input type="hidden" formControlName="totalqty" class="tds tabqfocus" (change)="getSum()" (click)="getSum()" autofocus>
+                                  <div *ngIf="brand.hasError('pattern', 'totalqty')" style="color:red;">Invalid Charcters..</div>
+                              </td>      -->
+                              <td>
+                                <input type="text" formControlName="unitprice" class="tabqfocus right" (keydown)="calc($event)" autofocus>
+                                <div *ngIf="brand.hasError('pattern', 'unitprice')" style="color:red;">Invalid Charcters..</div>
+                              </td>
+                              <td>
+
+                             <input type="text" formControlName="totalproductprice" class="tabqfocus right" (change)="getSum()" (click)="getSum()" autofocus>
+                             <div *ngIf="brand.hasError('pattern', 'totalproductprice')" style="color:red;">Invalid Charcters..</div>
+                              </td>
+                              <td>
+                                  <input type="text" formControlName="abc" id="width3">
+                              </td>
+                              <td>
+                                <input type="text" formControlName="distprodrank"  >
+                            </td>
+                              <td>
+                                  <input type="text" formControlName="distremarks"  >
+                              </td>
+                            
+                              <td>
+                                      <button type="button" class="btn viewbtn" (click)="removeRow(i)">Remove</button>
+                              </td>
+      
+                   
+                    
+                  
+                      <tr>
+                          <td>
+                              <input type="checkbox" name="check" class="tabcheck" id="width1"/>
+                              </td> 
+                              <td>
+                                  <input type="text" id="width2">
+                              </td>                                                                   
+                              <td>
+                                  <input type="text" >
+                              </td>
+                              <td>
+                                  <input type="text" >
+                              </td>                                   
+                              <td>
+                                  <input type="text" >
+                              </td>                                                                 
+                              <td>
+                                  <input type="text" >
+                              </td>
+                              <td>
+                                  <input type="text" >
+                              </td>                                                                  
+                              <td>
+                                  <input type="text" >
+                              </td>                            
+                              <td>
+                                  <input type="text" >
+                              </td>                         
+                              <td>
+                                  <input type="text" >
+                              </td> 
+                              <td>
+                                  <input type="text" >
+                              </td>
+                              <td>
+                                  <input type="text" id="width3" >
+                              </td>
+                              <td>
+                                  <input type="text" >
+                              </td>
+                              <td>
+                                  <input type="text" >
+                              </td>
+                              <td>
+                                      <input type="text" >
+                              </td>
+                      </tr>
+                  </tbody>
+                  <tfoot>
+                  </tfoot>
+              </table>
+          </div>
+          <br>
+      
+        <div class="form-group row">  
+            <div class="col-lg-2">
+              <fieldset class="form-group">
+                <label class="form-label">Total Product</label>
+                <input  type="text" class="form-control" class="form-control"  formControlName="totalproduct" disabled>            
+              </fieldset>
+            </div>
+            <!-- <div class="col-lg-2">
+              <fieldset class="form-group">
+                <label class="col-form-label">Total Box Quantity</label>
+                <input type="text" class="form-control" class="form-control" formControlName="totalboxquantity" disabled>            
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <fieldset class="form-group">
+                <label class="col-form-label">Total Strip Quantity</label>
+                <input type="text" class="form-control" class="form-control" formControlName="totalstpquantity" disabled>            
+              </fieldset>
+            </div>     -->
+            <div class="col-lg-2">
+              <fieldset class="form-group">
+                <label class="form-label">Total Quantity</label>
+                <input type="text" class="form-control" class="form-control"  formControlName="totaltabquantity" disabled>            
+              </fieldset>
+           </div> 
+           <!-- <div class="col-lg-2">
+            <fieldset class="form-group">
+              <label class="col-form-label">Total  Quantity</label>
+              <input type="text" class="form-control" class="form-control"  formControlName="totalquantity" disabled>            
+            </fieldset>
+          </div>  -->
+
+          <div class="col-lg-2">
+            <fieldset class="form-group">
+              <label class="form-label">Acquisition Cost</label>
+              <input type="text" class="form-control" class="form-control"  formControlName="grandtotal" disabled>            
+            </fieldset>
+         </div> 
+        </div>
+        <div class="form-group row">                 
+                <div class="col-lg-4">
+                            <button (click)="onSubmit()" class="btn btn-round">Save</button>                    
+                </div>
+      
+                <div class="col-lg-4">
+                            <button type="submit" class="btn btn-round"  [routerLink]="['/PurchaseOrder/ViewPurchaseOrder']">View</button>                    
+                </div>
+                <div class="col-lg-4">
+                    <button class="btn btn-round" (click)="poprint()"  >Print</button>
+                    <!-- <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/BillPrint_PurchaseOrder/Billprnt_PO.rptdesign&branchrefid={{branchid}}&Locname={{locname}}&Locrefid={{locrefid}}&Companyrefid={{companyrefid}}&porefid={{poid}}&POID={{poid}}&ShopID={{shopid}}&__format=PDF"
+                    class="btn btn-success btn-round active" (click)="poprint()" role="submit" aria-pressed="true" routerLinkActive="active" target="form_a">Print</a> -->
+        
+            </div>
+               
+        </div>  
+    
+        </form>
+     
+      
+      </app-card>
+      <ng2-toasty [position]="position"></ng2-toasty>

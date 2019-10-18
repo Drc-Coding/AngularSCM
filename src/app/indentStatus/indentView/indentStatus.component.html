@@ -1,0 +1,180 @@
+<style>
+  
+  .nodata {
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    font-size: 25px;
+    color: rgb(245, 50, 50);
+    font-family: Verdana, Geneva, sans-serif;
+  }
+
+  .action {
+    font-size: 15px;
+    color: green;
+  }
+
+  .action1 {
+    font-size: 15px;
+    color: red;
+  }
+
+  .statusbtn{
+    border-radius: 2rem;
+    background-color:  #5aa02c ;
+    border-color:  transparent ;
+    width:180px;
+    text-align:center;
+    font-family:Montserrat;
+    color: #fff;
+    cursor:pointer;
+    padding:2px 5px;
+  }
+
+  .bform{
+    border:2px solid #b3b3b3;
+    border-radius:5px;
+  }
+  
+</style>
+
+<app-card><br>
+
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
+      <div>
+        <label class="label-control">Show
+          <select class="form-control input-sm full-data-show-entry" [(ngModel)]="rowsOnPage">
+            <option [ngValue]="1">1</option>
+            <option [ngValue]="25">25</option>
+            <option [ngValue]="50">50</option>
+            <option [ngValue]="100">100</option>
+          </select>
+          Entries
+        </label>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      <div class="form-inline justify-content-end">
+        <strong class="searchstyle">Search:</strong>
+          <input type="search" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Enter Requisition Number" autofocus/>
+      </div>
+    </div>
+
+  </div><br>
+  <!-- <div class="panel-heading">User information</div>-->
+
+  <form [formGroup]="indentStatus" class="mx-2">
+
+  <div class="bform">
+
+    	<div class="form-group row mx-2 my-2">
+
+          <div class="col-lg-3">
+              <fieldset class="form-group">
+                <label class="form-label" style="font-weight:bold">Company Name</label>
+                <input type="text" class="form-control" formControlName="companyid" readonly>
+              </fieldset>
+            </div>
+
+            <div class="col-lg-3">
+                <fieldset class="form-group">
+                  <label class="form-label" style="font-weight:bold">Branch Name</label>
+                  <input type="text" class="form-control" formControlName="branchid" readonly>
+                </fieldset>
+              </div>
+          
+              <div class="col-lg-3">
+                  <fieldset class="form-group">
+                    <label class="form-label" style="font-weight:bold">From Location </label>
+                    <input type="text" class="form-control" formControlName="locname" readonly>
+                  </fieldset>
+                </div>
+              
+                <div class="col-lg-3">
+                    <fieldset class="form-group">
+                      <label class="form-label" style="font-weight:bold">From Shop Name</label>
+                      <input type="text" class="form-control" formControlName="locref" readonly>
+                    </fieldset>
+                  </div>
+      
+  
+           
+         </div> 
+
+  </div><br>
+</form>
+
+  <div class="dt-responsive" style="overflow:auto">
+    <table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery"
+      #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+      <thead>
+        <tr>
+          <th>
+           S.No
+          </th>
+          <!-- <th>
+            From Location
+          </th>
+          <th>
+            From Location Name
+          </th> -->
+          <th>
+            Requesition Number
+          </th>
+          <th>
+            Requesition Date
+          </th>
+          <th>
+            To Location
+          </th>
+          <th>
+            To Location Name
+          </th>
+         
+          <th>
+            Status
+          </th>
+        </tr>
+        <tr>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="(data | dataFilter : filterQuery) == 0">
+          <td></td>
+          <td></td>
+          <td class="nodata">No matching Records found....</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr *ngFor="let val of mf.data;let i=index">
+          <td>{{i+1}}</td>
+          <!-- <td>{{val[4]}}</td>
+          <td>{{val[5]}}</td> -->
+          <td>{{val[8]}}</td>
+          <td>{{val[9]}}</td>
+          <td>{{val[6]}}</td>
+          <td>{{val[7]}}</td>
+          
+          <td style="text-align: center;">
+            <span class="btn statusbtn" *ngIf="val[10]=='0'">Active</span>
+            <span class="btn statusbtn" *ngIf="val[10]=='1'">Stock Transfered</span>
+            <span class="btn statusbtn" *ngIf="val[10]=='3'">Session Completed</span>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="12">
+            <mfBootstrapPaginator class="pagination-main f-right"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</app-card>

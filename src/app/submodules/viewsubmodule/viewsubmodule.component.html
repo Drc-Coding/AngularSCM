@@ -1,0 +1,116 @@
+
+<app-card>
+
+
+    <div align ="right">
+        <button class="btn btn-success btn-round btnlinklist" (click)="view()">Add Sub Module</button>
+      </div><br>
+
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
+            <div>
+              <label class="label-control">Show
+                <select class="form-control input-sm full-data-show-entry" [(ngModel)]="rowsOnPage">
+                  <option [ngValue]="1">1</option>
+                  <option [ngValue]="25">25</option>
+                  <option [ngValue]="50">50</option>
+                  <option [ngValue]="100">100</option>
+                </select>
+                Entries
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6">
+            <div class="form-inline" >
+              <strong style="margin-left:65px">Search :</strong>
+              <input type="search" [(ngModel)]="filterQuery" class="form-control ml-2 w-75" placeholder="Search Module">
+          </div>
+          </div>
+        </div><br>
+
+       <!-- <table class="table table-striped table-responsive table-bordered">  -->
+          <table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery"
+          #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+          <thead>
+          <tr>
+<!--               <th> -->
+<!--                 Id -->
+<!--               </th> -->
+            <th>
+            <mfDefaultSorter by="countryname"><h6>Country Name</h6></mfDefaultSorter>
+            </th>
+            <th>
+             <mfDefaultSorter by="ProductName"><h6>Product Name</h6></mfDefaultSorter>
+            </th>
+            <th>
+             <mfDefaultSorter by="DomainName"><h6>Domain Name</h6></mfDefaultSorter>
+            </th>
+            <th>
+             <mfDefaultSorter by="SubNameDomain"><h6>Sub Domain</h6></mfDefaultSorter>
+            </th>
+            <th>
+            <mfDefaultSorter by="ModuleName"><h6>Module Name</h6></mfDefaultSorter>
+            </th>
+            <th>
+             <mfDefaultSorter by="SubModuleName"><h6>Sub Module Name</h6></mfDefaultSorter>
+              </th>
+             <th>
+              <mfDefaultSorter by="status"><h6>Active/Inactive</h6></mfDefaultSorter>
+              </th>
+          </tr>
+          <tr>
+          </tr>
+          </thead>
+          <tbody>
+              <tr *ngIf="(data | dataFilter : filterQuery) == 0">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="nodata">No matching Records found....</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+              </tr>
+       <!--   <tr *ngFor="let cust of subviewmodules"  
+         [class.selected]="cust === selectedmodules">  -->
+
+         <tr *ngFor="let cust of mf.data;let i=index" 
+         [class.selected]="cust === selectedModules">
+         
+           
+<!--               <td>{{cust[0]}}</td> -->
+            <td>{{cust[4]}}</td>
+            <td>{{cust[5]}}</td>
+            <td>{{cust[6]}}</td>
+            <td>{{cust[7]}}</td>
+            <td>{{cust[8]}}</td>
+            <td>{{cust[9]}}</td>
+            <td>
+          <span class="label label-success" *ngIf="cust[10]=='0'" style="font-size: 16px;">Active</span>
+          <span class="label label-danger" *ngIf="cust[10]=='1'" style="font-size: 16px;">In Active</span>
+        </td>
+          
+
+          </tr>
+          </tbody>
+          <tfoot>
+              <tr>
+                <td colspan="7">
+                  <mfBootstrapPaginator class="pagination-main f-right"></mfBootstrapPaginator>
+                </td>
+              </tr>
+            </tfoot>
+        </table>
+    
+      <!-- Edit table -->
+      
+    </app-card>
+<!--  <hospital-details [hospital]="selectedHospital"></hospital-details> -->
+
+
+

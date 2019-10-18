@@ -1,0 +1,100 @@
+<style>
+    #swidth{
+        width:300px;
+    }
+</style>
+<app-card>
+            
+            <div class="sub-title">View Distributor Wise Product
+                <i class="fa fa-users ficon"></i>
+            </div><br>
+
+            <form [formGroup]="registerForm"  >
+            
+            
+            <div class="box-typical box-typical-padding">
+            
+        
+                    <div class="row"> <!--.row1start--> 
+                                
+                        <div class="col-lg-1"></div>
+
+                                    <div class="col-lg-3">
+                                            
+                                    
+                                        <label class="form-label semibold" for="exampleInput"> Distributor Name
+                                                                       </label> 
+                                                        
+                                            <select  class="form-control" (change)="viewDistProdWhole()"  formControlName="distributor">
+                                                <option *ngFor="let item of distributors; let i = index"
+                                                    value={{item[0]}}>{{item[1]}}</option>
+                                            </select>
+                                      
+                                    
+                                        </div> 
+        
+                        </div><br><br>   <!-- rrghghf 1-->
+           
+                    <div class="row">
+
+                            <div class="col-lg-1"></div>
+
+                        <div class="col-lg-8">
+
+                        <div formArrayName="distprod" class="flow">  <!--. table  start--> 
+                            <div   >
+                             <table class="table styletab">
+                                 <thead class="stylehead">
+                                 <tr >
+                                     <th>S.No </th>                                          
+                                         <th>Prod Code</th>
+                                         <th>Prod Name</th> 
+                                         <th>Distributor Price</th>
+
+                                 </tr>
+                             </thead>
+                            <tbody class="stylebody">
+                             <tr *ngFor="let address of registerForm.controls.distprod.controls; let i=index" [formGroupName]="i">
+                         <td><input   value={{i+1}} id="width2" readonly/></td>
+                                                           
+
+                            <td><input   readonly   formControlName="drugprdid" id="width5"/></td>
+                            <td><input    readonly   formControlName="productname" id="swidth" style="text-align:left"  /></td>
+                            <td><input     readonly formControlName="distprice" /></td>
+
+                                                              
+
+                              </tr>
+                         </tbody>
+                             </table>
+        
+                      </div>
+                    </div>   
+                    </div>  <!--. table     end--> 
+
+                    <div class="col-lg-3">
+                      
+                    
+                    </div>
+
+                </div><!--Row End--><br>
+
+                <div class="col-lg-9" align="right">
+                    <button  type="button" class="btn btn-round" 
+                    [routerLink]="['/DistributorwiseProduct/AddDistributorwiseProduct' ]"    > Back  </button> 
+       
+                </div>
+            
+                                        
+              </div>
+                <!-- box-typical-->
+            
+            </form>
+   
+        
+        
+            </app-card>
+            
+            
+        
+    

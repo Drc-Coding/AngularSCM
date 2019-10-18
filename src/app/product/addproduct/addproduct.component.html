@@ -1,0 +1,44 @@
+
+
+
+<app-card>
+	<div align="right">
+		<button class="btn btn-success btn-round btnlinklist" (click)="view();">View</button>
+	</div>
+<br>
+
+	<form [formGroup]="productForm"  (ngSubmit)="onSubmit()">
+
+		<div class="form-group row">
+
+			<div class="col-lg-4">
+				<label class="form-label semibold">
+					<h6>Country</h6>
+				</label>
+				<select name="select" class="form-control" placeholder="Select Country" formControlName="countryid">
+					<option value="opt1" selected disabled>---Select Country Name---</option>
+					<option *ngFor="let coun of country " value={{coun[0]}}>
+						{{coun[1]}}</option>
+				</select>
+			</div>
+
+			<div class="col-lg-4">
+				<fieldset class="form-group mt-2">
+					<label class="form-label semibold">
+						<h6>Product Name</h6>
+					</label>
+					<input type="text" class="form-control" placeholder="Enter your Product Name" minlength="5" formControlName="productname"
+					/>
+					<div class="messages text-danger" *ngIf="productForm.controls.productname.errors?.required">Must not be empty..</div>
+
+				</fieldset>
+			</div>
+		</div>
+
+		<div class="btn-group">
+				<button type="submit" class="btn btn-success btn-round btnlinklist" style="margin: 26px;">Save</button>
+		</div>
+		
+	</form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

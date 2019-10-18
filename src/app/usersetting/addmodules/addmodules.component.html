@@ -1,0 +1,110 @@
+<app-card>
+
+  
+    <div align="right">
+        <button class="btn btn-success btn-round btnlinklist" (click)="view()">viewModules</button>
+      </div><br>
+
+
+      <form [formGroup]="mymodules" (ngSubmit)="onSubmit()">
+        <div class="form-group row">
+
+          <div class="col-sm-4">
+            <h6>Country Name</h6>
+            <select type="text" class="form-control" formControlName="countryid" placeholder="Select Country" id="countryid" name="countryid"
+              (change)="getproduct()" (click)="getproduct()">
+              <option value="0" selected disabled>--Select-- </option>
+              <option *ngFor="let cust of moduleid" value={{cust[0]}}>
+                {{cust[1]}}
+
+              </option>
+            </select>
+          </div>
+
+          <div class="col-sm-4">
+            <h6>Product Name</h6>
+            <select type="text" class="form-control" formControlName="productid" placeholder="Select Product Name" id="productid" name="productid"
+              (change)="getdomain()" (click)="getdomain()">
+              <option value="0" selected disabled>--Select-- </option>
+              <option *ngFor="let cust of product" value={{cust[0]}}>
+                {{cust[1]}}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-sm-4">
+            <h6>Domain Name</h6>
+            <select type="text" class="form-control" formControlName="domainrefid" placeholder="Select Domain Name" id="domainrefid"
+              name="domainrefid" (change)="getsubdomain()" (click)="getsubdomain()">
+              <option value="0" selected disabled>--Select-- </option>
+              <option *ngFor="let cust of domain" value={{cust[0]}}>
+                {{cust[1]}}
+              </option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="form-group row">
+
+          <div class="col-sm-4">
+            <h6>Sub Domain</h6>
+            <select type="text" class="form-control" formControlName="subdomainrefid" placeholder="Enter Module folder" id="subdomainrefid"
+              name="subdomainrefid">
+              <option value="0" selected disabled>--Select-- </option>
+              <option *ngFor="let cust of subdomain" value={{cust[0]}}>
+                {{cust[1]}}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-sm-4">
+            <h6>Module Folder </h6>
+            <input type="text" class="form-control" formControlName="label" placeholder="  ">
+          </div>
+
+          <div class="col-sm-4">
+            <h6>Module Name</h6>
+            <input type="text" class="form-control" formControlName="modulename" placeholder="Enter Module Name" id="modulename" name="modulename">
+          </div>
+
+        </div>
+
+        <div class="form-group row">
+
+          <div class="col-sm-4">
+            <h6>Module Code</h6>
+            <input type="text" class="form-control" formControlName="modulecode" placeholder="Enter Module Code" id="modulecode" name="modulecode">
+          </div>
+
+          <div class="col-sm-4">
+            <h6>Icon </h6>
+            <input type="text" class="form-control" formControlName="icon" placeholder="  ">
+          </div>
+
+          <div class="col-sm-4">
+            <h6>Status</h6>
+            <select name="select" class="form-control" formControlName="status" placeholder="Select Status" id="status" name="status">
+              <option selected disabled>--Select-- </option>
+              <option value="0">Active</option>
+              <option value="1">InActive</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="btn-group">
+
+          <button type="submit" class="btn btn-success btn-round btnlinklist" [disabled]="!mymodules.valid">Submit</button>
+        </div>
+      </form>
+
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>
+<!-- <div [hidden]="!submitted"> -->
+<!-- 	<div class="btn-group "> -->
+<!-- 		<h4>You submitted successfully!</h4> -->
+<!-- 		<button class="btn btn-primary" (click)="goBack()">Back</button> -->
+<!-- 		<button class="btn btn-success" (click)="newAddmodule()">Add</button> -->
+<!-- 	</div> -->
+<!-- </div> -->

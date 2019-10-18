@@ -1,0 +1,92 @@
+<style>
+   
+  
+  .nodata {
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    font-size: 25px;
+    color: red;
+    font-family: Arial;
+  }
+
+  .table-striped tr td:last-child {
+    text-align: left!important;
+}
+
+</style>
+
+<app-card>
+  <br>
+   <div class="row">
+
+    <div class="col-md-6"></div>
+
+    <div class="col-md-6">
+      <div class="form-inline justify-content-end">
+        <strong class="searchstyle">Search:</strong>
+          <input type="text" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Search By Packing No" autofocus/>
+      </div>
+    </div> 
+
+  </div><br> 
+
+  <div class="dt-responsive" style="overflow: auto;">
+    <table class="table table-striped table-bordered table-responsive full-data-table" 
+    [mfData]="data | dataFilter : filterQuery"
+    #mf="mfDataTable" [mfRowsOnPage]="rowOnPage" 
+     [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Packing No</th>
+          <th>Sales Order No</th>
+          <th>Sales Order Date</th>
+          <th>Sales Invoice No</th>
+          <th>No of Products</th>
+          <th>Customer Name</th>
+          <th>Mobile No</th>
+          <th>Employee Name & Code</th>
+          <!-- <th>Action</th> -->
+        </tr>
+       
+      </thead>
+      <tbody>
+         <tr *ngIf="(data | dataFilter: filterQuery) === 0"> 
+        
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="nodata">No matching Records found....</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+       
+     
+        <tr *ngFor="let item of mf.data;let i=index">
+          <td>{{i+1}}</td>
+          <td>{{item[0]}}</td>
+          <td>{{item[2]}}</td>
+          <td>{{item[3]}}</td>
+          <td>{{item[1]}}</td>
+          <td style="text-align: center">{{item[4]}}</td>
+          <td>{{item[5]}}</td>
+          <td>{{item[6]}}</td>
+          <td>{{item[7]}}</td>
+        
+        </tr>      
+
+      </tbody>
+       <tfoot>
+      <tr>
+          <td colspan="12">
+            <mfBootstrapPaginator class="pagination-main f-right"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</app-card>

@@ -1,0 +1,450 @@
+<style>
+    #autolist {
+        border: 1px solid rgba(0, 0, 0, .15);
+        position: absolute;
+        z-index: 21;
+        background-color: #ffffff;
+        width: 16.5em;
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+
+    li input:nth-child(1):focus {
+        background-color: rgba(0, 0, 0, .15);
+    }
+
+    li input:nth-child(3):focus {
+        background-color: rgba(0, 0, 0, .15);
+    }
+
+    li input:nth-child(1) {
+        border: transparent;
+    }
+
+    li input:nth-child(3) {
+        width: 6em;
+        border: transparent;
+        text-align: center;
+    }
+
+    li input:nth-child(2) {
+        display: none;
+    }
+
+    .clicktable {
+        position: absolute;
+        background-color: white;
+        top: 41%;
+        margin-left: 8px;
+        margin-right: 1%;
+        overflow: auto;
+        border: 3px solid #b3b3b3;
+        border-radius: 5px;
+        width: 96%;
+        z-index: 1;
+    }
+
+
+</style>
+
+<app-card>
+
+    <div class="sub-title">Stock Transfer
+        <i class="ti-reload ficon"></i>
+    </div><br>
+
+    <form [formGroup]="registerForm">
+
+        <div class="box-typical box-typical-padding">
+
+            <div class="row">
+                <!-- splitcolumn  start-->
+
+                <div class="col-md-4 Indentreq" *ngIf="registerForm.controls.indentselect.value=='1'">
+                    <label class="form-label semibold" for="exampleInput">Requisition Number
+                    </label>
+
+                    <select class="form-control" (change)="viewSelIndentproduct()" formControlName="indselid">
+                        <option *ngFor="let item of  indtapprno; let i = index" value={{i}}>{{item[1]}}</option>
+                    </select>
+                </div>
+
+
+
+
+                <div class="col-lg-4">
+                    <label class="form-label semibold" for="exampleInput"> Stock Trans Type
+                    </label>
+
+                    <select class="form-control" (change)="viewIndent()" formControlName="indentselect">
+                        <option value='1'>Requisition Transfer </option>
+                        <!--     <option value='2'>General Transfer </option>  -->
+                    </select>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="col-lg-4">
+                    <label class="form-label semibold" for="exampleInput">Stock Trans Date
+                    </label>
+
+                    <input type="date" class="form-control" formControlName="date" />
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="col-md-4 drugname" *ngIf="registerForm.controls.indentselect.value=='2'">
+                    <label class="form-label semibold" for="exampleInput"> Product Name
+                    </label>
+
+                    <input type="text" class="form-control" id="autoname" (focus)="autofocusin()"
+                        (focusout)="autofocusout()" autocomplete="off" (keydown)="autokeyselect($event,0)"
+                        formControlName="autonamenew" />
+                    <div id="autolist">
+                        <ul>
+                            <li *ngFor="let address of      autodata; let i=index" [formGroupName]="i"
+                                (keydown)="autokeyselect($event,i)">
+                                <input readonly value={{address[0]}} />
+                                <input /> {{address[3]}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div><br>
+
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <label class="form-label semibold" for="exampleInput"> From Business Type
+                    </label>
+
+                    <select class="form-control" formControlName="fromlocname">
+                        <option value="1"> Shop </option>
+                        <option value="2">warehouse</option>
+                        <option value="3"> hospital </option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label semibold" for="exampleInput"> From Business Name
+                    </label>
+
+                    <input type="text" class="form-control" formControlName="fromlocrefidname" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label semibold"> Transport Type
+                    </label>
+
+                    <select class="form-control" formControlName="">
+                        <option value='1'> Lorry </option>
+                        <option value='2'> Van </option>
+                    </select>
+                </div>
+
+            </div><br>
+
+            <!-- splitcolumn  end-->
+            <div [formGroup]="registerForm">
+                <!-- table1 start-->
+                <!--addresses-->
+
+
+                <div class="title1"><u>Reorder Product Table</u></div><br>
+
+                <div formArrayName="indentappr">
+
+                    <div class="flow" *ngIf="registerForm.controls.indentselect.value=='1'">
+
+                        <table class="table styletab">
+                            <thead class="stylehead">
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Prod Code</th>
+                                    <th> Prod Name </th>
+                                    <th> Required </th>
+                                    <th> Available </th>
+                                    <th *ngIf="registerForm.controls.boxdispflag.value=='1'"> Approved Box </th>
+                                    <th *ngIf="registerForm.controls.stripdispflag.value=='1'">Approved Strip</th>
+                                    <th *ngIf="registerForm.controls.tabdispflag.value=='1'"> Approved No of Qty</th>
+                                    <th> Total Approved </th>
+                                    <th> Total Waiting </th>
+                                    <th> Total Rejected </th>
+                                    <th> Rejected Reason </th>
+                                    <th> View Stock </th>
+                                </tr>
+                            </thead>
+                            <tbody class="stylebody">
+                                <tr *ngFor="let address of   registerForm.controls.indentappr.controls; let i=index"
+                                    [formGroupName]="i">
+                                    <td>
+                                        <input value={{i+1}} id="width1" readonly />
+                                    </td>
+                                    <td>
+                                        <input formControlName="drugproductrefid" readonly />
+                                    </td>
+                                    <td>
+                                        <input readonly formControlName="drugname" id="width6" style="text-align:left"
+                                            readonly />
+                                    </td>
+                                    <td>
+                                        <input formControlName="prodreqqty" readonly />
+                                    </td>
+                                    <td>
+                                        <input formControlName="prodavailqty" readonly />
+                                    </td>
+                                    <td *ngIf="registerForm.controls.boxdispflag.value=='1'">
+                                        <input class='box' formControlName="apprboxqty" (change)="calcIndtAppr()"
+                                            type="number" />
+                                    </td>
+                                    <td *ngIf="registerForm.controls.stripdispflag.value=='1'">
+                                        <input class='box' formControlName="apprstripqty" (change)="calcIndtAppr()"
+                                            type="number" />
+                                    </td>
+                                    <td *ngIf="registerForm.controls.tabdispflag.value=='1'">
+                                        <input class='box' formControlName="apprtabqty" (change)="calcIndtAppr()"
+                                            type="number" />
+                                    </td>
+                                    <td>
+                                        <input formControlName="apprtotalqty" readonly />
+                                    </td>
+                                    <td>
+                                        <input formControlName="waitingtotalqty" readonly />
+                                    </td>
+                                    <td>
+                                        <input formControlName="rejectqty" (change)="calcIndtAppr()" />
+                                    </td>
+                                    <td>
+                                        <input formControlName="rejectreason" id="width4" />
+                                    </td>
+                                    <td>
+                                        <span class="btn viewbtn" (click)="viewStock(i)">View</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div><br>
+            <!-- table1  end-->
+
+
+            <div [formGroup]="registerForm" *ngIf="registerForm.controls.indapprflag.value==1"  class="clicktable">
+                <!-- table2 start-->
+                <!--addresses -->
+                <div formArrayName="stk">
+
+                    <div class="title1"><u>Batch Wise Stock Transfer</u></div><br>
+
+                    <div class="flow">
+                        <!--table2_1 start -->
+
+                        <table class="table styletab" (focus)="myFunction()">
+                            <thead class="stylehead">
+                                <tr>
+                                    <th>Select</th>
+                                    <th>Prod Code</th>
+                                    <th> Prod Name </th>
+                                    <th> Required </th>
+                                    <th> Approved Total </th>
+                                    <th> Waiting Total </th>
+                                    <th> Batch No</th>
+                                    <th> Expiry Date</th>
+                                    <th> Available </th>
+                                    <th *ngIf="registerForm.controls.boxdispflag.value=='1'">Transfer Box </th>
+                                    <th *ngIf="registerForm.controls.stripdispflag.value=='1'">Transfer Strip </th>
+                                    <th *ngIf="registerForm.controls.tabdispflag.value=='1'">Transfer No Of Qty</th>
+                                    <th> Total Transfer </th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="stylebody">
+
+                                <tr *ngFor="let address of registerForm.controls.stk.controls; let i=index"
+                                    [formGroupName]="i">
+                                    <td>
+                                        <input type="checkbox" class="tabcheck" id="width1"
+                                            formControlName="batchselectFlag" />
+                                    </td>
+                                    <td>
+                                        <input formControlName="drugproductrefid" readonly />
+                                    </td>
+                                    <td>
+                                        <input formControlName="drugname" readonly id="width6" style="text-align:left"
+                                            readonly />
+                                    </td>
+                                    <td>
+                                        <input formControlName="prodreqqty" readonly />
+                                    </td>
+                                    <td>
+                                        <input formControlName="apprtotalqty" readonly />
+                                    </td>
+                                    <td>
+                                        <input formControlName="waitingtotalqty" readonly />
+                                    </td>
+                                    <td>
+                                        <input formControlName="batchname" id="width4" style="text-align:left" readonly />
+                                    </td>
+                                    <td>
+                                        <input formControlName="expirydate" readonly />
+                                    </td>
+                                    <td>
+                                        <input formControlName="batchavailqty" readonly />
+                                    </td>
+                                    <td *ngIf="registerForm.controls.boxdispflag.value=='1'">
+                                        <input formControlName="transferboxqty" (keydown)="calcformstock($event)"
+                                            type="number" />
+                                    </td>
+                                    <td *ngIf="registerForm.controls.stripdispflag.value=='1'">
+                                        <input formControlName="transferstripqty" (keydown)="calcformstock($event)"
+                                            type="number" />
+                                    </td>
+                                    <td *ngIf="registerForm.controls.tabdispflag.value=='1'">
+                                        <input formControlName="transfertabqty" (keydown)="calcformstock($event)"
+                                            type="number" />
+                                    </td>
+                                    <td>
+                                        <input formControlName="transfertotalqty" readonly />
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div><br>
+
+                <div
+                *ngIf="registerForm.controls.indentselect.value=='1'&& registerForm.controls.indapprflag.value=='1'">
+                <!--     subfield   start-->
+                <!--      <input type="text"   value="Transfer Quantity"  id="input1" readonly />    -->
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label class="form-label borderdown">Transfer Quantity:</label>
+                <input type="text" formControlName="valbatchapprqty" style="font-weight:bold;font-size:20px" readonly/>
+                &nbsp;&nbsp;&nbsp;
+                <button class="btn btn-round" (click)="viewTransferStock()">Save</button>
+                &nbsp;&nbsp;&nbsp;
+                <button class="btn btn-round" (click)="CloseTransfer()">Close</button>
+                </div><br>
+
+            </div>
+            
+                
+                <!-- table2  end-->
+
+                <!-- subfield     end-->
+                <div [formGroup]="registerForm">
+                    <!-- table3 start-->
+                    <!--addresses-->
+                    <div class="title1"><u> Consolidated Stock Transfer
+                        </u>
+                    </div><br>
+                    <div formArrayName="stktransfer">
+                        <div class="flow" *ngIf="registerForm.controls.indentselect.value=='1'">
+
+                            <table class="table styletab">
+                                <thead class="stylehead">
+                                    <tr>
+                                        <th>Select </th>
+                                        <th>S.No</th>
+                                        <th>Prod Code</th>
+                                        <th> Prod Name </th>
+                                        <th> Batch No </th>
+                                        <th> Available </th>
+                                        <th> Total Transfer </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="stylebody">
+                                    <tr *ngFor="let address of registerForm.controls.stktransfer.controls; let i=index"
+                                        [formGroupName]="i">
+                                        <td><input type="checkbox" class="tabcheck" formControlName="delflag"
+                                                id="width1" /></td>
+                                        <td>
+                                            <input value={{i+1}} id="width2" readonly />
+                                        </td>
+                                        <td>
+                                            <input formControlName="drugproductrefid" readonly />
+                                        </td>
+                                        <td>
+                                            <input formControlName="drugname" id="width6" style="text-align: left"
+                                                readonly />
+                                        </td>
+                                        <td>
+                                            <input formControlName="batchname" readonly />
+                                        </td>
+                                        <td>
+                                            <input formControlName="batchavailqty" readonly />
+                                        </td>
+                                        <td>
+                                            <input formControlName="transfertotalqty" readonly />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><br>
+                <!-- table3  end-->
+                <div class="col-lg-3">
+                    <button type="button" class="btn btn-round" (click)="remove()"> Remove </button>
+                </div>
+
+
+                <div class="row " *ngIf="registerForm.controls.indentselect.value=='1'">
+                    <!-- splitcolumn  start-->
+                    <div class="col-lg-5">
+                        <div class="row">
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="row">
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="row">
+                            <ng2-toasty [position]="position"></ng2-toasty>
+                        </div>
+                    </div>
+                </div>
+                <!-- splitcolumn   end-->
+            </div><br>
+            <!-- box-typical-->
+
+            <div class="row">
+                <!-- row Start-->
+                <div class="col-lg-1"></div>
+
+                <div class="col-lg-2">
+                    <button type="button" class="btn btn-round" (click)="onSubmit()"> Save </button>
+                </div>
+                <div class="col-lg-2">
+                    <button type="button" class="btn btn-round" [routerLink]="['/StockTransfer/stktransEdit' ]">
+                        Edit </button>
+                </div>
+            </div>
+            <!-- row end-->
+    </form>
+</app-card>
+<div class="scrollnew"> </div>

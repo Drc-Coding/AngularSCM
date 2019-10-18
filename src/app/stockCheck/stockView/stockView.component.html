@@ -1,0 +1,166 @@
+<style>
+  .nodata {
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    font-size: 25px;
+    color: rgb(245, 50, 50);
+    font-family: Verdana, Geneva, sans-serif;
+  }
+
+  .action {
+    font-size: 15px;
+    color: green;
+  }
+
+  .action1 {
+    font-size: 15px;
+    color: red;
+  }
+
+  .bform{
+    border:2px solid #b3b3b3;
+    border-radius:5px;
+    padding:1em;
+  }
+ 
+</style>
+<app-card><br>
+  <form [formGroup] = "purchaseOrder">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
+      <div>
+        <label class="label-control">Show
+          <select class="form-control input-sm full-data-show-entry" [(ngModel)]="rowsOnPage">
+            <option [ngValue]="1">1</option>
+            <option [ngValue]="25">25</option>
+            <option [ngValue]="50">50</option>
+            <option [ngValue]="100">100</option>
+          </select>
+          Entries
+        </label>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6">
+              
+      <div class="form-inline justify-content-end" >
+
+        <strong class="searchstyle">Search :</strong>
+        <input type="search" [(ngModel)]="filterQuery" [ngModelOptions]="{standalone: true}" class="form-control w-50" placeholder="Search Product Name" autofocus>
+      
+    </div>
+
+    </div>
+  </div><br>
+
+    <div class="bform">
+
+        <div class="form-group row">
+  
+            <div class="col-lg-3">
+                <fieldset class="form-group">
+                  <label class="form-label" style="font-weight:bold">Company Name</label>
+                  <input type="text" class="form-control" formControlName="companyid" disabled>
+                </fieldset>
+              </div>
+  
+              <div class="col-lg-3">
+                  <fieldset class="form-group">
+                    <label class="form-label" style="font-weight:bold">Branch Name</label>
+                    <input type="text" class="form-control" formControlName="branchid" disabled>
+                  </fieldset>
+                </div>
+            
+                <div class="col-lg-3">
+                    <fieldset class="form-group">
+                      <label class="form-label" style="font-weight:bold">Location </label>
+                      <input type="text" class="form-control" formControlName="locname" disabled>
+                    </fieldset>
+                  </div>
+                
+                  <div class="col-lg-3">
+                      <fieldset class="form-group">
+                        <label class="form-label" style="font-weight:bold">Firm Name</label>
+                        <input type="text" class="form-control" formControlName="locref" disabled>
+                      </fieldset>
+                    </div>
+             
+           </div> 
+    
+  </div>
+  <br>
+  <!-- <div class="panel-heading">User information</div>-->
+  <div class="dt-responsive" style="overflow:auto">
+    <table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery"
+      #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+      <thead>
+        <tr>
+          <th>
+            S.No
+          </th>
+          <!-- <th>
+            Company Name
+          </th>
+          <th>
+            Branch Name
+          </th>
+          <th>
+            Location Name
+          </th>
+          <th>
+            Firm Name
+          </th> -->
+          <th>Product Code</th>
+          <th>
+            Product Name
+          </th>
+          <th>
+            Batch Number
+          </th>
+          <th>
+         Quantity
+          </th>
+          <th>
+           Expiry Date
+          </th>
+        </tr>
+        <tr>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="(data | dataFilter : filterQuery) == 0">
+          <td></td>
+          <td class="nodata">NO RECORD</td>
+          <!-- <td></td>
+          <td></td>
+          <td></td>
+          <td></td> -->
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr *ngFor="let val of mf.data;let i=index">
+          <td>{{i+1}}</td>
+          <!-- <td>{{val[0]}}</td>
+          <td>{{val[1]}}</td>
+          <td>{{val[2]}}</td>
+          <td>{{val[3]}}</td> -->
+          <td>{{val[8]}}</td>
+          <td>{{val[4]}}</td>
+          <td>{{val[5]}}</td>
+          <td>{{val[6]}}</td>
+          <td>{{val[7]}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="9">
+            <mfBootstrapPaginator class="pagination-main f-right"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</form>
+</app-card>

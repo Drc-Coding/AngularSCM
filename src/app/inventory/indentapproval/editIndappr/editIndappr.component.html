@@ -1,0 +1,145 @@
+
+          
+            <app-card>
+            
+            
+              <div class="sub-title">Edit Details
+                <i class="fa fa-edit ficon" ></i>
+            </div><br>
+            <form [formGroup]="registerForm" >
+            
+            
+                <div class="box-typical box-typical-padding">
+            
+        
+                    <div class="row">   <!-- splitcolumn  start--> 
+
+                   <div class="col-md-4" *ngIf="registerForm.controls.invdispflag.value=='0' " >
+
+                                        <label class="form-label semibold" for="exampleInput">Indent Approval No </label> 
+                          
+                              
+                                          <select  class="form-control"  (change)="viewEdit()"    formControlName="id">
+                                            
+                                              <option *ngFor="let item of editdata; let i = index"    value={{item[3]}}>{{item[1]}}</option>
+                                                
+                                          </select>
+                                   </div> 
+
+                                   
+                                      <div class="col-md-4" *ngIf="registerForm.controls.invdispflag.value=='1' " >
+                                            
+                                    
+                                          <label class="form-label semibold" for="exampleInput"> Indent Approval No 
+                                                                       </label> 
+                                                            
+                                                     
+                                                   <input type="text" 
+                                                class="form-control"  formControlName="formno" 
+                                                  />
+                                      
+                                    
+                                        </div> 
+        
+        
+                                        <div class="col-md-4">
+                                            
+                                    
+                                                                <label class="form-label semibold" for="exampleInput">Date 
+                                                                       </label> 
+                                                            
+                                                     
+                                                  
+                                              <input type="date" 
+                                              class="form-control"  formControlName="date" 
+                                             />
+                                      
+                                    
+                                        </div> 
+                     
+                   
+        
+                        </div>   <br> <!-- splitcolumn  end--> 
+           
+
+                        <div class="title1">
+    
+                          <u>  Approval  Table  </u>
+                         
+                      </div>
+                       <br>
+
+                                       
+                               <div formArrayName="indappr"  class="flow">  <!--. table  start--> 
+                              
+
+                               <table class="table styletab"  >
+                             <thead class="stylehead">
+                             <tr>
+                                    <th>S. No </th>                                          
+                          
+                                    <th>Prod Name</th> 
+                                 
+                                 
+                        
+                                    <th >Required Qty</th>
+                                    
+                                    <th>Min Qty </th>
+                              
+                               
+                                    <!-- <th>MaxQty </th> -->
+
+                                    <th>Approved Qty </th>
+                                    <th>Remarks </th>
+     
+
+                             </tr>
+                         </thead>
+                         <tbody class="stylebody">
+                         <tr *ngFor="let address of registerForm.controls.indappr.controls; let i=index" [formGroupName]="i">
+                                <td><input   value={{i+1}} id="width2" readonly /></td>   
+                       
+                                <td ><input  formControlName="drugname"   id="width6" style="text-align:left"  readonly/></td>
+                     
+                                <td ><input  formControlName="qty"   readonly/></td>
+       
+                                <td><input  formControlName="minqty"    readonly /></td>
+                          
+                                <!-- <td><input  formControlName="maxqty"     readonly/></td> -->
+
+
+                                <td><input  formControlName="approvedqty"    readonly /></td>
+                                <td><input  formControlName="remarks" id="width5" style="text-align:left"   /></td>
+
+                          </tr>
+                     </tbody>
+                         </table>
+            
+                         
+                        </div>     <!--. table     end--> 
+						
+						
+                            
+              </div>
+                <!-- box-typical-->
+                
+                           
+
+            <br>                                                        
+              <div class="row">   <!-- row Start--> 
+                
+                <div class="col-lg-1"></div>
+               <div class="col-lg-3">     
+                <button  type="button" class="btn btn-round" [routerLink]="['/RequisitionApproval/ViewRequisitionApproval']">Back  </button>   </div>     
+                <!-- [routerLink]="['/RequisitionApproval/EditIndentApproval',item[3] ]"
+                class="btn btn-primary btn-sm">Edit</a></td>  -->
+                                                                                                 
+             </div>  <!-- row end--> 
+            
+            </form>
+        
+        
+            </app-card>
+            
+ 
+        

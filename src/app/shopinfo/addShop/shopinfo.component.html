@@ -1,0 +1,281 @@
+<app-card>
+	<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+			<div class="sub-title" style="font-size: 20px;">Shop Details
+					<i style="float:right;" class="fa fa-building-o" aria-hidden="true"></i></div>
+
+		<div class="row">
+
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>Company Name</h6>
+					</label>
+					<select name="select" class="form-control" formControlName="companyid" (change)="getBranch()">
+						<option value="opt1">---Select Company---</option>
+						<option *ngFor="let companies of companyrefid1" value={{companies[0]}}>{{companies[1]}}</option>
+					</select>
+				</fieldset>
+			</div>
+
+			<div class="col-lg-4">
+				<label class="form-label semibold">
+					<h6>Branch Name</h6>
+				</label>
+				<select name="select" class="form-control" placeholder="Select Branch" formControlName="branchid">
+					<option value="opt1">---Select Branch Name---</option>
+					<option *ngFor="let coun of branchrefid1" value={{coun[0]}}>
+						{{coun[1]}}</option>
+				</select>
+			</div>
+			<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">
+							<h6>Shop Name</h6>
+						</label>
+						<input type="text" class="form-control" placeholder="Enter Shop_Name" formControlName="shopname">
+					</fieldset>
+				</div>
+		</div>
+		<div class="form-group row">
+			
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class=" form-label">
+						<h6>Owner Name</h6>
+					</label>
+					<input type="text" class="form-control" placeholder="Enter Owner_Name" formControlName="ownername">
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class=" form-label">
+						<h6>License Holder Name</h6>
+					</label>
+					<input type="text" class="form-control" placeholder="Enter License Holder_Name" formControlName="license_holder">
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">
+							<h6>Registration Number</h6>
+						</label>
+						<input type="text" class="form-control" placeholder="Enter Registration Number" formControlName="phar_registration_no">
+					</fieldset>
+				</div>
+		</div>
+
+		<div class="form-group row">
+			
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>DL Number</h6>
+					</label>
+					<input type="text" class="form-control" placeholder="Drug License Number" formControlName="dlno">
+				</fieldset>
+			</div>
+
+
+				
+			<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">
+							<h6>TIN</h6>
+						</label>
+						<input type="text" class="form-control" placeholder="Tax Identification Number" formControlName="tinno">
+					</fieldset>
+				</div>
+
+			<!-- <div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label">
+						<h6>GST Number</h6>
+					</label>
+					<input type="text" class="form-control" placeholder="Goods And ServiceTax" formControlName="gstno">
+					<div class="messages text-danger" *ngIf="myForm.controls.gstno.errors?.required">Enter GST Number
+					</div>
+				</fieldset>
+			</div> -->
+
+		</div>
+
+		<div class="form-group row">
+		
+
+			<!-- <div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label">
+						<h6>CST</h6>
+					</label>
+					<input type="text" class="form-control" placeholder="Central Service Tax" formControlName="cstno">
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="col-form-label">
+						<h6>PAN</h6>
+					</label>
+					<input type="text" class="form-control" placeholder="Permanent Account Number" formControlName="panno">
+				</fieldset>
+			</div> -->
+
+		</div>
+		<div class="sub-title" style="font-size: 20px;">Contact Details</div>
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>Address</h6>
+					</label>
+					<input type="text" class="form-control" placeholder="Enter Address" formControlName="address1">
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>Country</h6>
+					</label>
+					<select name="select" class="form-control" formControlName="country" (change)="getState()">
+						<option value="0">---Select Country---</option>
+						<option *ngFor="let country of countries" value={{country[0]}}>{{country[1]}}</option>
+					</select>
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>State</h6>
+					</label>
+					<select name="select" class="form-control" formControlName="state" (change)="getCity()">
+						<option value="0">---Select State---</option>
+						<option *ngFor="let state of states" value={{state[0]}}>{{state[2]}}</option>
+					</select>
+				</fieldset>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>City</h6>
+					</label>
+					<select name="select" class="form-control" formControlName="city">
+						<option value="0">---Select City---</option>
+						<option *ngFor="let city of cities" value={{city[0]}}>{{city[1]}}</option>
+					</select>
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>ZIP/PIN Code</h6>
+					</label>
+					<input type="text" onkeyup="this.value = this.value.toUpperCase();" class="form-control" placeholder="Enter Zip/Pin Code" formControlName="pincode">
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>Phone Number</h6>
+					</label>
+					<input type="number" class="form-control" placeholder="Enter Phone Number" formControlName="mobileno">
+				</fieldset>
+				<div class="messages text-danger" *ngIf="myForm.controls.mobileno.errors?.pattern">Numerical Only Allowed Here</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>Email Id</h6>
+					</label>
+					<input type="text" class="form-control" placeholder="Enter Email Id" formControlName="emailid">
+					<div class="messages text-danger" *ngIf="myForm.controls.emailid.errors?.pattern">Invalid Email..</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="sub-title" style="font-size: 20px;">Pharmacist Details</div>
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>Pharmacist Name</h6>
+					</label>
+					<input type="text" class="form-control" placeholder="Pharmacist Name" formControlName="pharmacistname">
+					<div class="messages text-danger" *ngIf="myForm.controls.pharmacistname.errors?.required">Enter Pharmacist Name</div>
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>Country</h6>
+					</label>
+					<select name="select" class="form-control" formControlName="phar_country" (change)="getState1()">
+						<option value="0">---Select Country---</option>
+						<option *ngFor="let country of countries" value={{country[0]}}>{{country[1]}}</option>
+					</select>
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>State</h6>
+					</label>
+					<select name="select" class="form-control" formControlName="phar_state" (change)="getCity1()">
+						<option value="0">---Select State---</option>
+						<option *ngFor="let state of states1" value={{state[0]}}>{{state[2]}}</option>
+					</select>
+				</fieldset>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>City</h6>
+					</label>
+					<select name="select" class="form-control" formControlName="phar_city">
+						<option value="0">---Select City---</option>
+						<option *ngFor="let city of cities1" value={{city[0]}}>{{city[1]}}</option>
+					</select>
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>ZIP/PIN Code</h6>
+					</label>
+					<input type="text" onkeyup="this.value = this.value.toUpperCase();" class="form-control" placeholder="Enter Zip/Pin code" formControlName="phar_pincode">
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>Phone Number</h6>
+					</label>
+					<input type="number" class="form-control" placeholder="Enter Phone Number" formControlName="phar_contactno1">
+				</fieldset>
+				<div class="messages text-danger" *ngIf="myForm.controls.phar_contactno1.errors?.pattern">Numerical only Allowed Here..</div>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label">
+						<h6>Email Id</h6>
+					</label>
+					<input type="text" class="form-control" placeholder="Enter Email Id" formControlName="phar_emailid">
+				</fieldset>
+				<div class="messages text-danger" *ngIf="myForm.controls.phar_emailid.errors?.pattern">Invalid Email..</div>
+			</div>
+		</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<button [disabled]="!myForm.valid" type="submit" class="btn btn-round" style="margin: 26px;">Save</button>
+				</fieldset>
+			</div>
+
+	</form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

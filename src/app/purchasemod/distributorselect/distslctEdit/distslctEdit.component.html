@@ -1,0 +1,118 @@
+
+   <app-card>
+    <div class="sub-title">View Details
+      <i class="fa fa-eye ficon"></i>
+    </div><br>
+             <form [formGroup]="registerForm" >
+         <div class="box-typical box-typical-padding">
+            
+     
+        <div class="row">
+         
+         
+     <div class="col-lg-4"  *ngIf="registerForm.controls.invdispflag.value=='0' " >
+        <label class="form-label semibold" for="exampleInput">Dist Select No  </label> 
+           
+        <select  class="form-control"  (change)="viewEdit()"    formControlName="id">
+                                            
+       <option *ngFor="let item of editdata; let i = index"    value={{item[0]}}>{{item[1]}}</option>
+                                                
+         </select>
+         </div> 
+
+                                   
+    <div class="col-lg-4"   *ngIf="registerForm.controls.invdispflag.value=='1' "  >
+                                            
+     <label class="form-label semibold" for="exampleInput"> Dist Select No 
+        </label> 
+                                                            
+            <input type="text" class="form-control"  formControlName="formno"  />
+                                                                      
+   </div> 
+
+      
+   <div class="col-lg-4">
+                                            
+      <label class="form-label semibold" for="exampleInput">Date 
+       </label> 
+      
+    <input type="date"  class="form-control"  formControlName="date"  />
+                                 
+    </div> 
+  
+      
+      </div>    <!-- splitcolumn  end--> 
+           <br>
+
+ <div class="title1"><u>Distributor Selected Products</u>
+          
+      </div><br>
+
+     <div formArrayName="dstslct"   >  <!--. table  start--> 
+      <div class="table flow">
+        
+                 <table class="table styletab"  >
+           <thead class="stylehead">
+               <tr >
+            <th>S.No</th>     
+             <th>Prod Name  </th>
+              <th > Vendor Name </th>
+               <th > Expc Order Qty  </th>
+                                    
+               <th > Expc Price  </th>
+                                      
+                 <th >  Vendor Price   </th>
+                   <th > Credit Terms  </th>
+                  <th > Lead Time  </th>
+                                    <!--   <th > Dist Flag  </th>  --> 
+                         </tr>
+                             </thead>
+          <tbody class="stylebody">
+  <tr *ngFor="let address of registerForm.controls.dstslct.controls; let i=index" [formGroupName]="i">
+      <td><input value={{i+1}} id="width2" readonly/></td>   
+                                
+          <td><input  formControlName="drugname"  id="width6" style="text-align:left" readonly/></td>
+                                                                
+                                                                        
+         <td><input  formControlName="vendorname"   id="width6" style="text-align:left" readonly/></td>
+          <td><input  formControlName="exppoqty"  readonly /></td>  
+                                                                       
+                                                                       
+           <td><input  formControlName="exppoprice" class="right"  readonly /></td>
+
+            <td><input  formControlName="distfinalprice" class="right"  readonly /></td>
+              <td><input  formControlName="creditdays"  readonly /></td>
+              <td><input  formControlName="leadtime" readonly  /></td>
+                        
+     <!--    <td><input   type="checkbox"     formControlName="vendorslctflag"     /></td>  --> 
+                                        
+                        </tr>
+                            </tbody>
+                             </table>
+        
+                      </div>
+                    </div>     <!--  table     end  --> 
+					
+					
+              </div>
+                <!-- box-typical  -->
+                
+                               
+
+       <div class="row">   <!-- row Start--> 
+    <!--   <div class="col-lg-3">   <button  type="button" class="btn btn-success btn-round"(click)="onSubmit()"   value="Update" > Edit  </button>   </div>   -->
+        <div class="col-lg-1"></div>
+   <div class="col-lg-2">     <button  type="button" class="btn btn-round"
+      [routerLink]="['/DistributorSelection/DistributorSelection' ]"  value="Back"> Back  </button>  
+    </div>     
+            
+       </div>  <!-- row end--> 
+
+         </form>
+        
+        
+            </app-card>
+            
+            
+        
+        

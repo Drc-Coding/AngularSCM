@@ -1,0 +1,468 @@
+<style>
+
+.form-control:disabled{
+    font-size:18px;
+    font-weight:bold;
+}
+
+</style>
+
+<app-card>
+
+    <div class="sub-title">Purchase Invoice Details
+        <i class="ti-receipt ficon"></i></div><br>
+
+    <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
+        <!-- <div class="form-group row">
+            <div class="col-lg-11">
+                <div class="sub-title">Basic Details</div>
+            </div>
+            <div class="col-lg-1">
+                <div id="flip" title="Show & Hide Basic Details">
+                    <i class="icofont icofont-rounded-down" cardtoggleevent="" title="Show & Hide Basic Details"></i>
+                </div>
+            </div>
+        </div> -->
+        <div id="panel">
+            <div class="form-group row">
+                 <!--sankar-->
+                <div class="col-lg-4" hidden>
+                    <label class="form-label">GRN Number&nbsp;
+                        <font color="red" class="fontlabel">*</font>
+                    </label>
+                    <input type="text" class="form-control inputline" placeholder="Invoice Number" formControlName="pino" disabled>
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Invoice Date</label>
+                    <input type="date" class="form-control inputline" placeholder="Date" formControlName="pidate">
+                    <div class="messages text-danger" *ngIf="invoiceForm.controls.pidate.errors?.required">Enter InvoiceDate</div>
+                </div>
+                <!-- <div class="col-lg-4">
+                    <label class="col-form-label labal">Invoice Number</label>
+                    <input type="text" class="form-control inputline" placeholder="Invoice Number" formControlName="vendorinvoiceno">
+                    <div class="messages text-danger" *ngIf="invoiceForm.controls.vendorinvoiceno.errors?.required">Enter InvoiceNumber</div>
+                </div> -->
+                
+                <div class="col-lg-4">
+                        <!-- <label class="col-form-label labal">Delivery Type</label>
+                        <input type="text" class="form-control inputline" placeholder="Delivery Type" formControlName="deliverytype">
+     -->
+                    <fieldset class="form-group">
+                        <label class="form-label">Delivery Type</label>
+                            <select name="select" class="form-control" formControlName="deliverytype">
+                            <option value="opt1" selected disabled>---Select Delivery Type---</option>
+                            <option value="Parcel Service">Parcel Service</option>
+                            <option value="Courier Service">Courier Service</option >
+                            </select>
+                    </fieldset>
+                </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Barcode</label>
+                        <input type="text" class="form-control inputline" placeholder="invoice Barcode" formControlName="barcode">
+                    </div>
+            </div>
+            <div class="form-group row">
+               
+                <!--sankar-->
+                <div class="col-lg-4" hidden>
+
+                    <label class="form-label">Previous Purchase Item</label>
+                    <select name="select" class="form-control inputline" formControlName="previouspurchaseitem" placeholder="">
+                        <option value="opt1" selected disabled>---Previous Purchaseitems---</option>
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label">Select Purchase Order No</label>
+                    <select name="select" class="form-control inputline" formControlName="refpoid" placeholder="" (change)="getPOrder($event)" (change)="distvalue()">
+                        <option value="opt1" selected disabled>---Previous Purchase Order---</option>
+                        <option *ngFor="let po of polist" value="{{po[0]}}">{{po[1]}}</option>
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                        <label class="form-label">Distributor Name</label>
+                        <select name="select" class="form-control inputline" formControlName="vendorid" placeholder="" (change)="getDistvalues($event)">
+                            <option value="opt1" selected disabled>---Select Distributor---</option>
+                            <option *ngFor="let dist of distibutor" value="{{dist[0]}}">{{dist[1]}}</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4" *ngFor="let dist of distvalues">
+                            <label class="form-label">Drug License Number</label>
+                            <input type="text" class="form-control inputline" placeholder="Drug License Number" formControlName="dlnumber" name="dlnumber"
+                                value="{{dist[2]}}">
+                        </div>
+            </div>
+            <div class="form-group row">
+
+                <!-- <div class="col-lg-4" *ngFor="let dist of distvalues">
+                    <label class="col-form-label labal">GST Number</label>
+                    <input type="text" class="form-control inputline" placeholder="Goods & Service Tax" formControlName="gst" value="{{dist[3]}}">
+                </div>
+                 -->
+                 <div class="col-lg-4" *ngFor="let dist of distvalues">
+                    <label class="form-label">Address</label>
+                    <input type="text" class="form-control inputline" placeholder="Address" formControlName="addreess" value="{{dist[4]}}">
+
+                </div>
+
+                <div class="col-lg-4">
+                        <fieldset class="form-group">
+                            <label class="form-label">Product Name</label>
+                            <ng-select [options]="characters" placeholder="Search Drug Name" (change)="getProvalues()" (click)="getProvalues()" (input)="getProduct($event.target.value)"
+                                formControlName="productid" >
+                            </ng-select>
+                        </fieldset>
+                    </div>
+
+                <!-- <div class="col-lg-4">
+                        <label class="col-form-label labal">Actual Amount</label>
+                        <input type="text" class="form-control inputline" placeholder="Actual Amount" formControlName="actamount">
+                    </div> -->
+                   
+            </div>
+
+           
+        </div>
+
+
+        <div class="flow" style="overflow:auto;" formArrayName="brandDetails">
+            <table class="table styletab">
+                <thead class="stylehead">
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="checkAll" style="height:1.5em;width:1.4em" name="checkAll" />
+                        </th>
+                        <th>S.No</th>
+                        <th >Prod Id</th>
+                        <th>Prod Name</th>
+                        <th>Dosage</th>
+                        <th>Formulation</th>
+                        <th>Manufacturer</th>
+                        <!-- <th>Box Quantity</th>
+                        <th>Strip Quantity</th> -->
+                        <th>Tablet Qty</th>
+                        <!-- <th>Free Box Quantity</th>
+                        <th>Free Strip Quantity</th> -->
+                        <th>Free Qty</th>
+                        <th>Batch No</th>
+                        <th>Expiry Date</th>
+                        <th>Purchase Price</th>
+                        <th>SRP</th>
+                        <!-- <th>Sales Discount%</th> -->
+                        <th>Purchase Dis %</th>
+                        <th class="colvathide">VAT%</th>
+                        <th class="colhide">GST%</th>
+                        <th class="colhide">SGST%</th>
+                        <th class="colhide">CGST%</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="stylebody">
+
+                    <tr *ngFor="let brand of invoiceForm.controls.brandDetails.controls; let i = index" [formGroupName]="i">
+                        <td>
+                            <input type="checkbox" name="check" id="width1" class="tabcheck" />
+                        </td>
+
+                            <td id="width2">{{i+1}}</td>
+                            <td>
+                                <input type="text" formControlName="productid"  readonly>
+                            </td>
+                            <td>
+                                <input type="text" formControlName="productname" id="width6" style="text-align:left"  readonly>
+                            </td>
+                            <td>
+                                <input type="text" formControlName="dosage" id="width4"  readonly>
+                            </td>
+                            <td>
+                                <input type="text" formControlName="formulation" id="width5" style="text-align:left"  readonly>
+                            </td>
+                            <td>
+                                <input type="text" formControlName="mfg" id="width6"  style="text-align:left" readonly>
+                            </td>
+                            <!-- <td>
+                                <input type="text" formControlName="boxquantity" class="tds boxqfocus" (change)="getSum()" (click)="getSum()">
+                                <div *ngIf="brand.hasError('pattern', 'boxquantity')" style="color:red;">Invalid Charcters..</div>
+                            </td>
+                            <td>
+                                <input type="text" formControlName="stripquantity" class="tds stripqfocus" (change)="getSum()" (click)="getSum()">
+                                <div *ngIf="brand.hasError('pattern', 'stripquantity')" style="color:red;">Invalid Charcters..</div>
+                            </td> -->
+                            <td>
+                                <input type="text" formControlName="tabletquantity" class="tabqfocus" (change)="getSum()" (click)="getSum()" autofocus>
+                                <div *ngIf="brand.hasError('pattern', 'tabletquantity')" style="color:red;">Invalid Charcters..</div>
+                            </td>
+                            <!-- <td>
+                                <input type="text" formControlName="freeboxqty" class="tds fboxfocus" (change)="getSum()" (click)="getSum()">
+                                <div *ngIf="brand.hasError('pattern', 'freeboxqty')" style="color:red;">Invalid Charcters..</div>
+                            </td>
+                            <td>
+                                <input type="text" formControlName="freestripqty" class="tds fstripfocus" (change)="getSum()" (click)="getSum()">
+                                <div *ngIf="brand.hasError('pattern', 'freestripqty')" style="color:red;">Invalid Charcters..</div>
+                            </td> -->
+                            <td>
+                                <input type="text" formControlName="freetabletqty" class="ftabletfocus" id="width3" (change)="getSum()" (click)="getSum()">
+                                <div *ngIf="brand.hasError('pattern', 'freetabletqty')" style="color:red;">Invalid Charcters..</div>
+                            </td>
+                            <td>
+                                <input type="text" formControlName="batchno" id="width4" class="batchfocus" (change)="getSum()" (click)="getSum()">
+                            </td>
+                            <td>
+                                <input type="date" formControlName="expirydate" id="width5" (change)="getSum()" (click)="getSum()" style="width: 130px;">
+                                <div *ngIf="brand.hasError('required', 'expirydate')" style="color:red;">Invalid Date Format..</div>
+                            </td>
+                            <td>
+                                <input type="text" formControlName="purchaseprice" class="focuss" (change)="getSum()" (click)="getSum()" style="text-align:right">
+                                <div *ngIf="brand.hasError('pattern', 'purchaseprice')" style="color:red;">Invalid Charcters..</div>
+                            </td>
+                            <td>
+                                <input type="text" formControlName="mrp" readonly >
+                            </td>
+                            <!-- <td>
+                                <input type="text" formControlName="salesdisc"  (change)="getSum()" (click)="getSum()">
+                            </td> -->
+                            <td>
+                                <input type="text" formControlName="purchasedisc" class="purcdisfocus" (change)="getSum()">
+                                <div *ngIf="brand.hasError('pattern', 'purchasedisc')" style="color:red;">Invalid Charcters..</div>
+                            </td>
+
+                            <td id="colvathide" *ngIf="setvatTax">
+                                <input type="text" formControlName="vat" class="vatfocus" id="width2" (change)="getSum()" >
+                                <div *ngIf="brand.hasError('pattern', 'vat')" style="color:red;">Invalid Charcters..</div>
+                            </td>
+
+                            <td id="colhide" *ngIf="setgstTax">
+                                <input type="text" formControlName="gsts" id="width2" (change)="getSum()" (click)="getSum()" readonly>
+                            </td>
+
+                            <td id="colhide" *ngIf="setgstTax">
+                                <input type="text" formControlName="sgst" class="sgstfocus" id="width2" (change)="getSum()" (click)="getSum()">
+                                <div *ngIf="brand.hasError('pattern', 'sgst')" style="color:red;">Invalid Charcters..</div>
+                            </td>
+
+                            <td id="colhide" *ngIf="setgstTax">
+                                <input type="text" formControlName="cgst" class="cgstfocus" id="width2" (change)="getSum()" (click)="getSum()">
+                                <div *ngIf="brand.hasError('pattern', 'cgst')" style="color:red;">Invalid Charcters..</div>
+                            </td>
+
+                            <td>
+                                <input type="text" formControlName="amount"  style="text-align:right" readonly>
+                            </td>
+
+                            <td>
+                                <div ngbDropdown class="dropdown-secondary dropdown">
+                                    <button ngbDropdownToggle class="btn btn-mini dropdown-toggle waves-light b-none txt-muted dropDownbutton" type="button"
+                                        id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="icofont icofont-navigation-menu"></i>
+                                    </button>
+                                    <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown10" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                        <a class="dropdown-item waves-light waves-effect" href="javascript:;">
+                                            <i class="icofont icofont-spinner-alt-5 action" title="Add Free">&nbsp;
+                                                <span class="tdspan">Add Free</span>
+                                            </i>
+                                        </a>
+                                        <a class="dropdown-item waves-light waves-effect" href="javascript:;">
+                                            <i class="icofont icofont-ui-edit action1" title="Remove Row" (click)="removeRow(i)">&nbsp;
+                                                <span class="tdspan">RemoveRow</span>
+                                            </i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                    </tr>
+                   
+                   
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="check" class="tabcheck" id="width1"/>
+                            </td>
+                            <td>
+                                <input type="text" id="width2">
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" id="width1" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                             <td>
+                                <input type="text" id="width2">
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" id="width2">
+                            </td>
+                             
+                            <!-- <td class="colvathide">
+                                <input type="text" >
+                            </td>
+                            <td class="colhide">
+                                <input type="text" >
+                            </td>
+                            <td class="colhide">
+                                <input type="text" >
+                            </td>
+                            <td class="colhide">
+                                <input type="text" >
+                            </td> -->
+                           
+                    </tr>
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
+        <br>
+        <div class="form-group row">
+            <div class="col-lg-1">
+                <input type="hidden" class="removebutton buttontype" value="removeRow" />
+            </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="col-lg-1">
+                <label class="form-label" style="color:rgba(8, 8, 8, 0.986);font-size: 30px;">Total</label>
+            </div>
+            <div class="col-lg-3">
+                <input type="text" class="form-control" placeholder="" formControlName="totalamt"  style="border:0;font-size:30px;" disabled>
+            </div>
+
+        </div>
+
+        <div class="form-group row mx-5">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="col-lg-2">
+                <label class="form-label">Total Produtcs</label>
+                <input type="text" class="form-control" placeholder="Products" formControlName="totalproduct"
+                    disabled>
+            </div>&nbsp;&nbsp;
+
+            <div class="col-lg-2">
+                <label class="form-label">Total Quantity</label>
+                <input type="text" class="form-control" placeholder="Quantity" formControlName="totalquantity"
+                    disabled>
+            </div>&nbsp;&nbsp;
+
+            <div class="col-lg-2">
+                <label class="form-label">Free Quantity</label>
+                <input type="text" class="form-control" placeholder="Free Quantity" formControlName="totfreeqty"
+                    disabled>
+            </div>&nbsp;&nbsp;
+
+            <div class="col-lg-2">
+                <label class="form-label">TAX Amount</label>
+                <input type="text" class="form-control" placeholder="TAX Amount" formControlName="totalgst"
+                    disabled>
+
+            </div>&nbsp;&nbsp;
+
+            <div class="col-lg-2">
+                <label class="form-label">Sub Total</label>
+                <input type="text" class="form-control" placeholder="Sub Total" formControlName="subtotal"
+                    disabled>
+            </div>
+          
+        </div><br>
+
+        <div class="form-group row mx-5 mt-2">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="col-lg-2">
+                        <label class="col-form-label labal">Discount Amount</label>
+                        <input type="text" class="form-control" placeholder="Disc Amount" formControlName="totaldiscount"
+                            disabled>
+                    </div>&nbsp;&nbsp;
+
+            <div class="col-lg-2">
+                <label class="form-label">Cash Discount</label>
+                <input type="text" class="form-control" placeholder="Cash Discount" formControlName="cashdiscount" (change)="getSum()" 
+                (click)="getSum()" style="font-size:17px;font-weight:bold">
+            </div>&nbsp;&nbsp;
+
+            <div class="col-lg-2">
+                <label class="form-label">Rounded Off</label>
+                <input type="text" class="form-control" placeholder="Rounded Off" formControlName="rounddedoff"
+              disabled>
+          
+            </div>
+            <!-- <div class="col-lg-2">
+                <label class="col-form-label labal">Purchase Return No</label>
+                <input type="text" class="form-control" placeholder="Purchase Return Number" formControlName="prnumber" style="width:150px;height:30px"
+                    disabled>
+            </div>
+            <div class="col-lg-2">
+                <label class="col-form-label labal">Invoice Amount</label>
+                <input type="text" class="form-control" placeholder="Invoice Amount" formControlName="invoiceamt" style="width:150px;height:30px"
+                    disabled>
+
+            </div>
+            <div class="col-lg-2">
+                <label class="col-form-label labal">Adjustment Amount</label>
+                <input type="text" class="form-control" placeholder="Adjusted Amount" formControlName="adjustamt" style="width:150px;height:30px"
+                    disabled>
+            </div> -->
+            <div class="col-lg-2">
+                <label class="form-label">Total Margin</label>
+                <input type="text" class="form-control" placeholder="Total Margin" formControlName="margin"
+                    disabled>
+
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-2">
+                <input type="hidden" class="form-control" formControlName="totalvat" disabled>
+            </div>
+            <div class="col-lg-2">
+                <input type="hidden" class="form-control" formControlName="totalsgst" disabled>
+            </div>
+            <div class="col-lg-2">
+                <input type="hidden" class="form-control" formControlName="totalcgst" disabled>
+            </div>
+            <div class="col-lg-2">
+                <input type="hidden" class="form-control" formControlName="totaligst" disabled>
+            </div>
+            <div class="col-lg-2">
+                <input type="hidden" class="form-control" formControlName="totalutgst" disabled>
+            </div>
+            <div class="col-lg-2">
+                <input type="hidden" class="form-control" formControlName="taxableamount" disabled>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <button [disabled]="!invoiceForm.valid" type="submit" class="btn btn-round">Save</button>
+            </div>
+        </div>
+    </form>
+</app-card>
+
+<ng2-toasty [position]="position"></ng2-toasty>

@@ -1,0 +1,138 @@
+
+    
+      <app-card>
+            
+              <div class="sub-title">View Details
+                  <i class="fa fa-eye ficon" ></i>
+              </div><br>
+
+            <form [formGroup]="registerForm" >
+            
+            
+                <div class="box-typical box-typical-padding">
+            
+        
+                                <div class="row">
+                
+                                    <div class="col-lg-4" *ngIf="registerForm.controls.invdispflag.value=='0' " >
+                                        <label class="form-label semibold" for="exampleInput">Goods Received No </label> 
+                              
+                                          <select  class="form-control"  (change)="viewEdit()"    formControlName="id">
+                                            
+                                              <option *ngFor="let item of editdata; let i = index"    value={{item[0]}}>{{item[1]}}</option>
+                                                
+                                          </select>
+                                   </div> 
+
+                                   
+                                      <div class="col-lg-4" *ngIf="registerForm.controls.invdispflag.value=='1' " >
+                                            
+                                    
+                                          <label class="form-label semibold" for="exampleInput"> Goods Received  No 
+                                                                       </label> 
+                                                            
+                                                     
+                                         
+                                                <input type="text" 
+                                                class="form-control" formControlName="formno"/>
+                                      
+                                    
+                                        </div> 
+        
+        
+                                        <div class="col-lg-4">
+                                    
+                                           <label class="form-label semibold" for="exampleInput">Goods Received Date 
+                                                                       </label> 
+                                        
+                                              <input type="date" 
+                                              class="form-control"  formControlName="date"  />
+                                            
+                                    
+                                        </div> 
+  
+  
+                          </div>   <br>  <!-- splitcolumn  end--> 
+           
+ 
+            <div class="title1">
+    
+            <u>  Goods Receive Table  </u>
+   
+            </div><br>
+                  
+                               <div formArrayName="stkrec"  class="flow"   >  <!--. table  start--> 
+                               
+                                 <table class="table styletab "  >
+                                     <thead class="stylehead">
+                                     <tr >
+                                             <!--    <th>S. No </th>      -->  
+                                             <th> Prod Code </th>                                    
+                                     <th>Prod Name</th> 
+                           
+                                     <th>BatchNo</th>
+
+                                     <th>Expiry Date</th>
+
+                                     <th>Required Qty </th>
+                                     <th>Waiting Qty </th>
+                                  
+                                     <th>Rejected Qty </th>
+                                     <th>Batchwise Approved  </th>
+                                     <th>Received </th>
+                                      <th>Remarks </th>
+
+             
+
+                                     </tr>
+                                 </thead>
+                                 <tbody class="stylebody">
+                                 <tr *ngFor="let address of registerForm.controls.stkrec.controls; let i=index" [formGroupName]="i">
+                                          <!--  <td><input   value={{i+1}}  /></td>   --> 
+                                          <td><input  formControlName="drugproductrefid" readonly/></td>
+                                          <td><input  formControlName="drugname" id="width4" style="text-align:left" readonly/></td>
+               
+                            <td ><input  formControlName="batchname" readonly /></td>
+
+
+                            <td> <input  formControlName="expirydate" id="width3" readonly /> </td>
+
+                           <td ><input  formControlName="prodreqqty" readonly/></td>
+                            <td ><input  formControlName="waitingtotalqty" id="width3" readonly /></td>
+
+
+
+
+
+                            <td ><input  formControlName="rejectqty" id="width3" readonly/></td>
+                             <td ><input  formControlName="transfertotalqty"  readonly /></td>
+                              <td ><input  formControlName="receivetotalqty"    (keydown)="calc($event)"    type="number"  /></td>
+                             <td><input  formControlName="remarks"  id="width4" style="text-align:left" /></td> 
+                                                                       
+                                  </tr>
+                                </tbody>
+                             
+                                 </table>
+            
+                        </div>  
+                           <!--. table     end--> 
+             
+              </div><br>
+                <!-- box-typical-->
+                                                                    
+              <div class="row">   <!-- row Start--> 
+
+                <div class="col-lg-1"></div>
+
+               <div class="col-lg-3">   <button  type="button" class="btn btn-round"
+                  [routerLink]="['/GoodsReceivedNote/ViewGoodsReceivedNote' ]"> Back  </button>   
+                </div>     
+            
+                                                                                                 
+             </div>  <!-- row end--> 
+            
+            </form>
+        
+        
+            </app-card>
+            

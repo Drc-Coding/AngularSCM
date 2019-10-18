@@ -1,0 +1,279 @@
+<style>
+     .thirdtab{
+         position:absolute;
+         z-index:1;
+         background-color:white;
+         top:25%;
+         width:96%;
+         margin-left:8px;
+         margin-right:2%;
+         border:3px solid #b3b3b3;
+         border-radius:5px;
+     }
+     #swidth{
+         width:315px;
+     }
+</style>
+
+
+
+<app-card>
+    <div class="sub-title">Price Enquiry Details
+        <i class="fa fa-money ficon"></i>
+    </div><br>
+
+    <form [formGroup]="registerForm">
+
+        <div class="box-typical box-typical-padding">
+
+            <div class="row">
+                <!-- splitcolumn   start-->
+                        <div class="col-md-4 Indentreq">
+                            <label class="form-label semibold" for="exampleInput"> Purchase Session No
+                            </label>
+                       
+                            <select class="form-control" (change)="viewPurchSessionProd()" formControlName="purcsession">
+                                <option *ngFor="let item of  indtapprno; let i = index" value={{item[0]}}>{{item[1]}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label semibold" for="exampleInput"> Enquiry Date
+                            </label>
+                
+                            <input type="date" class="form-control" formControlName="date" />
+                        </div>
+             
+            </div><br>
+            <!-- splitcolumn  end-->
+
+            <div class="title1"><u>Purchase Session Products</u></div><br>
+
+            <div [formGroup]="registerForm">
+                <!-- table1   start-->
+                <div formArrayName="purc">
+                    <div class="flow">
+                     
+                        <table class="table styletab">
+                            <thead class="stylehead">
+                            <tr>
+                                <!--    <th>S.No</th>  -->
+                                <th> Prod Name </th>
+                                <th> Prod Code </th>
+                                <th> Required Qty </th>
+                                <th> Approved Qty </th>
+                                <th> Waiting Qty </th>
+                                <th> Rejected Qty </th>
+                                <th> View Distributor </th>
+                            </tr>
+                            </thead>
+                            <tbody class="stylebody">
+
+                            <tr *ngFor="let address of   registerForm.controls.purc.controls; let i=index" [formGroupName]="i">
+                                <!--    <td><input   value={{i+1}}  readonly/></td>   -->
+                                <td>
+                                    <input formControlName="drugname" id="swidth" style="text-align:left" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="drugproductrefid" id="width4" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="indreqqty" id="width4" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="stktransapprqty" id="width4" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="prodwaitingqty" id="width4" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="stktransrejqty" id="width4" readonly />
+                                </td>
+                                <td>
+                                    <span class="btn viewbtn" (click)="viewProdWiseDist(i)">View </span> 
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><br>
+            <!-- table1  end-->
+            <div [formGroup]="registerForm" *ngIf="registerForm.controls.distdisplayflag.value==1 "  >
+                <!-- table2 start-->
+                <div formArrayName="prepriceenq">
+                     <div class="thirdtab">
+                        
+                        <div class="title1"><u>Vendor Wise Product</u></div><br>
+                    <div class="flow">
+                        <table class="table styletab" (focus)="myFunction()">
+                            <thead class="stylehead">
+                            <tr>
+                                <th>Select</th>
+                                <th> Vendor Name</th>
+                                <th> Prod Name </th>
+                                <th> Waiting Qty </th>
+                                <th> Expected Order Qty </th>
+                                <th> Expected Price </th>
+                                <th> Previous Price/Unit </th>
+                                <th> Credit Days </th>
+                                <th> Lead Time </th>
+                                <th> A/B/C </th>
+                                <th> Ranking </th>
+                                <th>Remarks </th>
+                            </tr>
+                            </thead>
+                            <tbody class="stylebody">
+                            <tr *ngFor="let address of registerForm.controls.prepriceenq.controls; let i=index" [formGroupName]="i">
+                                <td>
+                                    <input type="checkbox" class="tabcheck" id="width1" formControlName="slctflag" />
+                                </td>
+                                <td>
+                                    <input formControlName="vendorname" id="width5" style="text-align:left" readonly/>
+                                </td>
+                                <td>
+                                    <input formControlName="drugname" id="width6" style="text-align:left" readonly/>
+                                </td>
+                                <td>
+                                    <input formControlName="prodwaitingqty"  readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="exppoqty" type="number" />
+                                </td>
+                                <td>
+                                    <input formControlName="exppoprice" type="number" class="right"/>
+                                </td>
+                                <td>
+                                    <input formControlName="previouspoprice" class="right" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="creditdays" id="width3" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="leadtime" id="width3" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="abc" id="width2" style="text-transform: uppercase" />
+                                </td>
+                                <td>
+                                    <input formControlName="distprodrank" id="width2" />
+                                </td>
+                                <td>
+                                    <input formControlName="remarks" id="width4"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div><br>
+
+                    <div  *ngIf="registerForm.controls.distdisplayflag.value==1 "  >
+               
+                            <div class="row">
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-2">
+                            <button type="submit" class="btn btn-round" (click)="viewConsolPriceEnquiry()">Save </button>
+                                </div>
+                                <div class="col-lg-2">
+                            <button type="submit" class="btn btn-round" (click)="closedist()">Close </button>
+                                </div>
+                                </div>
+                     </div><br>
+        
+                </div>
+                </div>
+            </div><br>
+            <!-- table2  end-->
+           
+                <!-- subrow   start-->
+                
+        
+        <div class="title1"><u>Consolidated Price Enquiry</u></div><br>
+            
+            <!-- subrow   end-->
+            <div [formGroup]="registerForm">
+                <div formArrayName="priceenq">
+                    <div class="flow">
+                       
+                        <table class="table styletab">
+                            <thead class="stylehead">
+                                <tr>
+                                    <th>Select </th>
+                                    <th>S.No</th>
+                                    <th> Vendor Name</th>
+                                    <th> Prod Name </th>
+                                    <th> Waiting Qty </th>
+                                    <th> Expected Order Qty </th>
+                                    <th> Expected Price </th>
+                                    <th> Previous Price/Unit </th>
+                                    <th> Credit Days </th>
+                                    <th> Lead Time </th>
+                                    <th>Remarks </th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="stylebody">
+
+                            <tr *ngFor="let address of registerForm.controls.priceenq.controls; let i=index" [formGroupName]="i">
+                                <td>
+                                    <input type="checkbox" class="tabcheck" id="width1" formControlName="delflag" />
+                                </td>
+                                <td>
+                                    <input value={{i+1}} id="width2" readonly/>
+                                </td>
+                                <td>
+                                    <input formControlName="vendorname" id="width5" style="text-align:left" readonly/>
+                                </td>
+                                <td>
+                                    <input formControlName="drugname" id="width6" style="text-align:left" readonly/>
+                                </td>
+                                <td>
+                                    <input formControlName="prodwaitingqty" id="width3" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="exppoqty" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="exppoprice" class="right" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="previouspoprice" class="right" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="creditdays" id="width3" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="leadtime" id="width3" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="remarks" readonly />
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><br>
+
+            <div class="col-lg-3">
+                <button type="button" class="btn btn-round" (click)="remove()"> Remove </button>
+            </div><br>
+          
+          
+        </div> <br>
+        <!-- box-typical-->
+        <ng2-toasty [position]="position"></ng2-toasty>
+       
+        <div class="row">
+            <!-- row Start-->
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <button type="button" class="btn btn-round" (click)="onSubmit()"> Save </button>
+            </div>
+            <div class="col-lg-2">
+                <button type="button" class="btn btn-round" [routerLink]="['/PriceEnquiry/prcenquiryEdit' ]"> Edit </button>
+            </div>
+        </div>
+        <!-- row end  -->
+    </form>
+</app-card>

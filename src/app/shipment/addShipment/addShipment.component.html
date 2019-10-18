@@ -1,0 +1,777 @@
+<style>
+    .tabdesign {
+
+        border: 2px;
+
+    }
+
+    .checklabel {
+        font-size: 18px;
+        margin-left: 8px;
+        font-family: Montserrat;
+    }
+
+    .check {
+        height: 1.3em;
+        width: 1.4em;
+    }
+
+    #swidth {
+        width: 270px
+    }
+
+    .ship {
+        border: 2px solid grey;
+        border-radius: 5px;
+        padding:0.8em;
+    }
+</style>
+<app-card>
+
+
+    <div class="sub-title">Shipment Details <i class="fa fa-truck ficon" title="truck"> </i> </div>
+
+    <form [formGroup]="shipmentForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Packing Number </label>
+
+
+                    <select class="form-control" formControlName="packagerefid"
+                        (change)="getPackDetails();gettablevalue()">
+
+                        <option *ngFor="let pkno of packno" value="{{pkno[0]}}">{{pkno[1]}} </option>
+
+                    </select>
+
+                    <div class="messages text-danger" *ngIf="shipmentForm.controls.packagerefid.errors?.required">Select
+                        Packing Number</div>
+
+
+
+                </fieldset>
+            </div>
+
+
+
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Sales Invoice ID </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="salesinvoiceno" />
+                   
+                </fieldset>
+            </div>
+
+
+
+
+            <div class="col-lg-4">
+
+
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Customer Name </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="customername" />
+
+                </fieldset>
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+        <div class="row">
+
+
+
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Date </label>
+
+                    <input type="date" class="form-control" placeholder="" formControlName="clientcdate" />
+
+                </fieldset>
+            
+
+            </div>
+
+
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Billing Address1 </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="billingaddress" />
+
+                </fieldset>
+                        
+                <div class="messages text-danger" *ngIf="shipmentForm.controls.billingaddress.errors?.required">
+                    This Field is Required*</div>
+            </div>
+
+
+
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Billing Address 2 </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="bstreet" />
+
+                </fieldset>
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+
+
+        <div class="row">
+
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput">Location </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="blocation" />
+
+                </fieldset>
+            </div>
+
+            <div class="col-lg-4">
+
+
+                <!-- <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Country </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="bcountry" />
+
+                </fieldset> -->
+
+
+
+                <fieldset class="form-group">
+                        <label class="form-label"><h6>Country</h6></label>
+                        <select name="select" class="form-control" formControlName="bcountry" (change)="getState()" >
+                            <option disabled value="0">---Select Country---</option>
+                            <option *ngFor="let country of countries" value={{country[0]}}>{{country[1]}}</option>
+                        </select>
+                    </fieldset>
+
+
+
+
+
+
+
+
+            </div>
+
+            <div class="col-lg-4">
+
+
+                <!-- <fieldset class="form-group">
+                    <label class="form-label" for="exampleInput"> State </label>
+                    <input type="text" class="form-control" placeholder="" formControlName="bstate" />
+                </fieldset> -->
+           
+
+                <fieldset class="form-group">
+                        <label class="form-label"><h6>State</h6></label>
+                        <select name="select" class="form-control" formControlName="bstate" (change)="getCity()">
+                            <option disabled value="0">---Select State---</option>
+                            <option *ngFor="let state of states" value={{state[0]}}>{{state[2]}}</option>
+                        </select>
+                    </fieldset>
+    
+           
+           
+           
+            </div>
+
+            <div class="col-lg-4">
+                
+<!-- 
+                <fieldset class="form-group">
+                    <label class="form-label" for="exampleInput"> City </label>
+                    <input type="text" class="form-control" placeholder="" formControlName="bcity" />
+                </fieldset> -->
+
+
+
+                <fieldset class="form-group">
+                        <label class="form-label"><h6>City</h6></label>
+                        <select name="select" class="form-control" formControlName="bcity">
+                            <option disabled value="0">---Select City---</option>
+                            <option *ngFor="let city of cities" value={{city[0]}}>{{city[1]}}</option>
+                        </select>
+                    </fieldset>
+
+
+
+
+
+            </div>
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Contact Person </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="bcontactperson" />
+                    <p class="messages text-danger" *ngIf="shipmentForm.controls.bcontactperson.errors?.required">
+                        This Field is Required*</p>
+
+                </fieldset>
+            </div>
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Mobile No </label>
+
+                    <input type="number" class="form-control" placeholder="" formControlName="bmobile" />
+
+                </fieldset>
+                <p class="messages text-danger" *ngIf="shipmentForm.controls.bmobile.errors?.required">
+                    This Field is Required*</p>
+            </div>
+
+
+
+
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Email </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="bemail" />
+
+                </fieldset>
+                <p class="messages text-danger" *ngIf="shipmentForm.controls.bemail.errors?.pattern">
+                    Enter Correct Mail Address</p>
+            </div>
+
+
+
+
+            <div class="col-lg-4">
+
+                    <fieldset class="form-group">
+    
+                        <label class="form-label" for="exampleInput"> Employee ID </label>
+    
+                        <input type="text" class="form-control" placeholder="" formControlName="emprefid" />
+    
+    
+                    </fieldset>
+                </div>
+    
+    
+                <div class="col-lg-4">
+    
+                    <fieldset class="form-group">
+    
+                        <label class="form-label" for="exampleInput"> Employee Name </label>
+    
+                        <input type="text" class="form-control" placeholder="" formControlName="employeename" />
+    
+                    </fieldset>
+    
+                </div>
+    
+
+
+
+
+        </div><br>
+
+
+
+        <!-- style="margin-left:40px;font-size:20px;padding-bottom:5em ,   -->
+
+        <div class="row">
+
+            <div class="col-lg-1"></div>
+
+            <div class="col-lg-10">
+
+                <input type="checkbox" formControlName="checkbox1" class="check"
+                    (click)="sameAddress($event.target.checked)" />
+
+                <label for="exampleInput" class="checklabel"> The above billing address as same as
+                    shipping....
+                </label>
+
+
+                <input type="checkbox" formControlName="checkbox2" class="check ml-4"
+                    (click)="shipShowMeth($event.target.checked)" />
+
+                <label for="exampleInput" class="checklabel"> If you have separate shipping address? Click Here!!!....
+                </label>
+
+            </div>
+
+            <div class="col-lg-1"></div>
+
+        </div>
+
+
+        <br> 
+
+
+        <div class="row ship mx-2" *ngIf="shtabhide==1">
+
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Contact Person </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="shcontactperson" />
+
+                </fieldset>
+            </div>
+
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Shipment Address 1 </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="shipmentaddress" />
+
+                </fieldset>
+            </div>
+
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Shipment Address 2 </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="shstreet" />
+
+                </fieldset>
+            </div>
+
+
+            <!-- <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput">Location </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="hsm_streetname" />
+
+                </fieldset>
+            </div> -->
+
+            <div class="col-lg-4">
+
+
+
+                    <fieldset class="form-group">
+                            <label class="form-label"><h6>Country</h6></label>
+                            <select name="select" class="form-control" formControlName="shcountry" (change)="getValues()" (change)="getState1()">
+                                <option disabled value="0">---Select Country---</option>
+                                <option *ngFor="let country of countries" value={{country[0]}}>{{country[1]}}</option>
+                            </select>
+                        </fieldset>
+    
+
+
+
+
+                <!-- <fieldset class="form-group">
+                    <label class="form-label" for="exampleInput"> Country </label>
+                    <input type="text" class="form-control" placeholder="" formControlName="shcountry" />
+                </fieldset> -->
+
+
+
+            </div>
+
+            <div class="col-lg-4">
+
+
+<!--                 
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> State </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="shstate" />
+
+                </fieldset> -->
+
+
+
+
+                
+                <fieldset class="form-group">
+                        <label class="form-label"><h6>State</h6></label>
+                        <select name="select" class="form-control" formControlName="shstate" (change)="getCity1()">
+                            <option disabled value="0">---Select State---</option>
+                            <option *ngFor="let state of states" value={{state[0]}}>{{state[2]}}</option>
+                        </select>
+                    </fieldset>
+
+
+
+                
+            </div>
+
+            <div class="col-lg-4">
+
+                <!-- <fieldset class="form-group">
+                    <label class="form-label" for="exampleInput"> City </label>
+                    <input type="text" class="form-control" placeholder="" formControlName="shcity" />
+                </fieldset>
+ -->
+
+
+
+
+
+                <fieldset class="form-group">
+                        <label class="form-label"><h6>City</h6></label>
+                        <select name="select" class="form-control" formControlName="shcity">
+                            <option disabled value="0">---Select City---</option>
+                            <option *ngFor="let city of cities" value={{city[0]}}>{{city[1]}}</option>
+                        </select>
+                    </fieldset>
+            </div>
+
+         
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Mobile No </label>
+
+                    <input type="number" class="form-control" placeholder="" formControlName="shmobile" />
+
+                </fieldset>
+            </div>
+
+
+
+
+
+            <div class="col-lg-4">
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Email </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="shemail" />
+
+                </fieldset>
+               
+                <p class="messages text-danger" *ngIf="shipmentForm.controls.shemail.errors?.pattern">
+                    Enter correct Mail Address</p>
+            </div>
+
+
+        </div>
+
+
+
+        <br> 
+
+
+
+        <div class="row">
+
+
+
+         
+
+
+
+        </div>
+
+
+
+        <div class="row">
+
+            <div class="col-lg-4">
+
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Shipping ID </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="shippingid" />
+
+                </fieldset>
+                <div class="messages text-danger" *ngIf="shipmentForm.controls.shippingid.errors?.required">
+                    This field is Required*</div>
+            </div>
+
+            <div class="col-lg-4">
+
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Mode of Transportation</label>
+
+                    <!-- <input type="text" class="form-control" placeholder="" formControlName="shippingmode" /> -->
+
+                    <select class="form-control" formControlName="shipmentmode">
+                        <option value="1"> Employee</option>
+                        <option value="2"> Courier</option>
+                        <option value="3"> Cargo</option>
+
+                    </select>
+
+                </fieldset>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Transport Name </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="shipmentname" />
+
+                </fieldset>
+
+            </div>
+
+
+
+
+        </div>
+
+
+        <div class="row">
+
+
+
+            <div class="col-lg-4">
+
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Transport Number </label>
+
+                    <input type="text" class="form-control" placeholder="" formControlName="transportno" />
+
+                </fieldset>
+
+            </div>
+
+
+
+            <div class="col-lg-4">
+
+                <fieldset class="form-group">
+
+                    <label class="form-label" for="exampleInput"> Plan Shipping Date </label>
+
+                    <input type="date" class="form-control" placeholder="" formControlName="plannedshipdate" />
+
+                </fieldset>
+                <div class="messages text-danger" *ngIf="shipmentForm.controls.plannedshipdate.errors?.required">
+                    This field is Required*</div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <div formArrayName="shipmentcalculation" class="flow">
+
+            <table class="table styletab">
+
+                <thead class="stylehead">
+
+
+                    <tr>
+                        <th> S.No </th>
+                        <th> Description </th>
+                        <th> Box</th>
+                        <th> Weight </th>
+                        <th> Invoice Price</th>
+                        <th> Amount</th>
+                        <th>Shipment Charge </th>
+                    </tr>
+
+                </thead>
+
+                <tbody *ngFor="let shipc of shipmentForm.controls.shipmentcalculation.controls; let i =index"
+                    [formGroupName]="i">
+
+                    <tr class="stylebody">
+                        <td>
+                            <input value={{i+1}} id="width1" readonly >
+                        </td>
+
+                        <td>
+                            <input id="swidth" formControlName="package_description" >
+                        </td>
+
+                        <td>
+                            <input formControlName="unitbox"  (input)="tableCalculation()"  (change)="tableCalculation()"  (click)="tableCalculation()"
+                              >
+                        </td>
+                        <td>
+                            <input formControlName="unitweight"  (input)="tableCalculation()"  (change)="tableCalculation()" (click)="tableCalculation()"
+                                >
+                        </td>
+                        <td>
+                            <input id="width4" formControlName="unitprice" >
+                        </td>
+                        <td>
+                            <input id="width4" formControlName="amount" >
+                        </td>
+                        <td>
+                            <input id="width4" formControlName="unitshipmentcharge"   (input)="tableCalculation()" (click)="tableCalculation()"
+                               >
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <br> <br>
+
+
+        <div class="row">
+
+            <div class="col-lg-3">
+                <label class="form-label">Total Box </label>
+                <input type="text" class="form-control" placeholder="Total Box" formControlName="totalbox">
+            </div>
+
+
+            <div class="col-lg-3">
+                <label class="form-label">Total Weight </label>
+                <input type="text" class="form-control" placeholder="Total Weight" formControlName="totalweight">
+            </div>
+
+
+
+
+
+            <div class="col-lg-3">
+                <label class="form-label">Total Shipment Charge</label>
+                <input type="text" class="form-control" placeholder="Total Shipment Charge"
+                    formControlName="totalshipmentcharge">
+            </div>
+
+
+        </div>
+
+
+        <br> <br>
+
+
+
+
+        <div class="row">
+
+            <div class="col-lg-3">
+
+                <div class="col-lg-3">
+
+                    <div class="form-group">
+
+                        <button type="submit" class="btn btn-round" title="please fill the fields"  [disabled]="!shipmentForm.valid">
+                            Save </button>
+
+
+                        <!-- [attr.disabled]="shipmentForm.get('packagerefid').value==null||undefined" -->
+
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+            <div class="col-lg-3">
+
+                <div class="form-group">
+
+
+
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </form>
+
+
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

@@ -1,0 +1,44 @@
+
+
+
+
+<style>
+    .table-responsive {
+        max-height: 400px;
+        overflow-y: scroll;
+    }
+    </style>
+    
+
+    <app-card id="tab">
+ 
+    
+    <div class="table-responsive">
+        <table class="table table-bordered">
+    
+            <tr>
+                <th>PrescID</th>
+                <th>PrescNo</th>
+                <th>PrescDate</th>
+                <th>Edit</th>
+     
+ 
+            </tr>
+            <tr *ngFor="let item of pharmacomp;">
+                <td>{{item[0  ] }}</td>
+                <td>{{item[1  ] }}</td>
+                <td>{{item[2  ] }}</td>
+    
+                <td><a [routerLink]="['/priscmgmt/prescEdit',item[0] ]"
+                    class="btn btn-primary ">Edit</a></td>
+          
+    
+            
+            </tr>
+        </table>
+    </div>
+    
+    
+    
+    </app-card>
+    

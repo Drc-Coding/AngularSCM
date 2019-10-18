@@ -1,0 +1,139 @@
+<style>
+	th {
+		font-family: sans-serif;
+		font-size: 16px;
+		color: #487742;
+		background-color: lightgray;
+	}
+
+	td {
+		background-color: whitesmoke;
+	}
+
+	.nodata {
+		text-align: center;
+		width: 100%;
+		padding: 10px;
+		font-size: 25px;
+		color: rgb(245, 50, 50);
+		font-family: Verdana, Geneva, sans-serif;
+	}
+
+
+
+</style>
+<app-card>
+	<form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+		<div class="sub-title" style="font-size: 20px;">Manage Appointment</div>
+		<div class="form-group row">
+			<div class="radio radiofill radio-default radio-inline form-radio">
+				<label>
+					<input type="radio" value="0" formControlName="radioselect">
+					<i class="helper"></i>Search By Doctor Name
+				</label>
+			</div>
+			<div class="col-sm-4">
+				<ng-select [options]="searchDoctors" placeholder="Search By DoctorName" (input)="searchDoctor($event.target.value)" formControlName="docid"></ng-select>
+			</div>
+			<div class="radio radiofill radio-success radio-inline form-radio">
+				<label>
+					<input type="radio" value="1" formControlName="radioselect">
+					<i class="helper"></i>Search By Patient Name/Mobile No
+				</label>
+			</div>
+			<div class="col-sm-3">
+				<ng-select [options]="searchPatient" placeholder="Search By Patient/Mobile" (input)="searchPatients($event.target.value)"
+				 formControlName="patientid"></ng-select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="radio radiofill radio-warning radio-inline form-radio">
+				<label>
+					<input type="radio" value="2" formControlName="radioselect">
+					<i class="helper"></i> Search By Date
+				</label>
+			</div>
+			<div class="col-sm-4" style="margin-left: auto;">
+				<input type="date" class="form-control" formControlName="serdate">
+			</div>
+			<label class="col-sm-2 col-form-label"></label>
+			<div class="col-lg-4">
+				<input type="button" class="btn btn-inverse btn-round" value="Search" (click)="getSearch()">
+			</div>
+		</div>
+		<hr>
+		<div id="data-grid-demo">
+			<dx-data-grid id="gridContainer" [dataSource]="dataSource" keyExpr="ID" (onRowClick)="getClick($event)">
+				<dxo-paging [enabled]="false"></dxo-paging>
+				<dxo-editing mode="batch" [allowUpdating]="false"> </dxo-editing>
+				<dxi-column dataField="id" caption="S.No" [width]="50"></dxi-column>
+				<dxi-column dataField="appointno" caption="Appointment No"></dxi-column>
+				<dxi-column dataField="appointmentdate" caption="Appointment Date"></dxi-column>
+				<dxi-column dataField="patientinfo" caption="Patient Name-Mobile No" [width]="170"></dxi-column>
+				<dxi-column dataField="doctorname" caption="Doctor Name"></dxi-column>
+				<dxi-column dataField="appointfrom" caption="Appointment From" [width]="140"></dxi-column>
+				<dxi-column dataField="appointto" caption="Appointment To"></dxi-column>
+				<dxi-column dataField="edit" caption="Action"></dxi-column>
+			</dx-data-grid>
+		</div>
+		<hr>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">Appointment Date</label>
+			<div class="col-sm-4">
+				<input type="date" class="form-control" formControlName="appointmentdate" style="background-color: cornsilk;">
+			</div>
+			<label class="col-sm-2 col-form-label">Emergency Level</label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" placeholder="Emergency Level" formControlName="emergencylevel">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">Physician</label>
+			<div class="col-sm-4">
+				<select name="select" class="form-control" formControlName="doctorrefid" style="background-color: cornsilk;">
+					<option value="opt1">---Select Physician---</option>
+					<option *ngFor="let doc of physicianlist" value="{{doc[0]}}">{{doc[1]}}</option>
+				</select>
+			</div>
+			<label class="col-sm-2 col-form-label">Appointment Reason</label>
+			<div class="col-sm-4">
+				<textarea rows="3" cols="5" class="form-control" placeholder="Appointment Reason" formControlName="appointreason" style="background-color: cornsilk;"></textarea>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">Patient Name</label>
+			<div class="col-sm-4">
+				<select name="select" class="form-control" formControlName="patientrefid" style="background-color: cornsilk;">
+					<option value="opt1">---Select PatientName---</option>
+					<option *ngFor="let pt of patientlist" value="{{pt[0]}}">{{pt[1]}}</option>
+				</select>
+			</div>
+			<label class="col-sm-2 col-form-label">Appointment Duration</label>
+			<div class="col-sm-2">
+				<input type="text" class="form-control" placeholder="Duration" formControlName="appointduration" disabled>
+			</div>
+			<label class="col-sm-0 col-form-label">Amount</label>
+			<div class="col-sm-1">
+				<input type="text" class="form-control" formControlName="appointmentcharge">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">Appointment Time</label>
+			<div class="col-sm-3">
+				<ngb-timepicker formControlName="appointfromtime" [(ngModel)]="timefrom1" [meridian]="meridian" (click)="checkfromTime()"
+				 (change)="checkfromTime()"></ngb-timepicker>
+			</div>
+			<label class="col-sm-1 col-form-label">To</label>
+			<div class="col-sm-3">
+				<ngb-timepicker formControlName="appointtotime" [(ngModel)]="timeto1" [meridian]="meridian" (click)="checktoTime()" (change)="checktoTime()"></ngb-timepicker>
+			</div>
+			<div class="col-lg-3">
+				<label class="col-sm-1 col-form-label"></label>
+				<button type="submit" class="btn btn-success btn-round" style="margin-top: 27px;">Update</button>
+			</div>
+		</div>
+		<hr>
+	</form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

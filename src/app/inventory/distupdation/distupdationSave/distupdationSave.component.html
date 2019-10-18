@@ -1,0 +1,105 @@
+<style>
+    #swidth1{
+        width:231px;
+    }
+    #swidth2{
+        width:150px;
+    }
+</style>
+
+<app-card>
+  <div class="sub-title">Price Update Details
+    <i class="fa fa-usd ficon"></i>
+  </div><br>
+
+    <form [formGroup]="registerForm">
+
+        <div class="form-group row">
+            <!-- row Start-->
+        
+                    <div class="col-md-4">
+                        <label class="form-label" for="exampleInput"> From Business Type</label>
+                        <select class="form-control" formControlName="fromlocname">
+                            <option value="1"> Shop </option>
+                            <option value="2">warehouse</option>
+                            <option value="3"> hospital </option>
+                        </select>
+                    </div>
+
+                 
+                    <div class="col-md-4">
+                        <label class="form-label" for="exampleInput"> From Business Name
+                          </label>
+                        <input type="text" class="form-control" formControlName="namefromlocrefid" />
+                    </div>
+            
+        </div><br>
+        <!-- row     end-->
+        <div class="title1"><u>Price Updation Products</u></div> <br>
+
+        <div formArrayName="stkexp" class="flow">
+            <!--. table  start-->
+    
+                <table class="table styletab">
+                    <thead class="stylehead">
+                        <tr>
+                            <!--        <th>S. No </th>      -->
+                            <th> Select </th>
+                            <th>Price Enq No </th>
+                            <th>Price Enq Date</th>
+                            <th>Prod Name</th>
+                            <th> Expected Order Qty </th>
+                            <th> Expected Price </th>
+                            <th> Final Product Price </th>
+                            <th>Remarks </th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody class="stylebody">
+                    <tr *ngFor="let address of registerForm.controls.stkexp.controls; let i=index" [formGroupName]="i">
+                        <!--    <td><input   value={{i+1}}  /></td>    -->
+                        <td>
+                                <input type="checkbox" class="tabcheck" id="width1" formControlName="delflag" />
+                            </td>
+                        <td>
+                            <input formControlName="prcencno" id="swidth1" readonly />
+                        </td>
+                        <td>
+                                <input formControlName="pedate" id="width3" readonly />
+                            </td>
+                        <td>
+                            <input formControlName="drugname" id="swidth2" style="text-align:left" readonly/>
+                        </td>
+                        <td>
+                            <input formControlName="exppoqty" readonly />
+                        </td>
+                        <td>
+                            <input formControlName="exppoprice" id="width3" readonly />
+                        </td>
+                        <td>
+                            <input formControlName="distfinalprice" type="number" />
+                        </td>
+                        <td>
+                            <input formControlName="distremarks"  id="width4" />
+                        </td>
+                      
+                    </tr>
+                    </tbody>
+                </table>
+            </div><br>
+        <!--. table     end-->
+        <ng2-toasty [position]="position"></ng2-toasty>
+        <div class="row">
+
+          <div class="col-lg-1"></div>
+            <!-- row Start-->
+            <div class="col-lg-3">
+                <button type="button" class="btn btn-round" (click)="onSubmit()"> Save </button>
+            </div>
+            <!--   <div class="col-lg-3">     <button  type="button" class="btn btn-success btn-round"  
+                   [routerLink]="['/ExpiryStock/stkexpEdit' ]"       > Edit  </button> </div>   -->
+
+        </div>
+        <!-- row end-->
+    </form>
+</app-card>

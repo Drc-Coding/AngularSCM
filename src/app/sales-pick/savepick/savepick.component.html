@@ -1,0 +1,261 @@
+<app-card>
+	<div class="sub-title">Picking Details
+		<i class="fa fa-truck ficon"></i>
+	</div><br>
+	<form [formGroup]="salespickingForm" (ngSubmit)="onSubmit()">
+		<div class="box-typical box-typical-padding">
+			<div class="row">
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Sales Order No
+							<span style="color:red">*</span>
+						</label>
+						<select name="select" class="form-control" placeholder="Select Salesorder No"
+							(change)="getsodata()" formControlName="salesorderrefid">
+							<option value="opt1" selected disabled>-----Select Sales Order-----</option>
+							<option *ngFor="let so of solist" value="{{so[0]}}">{{so[1]}}</option>
+						</select>
+					</fieldset>
+				</div>
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Sales Order Date</label>
+						<input type="text" class="form-control" placeholder=" " formControlName="orderdate"
+							autofocus />
+					</fieldset>
+				</div>
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Sales Order Type</label>
+						<input type="text" class="form-control" placeholder=" " formControlName="sotypename"
+							autofocus />
+					</fieldset>
+				</div>
+				
+			</div>
+			<!--.row1end-->
+			<div class="row mt-3">
+				<!--    row2start -->
+				<!-- <div class="col-lg-4">
+		  <fieldset class="form-group">
+			  <label class="form-label" for="exampleInput">Put Away Id</label> 
+				  <input type="text" class="form-control"  placeholder=" " autofocus />
+  
+		  </fieldset>
+	  </div> -->
+				<!-- <div class="col-lg-4">
+		  <fieldset class="form-group">
+			  <label class="form-label" for="exampleInput">Employee Id</label> 
+			  <select name="select" class="form-control" placeholder="Select Salesorder No"
+					formControlName=" " >
+					</select>
+  
+		  </fieldset>
+	  </div> -->
+	  <div class="col-lg-4">
+		<fieldset class="form-group">
+			<label class="form-label" for="exampleInput">Sales Invoice No</label>
+			<input type="text" class="form-control" formControlName="slsinvoice" placeholder="  " />
+		</fieldset>
+	</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label semibold" for="exampleInput">Customer Name</label>
+						<input type="text" class="form-control" formControlName="custemname" placeholder="  " />
+					</fieldset>
+				</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Customer Code</label>
+						<input type="text" class="form-control" formControlName="custemcode" placeholder="  " />
+					</fieldset>
+				</div>
+				
+			</div>
+			<!--Row 2 End-->
+			<div class="row mt-3">
+
+					<div class="col-lg-4">
+							<fieldset class="form-group">
+								<label class="form-label semibold" for="exampleInput">Customer Mobile Number</label>
+								<input type="text" class="form-control" formControlName="custemmobno" placeholder="  " />
+							</fieldset>
+						</div>
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Employee Name and Code
+								<span style="color:red">*</span>
+						</label>
+						<!-- <input type="text" class="form-control"  placeholder=" " /> -->
+						<select name="select" class="form-control" placeholder="Select Employee"
+							formControlName="emprefid">
+							<option value="opt1" selected disabled>-----Select Sales Order-----</option>
+							<option *ngFor="let en of empname" value="{{en[1]}}">{{en[0]}}</option>
+						</select>
+					</fieldset>
+				</div>
+				<!-- <div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label" for="exampleInput">QR Code</label> 
+						<input type="text" class="form-control"  placeholder=" " autofocus />
+		
+				</fieldset>
+			</div> -->
+			</div> <br>
+			<!---Row 3 End-->
+			<div class="flow" style="overflow:auto" formArrayName="SOrederproduct">
+				<!--. table  start-->
+				<table class="table styletab">
+					<thead class="stylehead">
+						<tr>
+							<!-- <th>Select </th> -->
+							<th>S.No </th>
+							<th>Prod Code</th>
+							<th>Prod Name</th>
+							<th>Dosage</th>
+							<th>Formulation</th>
+							<th>Batch No</th>
+							<th>Expiry Date</th>
+							<th>Block No</th>
+							<th>Rack No</th>
+							<th>Shelf No</th>
+							<th>Invoice Qty</th>
+							<th>Avail Qty </th>
+							<th>Picking Qty</th>
+							<th>Return Qty</th>
+							<th>Total Qty </th>
+							<th>Remarks</th>
+						</tr>
+					</thead>
+					<tbody class="stylebody">
+						<tr *ngFor="let sop of salespickingForm.controls.SOrederproduct.controls;let i=index"
+							[formGroupName]="i">
+							<!-- <td>
+						  <input type="checkbox" id="width1" class="tabcheck" />
+					  </td> -->
+							<td id="width2">{{i+1}}
+							</td>
+							<td>
+								<input type="text" formControlName="drugproductrefid" readonly />
+							</td>
+							<td>
+								<input type="text" id="width6" style="text-align:left" formControlName="brandname"
+									readonly />
+							</td>
+							<td>
+								<input  type="text" id="width4"  formControlName="dosage"
+									readonly />
+							</td>
+							<td>
+								<input id="width4" type="text" style="text-align:left" formControlName="formulation"
+									readonly />
+							</td>
+							<td>
+								<input type="text" id="width4" style="text-align:left" formControlName="batchname"
+									readonly />
+							</td>
+							<td>
+								<input formControlName="expirydate" readonly />
+							</td>
+							<td>
+								<input id="width3" type="text" formControlName="blockno" style="text-transform: uppercase" />
+							</td>
+							<td>
+								<input id="width3" formControlName="rackno" />
+							</td>
+							<td>
+								<input id="width3" type="text" formControlName="shelfno" />
+							</td>
+							<td>
+								<input type="number" formControlName="invoiceqty" readonly />
+							</td>
+							<td>
+								<input id="width3" type="number" formControlName="availqty" readonly />
+							</td>
+							<td>
+								<input id="width3" formControlName="pickedqty" (change) = "calculation()"/>
+							</td>
+							<td>
+								<input id="width3" formControlName="returnqty" (change) = "calculation()"/>
+							</td>
+							<td>
+								<input formControlName="qty" (change) = "calculation()"/>
+							</td>
+							<td>
+								<input type="text" formControlName="remarks" />
+							</td>
+						</tr>
+						<tr>
+							<td><input type="text" id="width2"></td>
+							<td>
+								<input type="text" />
+							</td>
+							<td>
+								<input type="text" id="width4" style="text-align:left" />
+							</td>
+							<td>
+								<input id="width2" type="text" />
+							</td>
+							<td>
+								<input id="width2" type="number" />
+							</td>
+							<td>
+								<input id="width1" type="text" />
+							</td>
+							<td>
+								<input id="width2" />
+							</td>
+							<td>
+								<input id="width2" type="text" />
+							</td>
+							<td>
+								<input id="width2" />
+							</td>
+							<td>
+								<input id="width2" />
+							</td>
+							<td>
+								<input id="width1" />
+							</td>
+							<td>
+								<input id="width3" />
+							</td>
+							<td>
+								<input id="width1" />
+							</td>
+							<td>
+								<input id="width3" />
+							</td>
+							<td>
+								<input id="width3" />
+							</td>
+							<td>
+								<input id="width3" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<!--. table     end-->
+			</div><br>
+		</div>
+		<!-- box-typical-->
+		<div class="row">
+			<div class="col-lg-1"></div>
+			<div class="col-lg-3">
+				<div class="form-group">
+
+  		<button type="submit" class="btn btn-round" [disabled]="!salespickingForm.valid">Save</button>
+				</div>
+			</div>
+			<!-- <div class="col-lg-3">
+				<div class="form-group">
+					<button type="submit" class="btn btn-round">Edit</button>
+				</div>
+			</div> -->
+		</div><br>
+	</form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

@@ -1,0 +1,291 @@
+<style>
+  .bform {
+    border: 2px solid #b3b3b3;
+    border-radius: 5px;
+    padding: 1em;
+  }
+
+  .nodata {
+    text-align: center;
+    padding: 10px;
+    font-size: 25px;
+    color: red;
+  }
+
+  .scheck {
+    height: 1.4em;
+    width: 1.3em;
+  }
+
+  #swidth {
+    width: 270px;
+  }
+
+  .ipstyle {
+    border-radius: 50px;
+    height: 45px;
+    width: 95%;
+    text-align: center;
+  }
+</style>
+
+<app-card>
+
+  <div class="sub-title">Order Tracking Details
+    <i class="fa fa-map-marker ficon"></i>
+  </div><br>
+  <div class="container">
+
+    <form [formGroup]="customerTrackingForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group row">
+
+        <div class="col-lg-1"></div>
+
+
+        <div class="col-lg-2">
+
+          <select (change)="generalSearch($event.target.value)" class="form-control">
+            <option disabled>--Select Search--</option>
+            <option value="1">Customer Name</option>
+            <option value="2">Sales Invoice Search</option>
+            <option value="3">Mobile no Search</option>
+            <option value="0">All Search</option>
+          </select>
+
+        </div>
+
+
+        <div class="col-lg-1"></div>
+
+
+
+        <div class="col-lg-7">
+
+
+          <input type="text" *ngIf="name" placeholder="Search Customer Name" class="ipstyle"
+            (input)="getCustSearch($event.target.value)">
+
+
+          <input type="text" *ngIf="invoice" placeholder="Search Sales Invoice Number" class="ipstyle"
+            (input)="getSalesInvSearch($event.target.value)">
+
+
+          <input type="text" *ngIf="mobile" placeholder="Search Mobile Number" class="ipstyle"
+            (input)="getMobileSearch($event.target.value)">
+
+          <input type="text" *ngIf="all" placeholder="Search All" class="ipstyle"
+            (input)="getSearchAll($event.target.value)">
+
+        </div>
+
+
+
+        <div class="col-lg-1"></div>
+
+      </div><br>
+
+
+      <div class="bform">
+
+        <div class="form-group row">
+
+          <div class="col-lg-4">
+            <fieldset class="form-group">
+              <label class="form-label">Customer Name</label>
+              <input type="text" class="form-control" formControlName="customername" disabled>
+            </fieldset>
+          </div>
+
+
+          <div class="col-lg-4">
+            <fieldset class="form-group">
+              <label class="form-label">Mobile No</label>
+              <input type="text" class="form-control" formControlName="mobileno" disabled>
+            </fieldset>
+          </div>
+
+          <div class="col-lg-4">
+            <fieldset class="form-group">
+              <label class="form-label">E-Mail</label>
+              <input type="text" class="form-control" formControlName="email" disabled>
+            </fieldset>
+          </div>
+
+          <div class="col-lg-4">
+            <fieldset class="form-group">
+              <label class="form-label">Address</label>
+              <input type="text" class="form-control" formControlName="address" disabled>
+            </fieldset>
+          </div>
+
+          <div class="col-lg-4">
+            <fieldset class="form-group">
+              <label class="form-label">Customer Type</label>
+              <input type="text" class="form-control" formControlName="customertype"
+                style="font-weight: bold;color:orangered" disabled>
+            </fieldset>
+          </div>
+
+
+          <div class="col-lg-4 mt-4">
+
+            <button class="btn btn-round" *ngIf="newcustomer" [routerLink]="['/Customer/AddCustomer']"> New Customer
+            </button>
+          </div>
+
+
+        </div>
+
+      </div><br>
+
+
+
+      <div class="flow" formArrayName="customerDetails">
+        <!--. table  start-->
+
+        <table class="table styletab">
+
+          <thead class="stylehead">
+            <tr>
+
+              <th>S.No </th>
+              <th>Order Id</th>
+              <th>Order No</th>
+              <th>Order Date</th>
+              <!-- <th>Prod Code</th>
+                <th>Prod Name</th>
+                <th>No of Products</th> -->
+              <th>Product Details</th>
+
+              <th> Status </th>
+              <th> Tracking</th>
+            </tr>
+
+          </thead>
+
+          <tbody class="stylebody">
+
+
+            <tr *ngFor="let cust of customerTrackingForm.controls.customerDetails.controls; let i =index"
+              [formGroupName]="i">
+
+
+
+              <td id="width3"> {{i+1}} </td>
+              <td> <input type="text" id="width4" formControlName="saleorderno"> </td>
+              <td> <input type="text" style="text-align:left" id="swidth" formControlName="salesorderdate"> </td>
+              <td> <input type="text" id="width5" formControlName="salesordertype"> </td>
+
+              <!-- <td> <input type="text" formControlName="productcode"> </td>
+                <td> <input type="text" formControlName="productname"> </td>
+                <td> <input type="text" formControlName="noofproducts"> </td>
+ -->
+
+              <td style="color:green;cursor:pointer" id="width3"
+                (click)="getSalesOrdDetails(customerTrackingForm.controls.customerDetails.controls[i].controls.saleorderno.value,content)">
+                View</td>
+
+
+
+
+
+              <td *ngIf="1 ==1">
+                <span class="label label-danger" *ngIf="0==1" style="font-size: 18px;">Request
+                  InComplete</span>
+                <span class="label label-success" *ngIf="0==0" style="font-size: 18px;">Request
+                  Complete</span>
+              </td>
+
+
+
+              <!-- <td *ngIf="hdFlag ==1">
+								<span class="label label-danger" *ngIf="item[4]==0" style="font-size: 18px;">Request
+									InComplete</span>
+								<span class="label label-success" *ngIf="item[4]==1 " style="font-size: 18px;">Request
+									Complete</span>
+							</td> -->
+
+
+
+              <td id="width4"> <span
+                  [routerLink]="['/CustomerTracking/LiveTracking', customerTrackingForm.controls.customerDetails.controls[i].controls.saleorderno.value]"
+                  style="color:green;cursor:pointer"><i class="fa fa-map-marker mr-1"></i>Track</span>
+              </td>
+
+            </tr>
+
+
+            <tr *ngIf="ndt">
+              <td></td>
+              <td></td>
+              <td> </td>
+              <td class="nodata">No matching Record(s) found</td>
+              <td> </td>
+              <td></td>
+              <td></td>
+            </tr>
+
+
+
+
+          </tbody>
+        </table>
+
+      </div><br>
+      <!--Table End-->
+
+
+
+
+
+      <div class="form-group row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-2">
+          <button type="submit" class="btn btn-success btn-round button">Save</button>
+        </div>
+      </div>
+
+
+      <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">Product Details:
+          <i class="fa fa-times" (click)="c('Close click');" style="color:white;cursor:pointer"></i>
+        </div>
+        <img src="assets/images/poptab.jpg" class="mt-4 modimg"><br><br>
+        <div class="modal-body">
+          <div class="flow" formArrayName="customerDetails1">
+            <!--. table  start-->
+            <table class="table styletab">
+              <thead class="stylehead">
+                <tr>
+                  <th>S.No </th>
+                  <th>Product Code</th>
+                  <th>Product Name</th>
+                  <th>Qty</th>
+                </tr>
+              </thead>
+              <tbody class="stylebody">
+                <tr *ngFor="let cust1 of customerTrackingForm.controls.customerDetails1.controls; let i =index"
+                  [formGroupName]="i">
+                  <td id="width1"> {{i+1}} </td>
+                  <td> <input type="text" id="width3" formControlName="productcode"> </td>
+                  <td> <input type="text" id="width5" style="text-align:left" formControlName="productname"> </td>
+                  <td> <input type="text" id="width3" formControlName="noofproducts"> </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div><br>
+          <!--Table End-->
+        </div>
+        <div class="modal-footer">
+          <label class="btn modbtn" (click)="c('Close click')">Ok</label>
+        </div>
+      </ng-template>
+
+
+    </form>
+  </div>
+</app-card>
+
+<ng2-toasty [position]="position"></ng2-toasty>

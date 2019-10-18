@@ -1,0 +1,131 @@
+
+
+
+
+
+
+<style>
+    .table-responsive {
+        height: 400px;
+        overflow-y: scroll;
+    }
+
+
+    
+    .row input ,.row label ,.row select{
+        margin-bottom: 6px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-right: 0px;
+        margin-left: 0px;
+        
+    }
+
+/*  .row label {
+
+font-size: 1.2em; 
+
+font-family: sans-serif  ;
+
+font-stretch: expanded ;
+
+font-weight: 500 ; 
+
+
+ }       */
+
+
+
+
+    </style>
+    
+
+    <app-card id="tab">
+
+            <form [formGroup]="registerForm" >
+   
+  <div class="row">
+                
+                                    <div class="col-lg-2">
+                                        
+                                
+                                                            <label class="form-label semibold" for="exampleInput"> From Loc Type
+                                                                   </label> 
+                                                        
+                                                 
+                                                                   
+                                                    </div>
+                                     <div class="col-lg-3">
+                                        <select class="select2"    class="form-control"
+                                        (change)="viewDestination()"     formControlName="tolocname"  >
+                                       
+                                        <option  value="1" >  Shop  </option>
+                                        
+                                                                                    <option  value="2" >warehouse</option>
+                                        
+                                                                                    <option  value="3" >  hospital  </option>
+                                                
+                                        </select>
+                                  
+                                
+                                    </div> 
+
+                                         </div> 
+
+
+      <div class="row">
+                                   <div class="col-lg-2">
+                                        
+                                
+                                                            <label class="form-label semibold" for="exampleInput"> From Loc Name   
+                                                                   </label> 
+                                                        
+                                                 
+                                                    
+                                                    </div>
+                                  <div class="col-lg-3">
+                                        <select   class="form-control"
+                                         formControlName="tolocrefid"  (change)="viewIndentRequest()"   >
+                                            <option *ngFor="let item of destination; let i = index"
+                                                value={{item[0]}}>{{item[1]}}</option>
+                                        </select>
+                                  
+                                
+                                    </div>
+                                     
+                                 
+                        </div>    
+
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+    
+            <tr>
+                <th>IndentReqID</th>
+                <th>IndentNo</th>
+                <th>IndentDate</th>
+                <th>Proceed</th>
+     
+ 
+            </tr>
+            <tr *ngFor="let item of pharmacomp;">
+                <td>{{item[0  ] }}</td>
+                <td>{{item[1  ] }}</td>
+                <td>{{item[6  ] }}</td>
+    
+                <td><a [routerLink]="['/indentapproval/saveIndappr',item[0] ,item[2] ,item[3]  ]"
+                    class="btn btn-primary ">Proceed</a></td>
+          
+    
+            
+            </tr>
+        </table>
+    </div>
+    
+</form>
+    
+    </app-card>
+    
+
+
+

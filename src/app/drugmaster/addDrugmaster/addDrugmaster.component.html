@@ -1,0 +1,754 @@
+<style>
+	
+	.nodata {
+		text-align: center;
+		width: 100%;
+		padding: 10px;
+		font-size: 20px;
+		color: red;
+		font-family: Arial;
+	}
+
+	input[type="radio"] {
+		-ms-transform: scale(1.5);
+		-webkit-transform: scale(1.5);
+		transform: scale(1.5);
+		margin-right: 0;
+	}
+
+	.image-div {
+		float: left;
+		margin-right: 10px;
+		max-width: 20%;
+		max-height: 20%;
+	}
+
+	.error {
+		font-size: large;
+		color: red;
+	}
+
+
+
+	.para {
+
+		font-size: 14px;
+
+	}
+
+</style>
+<app-card>
+	<div class="sub-title">Product Details
+		<i class="fa fa- ficon"></i>
+	</div><br>
+	<form [formGroup]="drugForm" (ngSubmit)="onSubmit()">
+		<div class="box-typical box-typical-padding">
+
+			<div class="form-group row">
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Product Name
+						</label>
+						<input type="text" class="form-control" placeholder="Enter Product Name"
+							formControlName="brandname">
+						<div class="messages text-danger" *ngIf="drugForm.controls.brandname.errors?.pattern">Invalid
+							characters
+						</div>
+					</fieldset>
+				</div>
+
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Generic Name
+						</label>
+						<ng-select [options]="generic" placeholder="Search Generic Name" formControlName="genericid"
+							(click)="showData2()" (input)="getGeneric($event.target.value)">
+						</ng-select>
+					</fieldset>
+				</div>
+
+
+
+				<div class="col-lg-4">
+					<br>
+					<label style=" display: block;
+							text-align: center;">
+					</label>
+					<label class="btn btn-round" (click)="open(content)" id="comdivision">Add Generic Name
+					</label>
+				</div>
+
+
+
+
+
+
+			</div>
+
+
+
+
+			<div class="form-group row">
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Main Group
+						</label>
+						<select name="select" class="form-control" placeholder="Select Main Group"
+							formControlName="maingroupid" (change)="getSubgroup1()"
+							(change)="searchwithcodeformain($event.target.value, contenetmain)">
+							<option selected disabled value="0">---Select Main Group---</option>
+							<option value="nonemain" id="comdivision2" style="background-color: #52aa0c"> Add Main Group
+							</option>
+
+							<option *ngFor="let main of maingroup" value={{main[0]}}>{{main[1]}}</option>
+						</select>
+					</fieldset>
+				</div>
+
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Sub Group 1
+						</label>
+						<select name="select" class="form-control" placeholder="Select Sub Group 1"
+							formControlName="subgroupid1" (change)="getSubgroup2()"
+							(change)="searchwithcodeforsub1($event.target.value, contenetsub1)">
+							<option selected disabled value="0">---Select Sub Group 1---</option>
+							<option value="nonesub1" id="comdivision3" style="background-color: #52aa0c;color:white">
+								Add Sub Group 1
+							</option>
+							<option *ngFor="let sub1 of subgroup1" value={{sub1[0]}}>{{sub1[1]}}</option>
+						</select>
+					</fieldset>
+				</div>
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Sub Group 2
+						</label>
+						<select name="select" class="form-control" placeholder="Select Sub Group 2"
+							formControlName="subgroupid2"
+							(change)="searchwithcodeforsub2($event.target.value, contenetsub2)">
+							<option selected disabled value="opt9">---Select Sub Group 2---</option>
+							<option value="nonesub2" id="comdivision4" style="background-color: #52aa0c;color:white">
+								Add Sub Group 2
+							</option>
+							<!-- <option *ngFor="let sub2 of subgroup2" [selected]="sub2==0" [value]="sub2[0]"> {{sub2[1]}} </option> -->
+							<option *ngFor="let sub2 of subgroup2" value={{sub2[0]}}> {{sub2[1]}} </option>
+						</select>
+						<!-- <div *ngIf="subgroup2.length == 0">No records found</div> -->
+					</fieldset>
+				</div>
+
+
+
+			</div>
+
+
+
+
+
+
+			<div class="form-group row">
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Dosage Value
+						</label>
+						<input type="text" class="form-control" placeholder="Dosage Value"
+							formControlName="genericnamedosage">
+					</fieldset>
+				</div>
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Unit Of Messurement(UOM)
+						</label>
+						<input type="text" class="form-control" placeholder="Unit Of Messurement(UOM)"
+							formControlName="uom">
+					</fieldset>
+				</div>
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Formulation</label>
+						<select name="select" class="form-control" formControlName="formulationid" placeholder="">
+							<option value="0" selected disabled>---Select Formulation---</option>
+							<option *ngFor="let formu of formulation" value={{formu[0]}}>{{formu[1]}}</option>
+						</select>
+					</fieldset>
+				</div>
+
+
+			</div>
+
+
+
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label"></label>
+
+					<!-- <input type="button" value="Check ATC" class="btn btn-round button" style="margin-left: 65px; position: absolute;top: 30%; "
+						 (click)="showData2()"> -->
+
+					<!-- <input type="button" value="Cancel" class="btn btn-inverse" style="margin-left: 170px;position: absolute;top: 30%;" (click)="cancel()"> -->
+				</fieldset>
+			</div>
+
+			<br> <br>
+
+
+
+			<div>
+
+				<h6 style="font-family:Montserrat"> If it's combination generic please <a [routerLink]=""  style="color:#52a00c;font-size:21px"
+						(click)="getOtherGeneric()" > Click Here!</a></h6>
+
+
+
+
+				<!-- <input type="button" value="Add" class="btn btn-round button" (click)="getOtherGeneric()"> -->
+
+
+				<input type="button" value="Save Combination" class="btn btn-round" (click)="showData4()">
+
+			</div><br>
+
+
+			<!-- <input type="button" value="show" class="btn btn-succss" (click)="showData()">  -->
+			<div formArrayName="FormArrayOne">
+				<table class="table table-striped table-bordered table-responsive full-data-table">
+					<!-- <tr>
+					<th >generic name</th>
+				<th >Dosage</th>
+			<th >UOM</th>
+			<th>Remove</th></tr> -->
+					<tbody>
+						<tr *ngFor="let mains of drugForm.controls.FormArrayOne.controls; let i=index"
+							[formGroupName]="i">
+							<td>
+								<ng-select [options]="generic" placeholder="Search Generic Name"
+									formControlName="genericid" (input)="getGeneric($event.target.value)">
+								</ng-select>
+							</td>
+							<td>
+								<input type="text" class="form-control" placeholder="Dosage Value"
+									formControlName="dosage">
+							</td>
+							<td>
+								<input type="text" class="form-control" placeholder="Unit Of Messurement(UOM)"
+									formControlName="uom1">
+							</td>
+							<td>
+								<input type="button" value="Cancel" class="btn btn-round" (click)="cancel(i)">
+							</td>
+
+
+
+						</tr>
+					</tbody>
+
+
+
+				</table>
+
+			</div>
+
+
+
+
+
+
+			<br>
+			<div class="sub-title">ATC Details</div>
+			<div style="overflow: auto">
+				<table class="table table-striped table-bordered table-responsive full-data-table"
+					[mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage"
+					[(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+
+					<thead class="thead">
+						<tr>
+							<th>
+								S.No
+							</th>
+							<th>
+								Generic Name
+							</th>
+							<th>
+								Chemical Subgroup Description
+							</th>
+							<th>
+								Pharmacological Subgroup Description
+							</th>
+							<th>
+								Therapeutic Subgroup description
+							</th>
+							<th>
+								Anatomical Main Group Description
+							</th>
+						</tr>
+						<tr>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngIf="(data | dataFilter : filterQuery) == 0&&nod">
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="nodata">{{currnot}}</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr *ngFor="let item of mf.data;let i=index">
+							<td>{{i+1}}</td>
+							<td>{{item.genericname}}</td>
+							<td>{{item.disc2}}</td>
+							<td>{{item.disc3}}</td>
+							<td>{{item.disc4}}</td>
+							<td>{{item.disc5}}</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="6">
+								<mfBootstrapPaginator class="pagination-main f-right"></mfBootstrapPaginator>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<br>
+			<div class="sub-title">Other Settings</div>
+			<div class="form-group row">
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label"> Manufacturer Name&nbsp;
+							<font color="red" class="fontlangifbel">*</font>
+						</label>
+						<span>
+							<ng-select [options]="Manufacturername" placeholder="Search Manufacturer Name"
+								formControlName="Manufacturernameid" (input)="getmanufacturer($event.target.value)">
+							</ng-select>
+							<!-- (change)="searchwithcode($event.target.value, contenet)" -->
+
+
+
+
+							<!-- <select name="select" class="form-control" placeholder=""
+						 formControlName="Manufacturernameid" (change)="searchwithcode($event.target.value, contenet)" > -->
+
+							<!-- (change)="getmanufactuereDiv()" -->
+							<!-- <option value="0" selected disabled>---Select Manufacturer Name---- </option> -->
+							<!-- <option value="none"  id="comdivision1" style="background-color: #52aa0c">
+								AddManufacturer 
+								</option> -->
+							<!--	<option *ngFor="let phar of pharmacompany" value={{phar[0]}}> {{phar[1]}}</option>
+						 </select> -->
+							<input type="button" [routerLink]="['/Manufacturer/AddManufacturer']"
+								value="Add Manufacturer" id="comdivision1"
+								style="background-color: #52aa0c; color:white;cursor:pointer">
+
+							<!-- </option> -->
+						</span>
+					</fieldset>
+
+
+				</div>
+
+				<!-- <div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="col-form-label"> Manufacturer Division&nbsp;
+							<font color="red" class="fontlabel">*</font> </label>
+						<select name="select" class="form-control" formControlName="manufacturerdivisionid"
+							Placeholder="">
+							<option value="0" selected disabled>---Select Manufacturer Division Name---- </option>
+							<option *ngFor="let manudivision of manufacturerdivision" value={{manudivision[0]}}>
+								{{manudivision[1]}}</option>
+						</select>
+					</fieldset>
+				</div> -->
+				<!-- <div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="col-form-label">Schedule</label>
+						<select name="select" class="form-control" formControlName="schudletype" placeholder="">
+							<option value="0" selected disabled>---Select Schedule---</option>
+							<option *ngFor="let sch of schedule" value={{sch[0]}}>{{sch[1]}}</option>
+						</select>
+					</fieldset>
+				</div> -->
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">SRP</label>
+						<input type="text" class="form-control" id="mrp" placeholder="SRP" formControlName="mrp"
+							step="0.02">
+						<div class="messages text-danger" *ngIf="drugForm.controls.mrp.errors?.pattern">Numerical Only
+							Accepts!</div>
+							<div class="messages text-danger" *ngIf="drugForm.controls.mrp.errors?.required">
+							This Field is Required*</div>
+								
+						<!-- <div class="messages text-danger"
+							*ngIf="drugForm.get('mrp').hasError('required') && formSubmitAttempt">
+							This Field is Required*
+						</div> -->
+					</fieldset>
+				</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Banned Drug</label>
+						<br>
+						<input type="radio" (click)="changeValue(true)" formControlName="banneddrug" [value]="1"
+							value="1" />&nbsp;&nbsp;&nbsp;Yes&nbsp;&nbsp;&nbsp;
+						<input type="radio" (click)="changeValue(false)" formControlName="banneddrug" value="0"
+							[checked]="true" />&nbsp;&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;
+						<div *ngIf="isValid">
+							<textarea rows="2" cols="50" formControlName="banneddrugreason"></textarea>
+						</div>
+						<div *ngIf="!isValid"></div>
+					</fieldset>
+				</div>
+				<!--</div>-->
+				<!--<div class="form-group row"> -->
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Min Quantity</label>
+						<input type="text" class="form-control" id="minqty" placeholder="Minimum Quantity"
+							formControlName="minqty">
+						<div class="messages text-danger" *ngIf="drugForm.controls.minqty.errors?.pattern">Numerical
+							Only Accepts!</div>
+					</fieldset>
+				</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Max Quantity</label>
+						<input type="text" class="form-control" id="maxqty" placeholder="Maximum Quantity"
+							formControlName="maxqty">
+						<div class="messages text-danger" *ngIf="drugForm.controls.maxqty.errors?.pattern">Numerical
+							Only Accepts!</div>
+					</fieldset>
+				</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Insurance Type</label>
+						<angular2-multiselect class="form-control" [data]="insurancetype" [settings]="dropdownSettings"
+							formControlName="insuranceid">
+						</angular2-multiselect>
+					</fieldset>
+				</div>
+				<!--</div>-->
+				<!--<div class="form-group row"> -->
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Box/Cartone </label>
+						<input type="text" class="form-control" id="boxpercartoon" placeholder="Box per Cartone"
+							formControlName="boxpercartoon">
+						<div class="messages text-danger" *ngIf="drugForm.controls.boxpercartoon.errors?.pattern">
+							Numerical Only Accepts!
+						</div>
+					</fieldset>
+				</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Strip/Box</label>
+						<input type="text" class="form-control" id="stripperbox" placeholder="Strip per Box"
+							formControlName="stripperbox">
+						<div class="messages text-danger" *ngIf="drugForm.controls.stripperbox.errors?.pattern">
+							Numerical Only Accepts!
+						</div>
+					</fieldset>
+				</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Quantity/Strip</label>
+						<input type="text" class="form-control" id="quantityperstrip" placeholder="Quantity per Box"
+							formControlName="quantityperstrip">
+						<div class="messages text-danger" *ngIf="drugForm.controls.quantityperstrip.errors?.pattern">
+							Numerical Only Accepts!</div>
+					</fieldset>
+				</div>
+				<!--</div>-->
+				<!--<div class="form-group row"> -->
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Barcode</label>
+						<input type="text" class="form-control" id="barcode" placeholder="Barcode"
+							formControlName="barcode">
+					</fieldset>
+				</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Product Register Number</label>
+						<input type="text" class="form-control" id="productregno" placeholder="Product Register Number"
+							formControlName="productregno">
+					</fieldset>
+				</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label">Distributor Channel</label>
+						<select name="select" class="form-control" formControlName="distimporterid" placeholder="">
+							<option value="0">---Select Distributor Channel---</option>
+							<option *ngFor="let distchn of ditributorchann" value={{distchn[0]}}> {{distchn[1]}}
+							</option>
+						</select>
+					</fieldset>
+				</div>
+
+
+			</div>
+
+
+
+			<div class="sub-title">Tax Settings</div>
+
+			<div class="form-group row">
+				<div class="col-lg-4" *ngIf="fieldhide == 0">
+					<fieldset class="form-group">
+						<label class="form-label">VAT</label>
+						<select name="select" class="form-control" formControlName="vat" placeholder="">
+							<option value="0" selected disabled>---Select VAT---</option>
+							<option *ngFor="let vatTax of vat" value={{vatTax[0]}}>{{vatTax[1]}}</option>
+						</select>
+					</fieldset>
+				</div>
+
+				<div class="col-lg-4" *ngIf="fieldhide == 1">
+					<fieldset class="form-group">
+						<label class="form-label">Goods & Service Tax(GST)</label>
+						<select name="select" class="form-control" formControlName="gst" placeholder="">
+							<option value="0" selected disabled>---Select Goods And ServiceTax---</option>
+							<option *ngFor="let gstTax of gst" value={{gstTax[0]}}>{{gstTax[1]}}</option>
+						</select>
+					</fieldset>
+				</div>
+				<div class="col-lg-4" *ngIf="fieldhide == 1">
+					<fieldset class="form-group">
+						<label class="form-label">SGST</label>
+						<select name="select" class="form-control" formControlName="sgst" placeholder="">
+							<option value="0" selected disabled>---Select SGST---</option>
+							<option *ngFor="let sgstTax of sgst" value={{sgstTax[0]}}>{{sgstTax[1]}}</option>
+						</select>
+					</fieldset>
+				</div>
+				<!-- <div class="form-group row">-->
+				<div class="col-lg-4" *ngIf="fieldhide == 1">
+					<fieldset class="form-group">
+						<label class="form-label">CGST</label>
+						<select name="select" class="form-control" formControlName="cgst" placeholder="">
+							<option value="0" selected disabled>---Select CGST---</option>
+							<option *ngFor="let cgstTax of cgst" value={{cgstTax[0]}}>{{cgstTax[1]}}</option>
+						</select>
+					</fieldset>
+				</div>
+				<div class="col-lg-4" *ngIf="fieldhide == 1">
+					<fieldset class="form-group">
+						<label class="form-label">IGST</label>
+						<select name="select" class="form-control" formControlName="igst" placeholder="">
+							<option value="0" selected disabled>---Select IGST---</option>
+							<option *ngFor="let igstTax of igst" value={{igstTax[0]}}>{{igstTax[1]}}</option>
+						</select>
+					</fieldset>
+				</div>
+
+
+				<div class="col-lg-4">
+
+						<label class="form-label"> Upload photos (Max file upload 500kb)</label>
+						<div class="form-inline">
+						<input type="file" formControlName="choosephotos" #fileInput class="form-control"
+							style="padding-left:1rem 4rem;" [multiple]="(maxFiles > 1)"
+							(change)="selectFile($event)" accept="image/*">
+							<span (click)="reset()" style="cursor:pointer" class="fa fa-trash"></span>
+						</div>
+						<div class="error" *ngIf="errors.length > 0">
+							<ul>
+								<li *ngFor="let err of errors">{{err}}</li>
+							</ul>
+						</div>
+
+					</div>
+
+			</div>
+
+
+
+			<!-- <div class="form-group row">
+
+				<div class="col-sm-8">
+					<div class="col-lg-5 float-left">
+						<fieldset class="form-group">
+							 <div class="col-form-label">Picture Upload</div>
+							<label class="col-form-label">Upload photos (Max file upload 500kb) </label>
+							<input type="file" formControlName="choosephotos" #fileInput [multiple]="(maxFiles > 1)" (change)="selectFile($event)"
+							 accept="image/*">
+							<button type="button" class="btn btn-danger btn-sm" (click)="reset()">
+								<span class="fa fa-trash"></span> Remove
+							</button>
+							<div class="error" *ngIf="errors.length > 0">
+								<ul>
+									<li *ngFor="let err of errors">{{err}}</li>
+								</ul>
+							</div> 
+
+						
+							
+						</fieldset>
+					</div>
+				</div>
+
+
+			</div>
+ -->
+
+			<div class="form-group row">
+				<div class="col-lg-4">
+					<button [disabled]="!drugForm.valid" type="submit" class="btn btn-round">Save</button>
+				</div>
+			</div>
+
+
+			<ng2-toasty [position]="position"></ng2-toasty>
+
+			<ng-template #content let-c="close" let-d="dismiss">
+				<div class="modal-header">
+					<label class="form-label"> Add Generic</label>
+					<i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer"></i>
+				</div>
+				<img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+
+				<div class="modal-body mx-5">
+					<input class="form-control" id="genericnumber" formControlName="genericname" placeholder="Enter Generic Name" />
+
+				</div>
+				<div class="modal-footer">
+					<label class="btn modbtn" id="type" (click)="saveGeneric(c)">Save Generic Name</label>
+				
+				</div>
+			</ng-template>
+
+
+
+
+
+
+			<!-- <ng2-toasty [position]="position"></ng2-toasty>
+			<ng-template #contenet let-c="close" let-d="dismiss">
+				<div class="modal-header">
+					<label> Add Manufacturer</label>
+				</div>
+				<div class="modal-body">
+					<input class="form-control" id="manufacturernumber" formControlName="addmanufacturerid" />
+				</div>
+				<div class="modal-footer">
+					<label class="btn btn-round button" id="type" (click)="saveManufacturer(c)">Save Manufacturer
+						Name</label>
+					<label class="btn btn-round button " (click)="c('Close click')">Close</label>
+				</div>
+			</ng-template> -->
+
+
+
+
+
+			<ng2-toasty [position]="position"></ng2-toasty>
+			<ng-template #contenetmain let-c="close" let-d="dismiss">
+				<div class="modal-header">
+					<label class="form-label"> Add Main Group</label>
+					<i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer"></i>
+				</div>
+				<img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+
+				<div class="modal-body mx-5">
+					<input class="form-control" id="maingroupnumber" formControlName="groupname" placeholder="Enter Main Group Name" />
+				</div>
+				<div class="modal-footer">
+					<label class="btn modbtn" id="typemain" (click)="saveMaingroup(c)"
+						(click)="groupname.value= null">Save Main Group
+					</label>
+
+				</div>
+			</ng-template>
+
+
+
+
+
+			<ng2-toasty [position]="position"></ng2-toasty>
+			<ng-template #contenetsub1 let-c="close" let-d="dismiss">
+				<div class="modal-header">
+					<label class="form-label"> Add Sub Group1</label>
+					<i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer"></i>
+				</div>
+				<img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+
+				<div class="modal-body mx-5">
+
+				<select name="select" class="form-control" placeholder="Select Main Group" formControlName="maingroupid"
+					(change)="getSubgroup1()" (change)="searchwithcodeformain($event.target.value, contenetmain)">
+					<option selected disabled value="0">---Select Main Group---</option>
+					<!-- <option value="nonemain" id="comdivision2" style="background-color: #52aa0c"> Add Main Group 
+							</option> -->
+					<option *ngFor="let main of maingroup" value={{main[0]}}>{{main[1]}}</option>
+				</select><br>
+				
+					<input class="form-control" id="subgroupnumber1" formControlName="subgroupname1"
+						placeholder="Enter Sub Group 1" />
+				</div>
+				<div class="modal-footer">
+					<label class="btn modbtn" id="typesub1" (click)="saveSubgroup1(c)">Save Sub Group1
+					</label>
+				</div>
+			</ng-template>
+
+
+
+
+
+
+
+			<ng2-toasty [position]="position"></ng2-toasty>
+			<ng-template #contenetsub2 let-c="close" let-d="dismiss">
+				<div class="modal-header">
+					<label class="form-label"> Add Sub Group2</label>
+					<i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer"></i>
+				</div>
+				<img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+
+				<div class="modal-body mx-5">
+
+				<select name="select" class="form-control" placeholder="Select Main Group" formControlName="maingroupid"
+					(change)="getSubgroup1()" (change)="searchwithcodeformain($event.target.value, contenetmain)">
+					<option selected disabled value="0">---Select Main Group---</option>
+					<!-- <option value="nonemain" id="comdivision2" style="background-color: #52aa0c"> Add Main Group 
+						</option> -->
+					<option *ngFor="let main of maingroup" value={{main[0]}}>{{main[1]}}</option>
+				</select><br>
+
+				<select name="select" class="form-control" placeholder="Select Sub Group 1"
+					formControlName="subgroupid1" (change)="getSubgroup2()"
+					(change)="searchwithcodeforsub1($event.target.value, contenetsub1)">
+					<option selected disabled value="0">---Select Sub Group 1---</option>
+					<!-- <option value="nonesub1" id="comdivision3" style="background-color: #52aa0c"> Add Sub Group 1
+					</option> -->
+					<option *ngFor="let sub1 of subgroup1" value={{sub1[0]}}>{{sub1[1]}}</option>
+				</select><br>
+
+					<input class="form-control" id="subgroupnumber2" formControlName="subgroupname2"
+						placeholder="Enter Sub Group 2" />
+				</div>
+				<div class="modal-footer">
+					<label class="btn modbtn" id="typesub2" (click)="saveSubgroup2(c)">Save Sub Group2
+					</label>
+				</div>
+			</ng-template>
+
+		</div>
+	</form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

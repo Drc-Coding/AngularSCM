@@ -1,0 +1,406 @@
+<app-card>
+
+	 <div class="sub-title">Edit Details
+		<i class="fa fa-edit ficon"></i>
+	</div>
+	
+	<br> 
+
+	<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="mx-3">
+
+
+		<div class="box-typical box-typical-padding">
+
+			<div class="row">
+
+				<div class="col-lg-4">
+
+					<fieldset class="form-group">
+						<label class="form-label semibold" for="exampleInput">
+							Manufacturer company Id </label>
+						<input type="text" name="doctorName" class="form-control" id="docid" placeholder="  "
+							formControlName="id" readonly />
+
+
+
+					</fieldset>
+				</div>
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Manufacturer Company Name
+						</label>
+						
+						<input type="text" class="form-control" id="pcompanyname1" placeholder=" "
+							formControlName="pcompanyname" />
+
+
+
+						<!-- <p class="messages text-danger" *ngIf="registerForm.controls.pcompanyname.errors?.required">This
+							Field is
+							Required*</p>
+						<p class="messages text-danger" *ngIf="registerForm.controls.pcompanyname.errors?.pattern">
+							Accepts
+							Text & Number ( . , -)!</p> -->
+
+					</fieldset>
+				</div>
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput"> Manufacturer Company Short Name
+						</label>
+						 <input type="text" class="form-control" id="docname" placeholder=" "
+							formControlName="pshortname" />
+
+						<!-- <p class="messages text-danger" *ngIf="registerForm.controls.pshortname.errors?.required">This
+							field is
+							Required!</p>
+						<p class="messages text-danger" *ngIf="registerForm.controls.pshortname.errors?.pattern">Accepts
+							Text & Numbers ( . , -)!</p> -->
+
+					</fieldset>
+				</div>
+
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Drug License No
+						</label> <input type="text" class="form-control" id="docregistrationid" placeholder=" "
+							formControlName="dlno" />
+
+						<!-- <p class="messages text-danger" *ngIf="registerForm.controls.dlno.errors?.required">This
+							Field is
+							Required*</p> -->
+
+					</fieldset>
+				</div>
+
+
+
+
+				<div class="col-lg-4">
+					<label class="form-label">Select Type</label>
+					<angular2-multiselect [data]="compnytypemulList" [(ngModel)]="comptypesldItems"
+						[settings]="compnytypeSettings" formControlName="phcompnytype">
+					</angular2-multiselect>
+
+
+				</div>
+
+				<div class="col-lg-4">
+					<label class="form-label">Select Division</label>
+					<angular2-multiselect [data]="divisionmulList" [(ngModel)]="divisionsldItems"
+						[settings]="divisionSettings" formControlName="phdivision">
+					</angular2-multiselect>
+
+
+				</div>
+
+
+
+
+			</div>
+			<!--.row1end-->
+			<br>
+			<div class="sub-title">Contact Details</div><br>
+
+			<div class="row">
+				<!--.row2start-->
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Contact Person</label> <input type="text"
+							class="form-control" id="docpincode" placeholder="  " formControlName="pcontactperson" />
+
+
+					</fieldset>
+				</div>
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label semibold" for="exampleInput">Designation
+						</label> <input class="form-control" id="docphonenumber" placeholder="  "
+							formControlName="pdesignationid" />
+
+
+					</fieldset>
+				</div>
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Address </label>
+						<input type="text" class="form-control" id="doc_address1" placeholder=" "
+							formControlName="paddress1" />
+
+<!-- 
+						<p class="messages text-danger" *ngIf="registerForm.controls.paddress1.errors?.required">This
+							Field is
+							Required*</p> -->
+					</fieldset>
+				</div>
+
+
+
+				<div class="col-lg-4" id="country">
+					<section>
+						<label class="form-label" for="country">Country</label>
+						<div id="country">
+							<select class="select2" id="doccountry" class="form-control" formControlName="pcountry"
+								(click)="viewState()">
+								<option *ngFor="let item of countries; let i = index" value={{item[0]}}>{{item[1]}}
+								</option>
+
+							</select>
+						</div>
+					</section>
+				</div>
+
+				<div class="col-lg-4" id="state">
+					<section class="form-group">
+						<label class="form-label" for="state">State</label>
+						<div id="state">
+							<select class="select2" id="docstate" class="form-control" (click)="viewCity()"
+								formControlName="pstate">
+								<option *ngFor="let item of states; let i = index" value={{item[0]}}>{{item[2]}}
+								</option>
+							</select>
+						</div>
+					</section>
+				</div>
+
+
+				<div class="col-lg-4" id="state">
+					<section class="form-group">
+						<label class="form-label" for="state">City</label>
+						<div id="state">
+							<select class="select2" id="docstate" class="form-control" formControlName="pcity">
+								<option *ngFor="let item of cities; let i = index" value={{item[0]}}>{{item[2]}}
+								</option>
+							</select>
+						</div>
+					</section>
+				</div>
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">ZIP/PIN Code</label>
+						<input type="text" onkeyup="this.value = this.value.toUpperCase();" class="form-control"
+							id="docpincode" placeholder=" " formControlName="ppincode" />
+
+					</fieldset>
+				</div>
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label semibold" for="exampleInput">Mobile Number
+						</label> <input class="form-control" id="docphonenumber" type="number" placeholder=" "
+							formControlName="pmobileno" />
+
+						<!-- <p class="messages text-danger" *ngIf="registerForm.controls.pmobileno.errors?.required">This
+							Field is
+							Required*</p> -->
+
+					</fieldset>
+				</div>
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Phone Number</label> <input class="form-control"
+							id="docmobile" type="number" placeholder=" " formControlName="pphoneno" />
+
+					</fieldset>
+				</div>
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInputEmail1">Email Id
+						</label> <input type="text" class="form-control" id="docemail" placeholder="  "
+							formControlName="pemail" />
+
+						<!-- <p class="messages text-danger" *ngIf="registerForm.controls.pemail.errors?.pattern">Enter
+							Correct Mail!
+						</p> -->
+
+					</fieldset>
+				</div>
+
+				<!-- <div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label" for="exampleInput">PAN Number</label> <input
+						type="text" class="form-control" id="docpincode"
+						placeholder="  " formControlName="ppanno" />
+
+
+				</fieldset>
+			</div> -->
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label semibold" for="exampleInput">TIN Number
+						</label> <input class="form-control" id="docphonenumber" placeholder=""
+							formControlName="ptinno" />
+
+
+					</fieldset>
+				</div>
+
+
+				<!-- <div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label" for="exampleInput">GST Number</label> <input
+						type="text" class="form-control" id="docpincode"
+						placeholder="  " formControlName="pgstno" />
+
+
+				</fieldset>
+			</div> 
+
+
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label semibold" for="exampleInput">IEC Code
+						</label> <input  class="form-control" id="docphonenumber"
+						placeholder="  " formControlName="pieccode" />
+
+
+				</fieldset>
+			</div> -->
+
+
+				<div class="col-lg-4">
+
+					<label class="form-label" for="country">Country Of Origin</label>
+
+					<select class="form-control" formControlName="countryoforigin">
+						<option *ngFor="let item of countries; let i = index" value={{item[0]}}>{{item[1]}}</option>
+
+					</select>
+
+				</div>
+
+
+
+
+
+			</div>
+			<!--.row2 end-->
+
+			<br>
+			<div class="sub-title">Bank Details</div><br>
+
+
+			<div class="row">
+				<!--.row3start-->
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Bank Name</label> <input type="text"
+							class="form-control" id="docpincode" placeholder="  " formControlName="bankname" />
+
+
+					</fieldset>
+				</div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label semibold" for="exampleInput">Bank Branch
+						</label> <input class="form-control" id="docphonenumber" placeholder="  "
+							formControlName="bankbranch" />
+
+
+					</fieldset>
+				</div>
+
+
+
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="form-label" for="exampleInput">Account Number</label> <input type="text"
+							class="form-control" id="docpincode" placeholder="  " formControlName="accountnumber" />
+
+
+					</fieldset>
+				</div>
+			</div>
+				<!-- <div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label semibold" for="exampleInput">IFSC Code
+						</label> <input class="form-control" id="docphonenumber"
+						placeholder="  " formControlName="ifsccode" />
+
+
+				</fieldset>
+			</div>
+
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label" for="exampleInput">SWIFT Code</label> <input
+						type="text" class="form-control" id="docpincode"
+						placeholder="  " formControlName="swiftcode" />
+
+
+				</fieldset>
+			</div>
+			<div class="col-lg-4">
+				<fieldset class="form-group">
+					<label class="form-label semibold" for="exampleInput">MISC Code
+						</label> <input class="form-control" id="docphonenumber"
+						placeholder="  " formControlName="misccode" />
+
+
+				</fieldset>
+			</div> -->
+
+
+
+
+			<br>
+			<div class="row">
+				<div class="col-lg-1"></div>
+				<div class="col-lg-2">
+					<div class="form-group">
+						<button type="submit" class="btn btn-round">Update</button>
+					</div>
+				</div>
+
+				<!-- [disabled]="!registerForm.valid"  -->
+
+
+				<div class="col-lg-2">
+
+					<button type="button" class="btn btn-round" (click)="deletePhCompany()"> Delete</button>
+
+				</div>
+
+
+				<div class="col-lg-2">
+					<div class="form-group">
+
+						<span [routerLink]="['/Manufacturer/AddManufacturer']" class="btn btn-round">Back </span>
+
+					</div>
+				</div>
+
+
+			</div>
+			<!--.row3 end-->
+
+
+
+
+
+
+
+		</div>
+		<!-- box-typical-->
+
+	</form>
+
+
+</app-card>
+
+<ng2-toasty [position]="position"></ng2-toasty>

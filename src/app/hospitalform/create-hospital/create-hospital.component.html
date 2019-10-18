@@ -1,0 +1,103 @@
+<app-card>
+  <form [formGroup]="hospitalForm" (ngSubmit)="onSubmit()">
+
+      <div class="sub-title" style="font-size: 20px;">Hospital Details
+          <i style="float:right;" class="fa fa-hospital-o" aria-hidden="true"></i></div>
+
+    <div class="form-group row">
+      <div class="col-lg-4">
+        <label class="form-label"><h6>Hospital Name</h6></label>
+        <input type="text" class="form-control" placeholder="Enter Hospital Name" formControlName="hospitalname" autofocus>
+      </div>
+      <div class="col-lg-4">
+        <label class="form-label"><h6>Registration No</h6></label>
+        <input type="text" class="form-control" placeholder="Enter the Registration Number" formControlName="registrationno">
+      </div>
+      <div class="col-lg-4">
+        <label class="form-label"><h6>Speciality</h6></label>
+        <select name="select" class="form-control" placeholder="Select Country" formControlName="specialityid" (change)="getState()">
+          <option selected disabled value="0">---Select Speciality---</option>
+          <option *ngFor="let sp of speciality" value={{sp[0]}}>{{sp[1]}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-lg-4">
+        <label class="form-label"><h6>Head Quarters</h6></label>
+        <input type="text" class="form-control" placeholder="Enter Head Quarters" formControlName="hosheadquarters">
+      </div>
+      <div class="col-lg-4">
+        <label class="form-label"><h6>Address 1</h6></label>
+        <input type="text" class="form-control" placeholder="Enter Your Address 1" formControlName="hosaddress1">
+      </div>
+      <div class="col-lg-4">
+        <label class="form-label"><h6>Address 2</h6></label>
+        <input type="text" class="form-control" placeholder="Enter Your Address 2" formControlName="hosaddress2">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-lg-4">
+        <label class="form-label"><h6>ZIP/PIN Code</h6></label>
+        <input type="text" class="form-control" placeholder="Enter Your Zip/Pin Code" formControlName="hospincode">
+      </div>
+      <div class="col-lg-4">
+        <label class="form-label"><h6>Country</h6></label>
+        <select name="select" class="form-control" placeholder="Select Country" formControlName="countryid" (change)="getState()">
+          <option selected disabled value="0">---Select Country---</option>
+          <option *ngFor="let coun of country" value={{coun[0]}}>{{coun[1]}}</option>
+        </select>
+      </div>
+      <div class="col-lg-4">
+        <label class="form-label"><h6>State</h6></label>
+        <select name="select" class="form-control" placeholder="Select State" formControlName="stateid" (change)="getCity()">
+          <option selected disabled value="0">---Select State---</option>
+          <option *ngFor="let coun of state" value={{coun[0]}}>{{coun[2]}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-lg-4">
+        <label class="form-label"><h6>Location/City</h6></label>
+        <select name="select" class="form-control" placeholder="Select City" formControlName="city">
+          <option selected disabled value="0">---Select City---</option>
+          <option *ngFor="let coun of city" value={{coun[0]}}> {{coun[1]}} </option>
+        </select>
+      </div>
+      <div class="col-lg-4">
+        <label class="form-label"><h6>Country Code</h6></label>
+        <select name="select" class="form-control form-control-default" formControlName="countrycode">
+          <option selected disabled value="0">---Select Country Code---</option>
+          <option *ngFor="let coun of countrycode" value={{coun}}>{{coun}} </option>
+        </select>
+      </div>
+      <div class="col-lg-4">
+        <label class="form-label"><h6>Phone Number</h6></label>
+        <input type="text" class="form-control phone" placeholder="Enter Phone Number" formControlName="phoneno">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-lg-4">
+        <label class="form-label"><h6>Help Line Number</h6></label>
+        <input type="text" class="form-control phone" placeholder="Enter Help Line Number" formControlName="helpline">
+      </div>
+      <div class="col-lg-4">
+        <label class="form-label"><h6>Email Id</h6></label>
+        <input type="text" class="form-control" placeholder="Enter Your Email Id" formControlName="email">
+        <div class="messages text-danger" *ngIf="hospitalForm.controls.email.errors?.pattern">invalid Email Address..</div>
+      </div>
+      <div class="col-lg-4">
+        <label class="form-label"><h6>Status</h6></label>
+        <select name="select" class="form-control" placeholder="Select Status" formControlName="status">
+          <option value="0">Active</option>
+          <option value="1">In-Active</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-lg-4">
+        <button type="submit" class="btn btn-round" style="margin: 26px;">Save</button>
+      </div>
+    </div>
+  </form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

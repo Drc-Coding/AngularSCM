@@ -1,0 +1,45 @@
+
+
+<app-card>
+	
+
+    <div class="col-md-5">
+        
+
+                            <label class="form-label semibold" for="exampleInput">Date 
+                                   </label> 
+                        
+                 
+                    
+                    </div>
+    <div class="col-md-7">
+          <input type="date" name="doctorName"
+          class="form-control" id="docid" placeholder=""
+          formControlName="prdate" />
+  
+
+    </div> 
+
+        <div class="col-md-5">
+                
+        
+                          <label class="form-label semibold" for="exampleInput">Invoice No
+                       </label> 
+                                
+                         
+                            
+                            </div>
+            <div class="col-md-7">
+                    <div id="state">
+                            <select class="select2" id="docstate" class="form-control"
+                            (change)="viewPInvoiceProduct()"    formControlName="invoiceno">
+                                <option *ngFor="let item of invoices; let i = index"
+                                    value={{item[0]}}>{{item[1]}}</option>
+                            </select>
+                        </div>
+          
+        
+            </div> 
+
+</app-card>
+

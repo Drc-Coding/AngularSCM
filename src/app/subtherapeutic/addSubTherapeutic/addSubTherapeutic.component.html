@@ -1,0 +1,40 @@
+
+
+
+<style>
+
+input[type=radio]{
+margin:5px;
+
+}
+
+</style>
+		<app-card>
+		<form [formGroup]="subTherapeuticForm" (ngSubmit)="onSubmit()">
+			<div class="form-group row">
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+						<label class="col-form-label">THERAPEUTICS NAME</label> <select
+							name="select" class="form-control" 
+							formControlName="therapeuticid" autofocus>
+							<option value="opt1" selected disabled>---SELECT THERAPEUTICS NAME---</option>
+							<option *ngFor="let tname of therapeutics" value={{tname[0]}}>{{tname[1]}}</option>
+						</select>
+					</fieldset>
+				</div>				
+				<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class=" col-form-label">SUB THERAPEUTICS NAME</label> <input
+								type="text" class="form-control" 
+								placeholder="Enter the Therapeutic Name"
+								formControlName="subtherapeuticname">
+						</fieldset>
+				</div>
+				<div class="col-lg-4">
+						<button type="submit" style="margin-top: 32px" class="btn btn-success btn-round" >SAVE</button>
+				</div>		
+			</div>								
+		</form>
+		</app-card>
+		<ng2-toasty [position]="position"></ng2-toasty>
+

@@ -1,0 +1,216 @@
+<style>
+  .sicon {
+    font-size: 16px;
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+
+  .tfont {
+    margin-left: 10px;
+    position: absolute;
+    font-family: Montserrat;
+    width: 230px;
+    font-size: 18px;
+  }
+
+  .pfont {
+    margin-left: 25px;
+    position: absolute;
+    font-family: Montserrat;
+    width: 500px;
+    font-size: 13px;
+  }
+
+  .timefont {
+    margin-left: 32px;
+    position: absolute;
+    font-family: Montserrat;
+    width: 230px;
+    font-size: 12px;
+    color:orangered;
+  }
+
+  .dot {
+    height: 27px;
+    width: 27px;
+    background-color: #d9d3d2;
+    border-radius: 50%;
+    margin-left: -12px;
+  }
+
+
+  .step {
+    position: relative;
+    width: 3px;
+    top: 0;
+    background-color: #d9d3d2;
+    height: 85px;
+  }
+
+  .bform {
+    border: 2px solid #b3b3b3;
+    border-radius: 5px;
+    padding:1em;
+  }
+
+</style>
+
+<app-card>
+
+
+  <form [formGroup]="livetrackingform">
+
+    <div class="sub-title">Live Tracking
+      <i class="fa fa-map-marker ficon"></i>
+    </div><br>
+
+    <div class="bform">
+
+        <div class="form-group row">
+
+            <div class="col-lg-3">
+              <fieldset class="form-group">
+                <label class="form-label">Customer Name</label>
+                <input type="text" class="form-control" formControlName="customername"  disabled>
+              </fieldset>
+            </div>
+
+            <div class="col-lg-3">
+              <fieldset class="form-group">
+                <label class="form-label">Mobile No</label>
+                <input type="text" class="form-control" formControlName="mobilenumber"  disabled>
+              </fieldset>
+            </div>
+
+            <div class="col-lg-3">
+              <fieldset class="form-group">
+                <label class="form-label">Sales Order No</label>
+                <input type="text" class="form-control" formControlName="salesordernumber"   disabled>
+              </fieldset>
+            </div>
+
+            <div class="col-lg-3">
+                <fieldset class="form-group">
+                  <label class="form-label">Sales Order Date</label>
+                  <input type="date" class="form-control"  formControlName="salesorderdate"  disabled>
+                </fieldset>
+              </div>
+
+          </div>
+
+    </div><br>
+
+
+ 
+    <div class="row">
+
+      <div class="col-lg-4"></div>
+  
+      <div class="col-lg-4">
+  
+          <div class="step" [ngStyle]="{'background-color':status == 2?'#5aa02c':(status == 3?'#5aa02c':(status == 4?'#5aa02c':(status == 5?'#5aa02c':(status == 6?'#5aa02c':(status == 7?'#5aa02c':(status == 8?'#5aa02c':'null'))))))}">
+  
+            <div class="dot" [ngStyle]="{'background-color':status == 1?'#5aa02c':(status == 2?'#5aa02c':(status == 3?'#5aa02c':(status == 4?'#5aa02c':(status == 5?'#5aa02c':(status == 6?'#5aa02c':(status == 7?'#5aa02c':(status == 8?'#5aa02c':'null')))))))}">
+             
+              <i class="fa fa-check sicon"></i>
+            </div>
+            <h6 class="tfont">Order Placed</h6><br>
+            <p class="pfont">{{so1}}</p><br>
+            <p class="timefont">{{so2}}<span class="ml-2">{{so3}}</span></p>
+          </div>
+  
+  
+          <div class="step" [ngStyle]="{'background-color':status == 3?'#5aa02c':(status == 4?'#5aa02c':(status == 5?'#5aa02c':(status == 6?'#5aa02c':(status == 7?'#5aa02c':(status == 8?'#5aa02c':'null')))))}">
+  
+            <div class="dot" [ngStyle]="{'background-color':status == 2?'#5aa02c':(status == 3?'#5aa02c':(status == 4?'#5aa02c':(status == 5?'#5aa02c':(status == 6?'#5aa02c':(status == 7?'#5aa02c':(status == 8?'#5aa02c':'null'))))))}">
+              <i class="fa fa-check sicon"></i>
+            </div>
+            <h6 class="tfont">Invoice Created</h6><br>
+            <p class="pfont">{{si1}}</p><br>
+            <p class="timefont">{{si2}}<span class="ml-2">{{si3}}</span> </p>
+  
+          </div>
+  
+          <div class="step" [ngStyle]="{'background-color':status == 4?'#5aa02c':(status == 5?'#5aa02c':(status == 6?'#5aa02c':(status == 7?'#5aa02c':(status == 8?'#5aa02c':'null'))))}">
+  
+            <div class="dot" [ngStyle]="{'background-color':status == 3?'#5aa02c':(status == 4?'#5aa02c':(status == 5?'#5aa02c':(status == 6?'#5aa02c':(status == 7?'#5aa02c':(status == 8?'#5aa02c':'null')))))}">
+              <i class="fa fa-check sicon"></i>
+            </div>
+            <h6 class="tfont">Picking</h6><br>
+            <p class="pfont">{{pic1}}</p><br>
+            <p class="timefont">{{pic2}}<span class="ml-2">{{pic3}}</span> </p>
+  
+          </div>
+  
+  
+          <div class="step" [ngStyle]="{'background-color':status == 5?'#5aa02c':(status == 6?'#5aa02c':(status == 7?'#5aa02c':(status == 8?'#5aa02c':'null')))}">
+  
+            <div class="dot" [ngStyle]="{'background-color':status == 4?'#5aa02c':(status == 5?'#5aa02c':(status == 6?'#5aa02c':(status == 7?'#5aa02c':(status == 8?'#5aa02c':'null'))))}">
+              <i class="fa fa-check sicon"></i>
+            </div>
+            <h6 class="tfont">Packing</h6><br>
+            <p class="pfont">{{pak1}}</p><br>
+            <p class="timefont">{{pak2}}<span class="ml-2">{{pak3}}</span> </p>
+  
+          </div>
+  
+          <div class="step" [ngStyle]="{'background-color':status == 6?'#5aa02c':(status == 7?'#5aa02c':(status == 8?'#5aa02c':'null'))}">
+  
+            <div class="dot" [ngStyle]="{'background-color':status == 5?'#5aa02c':(status == 6?'#5aa02c':(status == 7?'#5aa02c':(status == 8?'#5aa02c':'null')))}">
+              <i class="fa fa-check sicon"></i>
+            </div>
+            <h6 class="tfont">Labelling</h6><br>
+            <p class="pfont">{{lab1}}</p><br>
+            <p class="timefont">{{lab2}}<span class="ml-2">{{lab3}}</span> </p>
+  
+          </div>
+  
+          <div class="step" [ngStyle]="{'background-color':status == 7?'#5aa02c':(status == 8?'#5aa02c':'null')}">
+  
+            <div class="dot" [ngStyle]="{'background-color':status == 6?'#5aa02c':(status == 7?'#5aa02c':(status == 8?'#5aa02c':'null'))}">
+              <i class="fa fa-check sicon"></i>
+            </div>
+            <h6 class="tfont">Shipment</h6><br>
+            <p class="pfont">{{ship1}}</p><br>
+            <p class="timefont">{{ship2}}<span class="ml-2">{{ship3}}</span> </p>
+  
+          </div>
+  
+  
+          <div class="step" [ngStyle]="{'background-color':status == 8?'#5aa02c':(status == 9?'#5aa02c':'null')}">
+  
+            <div class="dot" [ngStyle]="{'background-color':status == 7?'#5aa02c':(status == 8?'#5aa02c':'null')}">
+              <i class="fa fa-check sicon"></i>
+            </div>
+            <h6 class="tfont">Out for Delivery</h6><br>
+            <p class="pfont">{{del1}}</p><br>
+            <p class="timefont">{{del2}}<span class="ml-2">{{del3}}</span> </p>
+  
+          </div>
+  
+          <div class="step" [ngStyle]="{'background-color':status == 9?'#5aa02c':(status == 10?'#5aa02c':'null')}" style="height:0px">
+  
+            <div class="dot" [ngStyle]="{'background-color':status == 8?'#5aa02c':(status == 9?'#5aa02c':'null')}">
+              <i class="fa fa-check sicon"></i>
+            </div>
+            <h6 class="tfont">Delivered</h6><br>
+            <p class="pfont"></p><br>
+            <!-- <p class="timefont">Oct 26 Wed <span class="ml-2">9.54 AM</span> </p> -->
+  
+          </div>
+          <br><br><br>
+  
+          <button class="btn btn-round ml-3 my-4">Send Notifications
+            <i class="fa fa-angle-double-right ml-1"></i></button>
+  
+        </div>
+  
+        <div class="col-lg-4"></div>
+  
+      </div>
+  
+
+
+  </form>
+
+</app-card>

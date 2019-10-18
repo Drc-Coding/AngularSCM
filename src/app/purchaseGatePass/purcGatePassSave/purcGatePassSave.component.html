@@ -1,0 +1,315 @@
+
+<app-card [title]='"Purchase Gate Pass"'>       
+           <div class="container">
+            <form [formGroup]="deliveryForm"  (ngSubmit)="onSubmit()">      
+                   
+                <div class="card" style="margin-top:8px">
+                            <div class="card-header bg-info">Purchase Gate Entry</div>
+                            <div class="card-body bg-light">
+                              
+                      
+                    <div class="form-group row">                          
+                            <label for="email" class="col-sm-2 col-form-label">Purchase Gate Pass#</label>
+                            <div class="col-sm-4">
+                                <input type="text"  class="form-control inputline"  formControlName="gpno" disabled>   
+                            </div>
+                            <label for="email" class="col-sm-2 col-form-label">Location Type</label>
+                            <div class="col-sm-4">
+                                    <select class="select2"    class="form-control" 
+                                    (change)="getFirm()"   formControlName="tolocname"  > 
+                                    <option  value="opt1" disabled>----Select Location Type----</option> 
+                                        <option  value="1" >store</option>
+
+                                        <option  value="2" >warehouse </option>
+
+                                        <option  value="3" >hospital  </option>
+                                            
+                                    </select>
+                            </div>
+                     </div>
+
+                     <div class="form-group row">                           
+                            <label for="email" class="col-sm-2 col-form-label">Gate Entry Date#</label>
+                            <div class="col-sm-4">
+                              <input type="date"  class="form-control inputline"  placeholder="Enter the date" required="true" formControlName="gatepassdate" >
+                            </div>
+                            <label for="password" class="col-sm-2 col-form-label">Location Name</label>
+                            <div class="col-sm-4">
+                                    <select   class="form-control"
+                                    formControlName="tolocrefid">
+                                    <option  value="opt1" disabled>----Select Location Name----</option> 
+                                       <option *ngFor="let item of firms; let i = index"
+                                           value={{item[0]}}>{{item[1]}}</option>
+                                   </select>
+                            </div>
+                     </div>
+                     <br>
+
+                     <div class="form-group row">                                                  
+                                <label for="stock"  class="col-sm-2 col-form-label">Purchase Delivery Challan#</label>
+                                 <div class="col-sm-4">
+                                <ng-select [options]="distributors" placeholder="Search Purchase Challan No" (change)="getStockNumber()" (click)="getStockNumber()" (input)="getStock($event.target.value)"
+                                  formControlName="stockno">
+                                </ng-select>
+                               </div>                                                       
+                   </div>                 
+                </div>
+            </div>
+            <div class="card" style="margin-top:8px">
+                    <div class="card-header bg-info">Other Details</div>
+                    <div class="card-body bg-light">
+                      
+              
+            <div class="form-group row">                          
+                    <label for="email" class="col-sm-2 col-form-label">Transport Type#</label>
+                    <div class="col-sm-4">
+                            <select class="select2"    class="form-control"    formControlName="transportdetails"  > 
+                            <option  value="opt1" disabled>----Select Transport----</option> 
+                                <option  value="1" >own transport</option>
+
+                                <option  value="2" >spare transport </option>
+                                    
+                            </select>
+                    </div>
+                    <label for="sales" class="col-sm-2 col-form-label">Bill Date#</label>
+                    <div class="col-sm-4">
+                            <input type="date"  class="form-control inputline"  placeholder="Enter the date" required="true" formControlName="billdate" >
+                     </div>
+             </div>
+
+             <div class="form-group row">                           
+                    <label for="email" class="col-sm-2 col-form-label">Transport Desc#</label>
+                    <div class="col-sm-4">
+                      <input type="text"  class="form-control inputline"  placeholder="Enter Description"  formControlName="transportno" >
+                    </div>
+                    <label for="password" class="col-sm-2 col-form-label">Bill/Cash Memo No</label>
+                    <div class="col-sm-4">
+                            <input type="text"  class="form-control inputline"  placeholder="Enter Bill No"  formControlName="billno" >
+                          </div>
+             </div>
+                        
+        </div>
+    </div>
+                
+
+
+                   <div class="table-responsive" style="overflow:auto;" formArrayName="brandDetails">
+                    <table rz-table class="table-bordered table-hover">
+                        <thead class="header " >
+                            <tr>
+                                <th>
+                                    <input type="checkbox" class="checkAll chkboxs" name="checkAll" />
+                                </th>
+                                <th>#S.No</th>
+                                <th width="10px">Product Code</th>
+                                <th>Product Name</th>
+                                <th>Batch Number</th>                              
+                                <th>Box Quantity</th>
+                                <th>Strip Quantity</th>
+                                <th>Tablet Quantity</th>                                                                                                                                                                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let brand of deliveryForm.controls.brandDetails.controls; let i = index" [formGroupName]="i">
+                                <td>
+                                    <input type="checkbox" name="check" class="chkbox" /></td>
+                                    <td>{{i+1}}</td>
+                                    <td>
+                                        <input type="text" formControlName="drugproductrefid" class="tds" disabled style="width: 50px;">
+                                    </td>
+                                    <td>
+                                        <input type="text" formControlName="productname" class="tds" disabled>
+                                    </td>   
+                                    <td>
+                                        <input type="text" formControlName="batchno" class="tds" disabled>
+                                    </td>                                 
+                                    <td>
+                                        <input type="text" align="center" formControlName="boxqty" class="tds boxqfocus" (change)="getSum()" (click)="getSum()">
+                                        <div *ngIf="brand.hasError('pattern', 'boxqty')" style="color:red;">Invalid Charcters..</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" formControlName="stripqty" class="tds stripqfocus" (change)="getSum()" (click)="getSum()">
+                                        <div *ngIf="brand.hasError('pattern', 'stripqty')" style="color:red;">Invalid Charcters..</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" formControlName="tabqty" class="tds tabqfocus" (change)="getSum()" (click)="getSum()" autofocus>
+                                        <div *ngIf="brand.hasError('pattern', 'tabqty')" style="color:red;">Invalid Charcters..</div>
+                                    </td>                                                                                                                                                                                                                                                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="check" class="chkbox" />
+                                    </td>                                                   
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                                  
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>  
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>      
+                                                                 
+                                   
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="check" class="chkbox" />
+                                    </td>                                 
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                                                                                                    
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                          
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>        
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                                                                         
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="check" class="chkbox" />
+                                    </td>                                  
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                                                                    
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                                  
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                   
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                                                                  
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="check" class="chkbox" />
+                                   </td>                                                                    
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                                                                 
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                      
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>  
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>   
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                                                                                                    
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="check" class="chkbox" />
+                                    <td></td>                                                                    
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                                   
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                                                                 
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>                                                                  
+                                    <td>
+                                        <input type="text" class="tds">
+                                    </td>   
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                </div>
+                <br>
+                <div class="form-group row">
+                        <div class="col-lg-2">
+                            <label class="col-form-label labal">Total produtcs</label>
+                            <input type="text" class="form-control" placeholder="Products" formControlName="totalproduct" style="width:150px;height:30px"
+                                disabled>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="col-form-label labal">Total Quantity</label>
+                            <input type="text" class="form-control" placeholder="Quantity" formControlName="totalqty" style="width:150px;height:30px"
+                                disabled>
+                        </div>                     
+                        <div class="col-lg-2">
+                            <label class="col-form-label labal">Box Quantity</label>
+                            <input type="text" class="form-control" placeholder="Box Quantity" formControlName="totalboxqty" style="width:150px;height:30px"
+                                disabled>
+            
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="col-form-label labal">Strip Quantity</label>
+                            <input type="text" class="form-control" placeholder="Strip Quantity" formControlName="totalstripqty" style="width:150px;height:30px"
+                                disabled>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="col-form-label labal">Tablet Quantity</label>
+                            <input type="text" class="form-control" placeholder="Table Quantity" formControlName="totaltabqty" style="width:150px;height:30px"
+                                disabled>
+            
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-4">
+                            <button type="submit"  class="btn btn-success btn-round button">Save</button>
+                        </div>
+                    </div>
+              </form>
+              </div>
+            </app-card>  
+            <ng2-toasty [position]="position"></ng2-toasty>
+
+
+                
+    

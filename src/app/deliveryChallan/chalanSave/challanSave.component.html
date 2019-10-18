@@ -1,0 +1,235 @@
+<style>
+#swidth{
+    width:325px;
+    text-align:left;
+}
+</style>
+
+<app-card>
+    <div class="sub-title">Stock Transfer Delivery Challan
+        <i class="ti-receipt ficon"></i>
+    </div><br><br>
+    <div class="container">
+        <form [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
+            <div class="card">
+            
+                <div class="card-body bg-light">
+                    <div class="form-group row">
+
+
+                        <!-- <label for="email" class="col-sm-2 col-form-label">Delivery Challan#</label>
+                     <div class="col-sm-4">
+                         <input type="text"  class="form-control inputline"  formControlName="dcno" disabled>   
+                     </div> -->
+
+
+                        <div class="col-sm-3">
+                            
+                        <label for="email" class="form-label">Location Type 
+                             <span style="color:red">*</span></label>
+                            <select class="select2" class="form-control" (change)="getFirm()"
+                                formControlName="tolocname">
+                                <option value="opt1" disabled>----Select Location Type----</option>
+                                <option value="1">Shop</option>
+
+                                <option value="2">Warehouse </option>
+
+                                <option value="3">Hospital </option>
+
+                            </select>
+                        </div>
+
+                     
+                        <div class="col-sm-3">
+                                <label for="password" class="form-label">Location Name  
+                                    <span style="color:red">*</span></label>
+                            <select class="form-control" formControlName="tolocrefid">
+                                <option value="opt1" disabled>----Select Location Name----</option>
+                                <option *ngFor="let item of firms" value={{item[0]}}>{{item[1]}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-3">
+                                <label for="email" class="form-label">Delivery Date</label>
+                            <input type="date" class="form-control inputline" placeholder="Enter the date"
+                                required="true" formControlName="deliverydate">
+                        </div>
+
+                    
+                 
+                        <div class="col-sm-3">
+                                <label for="stock" class="form-label">Sales Invoice No 
+                                     <span style="color:red">*</span></label>
+                               <ng-select [options]="distributors" formControlName="stockno"
+                                   placeholder="Search Invoice Number" 
+                                   (change)="getStockNumber()"     (click)="getStockNumber()" 
+                                   (input)="getSales($event.target.value)">
+                               </ng-select>
+                           </div>
+   
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+            <div class="flow" formArrayName="brandDetails">
+                <table rz-table class="table styletab">
+                    <thead class="stylehead">
+                        <tr>
+                            <th>
+                                <input type="checkbox" class="checkAll" style="width:1.3em;height:1.4em" name="checkAll" />
+                            </th>
+                            <th>S.No</th>
+                            <th>Prod Code</th>
+                            <th>Prod Name</th>
+                            <th>Batch No</th>
+
+                            <!-- <th>Box Quantity</th>
+                         <th>Strip Quantity</th>
+                         <th>Tablet Quantity</th>   -->
+
+
+                            <th> Tablet Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody class="stylebody">
+
+                        <tr *ngFor="let brand of deliveryForm.controls.brandDetails.controls; let i = index"
+                            [formGroupName]="i">
+                            <td>
+                                <input type="checkbox" name="check" class="tabcheck" id="width1"/></td>
+                            <td id="width2">{{i+1}}</td>
+                            <td>
+                                <input type="text" formControlName="drugproductrefid"  readonly>
+                            </td>
+                            <td>
+                                <input type="text" formControlName="productname" id="swidth" readonly>
+                            </td>
+                            <td>
+                                <input type="text" formControlName="batchno" id="width4" style="text-align:left" readonly>
+                            </td>
+
+
+                            <!-- <td>
+                                 <input type="text" align="center" formControlName="boxqty" class="tds boxqfocus" (change)="getSum()" (click)="getSum()">
+                                 <div *ngIf="brand.hasError('pattern', 'boxqty')" style="color:red;">Invalid Charcters..</div>
+                             </td>
+                             <td>
+                                 <input type="text" formControlName="stripqty" class="tds stripqfocus" (change)="getSum()" (click)="getSum()">
+                                 <div *ngIf="brand.hasError('pattern', 'stripqty')" style="color:red;">Invalid Charcters..</div>
+                             </td>
+                            
+                            
+                            
+                          
+
+
+
+
+
+                            <td>
+                                <input type="text" formControlName="totqty" class="tds tabqfocus" (change)="getSum()"
+                                    (click)="getSum()" autofocus>
+                                <div *ngIf="brand.hasError('pattern', 'totqty')" style="color:red;">Invalid Charcters..
+                                </div>
+                            </td>    -->
+
+                            <td>
+                                <input type="text" formControlName="tabqty" class="tabqfocus" (change)="getSum()" (click)="getSum()" autofocus>
+                                <div *ngIf="brand.hasError('pattern', 'tabqty')" style="color:red;">Invalid Charcters..</div>
+                            </td> 
+
+
+
+
+                        </tr>
+                      
+                       
+                        
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="check" id="width1" class="tabcheck" />
+                            </td>
+                            <td>
+                                <input type="text" id="width2">
+                            </td>
+                            <td>
+                                <input type="text" >
+                            </td>
+                            <td>
+                                <input type="text" id="swidth" >
+                            </td>
+
+                            <td>
+                                <input type="text" id="width4" >
+                            </td>
+
+                            <td>
+                                <input type="text" >
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                </table>
+            </div>
+            <br>
+
+            <div class="form-group row">
+
+                <div class="col-lg-2">
+                    <label class="form-label">Total produtcs</label>
+                    <input type="text" class="form-control" placeholder="Products" formControlName="totalproduct"
+                        style="font-size: 18px" disabled>
+                </div>
+
+
+                <!-- 
+
+                </div> -->
+
+
+
+                <!-- <div class="col-lg-2">
+                     <label class="col-form-label labal">Box Quantity</label>
+                     <input type="text" class="form-control" placeholder="Box Quantity" formControlName="totalboxqty" style="width:150px;height:30px"
+                         disabled>
+     
+                 </div>
+                 <div class="col-lg-2">
+                     <label class="col-form-label labal">Strip Quantity</label>
+                     <input type="text" class="form-control" placeholder="Strip Quantity" formControlName="totalstripqty" style="width:150px;height:30px"
+                         disabled>
+                 </div> -->
+
+
+             <div class="col-lg-2">
+                     <label class="form-label">Total Tablet Quantity</label>
+                     <input type="text" class="form-control" placeholder="Table Quantity" formControlName="totaltabqty"
+                      style="font-size: 18px"   disabled>
+     
+                 </div>  
+
+
+                 <!-- <div class="col-lg-2">
+                    <label class="col-form-label labal">Total Quantity</label>
+                    <input type="text" class="form-control" placeholder="Total Quantity" formControlName="totalqty"
+                        style="width:150px;height:30px" disabled>
+
+                          </div> -->
+
+            </div><br>
+           
+                <div class="col-lg-2 ml=4">
+                    <button type="submit" class="btn btn-round">Save</button>
+                </div>
+            
+        </form>
+    </div>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

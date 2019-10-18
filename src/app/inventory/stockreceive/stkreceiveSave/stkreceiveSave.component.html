@@ -1,0 +1,173 @@
+
+    
+    
+    
+    <app-card>
+        <div class="sub-title">Goods Received Note
+            <i class="ti-import ficon"></i>
+        </div><br>
+    
+        <form [formGroup]="registerForm">
+    
+    
+            <div class="box-typical box-typical-padding">
+    
+    
+                        <div class="row">
+
+                            <div class="col-lg-3">
+    
+                             <label class="form-label semibold" for="exampleInput"> Stock Transfer Number
+                                </label>
+                        
+    
+                                <select class="form-control" (change)="viewStkTransfProducts()" formControlName="stktranselid">
+    
+                                    <option value="opt1" selected disabled>---Select Stk Trns No---</option>
+                                    <option *ngFor="let item of  stktransno; let i = index" value={{i}}>{{item[1]}}</option>
+                                </select>
+    
+                             </div>
+    
+    
+                        <div class="col-lg-3">
+                             <label class="form-label semibold" for="exampleInput">Goods Receive Date
+                                </label>
+                   
+                                <input type="date" class="form-control" formControlName="date" />
+                             </div>
+
+                             <div class="col-lg-3">
+                                    <label class="form-label semibold" for="exampleInput"> From Business Type
+                                        </label>
+                                
+                                        <select class="form-control" formControlName="tolocname">
+            
+            
+                                            <option value="1"> Shop </option>
+            
+                                            <option value="2">warehouse</option>
+            
+                                            <option value="3"> hospital </option>
+                                        </select>
+            
+                                </div>
+                            
+                                <div class="col-lg-3">
+    
+    
+                                    <label class="form-label semibold" for="exampleInput"> From Business Name
+                                    </label>
+                        
+                                    <input type="text" class="form-control" formControlName="tolocrefidname" />
+        
+                                 </div>
+    
+
+                         </div><br>
+                <!-- splitcolumn  end-->
+    
+                <div class="title1">
+    
+                    <u>  Goods Receive Table  </u>
+                   
+                </div>
+                 <br>
+    
+                <div formArrayName="stkrec" class="flow">
+                    <!--. table  start-->
+                
+                        <table class="table styletab">
+                            <thead class="stylehead">
+                                <tr>
+                                    <!--    <th>S. No </th>      -->
+                                    <th>Prod Name</th>
+    
+                                    <th>Batch No</th>
+                                    <th width = "10%"> Exp Date</th>
+    
+                                    <th>Required Qty </th>
+                                    <th>Waiting Qty </th>
+    
+                                    <th>Rejected Qty </th>
+                                    <th>Batchwise Approved</th>
+                                    <th>Received </th>
+                                    <th>Remarks </th>
+                                </tr>
+                            </thead>
+                            <tbody class="stylebody">
+                            <tr *ngFor="let address of registerForm.controls.stkrec.controls; let i=index" [formGroupName]="i">
+                                <!--  <td><input   value={{i+1}}  /></td>   -->
+                                <td>
+                                    <input formControlName="drugname" id="width4" style="text-align:left" readonly/>
+                                </td>
+    
+                                <td>
+                                    <input formControlName="batchname" readonly />
+                                </td>
+    
+    
+                             <td>
+                                    <input formControlName="expirydate" id="width3" readonly />
+                                </td>
+    
+    
+                                <td>
+                                    <input formControlName="prodreqqty" readonly/>
+                                </td>
+                                <td>
+                                    <input formControlName="waitingtotalqty" id="width3" readonly />
+                                </td>
+    
+                                 <td>
+                                    <input formControlName="rejectqty" id="width3" readonly/>
+                                </td>
+                                <td>
+                                    <input formControlName="transfertotalqty" readonly />
+                                </td>
+                                <td>
+                                    <input formControlName="receivetotalqty" (keydown)="calc($event)" type="number" />
+                                </td>
+                                <td>
+                                    <input formControlName="remarks" id="width4" style="text-align:left" />
+                                </td>
+    
+    
+                            </tr>
+                        </tbody>
+                        </table>
+    
+                </div>
+                <!--. table     end-->
+    
+    
+    
+            </div>  <br>
+            <!-- box-typical-->
+
+            
+            <ng2-toasty [position]="position"></ng2-toasty>
+    
+  
+            <div class="row">
+                <!-- row Start-->
+                
+                <div class="col-lg-1"></div>
+
+                <div class="col-lg-3">
+                    <button type="button" class="btn btn-round" (click)="onSubmit()"> Save </button>
+                </div>
+
+                <div class="col-lg-3">
+                    <button type="button" class="btn btn-round" [routerLink]="['/GoodsReceivedNote/stkreceiveEdit' ]"> View </button>
+                </div>
+    
+            </div>
+            <!-- row end-->
+    
+    
+        </form>
+    
+    
+    </app-card>
+    

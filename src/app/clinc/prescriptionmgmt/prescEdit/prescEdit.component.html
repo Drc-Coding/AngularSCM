@@ -1,0 +1,810 @@
+
+
+
+
+
+
+
+
+
+<style>
+    
+
+  
+
+  
+    
+    
+    
+    .row input ,.row label ,.row select{
+        margin-bottom: 6px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-right: 0px;
+        margin-left: 0px;
+        
+    }
+
+
+
+
+ .row label {
+
+font-size: 1.2em; 
+
+font-family: sans-serif  ;
+
+font-stretch: expanded ;
+
+font-weight: 500 ; 
+
+
+}
+
+
+
+     .tablenew{
+      
+       border: 1px solid rgba(0,0,0,.15);
+       height:300px;
+       max-width:  100%;
+       box-sizing:border-box;
+       max-height: 300px;
+        overflow-y: scroll;
+        overflow-x: scroll;
+
+
+   
+
+        }
+
+
+      .tablenew  table th {
+        padding: 0.43em   0em     0.43em   0em;
+     
+        margin:  0em; 
+        text-align:center;
+     
+        vertical-align: top;
+        border: 1px solid rgba(0,0,0,.15);
+
+        font-family: sans-serif  ;
+
+        background-color:#0073aa	 ;
+
+
+        color:#FFFFFF ;
+    
+    }
+       
+        .tablenew table td{
+        vertical-align: top;
+        padding: 0.43em   0em      0.43em   0em;
+        text-align:center;
+        margin:  0em; 
+        border: 1px solid rgba(0,0,0,.15);
+       }
+
+
+
+
+    .tablenew  table p{
+
+                padding: 0em;   
+                margin:  0em; 
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .tablenew table td input{
+      width:4em;
+        text-align:center;
+        border: #FFFFFF;
+    }
+       
+    
+
+    .tablenew table th label  {
+ 
+
+       text-align:center;
+       border: #FFFFFF;
+   }
+
+
+   .tablenew table td label  {
+ 
+       margin:  0em; 
+       padding: 0em ;
+
+       text-align:center;
+       border: #FFFFFF;
+   }
+
+
+   .tablenew table tr {
+      margin:  0em; 
+        width: 100%;
+        border: 1px solid rgba(0,0,0,.15);
+    }
+  
+
+
+
+
+    .tablenew   table td input:focus{
+
+       background-color:  rgba(0,0,0,.15);
+   }
+
+
+
+
+.tablenew    input[type="checkbox"]  {
+
+ width: 1.7em  ;
+ height :    1.7em  ;
+
+ padding: 0em ;
+
+ margin:  0em; 
+}
+
+  
+  #autolist {
+    
+            border: 1px solid rgba(0,0,0,.15);
+            position: absolute;
+            z-index: 21;
+            background-color: #ffffff;
+
+
+
+
+
+
+            width:  20em;
+            max-height: 250px;
+            overflow-y: scroll;
+     
+        }
+        
+
+        #autolist   li input:nth-child(1):focus{
+    
+            background-color:  rgba(0,0,0,.15);
+        }
+
+        #autolist  li input:nth-child(3):focus{
+    
+            background-color:  rgba(0,0,0,.15);
+        }
+
+
+
+        #autolist  li input {
+ 
+            border: transparent;
+    
+        }
+
+
+        #autolist   li input:nth-child(3) {
+ 
+            width:6em;  
+            border: transparent;
+    
+
+            text-align:center;
+
+
+        }
+
+     
+
+
+        #autolist  li   label{
+    
+            text-align:center;
+            width:  7em;
+            height:  1em;
+        
+            padding-top: 0.05em;
+        
+           
+        }
+ 
+
+
+
+
+
+
+        #autolist  li:nth-child(1)   {
+    
+          background-color:#0073aa	 ;
+
+      
+        }
+
+
+
+        #autolist  li:nth-child(1)  label  {
+            font-family: sans-serif  ;
+
+           font-stretch: expanded ;
+
+           font-weight: 500 ; 
+    
+            color:#FFFFFF ;
+      
+        }
+
+
+
+        #autolist  li {
+            border: 1px solid rgba(0,0,0,.05);
+            
+        }
+
+     
+
+
+        #autolistnew {
+    
+            border: 1px solid rgba(0,0,0,.15);
+            position: absolute  ;
+            z-index: 21;
+            background-color: #ffffff;
+
+
+
+            width:      7.1em;
+            max-height: 200px;
+            overflow-y: scroll;
+     
+        }
+        
+        #autolistnew li input:nth-child(1):focus{
+    
+            background-color:  rgba(0,0,0,.15);
+        }
+
+       #autolistnew  li input:nth-child(1) {
+ 
+            border: transparent;
+            text-align:center;
+
+            width:   4.9em;
+        }
+
+
+
+      #gridContainer  {
+
+
+       height:369px;
+        }
+
+
+
+
+label{
+
+    font-size:  1.09em;
+   font-family: sans-serif ;
+}
+
+
+
+
+
+
+      </style>
+          
+          
+          <h2> </h2>
+          <app-card>
+          
+          
+          <form [formGroup]="registerForm" >
+          
+          
+              <div class="box-typical box-typical-padding">
+          
+      
+                  <div class="row">  <!-- splitcolumn   start--> 
+      
+      
+                      <div class="col-lg-4">
+                              <div class="row">
+              
+          
+         
+                                
+                                                  
+                                                     <div class="col-md-5">
+                                              
+                                      
+                                                                  <label class="form-label semibold" for="exampleInput">Cust name  </label>
+                                                                   
+                                                              
+                                                       
+                                                          
+                                                          </div>
+                                                     <div class="col-md-7">
+                                                        <select    class="form-control"  (change)="custLoyalty(i)"      formControlName="custrefid"
+                                                       >
+                                                            <option *ngFor="let item of   customers; let i = index"
+                                                                value={{item[0]}}>{{item[1]}}</option>
+                                                        </select>
+                                                              
+                                                  </div> 
+                                                  <div class="col-md-5">
+                                                    
+                                            
+                                                                        <label class="form-label semibold" for="exampleInput">Doctor name  </label>
+                                                                         
+                                                                    
+                                                             
+                                                                
+                                                                </div>
+                                                           <div class="col-md-7">
+                                                              <select   class="form-control"     formControlName="docrefid"
+                                                             >
+                                                                  <option *ngFor="let item of   doctors; let i = index"
+                                                                      value={{i}}>{{item[1]}}</option>
+                                                              </select>
+                                                                    
+                                                        </div> 
+
+                                                     
+                                                        
+                                                        <div class="col-lg-5">
+                                                            
+                                                    
+                                                                                <label class="form-label semibold" for="exampleInput"   style="color: #0073aa"   >  Disesase  
+                                                                                       </label> 
+                                                                            
+                                                                     
+                                                                        
+                                                                        </div>
+                                                                        <div class="col-lg-7">
+                                                                                          <input type="text"    formControlName="diagnosis"
+                                                                                          class="form-control" 
+                                                                                       />
+                                                                                  
+                                                                                
+                                                                           </div>   
+
+
+
+
+                                             <div class="col-md-5 drugname">
+                                                    
+                                            
+                                                              <label class="form-label semibold" for="exampleInput">   Drug  Name 
+                                                           </label> 
+                                                                    
+                                                             
+                                                                
+                                                   </div>
+                                                    
+
+                                                
+                                                <div class="col-md-7 drugname">
+                                                    
+                                             
+                                                    <input type="text" 
+                                                    class="form-control" id="autoname"    (focus)="autofocusin()"    (focusout)="autofocusout()"   autocomplete="off"  
+                                                    (keydown)="autokeyselect($event,0)"      formControlName="autonamenew"  />
+                                            
+                                                    <div id="autolist"  >
+                                                          <ul >  
+                                                         
+                                                      <li   *ngIf="autodata.length>0" >  <label class="form-label" > Drug name </label>       </li>            
+                                                          
+                                                         <li  *ngFor="let address of    autodata; let i=index"      (keydown)="autokeyselect($event,i)" >
+                                                              <input   readonly value={{address[0]}}  />          
+                                                         </li>
+                                                       
+                                                          </ul>  
+        
+                                                     </div>
+                                                                    
+                                                                                                               
+                                                 </div>  
+
+                                      
+                                                 <div id="autolistnew"  class="boxname" >
+                                                    <ul >  
+                                                     <li (keydown)="viewStock($event, 1)"  >    <input  type="text"    readonly value='Box'  />   </li>
+                                                     <li  (keydown)="viewStock( $event ,2)"  >    <input  type="text"    readonly value='Strip'/>  </li>
+                                                     <li  (keydown)="viewStock($event ,3)"  >    <input  type="text"    readonly value='Tab' />   </li>   
+                                                     <li  (click)="open(content)"  >    <input  type="text"    readonly value='TempStock'  />   </li>  
+                                                    </ul>        
+                                                           
+                
+                                               </div>  
+
+                                                           
+                                                                 
+
+
+                                  </div> 
+              
+              
+                         </div> 
+      
+      
+                        <div class="col-lg-4">
+                              <div class="row">
+                
+                                           <div class="col-lg-5">
+                                    
+                            
+                                                        <label class="form-label semibold" for="exampleInput"     > Age  
+                                                               </label> 
+                                                    
+                                             
+                                                
+                                                </div>
+                                                <div class="col-lg-7">
+                                                                  <input type="text"    formControlName="age"
+                                                                  class="form-control" 
+                                                               />
+                                                          
+                                                        
+                                                   </div>   
+                                                   <div class="col-lg-5">
+                                                    
+                                            
+                                                                        <label class="form-label semibold" for="exampleInput"    >  Gender  
+                                                                               </label> 
+                                                                    
+                                                             
+                                                                
+                                                                </div>
+                                                                <div class="col-lg-7">
+                                                                    
+                                                                    <select   class="form-control"      formControlName="gender"   
+                                                                    >
+                                                                         <option    value='1'>Male</option>
+                                                                         <option    value='2'>Female</option>
+                                                                           
+                                                                     </select>
+                                                                          
+                                                                        
+                                                                   </div>   
+                                                                   <div class="col-lg-5">
+                                                                    
+                                                            
+                                                                                        <label class="form-label semibold" for="exampleInput"     >  Weight  
+                                                                                               </label> 
+                                                                                    
+                                                                             
+                                                                                
+                                                                                </div>
+                                                                                <div class="col-lg-7">
+                                                                                                  <input type="text"    formControlName="weight"
+                                                                                                  class="form-control" 
+                                                                                               />
+                                                                                          
+                                                                                        
+                                                                                   </div>   
+                                                                                   <div class="col-lg-5">
+                                                                                    
+                                                                            
+                                                                                                        <label class="form-label semibold" for="exampleInput"     >  Temperature  
+                                                                                                               </label> 
+                                                                                                    
+                                                                                             
+                                                                                                
+                                                                                                </div>
+                                                                                                <div class="col-lg-7">
+                                                                                                                  <input type="text"    formControlName="temperature"
+                                                                                                                  class="form-control" 
+                                                                                                               />
+                                                                                                          
+                                                                                                        
+                                                                                                   </div>                
+                                                                 
+                                                                             
+
+
+
+                                                                              
+                        
+                                                  
+                                  </div>
+              
+              
+                         </div> 
+                         
+        
+      
+                         <div class="col-lg-4">
+                              <div class="row">
+
+              
+                                <div class="col-lg-5">
+                                    
+                            
+                                                        <label class="form-label semibold" for="exampleInput"  >  Blood Sugar  
+                                                               </label> 
+                                                    
+                                             
+                                                
+                                                </div>
+                                                <div class="col-lg-7">
+                                                                  <input type="text"    formControlName="blood_sugar"
+                                                                  class="form-control" 
+                                                               />
+                                                          
+                                                        
+                                                   </div>   
+                                                   <div class="col-lg-5">
+                                                    
+                                            
+                                                                        <label class="form-label semibold" for="exampleInput"     >   Blood Pressure   
+                                                                               </label> 
+                                                                    
+                                                             
+                                                                
+                                                                </div>
+                                                                <div class="col-lg-7">
+                                                                                  <input type="text"    formControlName="blood_pressure"
+                                                                                  class="form-control" 
+                                                                               />
+                                                                          
+                                                                        
+                                                                   </div>  
+
+
+                     <div class="col-lg-12">  <input type="text"   class="form-control "  style=" border-color:transparent;"      />    </div> 
+                   <div class="col-lg-5">  </div>
+                    <div class="col-lg-7">     </div>   
+                                      
+                                  
+                               
+                         
+                                               
+                      </div> 
+              
+              
+                         </div> 
+      
+                      </div>     <!-- splitcolumn  end--> 
+     
+
+                                                   
+                                       <div formArrayName="presc"  class="tablenew "   >  <!--. table  start--> 
+                                        <div   >
+                                         <table class="table "  id="knowledgeTreeTable"     (keydown)="autocleartable1()" >
+                                             <thead class="thead-default">
+                                             <tr >
+                                                 <th> S. No </th>    
+                                                 <th>Product Name</th>
+                                                 <th> B/S/T</th> 
+                                            
+                                                 <th> FN</th>    
+                                                 <th> AN</th>   
+                                                 <th> Evening</th>    
+                                                 <th> Night</th>  
+                                                 <th> BF/AF</th>    
+                                                 <th> Dose</th>   
+                                                 <th> Medication</th>    
+                                                 <th> Days</th>  
+                                                 <th> Food Interaction</th>  
+                                                 <th> Remove </th> 
+                                             </tr>
+                                         </thead>
+                                        
+                                         <tr *ngFor="let address of registerForm.controls.presc.controls; let i=index" [formGroupName]="i">
+                                         <td><input   value={{i+1}}  readonly/></td>   
+                                         <td><input  formControlName="productname"   /></td>
+                                         <td><input  formControlName="drgtyp"   /></td>  
+
+                                         <td><input  formControlName="morning"   /></td>
+                                         <td><input  formControlName="afternoon"   /></td>  
+                                     
+                              
+                                         <td><input  formControlName="evening"    /></td>
+                                         <td><input  formControlName="night"  /></td>
+                                         <td><input  formControlName="bfaf" /></td>
+                                         <td><input  formControlName="dose" /></td>
+                                         <td><input  formControlName="total_medications"  /></td>
+                                         <td><input  formControlName="days"  /></td>
+                                         <td><input  formControlName="fdinteraction"  /></td>
+
+                                         <td><input   type="checkbox"     (click)="remove(i)"  /></td>                                        
+
+         
+                                          </tr>
+                                     
+                                         </table>
+                    
+                                  </div>
+                                </div>     <!--. table     end--> 
+
+
+
+
+            
+                  <div class="row">    <!-- splitcolumn  start--> 
+                      
+                      
+                                      <div class="col-lg-4"> <!-- subcolumn  start--> 
+                                              <div class="row">
+                              
+
+
+
+                                                    <div class="col-md-5">
+                                                            
+                                                    
+                                                 <label class="form-label semibold" for="exampleInput"  > Remarks  
+                                                     </label> 
+                                                                            
+                                                                     
+                                                                        
+                                                                        </div>
+                                                    <div class="col-md-7">
+                                                                      <input type="text"      formControlName="remarks"
+                                                                      class="form-control" 
+                                                                   />
+                                                              
+                                                            
+                                                                </div> 
+                                                 
+                                                                <div class="col-md-5">
+                                                                  
+                                                          
+                                                                                      <label class="form-label semibold" for="exampleInput"   style="color: #0073aa"   > Consulatation Fee  
+                                                                                             </label> 
+                                                                                  
+                                                                           
+                                                                              
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                <input type="text"    formControlName="consultation_fee"
+                                                                class="form-control" 
+                                                               />
+                                                        
+                                                            </div>
+
+
+                                                      
+                                                                
+                                         
+
+
+
+
+
+                                                                    
+                                           </div>
+                              
+                              
+                                         </div>  <!-- subcolumn  end--> 
+                      
+                      
+                                         <div class="col-lg-4">   <!-- subcolumn  start--> 
+                                              <div class="row">
+                              
+
+
+                                                <div class="col-md-5">
+                                                    
+                                            
+                                                                        <label class="form-label semibold" for="exampleInput">Next  Visit  
+                                                                               </label> 
+                                                                    
+                                                             
+                                                                
+                                                                </div>
+                                              <div class="col-md-7">
+                                                              <input type="date"       formControlName="next_visit"
+                                                              class="form-control"  
+                                                           />
+                                                      
+                                                    
+                                                        </div> 
+                                                        <div class="col-md-5">
+                                                            
+                                                    
+                                                                                <label class="form-label semibold" for="exampleInput"> Drug  Interaction   
+                                                                                       </label> 
+                                                                            
+                                                                     
+                                                                        
+                                                                        </div>
+                                                         <div class="col-md-7">
+                                                       
+ 
+                                                          
+                                                        
+                                                            </div> 
+                                         
+                                                       
+                    
+                                                  
+
+
+                                                                  
+                                                  </div>
+                              
+                              
+                                         </div>  <!-- subcolumn  end--> 
+                                         
+                        
+                      
+                                         <div class="col-lg-4">    <!-- subcolumn  start--> 
+                                            
+                                              <div class="row">
+                              
+                                  
+                                                         
+                                                             
+                                                                         
+                                           </div> 
+                              
+                              
+                                         </div>     <!-- subcolumn  end--> 
+                                         
+                      
+                                      </div>     <!-- splitcolumn  end-->
+                                      
+                                      <ng2-toasty [position]="position"></ng2-toasty>
+
+        <ng-template #content let-c="close" let-d="dismiss">
+            <div class="modal-header">
+                  
+            </div>
+            <div class="modal-body">
+
+                 <input class="form-control" id="docphonenumber"    formControlName="tempstock"  />
+                  
+            </div >
+            <div class="modal-footer" >
+                  <label  class="btn btn-primary " id="type" (click)="saveTempStock()" >save</label>
+                
+                  <label  class="btn btn-primary "   (click)="c('Close click')" >Close</label>
+            </div>
+          </ng-template>
+ 
+           
+            </div>
+              <!-- box-typical-->
+
+                
+             
+                      
+                                
+                               
+          
+          </form>
+          <!--addresses-->
+    
+       
+          
+              <button type="submit" class="btn btn-primary"
+                (click)="onSubmit()"    >submit</button>
+
+
+          </app-card>
+          
+          
+      

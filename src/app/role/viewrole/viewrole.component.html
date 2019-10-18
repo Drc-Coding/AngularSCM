@@ -1,0 +1,130 @@
+<style>
+  .nodata {
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    font-size: 25px;
+    color: rgb(245, 50, 50);
+    font-family: Verdana, Geneva, sans-serif;
+  }
+
+  .action {
+    font-size: 15px;
+    color: green;
+  }
+
+  .action1 {
+    font-size: 15px;
+    color: red;
+  }
+
+  .module{
+  border-radius: 7px;
+  background-color:  #5aa02c ;
+  border-color:  transparent ;
+  text-align:center;
+  font-family:Montserrat;
+  color: #fff;
+  cursor:pointer;
+  padding:5px 21px;
+  }
+
+</style>
+<app-card>
+  <br>
+  <div align="right">
+    <button class="btn btn-round" (click)="addRole()">Add Role</button>
+  </div>
+  <br>
+  <div class="dt-responsive">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
+        <div>
+          <label class="label-control">Show
+            <select class="form-control input-sm full-data-show-entry" [(ngModel)]="rowsOnPage">
+              <option [ngValue]="1">1</option>
+              <option [ngValue]="25">25</option>
+              <option [ngValue]="50">50</option>
+              <option [ngValue]="100">100</option>
+            </select>
+            Entries
+          </label>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-6">
+        <div class="form-inline justify-content-end">
+	
+					<strong class="searchstyle">Search :</strong>
+					<input type="search" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Search Role Name">
+				
+			</div>
+      </div>
+    </div><br>
+    <div style="overflow-x: auto">
+      <table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery"
+        #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+        <thead>
+          <tr>
+            <th>
+             S.No
+            </th>
+            <th>
+             Role Id
+            </th>
+            <th>
+             Role Name
+            </th>
+            <th>
+            Company Name
+            </th>
+            <th>
+              Status
+            </th>
+            <th>
+              Action
+            </th>
+            <th>
+             View
+            </th>
+          </tr>
+          <tr>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="(data | dataFilter : filterQuery) == 0">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="nodata">No matching Record(s) found</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr *ngFor="let val of mf.data;let i=index">
+            <td>{{i+1}}</td>
+            <td>{{val[0]}}</td>
+            <td>{{val[1]}}</td>
+            <td>{{val[2]}}</td>
+            <td>
+              <span class="label label-success" align="center" *ngIf="val[3]=='0'" style="font-size: 16px;">Active</span>
+              <span class="label label-danger" align="center" *ngIf="val[3]=='1'" style="font-size: 16px;">In Active</span>
+            </td>
+            <td align="center">
+              <input type="button" class="btn module" value="Assign Role" (click)="assignRole(val[0])">
+            </td>
+            <td>
+              <button type="button" class="btn viewbtn" (click)="assignRoleDetails(val[0])">View</button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan=7>
+              <mfBootstrapPaginator class="pagination-main f-right"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</app-card>
