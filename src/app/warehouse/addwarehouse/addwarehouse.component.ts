@@ -63,6 +63,11 @@ export class Addwarehousecomponent implements OnInit {
 
       warehousename: [, [Validators.required]],
       warehousecode: [, [Validators.required]],
+
+      username: [, []],
+      password: [, []],
+
+
       owner_name: [, [Validators.required]],
       address1: [, []],
       address2: [, []],
