@@ -39,6 +39,7 @@ export class viewDistWiseProdComponent implements OnInit {
 
 
   selobj;
+  gifFail: boolean;
 
   constructor(private userService: viewDistWiseProdService, private formBuilder: FormBuilder, config: NgbDropdownConfig, private notificationsComponent: NotificationsComponent) {
 
@@ -93,10 +94,13 @@ export class viewDistWiseProdComponent implements OnInit {
 
   viewDistProdWhole() {
 
-
+    this.gifFail=true;
     var frmdata = { frmint1: this.registerForm.get('distributor').value, frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
+    setTimeout(() => {
     this.userService.viewDistProdWhole(JSON.stringify(frmdata)).subscribe(data => { this.viewServDistProduct(data) },
       errorCode => console.log(errorCode));
+      this.gifFail=false;
+    },3000);
   }
 
   viewServDistProduct(data: any) {

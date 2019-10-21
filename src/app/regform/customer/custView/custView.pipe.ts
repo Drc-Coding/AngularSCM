@@ -11,7 +11,7 @@ export class CategoryPipe implements PipeTransform {
         dataFilter.filter(function(subCategory, index) {
           //Search only by second criteria index[0](in this case name)
           if(index == 5) {
-            if(subCategory.toString().toLowerCase().indexOf(filterQuery.toLowerCase()) != -1) {
+            if(subCategory && subCategory.toString().toLowerCase().startsWith(filterQuery.toLowerCase()) == true) {
               if(filteredCategories.indexOf(subCategory) == -1) {
                 filteredCategories.push(dataFilter);
               }

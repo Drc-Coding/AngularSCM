@@ -53,6 +53,10 @@ export class slsInvSaveComponent implements OnInit {
   soid: any;
   url;
   @Input() fileExt: string = "JPG, GIF, PNG";
+  refill=false;
+  opnrefill=true;
+  clsrefill=false;
+
   constructor(private userService: slsInvSaveService, private dateformat: dateFormatPipe, private formBuilder: FormBuilder, config: NgbDropdownConfig, private notificationsComponent: NotificationsComponent, private modalService: NgbModal, private domSanitizer: DomSanitizer) {
     config.autoClose = false;
   }
@@ -129,6 +133,7 @@ export class slsInvSaveComponent implements OnInit {
       cashcheck: [, []],
       creditcheck: [, []],
       debitcheck: [, []],
+      refilldays:[,[]],
       vatdispflag: [this.selobj.vatdispflag, []],
       boxdispflag: [this.selobj.boxdispflag, []],
       stripdispflag: [this.selobj.stripdispflag, []],
@@ -1332,6 +1337,20 @@ export class slsInvSaveComponent implements OnInit {
       }
     }
   }
+
+  openrefill(){
+    this.refill=true;
+    this.clsrefill=true;
+    this.opnrefill=false;
+  }
+
+  closerefill(){
+    this.refill=false;
+    this.clsrefill=false;
+    this.opnrefill=true;
+  }
+
+
   clear() {
     this.ngOnInit();
   }

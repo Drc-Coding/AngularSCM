@@ -534,9 +534,27 @@
                      
                             <input type="text" class="form-control" formControlName="balanceamount" style="font-size:20px;font-weight:bold"/>
                         </div>
-                    </div>
+                    </div><br>
                     <!-- row end-->
               
+                    <div class="row">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-7">
+                            <h6 style="font-family:Montserrat;font-weight:bold;">
+                                If you Alert Customer for Refill
+                                 <span (click)="openrefill()" *ngIf="opnrefill" class="ml-3" style="color:#52a00c;font-size:21px;cursor:pointer">Click Here!</span>
+                                 <span (click)="closerefill()" *ngIf="clsrefill" class="ml-3" style="color:#52a00c;font-size:21px;cursor:pointer">Minimize!</span>
+                            </h6>
+                        
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control" *ngIf="refill" formControlName="refilldays" placeholder="Enter Days"  style="font-size:20px;font-weight:bold"/>
+                        </div>
+                    </div>
+      
       
                     <ng-template #content1 let-c="close" let-d="dismiss">
                         <div class="modal-header">Select Type:
