@@ -83,7 +83,7 @@ export class DoctorregistrationComponent implements OnInit {
             this.notificationsComponent.addToast({ title: 'Error Message', msg: 'Data Not saved..', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
           }
         }
-      );;
+      );
     }
   }
 

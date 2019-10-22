@@ -291,10 +291,8 @@ export const AppRoutes: Routes = [{
     },
  
     
-    
-    
-    
-    
+  
+
     {
       path: 'Ledger',
       loadChildren: './accounts/ledger/ledger.module#ledgerModule'
@@ -353,6 +351,10 @@ export const AppRoutes: Routes = [{
     {
       path:'CustomerTracking',
       loadChildren: './custrack/custrack.module#CustrackModule'
+    },
+    {
+      path:'Department',
+      loadChildren: './department/department.module#DepartmentModule'
     },
     {
 
