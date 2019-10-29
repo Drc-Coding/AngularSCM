@@ -11,12 +11,10 @@ export class ViewListBarcode implements OnInit {
   country: any;
   states: any;
   public data = [];
-
-  public rowsOnPage: number =10;
+  public rowsOnPage: number = 10;
   public filterQuery: string = "";
   public sortBy: string = "";
   public sortOrder: string = "desc";
-  
   constructor(private barcodeService: BarcodeService, private router: Router) {
   }
   getBarcode() {
