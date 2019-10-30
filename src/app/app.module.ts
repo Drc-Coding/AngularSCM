@@ -16,6 +16,7 @@ import {ScrollModule} from './scroll/scroll.module';
 import {LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     AuthLayoutComponent,
     BreadcrumbsComponent,
     TitleComponent,
+   
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../users.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 @Component({
@@ -17,31 +17,58 @@ export class AddusermodulesComponent implements OnInit {
   usermodulelist = [];
   submodulelist = [];
   userlist: any;
+  mulSettings={};
+  mulList = [];
   public flag: boolean = false;
-  constructor(private moduleService: UsersService, private notificationsComponent: NotificationsComponent, private router: Router) {
-    const suserrefid = new FormControl();
-    const moduleid = new FormControl();
-    const submoduleid = new FormControl();
-    const companyrefid = new FormControl();
+  mulservList=[];
+  submulList=[];
+  submulservList=[];
+  g: number;
+  constructor(private formBuilder: FormBuilder,private moduleService: UsersService, private notificationsComponent: NotificationsComponent, private router: Router) {
+  //   const suserrefid = new FormControl();
+  //   const moduleid = new FormControl();
+  //   const submoduleid = new FormControl();
+  //   const companyrefid = new FormControl();
 
-    let is_approver = new FormControl();
+  //   let is_approver = new FormControl();
 
-    this.usermoduleForm = new FormGroup({
-      companyrefid: companyrefid,
-      is_approver: is_approver,
-      suserrefid: suserrefid,
-      moduleid: moduleid,
-      submoduleid: submoduleid,
-    });
-  }
+  //   this.usermoduleForm = new FormGroup({
+  //     companyrefid: companyrefid,
+  //     is_approver: is_approver,
+  //     suserrefid: suserrefid,
+  //     moduleid: moduleid,
+  //     submoduleid: submoduleid,
+  //   });
+
+
+this.usermoduleForm = this.formBuilder.group({
+
+      companyrefid:  ['', []],
+      is_approver:  ['', []],
+      suserrefid:  ['', []],
+      moduleid:  ['', []],
+      submoduleid:  ['', []]
+});
+
+}
 
   ngOnInit() {
+
+    this.mulSettings = {
+      maxHeight: 200,
+      singleSelection: false,
+      text: "Select Types",
+      badgeShowLimit: 1,
+      classes: "myclass custom-class"
+    };
+    
     //DROP DOWN PLACE HOLDER
     this.usermoduleForm.get('companyrefid').setValue('opt1');
-    this.usermoduleForm.get('suserrefid').setValue('opt1');
-    this.usermoduleForm.get('moduleid').setValue('opt1');
+   // this.usermoduleForm.get('suserrefid').setValue('opt1');
     this.moduleService.getCompanylist().then(data => { this.companylist = data });
     this.usermoduleForm.get('is_approver').setValue(false);
+
+
 
   }
 
@@ -54,18 +81,61 @@ export class AddusermodulesComponent implements OnInit {
     });
   }
 
+  sess :any
   getUsermodule() {
-    this.moduleService.getModule(this.usermoduleForm.get('suserrefid').value).then(data => { this.usermodulelist = data },
+    
+    this.moduleService.getModule(this.usermoduleForm.get('suserrefid').value).then(data => { this.mulservList = data, this.getsetmodule(); },
       err => {
         console.log('Error Occured On getModule()');
       });
+      
   }
 
+  getsetmodule() {
+    alert("calertgetsetmodule")
+    for (this.i = 0; this.i < this.mulservList.length; this.i++) {
+      this.mulList.push({ id: this.mulservList[this.i][0], itemName: this.mulservList[this.i][1] });
+      
+    }
+
+  }
+
+
+  
   getuserSubmodule() {
-    this.usermoduleForm.get("submoduleid").setValue('');
-    this.moduleService.getSubmodule(this.usermoduleForm.get('moduleid').value, this.usermoduleForm.get('suserrefid').value).subscribe(data => { this.submodulelist = data }, err => {
-      console.log('Error Occured On getSubmodule()');
-    });
+
+    this.sess = this.usermoduleForm.get('moduleid').value;
+    if (this.sess != "") {
+      alert("Uservalue"+this.usermoduleForm.get('suserrefid').value);
+      for (this.g = 0; this.g < this.sess.length; this.g++) {
+        //alert("sessionid" + this.sess[this.g].id);
+       
+    this.moduleService.getSubmodule(this.sess[this.g].id, this.usermoduleForm.get('suserrefid').value).then(data => { this.submulservList = data, this.getsetmodule(); },
+       
+          error => {
+            console.log("Error Occured from getPurcSessiontable()");
+          });
+
+      }
+     
+    } else {
+      this.notificationsComponent.addToast({ title: 'Error Message', msg: 'SELECT SUB MODULe..', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
+    }
+
+  
+    // this.moduleService.getSubmodule(this.usermoduleForm.get('submoduleid').value, this.usermoduleForm.get('suserrefid').value).subscribe(data => { this.submulservList = data,this.getsetsubmodule() }, err => {
+    //   console.log('Error Occured On getSubmodule()');
+    // });
+    
+  }
+
+  getsetsubmodule(){
+    alert("callgetsetsubmodule")
+    alert(this.submulservList);
+    for (this.i = 0; this.i < this.submulservList.length; this.i++) {
+      this.submulList.push({ id: this.submulservList[this.i][0], itemName: this.submulservList[this.i][1] });
+    }
+    
   }
 
   onSubmit() {

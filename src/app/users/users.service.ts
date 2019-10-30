@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 @Injectable()
 export class UsersService {
   private compURL = 'api/companylist';
@@ -35,6 +35,7 @@ export class UsersService {
   private headers = new Headers({ 'Content-Type': 'application/json' });
   constructor(private http: Http) { }
 
+  
   getCompanylist(): Promise<any> {
     return this.http.get(this.compURL)
       .toPromise()
@@ -96,9 +97,28 @@ export class UsersService {
       .catch(this.handleError);
   }
 
-  getSubmodule(mid: any, uid: any) {
-    return this.http.get(this.submodURL + '/' + mid + '/' + uid).map(response => response.json());
+  
+  // getModule(serobj: string) {
+  //   let header = new Headers({ 'Content-Type': 'application/json' });
+  //   let options = new RequestOptions({ headers: header });
+
+  //   return this.http.post(this.modURL + `viewDstPhCompanies`, serobj, options)
+  //     .map((res: Response) => res.json());
+  // }
+
+
+  getSubmodule(mid: any,uid :any): Promise<any> {
+    return this.http.get(this.modURL + '/' + mid + '/' + uid)
+      .toPromise()
+      .then(response => response.json() as any)
+      .catch(this.handleError);
   }
+
+
+  // getSubmodule(mid:any, uid: any) {
+  //   return this.http.get(this.submodURL + '/' + mid + '/' + uid).map(res => res.json());
+  //  // return this.http.get(this.submodURL  + '/'+mid+'/' + uid).map(response => response.json());
+  // }
 
   addModule(user: any, modules: any, approve :any, companyrefid:any) {
     return this.http.post(this.saveMURL, { suserrefid: user, moduleid: modules,  is_approver: approve, companyrefid:companyrefid }, { headers: this.headers }).map(response => response.json()).catch(this.handleError);

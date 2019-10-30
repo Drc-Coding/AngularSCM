@@ -108,7 +108,7 @@ export class DistributorComponent implements OnInit {
       errorCode => console.log(errorCode));
     this.userService.viewCountry(JSON.stringify(frmdata)).subscribe(data => this.countries = data,
       errorCode => console.log(errorCode));
-    this.userService.viewDstPhCompanies(JSON.stringify(frmdata)).subscribe(data => { this.mulservList = data, this.viewPharmaCompany() },
+    this.userService.viewDstPhCompanies(JSON.stringify(frmdata)).subscribe(data => { this.mulservList = data, alert(data) ,this.viewPharmaCompany() },
       errorCode => console.log(errorCode));
     // $(document).ready(function () {
     //   setInterval("yourAjaxCall()", 1000);

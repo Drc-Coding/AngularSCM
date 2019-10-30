@@ -322,11 +322,128 @@
 						<button type="submit" class="btn btn-round" [routerLink]="['/Employee/ViewEmployee']">View</button>
 					</div>
 
+					<div class="col-lg-2">
+						<label class="btn btn-round mt-4" (click)="opendept(dept)">Tax Excempt</label>
+					</div>
+
+					<div class="col-lg-2">
+						<label class="btn btn-round mt-4" (click)="opensubdivision(subdivision)">Tax Except</label>
+					</div>
+
 				</div>
 
-			</form>
-			<!-- <div id="google_translate_element"></div> -->
 
+				
+				<ng-template #dept let-c="close" let-d="dismiss">
+					<div class="modal-header">
+						<label class="form-label"> Add Department</label>
+						<i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer"></i>
+					</div>
+					<img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+	
+					<div class="modal-body mx-5">
+						<input class="form-control" id="genericnumber" formControlName="" placeholder="Enter Generic Name" />
+	
+					</div>
+					<div class="modal-footer">
+						<label class="btn modbtn" id="type" (click)="saveGeneric(c)">Save Generic Name</label>
+					
+					</div>
+				</ng-template>
+	
+		  <ng-template #subdept let-c="close" let-d="dismiss">
+					<div class="modal-header">
+						<label class="form-label"> Add Sub Department</label>
+						<i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer"></i>
+					</div>
+			<img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+			
+			
+					<div class="modal-body mx-5">
+
+							<select name="select" class="form-control" placeholder="Select Main Group" formControlName="">
+									<option selected disabled value="0">---Select Department---</option>
+								  
+									</select><br>
+							
+						<input class="form-control" id="genericnumber" formControlName="" placeholder="Enter Generic Name" />
+	
+					</div>
+					<div class="modal-footer">
+						<label class="btn modbtn" id="type" (click)="saveGeneric(c)">Save Generic Name</label>
+					
+					</div>
+				</ng-template>
+	
+		  <ng-template #division let-c="close" let-d="dismiss">
+					<div class="modal-header">
+						<label class="form-label"> Add Division</label>
+						<i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer"></i>
+					</div>
+			<img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+			
+		
+					<div class="modal-body mx-5">
+
+							<select name="select" class="form-control" placeholder="Select Main Group" formControlName="">
+									<option selected disabled value="0">---Select Department---</option>
+								  
+								  </select><br>
+						  
+								  <select name="select" class="form-control" placeholder="Select Main Group" formControlName="">
+									<option selected disabled value="0">---Select Sub Department---</option>
+										
+									</select><br>
+	
+						<input class="form-control" id="genericnumber" formControlName="" placeholder="Enter Generic Name" />
+	
+					</div>
+					<div class="modal-footer">
+						<label class="btn modbtn" id="type" (click)="saveGeneric(c)">Save Generic Name</label>
+					
+					</div>
+		  </ng-template>
+		  
+	
+		  <ng-template #subdivision let-c="close" let-d="dismiss">
+					<div class="modal-header">
+						<label class="form-label"> Add Sub Division</label>
+						<i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer"></i>
+					</div>
+					<img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+	
+		
+	
+					<div class="modal-body mx-5">
+
+							<select name="select" class="form-control" placeholder="Select Main Group" formControlName="">
+									<option selected disabled value="0">---Select Department---</option>
+								  
+								  </select><br>
+						  
+								  <select name="select" class="form-control" placeholder="Select Main Group" formControlName="">
+									<option selected disabled value="0">---Select Sub Department---</option>
+								  
+								  </select><br>
+						  
+								  <select name="select" class="form-control" placeholder="Select Main Group" formControlName="">
+									<option selected disabled value="0">---Select Division---</option>
+								  
+								  </select><br>
+
+						<input class="form-control" id="genericnumber" formControlName="" placeholder="Enter Generic Name" />
+	
+					</div>
+
+					<div class="modal-footer">
+						<label class="btn modbtn" id="type" (click)="saveGeneric(c)">Save Generic Name</label>
+					
+					</div>
+				</ng-template>
+	
+
+			</form>
+		
 
 		</app-card>
 		<ng2-toasty [position]="position"></ng2-toasty>

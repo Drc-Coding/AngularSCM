@@ -353,6 +353,10 @@ export const AppRoutes: Routes = [{
       loadChildren: './custrack/custrack.module#CustrackModule'
     },
     {
+      path:'usertask',
+      loadChildren: './usertask/usertask.module#UsertaskModule'
+    },
+    {
       path:'Department',
       loadChildren: './department/department.module#DepartmentModule'
     },

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { AppComponent } from '../../app.component';
 import { window } from 'rxjs/operator/window';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 const textPattern = "[a-zA-Z ]*";
 const textnumbers = '^[0-9]+(\.[0-9]{1,2})?$';
@@ -42,7 +43,9 @@ export class addEmployeeComponent implements OnInit {
   selobj: any;
   errors: any;
   @Input() fileExt: string = "JPG, GIF, PNG";
-  constructor(private addEmployee: EmployeeService, private router: Router, formBuilder: FormBuilder, private notificationsComponent: NotificationsComponent) {
+  closeResult: string;
+  constructor(private addEmployee: EmployeeService, private router: Router, formBuilder: FormBuilder, 
+    private notificationsComponent: NotificationsComponent,private modalService: NgbModal) {
     let companyid = new FormControl();
     let branchid = new FormControl();
     let storerefid = new FormControl();
@@ -330,6 +333,64 @@ export class addEmployeeComponent implements OnInit {
     });
    
   }
+
+
+  // Popup Modal Open Code
+
+  
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  opendept(dept) {
+
+    this.modalService.open(dept).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+  }
+
+  opensubdept(subdept) {
+
+    this.modalService.open(subdept).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+  }
+
+
+  opendivision(division) {
+
+    this.modalService.open(division).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+  }
+
+  opensubdivision(subdivision) {
+
+    this.modalService.open(subdivision).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+  }
+
+
+
  
 }
 

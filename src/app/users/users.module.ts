@@ -13,10 +13,14 @@ import { userViewmodule } from './viewUserModules/viewUserModules.component';
 import { userViewAccess } from './viewUserAccess/viewUserAccess.component';
 import { CategoryPipe } from './viewUser/viewUser.component.pipe';
 import { CategoryPipe1 } from './viewUserModules/viewUserModules.view.pipe';
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 
 @NgModule({
   imports: [
     CommonModule,
+    MultiselectDropdownModule,
+    AngularMultiSelectModule,
     RouterModule.forChild(UsersRoutes),
     SharedModule
   ],
