@@ -30,7 +30,7 @@
           <option *ngFor="let coun of mulservList" value={{coun[0]}}>{{coun[1]}}</option>
         </select> -->
 
-        <angular2-multiselect [data]="mulList" [settings]="mulSettings" (click)="getuserSubmodule()" formControlName="moduleid">
+        <angular2-multiselect [data]="mulList" [settings]="mulSettings" [(ngModel)]="selectedItems" (click)="getuserSubmodule()" formControlName="moduleid">
           </angular2-multiselect>
       </div>
     </div>
@@ -44,7 +44,7 @@
           <option *ngFor="let sub of submodulelist" value={{sub[0]}}>{{sub[1]}}</option>
         </select> -->
 
-        <angular2-multiselect [data]="submulList" [settings]="mulSettings" formControlName="submoduleid">
+        <angular2-multiselect [data]="submulList" [settings]="mulSettings" [(ngModel)]="selectedItems1" formControlName="submoduleid">
         </angular2-multiselect>
       </div>
 

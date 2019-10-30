@@ -45,11 +45,15 @@
     <div class="col-xs-12 col-sm-12 col-md-6">
       <div class="form-inline justify-content-end">
         <strong class="searchstyle">Search:</strong>
-          <input type="search" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Challan Number">
+          <input type="search" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Search Challan No">
       </div>
     </div>
   </div><br>
   
+  <div align="center">
+		<img src="assets/images/loading.gif" height="100px" *ngIf="gifFail">
+	  </div><br>
+
   <form [formGroup]="viewchallan">
 
   <div class="bform">

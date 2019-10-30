@@ -90,25 +90,14 @@ export class UsersService {
       .catch(this.handleError);
   }
 
-  getModule(id: any): Promise<any> {
-    return this.http.get(this.modURL + '/' + id)
-      .toPromise()
-      .then(response => response.json() as any)
-      .catch(this.handleError);
-  }
-
+ 
+  getModule(id: number) {
+    return this.http.get(this.modURL + '/' + id).map(res => res.json());
+}
   
-  // getModule(serobj: string) {
-  //   let header = new Headers({ 'Content-Type': 'application/json' });
-  //   let options = new RequestOptions({ headers: header });
-
-  //   return this.http.post(this.modURL + `viewDstPhCompanies`, serobj, options)
-  //     .map((res: Response) => res.json());
-  // }
-
-
+ 
   getSubmodule(mid: any,uid :any): Promise<any> {
-    return this.http.get(this.modURL + '/' + mid + '/' + uid)
+    return this.http.get(this.submodURL + '/' + mid + '/' + uid)
       .toPromise()
       .then(response => response.json() as any)
       .catch(this.handleError);

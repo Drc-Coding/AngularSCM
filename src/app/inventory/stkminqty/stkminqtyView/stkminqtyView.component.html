@@ -65,13 +65,6 @@
 				</div>
 	
 	
-				<!-- <div class="col-lg-3">
-						<select class="form-control" (change)="viewProd()" formControlName="minstockflag">
-							<option value="1">Load Min Stock</option>
-							<option value="2"> Load New Product </option>
-						</select>
-					</div> -->
-	
 				<div class="col-lg-4">
 	
 					<label class="form-label">
@@ -83,6 +76,12 @@
 							formControlName="minstockflag"> Load New Product
 					</label>
 				</div>
+
+				<div class="col-lg-4" align="center">
+					
+						<img src="assets/images/loading.gif" height="100px" *ngIf="gifFail">
+					  
+				</div><br>
 	
 	
 			</div>	<br><br>

@@ -13,7 +13,7 @@ export class UsertaskComponent implements OnInit {
 
 
 
-  usertask: FormGroup;
+  usertaskForm: FormGroup;
 
 
 
@@ -24,18 +24,18 @@ export class UsertaskComponent implements OnInit {
 
 ngOnInit() {
 
-  this.usertask.get('companyrefid').setValue(AppComponent.companyID);
-  this.usertask.get('branchrefid').setValue(AppComponent.branchID);
-  this.usertask.get('locname').setValue(AppComponent.locrefID);
-  this.usertask.get('locrefid').setValue(AppComponent.shopID);   
+  this.usertaskForm.get('companyrefid').setValue(AppComponent.companyID);
+  this.usertaskForm.get('branchrefid').setValue(AppComponent.branchID);
+  this.usertaskForm.get('locname').setValue(AppComponent.locrefID);
+  this.usertaskForm.get('locrefid').setValue(AppComponent.shopID);   
 
-    const companyrefid = new FormControl();
-  const samplename = new FormControl('', Validators.required);
+  const companyrefid = new FormControl();
+  //const samplename = new FormControl('', Validators.required);
   const branchrefid = new FormControl();
   const locname = new FormControl();
   const locrefid = new FormControl();
 
-  this.usertask = new FormGroup({
+  this.usertaskForm = new FormGroup({
 
     companyrefid: companyrefid,
   
