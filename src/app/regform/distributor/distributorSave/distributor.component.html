@@ -316,6 +316,11 @@
                 <div class="col-lg-4">
                     <button type="submit" class="btn btn-round" style=" margin:26px" [disabled]="!registerForm.valid">Submit</button>
                 </div>
+                <div class="col-lg-1"></div>
+                    <div class="col-lg-2" align="center">
+                    <img src="assets/images/saveload.gif" height="100px" *ngIf="gifFail">
+                  </div><br>
+                    
             </div>
             <!--.row4 end-->
             <ng2-toasty [position]="position"></ng2-toasty>

@@ -8,8 +8,8 @@ export class CategoryPipe implements PipeTransform {
       let filteredCategories = [];
       categories.filter(function(dataFilter){
         dataFilter.filter(function(subCategory, index) {          
-          if(index == 1) {
-            if(subCategory.toString().toLowerCase().indexOf(filterQuery.toLowerCase()) != -1) {
+          if(index == 1 || index == 2) {
+            if(subCategory.toString().toLowerCase().startsWith(filterQuery.toLowerCase()) == true) {
               if(filteredCategories.indexOf(subCategory) == -1) {
                 filteredCategories.push(dataFilter);
               }

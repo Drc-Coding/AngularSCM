@@ -12,7 +12,7 @@ import { userView } from './viewUser/viewUser.component';
 import { userViewmodule } from './viewUserModules/viewUserModules.component';
 import { userViewAccess } from './viewUserAccess/viewUserAccess.component';
 import { CategoryPipe } from './viewUser/viewUser.component.pipe';
-import { CategoryPipe1 } from './viewUserModules/viewUserModules.view.pipe';
+//import { CategoryPipe1 } from './viewUserModules/viewUserModules.view.pipe';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 
@@ -24,7 +24,8 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2
     RouterModule.forChild(UsersRoutes),
     SharedModule
   ],
-  declarations: [UsersComponent, AdduserComponent, AddusermodulesComponent, AdduseraccessComponent, userView, userViewmodule, userViewAccess, CategoryPipe, CategoryPipe1],
+  declarations: [UsersComponent, AdduserComponent, AddusermodulesComponent, AdduseraccessComponent, userView, 
+    userViewmodule, userViewAccess, CategoryPipe],
   providers: [UsersService]
 })
 

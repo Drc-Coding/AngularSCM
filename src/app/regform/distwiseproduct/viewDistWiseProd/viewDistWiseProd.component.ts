@@ -94,13 +94,18 @@ export class viewDistWiseProdComponent implements OnInit {
 
   viewDistProdWhole() {
 
+   
+    const control1 = <FormArray>this.registerForm.controls['distprod'];
+    control1.controls=[];
+    this.init();
     this.gifFail=true;
+
     var frmdata = { frmint1: this.registerForm.get('distributor').value, frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
     setTimeout(() => {
     this.userService.viewDistProdWhole(JSON.stringify(frmdata)).subscribe(data => { this.viewServDistProduct(data) },
       errorCode => console.log(errorCode));
       this.gifFail=false;
-    },3000);
+    },3500);
   }
 
   viewServDistProduct(data: any) {

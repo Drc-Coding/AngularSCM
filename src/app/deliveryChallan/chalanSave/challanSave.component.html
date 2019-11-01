@@ -61,7 +61,7 @@
                                 <label for="stock" class="form-label">Stock Transfer No 
                                      <span style="color:red">*</span></label>
                                <ng-select [options]="distributors" formControlName="stockno"
-                                   placeholder="Search Stock Transfer No" 
+                                   placeholder="Type: STK/TRNS/0000" 
                                    (change)="getStockNumber()"     (click)="getStockNumber()" 
                                    (input)="getSales($event.target.value)">
                                </ng-select>
