@@ -6,6 +6,7 @@ import { purcGatePassRoutes } from './purcGatePass.routing';
 import { purcGatePassSaveComponent } from './purcGatePassSave/purcGatePassSave.component'; 
 import { purcGatePassEditComponent } from './purcGatePassEdit/purcGatePassEdit.component';
 import { purcGatePassViewComponent } from './purcGatePassView/purcGatePassView.component';
+import {CategoryPipe}from './purcGatePassView/purchaseGataPassView.pipe';
 import { DxDataGridModule,
   DxSparklineModule,
   DxTemplateModule } from 'devextreme-angular';
@@ -22,7 +23,7 @@ import { DxDataGridModule,
     RouterModule.forChild(purcGatePassRoutes),
    SharedModule
   ],
-  declarations: [ purcGatePassSaveComponent  , purcGatePassEditComponent   ,  purcGatePassViewComponent ],
+  declarations: [ purcGatePassSaveComponent  , purcGatePassEditComponent   , CategoryPipe ,  purcGatePassViewComponent ],
   
 
   bootstrap: [purcGatePassSaveComponent]

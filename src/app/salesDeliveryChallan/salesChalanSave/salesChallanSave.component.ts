@@ -42,7 +42,8 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
   x;
   polist = [];
   coltax: any;
-  constructor(private challanService: salesChallanServices, private router: Router, private formBuilder: FormBuilder, private notificationsComponent: NotificationsComponent, private appComponent: AppComponent) {
+  constructor(private challanService: salesChallanServices, private router: Router, private formBuilder: FormBuilder, 
+    private notificationsComponent: NotificationsComponent, private appComponent: AppComponent,private dateformat: dateFormatPipe) {
   
   
     this.deliveryForm = this.formBuilder.group({
@@ -68,7 +69,7 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
       locname: ['', []],
       locrefid: ['', []],
       clientcdate: ['', []],
-      deliverydate: ['', []],
+      deliverydate: [this.dateformat.transform05(Date.now()), []],
       stockno: ['', []],
       salesno: ['', []],
       fromlocrefid: ['', []],

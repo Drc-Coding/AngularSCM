@@ -116,7 +116,6 @@ this.usermoduleForm = this.formBuilder.group({
     
       for (this.g = 0; this.g < this.sess.length; this.g++) {
         
-       // alert("sessionid" + this.sess[this.g].id);
 
     this.moduleService.getSubmodule(this.sess[this.g].id, this.usermoduleForm.get('suserrefid').value).then(data => { this.getsetsubmodule(data); },
        
@@ -125,18 +124,17 @@ this.usermoduleForm = this.formBuilder.group({
           });
 
       }
-     // alert("after for sessionid" + this.sess[this.g].id);
+    
      
     } else {
-      this.notificationsComponent.addToast({ title: 'Error Message', msg: 'SELECT SUB MODULe..', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
+      this.notificationsComponent.addToast({ title: 'Error Message', msg: 'SELECT MODULE..', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
     }
 
   
   }
 
   getsetsubmodule(data : any){
-   // alert("call Get Set Sub  Module")
-   // alert(data);
+  
     for (this.i = 0; this.i < data.length; this.i++) {
       this.submulList.push({ id: data[this.i][0], itemName: data[this.i][1] });
     }
@@ -147,7 +145,7 @@ this.usermoduleForm = this.formBuilder.group({
     this.flag = this.validation();
     if (this.flag == true) {
      
-     this.sess = this.usermoduleForm.get('moduleid').value;
+     //this.sess = this.usermoduleForm.get('moduleid').value;
 
      this.moduleService.addModule(this.usermoduleForm.get('suserrefid').value, 
      this.usermoduleForm.get('moduleid').value,
@@ -159,6 +157,9 @@ this.usermoduleForm = this.formBuilder.group({
       }, err => {
         console.log('Error Occured On addModule()')
       });
+
+    }
+  }
 
     // //  for (this.g = 0; this.g < this.sess.length; this.g++) {
 
@@ -176,8 +177,7 @@ this.usermoduleForm = this.formBuilder.group({
     // //     console.log('Error Occured On addModule()')
     // //   });
     // }
-    }
-  }
+  
 
   saveSumnoduleData() {
     let sModuleID: any = this.usermoduleForm.get("submoduleid").value;

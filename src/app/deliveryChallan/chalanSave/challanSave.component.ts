@@ -478,7 +478,7 @@ export class challanSaveComponent implements OnInit, AfterViewInit {
               data => {
                 if (data == true) {
                   this.notificationsComponent.addToast({ title: 'SUCCESS MESSAGE', msg: 'DATA SAVED SUCCESSFULLY..', timeout: 5000, theme: 'success', position: 'top-right', type: 'success' });
-                  window.location.href = "/DeliveryReceipt/ViewDeliveryReceipt";
+                  window.location.href = "DeliveryReceipt/ViewDeliveryReceipt";
                 }
               },
               error => {

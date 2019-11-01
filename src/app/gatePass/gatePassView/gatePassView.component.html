@@ -17,6 +17,12 @@
         font-size: 15px;
         color: red;
       } 
+
+      .bform{
+        border:2px solid #b3b3b3;
+        border-radius:5px;
+        padding:1em;
+      }
       
     </style>
 <app-card>
@@ -45,8 +51,50 @@
   </div><br>
 
 
+  <div align="center">
+      <img src="assets/images/loading.gif" height="100px" *ngIf="gifFail">
+    </div><br>
+      
+  
+    <form [formGroup]="viewgatepass">
 
-  <!-- <div class="panel-heading">User information</div>-->
+        <div class="bform">
+      
+          <div class="row">
+      
+          <div class="col-lg-3">
+             
+              <label for="email" class="form-label">Company Name</label>
+                 <input type="text"  class="form-control"  formControlName="companyid" disabled>   
+          
+          </div>
+      
+          <div class="col-lg-3">
+             
+              <label for="email" class="form-label">Branch Name</label>
+                 <input type="text"  class="form-control"  formControlName="branchid" disabled>   
+          
+        </div>
+      
+         <div class="col-lg-3">
+             
+            <label for="email" class="form-label">Location</label>
+               <input type="text"  class="form-control"  formControlName="locname" disabled>   
+        
+          </div>
+      
+          <div class="col-lg-3">
+             
+              <label for="email" class="form-label">Name</label>
+                 <input type="text"  class="form-control"  formControlName="locref" disabled>   
+          
+          </div>
+      
+        </div>
+      
+        </div>
+      </form><br>
+
   <div class="dt-responsive" style="overflow:auto">
     <table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery"
       #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
@@ -55,18 +103,7 @@
           <th>
            S.No
           </th>
-          <th>
-         Company Name
-          </th>
-          <th>
-          Branch Name
-          </th>
-          <th>
-           Location
-          </th>
-          <th>
-          Name
-          </th>          
+                
           <th>
            From Location
           </th>
@@ -93,6 +130,7 @@
         </tr>
       </thead>
       <tbody>
+        
           <tr *ngIf="(data | dataFilter : filterQuery) == 0">
 							<td></td>
 							<td class="nodata">No matching Records found....</td>
@@ -101,18 +139,12 @@
               <td></td> 
               <td></td>
 							<td></td> 
-              <td></td>     
-              <td></td> 
-              <td></td> 
-              <td></td>    
-              <!-- <td></td>     -->
-							</tr>  	
-        <tr *ngFor="let val of data;let i=index">
+            
+              </tr>  	
+              
+        <tr *ngFor="let val of mf.data;let i=index">
           <td>{{i+1}}</td>
-          <td>{{val[0]}}</td>
-          <td>{{val[1]}}</td>
-          <td>{{val[2]}}</td>
-          <td>{{val[3]}}</td>
+         
           <td>{{val[4]}}</td>
           <td>{{val[5]}}</td>
           <td>{{val[6]}}</td>
