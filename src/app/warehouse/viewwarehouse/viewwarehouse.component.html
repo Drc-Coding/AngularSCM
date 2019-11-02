@@ -41,6 +41,7 @@
           <th> Owner Name </th>
           <th> Address </th>
           <th>Mobile Number</th>
+          <th>Action</th>
 
         </tr>
 
@@ -57,6 +58,7 @@
           <td></td>
           <td></td>
           <td></td>
+          <td></td>
         </tr>
 
 
@@ -67,6 +69,26 @@
           <td>{{item[7]}}</td>
           <td>{{item[8]}}</td>
           <td>{{item[17]}}</td>
+
+
+
+          <td ngbDropdown class="text-center">
+
+            <span ngbDropdownToggle class="dropdown-toggle addon-btn" data-toggle="dropdown" aria-expanded="true">
+              <i class="icofont icofont-ui-settings"></i>
+            </span>
+
+            <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+
+              <span class="dropdown-item" href="javascript:;" [routerLink]="['/warehouse/editWarehouse',item[0]]"
+                 style="cursor: pointer">
+                <i class="icofont icofont-ui-edit"></i>Edit</span>
+
+              <!-- <span class="dropdown-item" href="javascript:;" (click)="employeeDelete(val[0])" style="cursor:pointer">
+                <i class="icofont icofont-attachment"></i>Delete</span> -->
+
+            </div>
+          </td>
           <!-- <td style="text-align: center">{{item[4]}}</td> -->
 
 

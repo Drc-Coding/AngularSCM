@@ -5,6 +5,7 @@ import { warehouseRoutes } from "./warehouse.routing";
 import { SharedModule } from "app/shared/shared.module";
 import { Addwarehousecomponent } from "./addwarehouse/addwarehouse.component";
 import { ViewWarehouseComponent } from "./viewwarehouse/viewwarehouse.component";
+import { Editwarehousecomponent } from "./editwarehouse/editwarehouse.component";
 
 
 
@@ -18,7 +19,7 @@ import { ViewWarehouseComponent } from "./viewwarehouse/viewwarehouse.component"
     ],
 
 
-    declarations: [Addwarehousecomponent, ViewWarehouseComponent ]
+    declarations: [Addwarehousecomponent, ViewWarehouseComponent, Editwarehousecomponent ]
 
 })
 
