@@ -48,13 +48,18 @@
 			<div class="form-inline justify-content-end">
 
 				<strong class="searchstyle">Search:</strong>
-					<input type="search" [(ngModel)]="filterQuery" [ngModelOptions]="{standalone: true}" class="form-control w-50" placeholder="Search Barcode">
+					<input type="search" [(ngModel)]="filterQuery" [ngModelOptions]="{standalone: true}" class="form-control w-50" placeholder="Search Product Name & Barcode">
 			
 			</div>
 		</div>
 
 	</div><br>
-	<!-- <div class="panel-heading">User information</div>-->
+	
+
+	<div align="center">
+			<img src="assets/images/loading.gif" height="100px" *ngIf="gifFail">
+	</div><br>
+			
 	<div class="dt-responsive" style="overflow:auto">
 
 		<table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable"
@@ -62,31 +67,31 @@
 			<thead>
 				<tr>
 					<th>
-						<mfDefaultSorter by="sno">S.No</mfDefaultSorter>
+						S.No
 					</th>
 					<th>
-						<mfDefaultSorter by="empfirstname">Product Code</mfDefaultSorter>
+						Product Code
 					</th>
 					<th>
-						<mfDefaultSorter by="emplastname">Product Name</mfDefaultSorter>
+						Product Name
 					</th>
 					<th>
-						<mfDefaultSorter by="department">Barcode</mfDefaultSorter>
+						Barcode
 					</th>
 					<th>
-						<mfDefaultSorter by="department">Company Name</mfDefaultSorter>
+						Company Name
 					</th>
 					<th>
-						<mfDefaultSorter by="department">Branch Name</mfDefaultSorter>
+						Branch Name
 					</th>
 					<th>
-						<mfDefaultSorter by="department">Location Name</mfDefaultSorter>
+						Location Name
 					</th>
 					<th>
-						<mfDefaultSorter by="department">Firm Name</mfDefaultSorter>
+						Firm Name
 					</th>
 					<th>
-						<mfDefaultSorter by="Action">Status</mfDefaultSorter>
+						Status
 					</th>
 				</tr>
 				<tr>

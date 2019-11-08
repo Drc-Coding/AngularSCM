@@ -51,6 +51,7 @@
     "getmac": "^1.4.6",
     "jquery-knob": "github:aterrien/jQuery-Knob",
     "jquery-sparkline": "^2.4.0",
+    "macaddress": "^0.2.9",
     "moment": "^2.22.2",
     "morris.js": "^0.5.0",
     "ng-chartist": "^1.1.1",

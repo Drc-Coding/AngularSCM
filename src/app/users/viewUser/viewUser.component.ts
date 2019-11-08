@@ -13,12 +13,17 @@ export class userView implements OnInit {
   public filterQuery: string = "";
   public sortBy: string = "";
   public sortOrder: string = "desc";
+  gifFail: boolean=true;
   constructor(private service: UsersService, private notificationsComponent: NotificationsComponent, private rout: Router) { }
 
   ngOnInit() {
+
+    setTimeout(() => {
     this.service.viewUser().subscribe(data => this.data = data, err => {
       console.log("Error occured on viewUser()");
     });
+    this.gifFail=false;
+  },3000);
   }
   adduser() {
     this.rout.navigate(['User/AddUser']);

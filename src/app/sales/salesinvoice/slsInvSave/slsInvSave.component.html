@@ -53,16 +53,13 @@
    
     .image {
         position: absolute;
-        width: 320px;
-        height: 350px;
-        top:8px;
-        overflow-y: scroll;
-        overflow-x: scroll;
+        top:25px;
         background-color:white;
-        left:60%;
+        left:61%;
         /*
     display:none  ;
- 
+          width: 260px;
+        height: 270px;
    */
     }
   
@@ -121,6 +118,7 @@
                             
                      
                         </div>
+
                         <div class="row topadding mt-3">
                             
                                 <div class="col-lg-3" *ngIf="registerForm.controls.sorderflag.value==0">
@@ -154,17 +152,27 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="col-lg-2">
+
+                            <div class="col-lg-4">
                                     <label class="form-label semibold" for="exampleInput"> Prescription Upload
                                     </label>
                              
-                                    <input type="file" (change)="fileChange($event)" formControlName="presc35" class="form-control" />
-                                </div>
-                                <div class="col-lg-2">
-                                    <label class="btn btn-round mt-4" (click)="viewsPresc()" style="font-size: 1em; ">view Presc</label>
-                                </div>          
+                                    <div class="form-inline">
+                                    <input type="file" (change)="fileChange($event)" formControlName="presc35"
+                                     class="form-control" id="imagefile" />
+                                    <span class="fa fa-eye mt-2" style="cursor: pointer" (click)="viewsPresc()" *ngIf="showeye"></span>
+                                    <span class="fa fa-eye-slash mt-2" style="cursor: pointer" (click)="ClosePresc()" *ngIf="showeyeslash"></span>
+                                    <span class="fa fa-trash mt-2 ml-2" style="cursor: pointer" (click)="reset()"></span>
+                                    </div>
+                                    <!-- <span style="color:red;" *ngIf="message">{{message}}</span> -->
                              </div>
-           
+                                        
+                        </div>
+
+                        <!-- <div class="col-lg-2">
+                                <label class="btn btn-round mt-4" (click)="viewsPresc()" style="font-size: 1em; ">view Presc</label>
+                            </div> 
+            -->
                 <!-- splitcolumn  end-->
             </div><br>
           
@@ -273,10 +281,12 @@
                   </div><br>
                   
                   
-                  <div class="image">
-                        <i class="fa fa-times ficon" style="cursor:pointer" (click)="ClosePresc()"></i>
-                        <br><br><br>  
-                        <ngx-image-viewer [src]=images></ngx-image-viewer>
+                  <div class="image" *ngIf="showimage">
+ 
+                        <!-- <ngx-image-viewer [src]="images" height="290" width="300">
+                        </ngx-image-viewer> -->
+                        <img [src]="images" height="290" width="300"/>
+                               
                   </div>
         
                 <div class="title1"><u>Invoice Products</u></div><br>

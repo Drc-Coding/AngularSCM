@@ -56,6 +56,11 @@ export class slsInvSaveComponent implements OnInit {
   refill=false;
   opnrefill=true;
   clsrefill=false;
+  showimage: boolean=false;
+  showeyeslash: boolean=false;
+  showeye: boolean=true;
+  
+ 
 
   constructor(private userService: slsInvSaveService, private dateformat: dateFormatPipe, private formBuilder: FormBuilder, config: NgbDropdownConfig, private notificationsComponent: NotificationsComponent, private modalService: NgbModal, private domSanitizer: DomSanitizer) {
     config.autoClose = false;
@@ -224,22 +229,37 @@ export class slsInvSaveComponent implements OnInit {
       errorCode => console.log(errorCode));
     this.registerForm.get('freeflag').setValue(1);
 
-    $(document).ready(function () {
-      $('.image').hide();
-    });
+  
     $('.boxname ').hide();
     this.images = [];
     this.init();
     $('#autolist').hide();
     $('#autolist1').hide();
   }
-  ClosePresc() {
-    $('.image ').hide();
-  }
+
 
   viewsPresc() {
-    this.images = [['api/slsinv/viewPresImage?search=' + this.registerForm.get('prescpath').value]];
-    $('.image ').show();
+    //this.images = [['api/slsinv/viewPresImage?search=' + this.registerForm.get('prescpath').value]];
+  
+    this.showimage=true;
+    this.showeye=false;
+    this.showeyeslash=true;
+  }
+
+  ClosePresc() {
+    this.showimage=false;
+    this.showeyeslash=false;
+    this.showeye=true;
+  }
+
+  reset() {
+  
+    (<HTMLInputElement>document.getElementById('imagefile')).value = '';
+    this.images=[''];
+    this.showimage=false;
+    this.showeyeslash=false;
+    this.showeye=true;
+  //this.message="";
   }
   
   autofocusin() {
@@ -1105,15 +1125,21 @@ export class slsInvSaveComponent implements OnInit {
       formData.append('file', file, file.name);
       formData.append('locrefid', this.selobj.locrefid);
       formData.append('locname', this.selobj.locname);
+
+        // Instantiate an object to read the file content
+    let reader = new FileReader();
+
+    //To read Encrypted file and send url to display in html
+    reader.readAsDataURL(file); 
+    reader.onload = (_event) => { 
+      this.images = [reader.result]; 
+    }
+
       this.userService.savePresImage(formData).subscribe(data => { this.registerForm.get('prescpath').setValue(data) },
         errorCode => console.log(errorCode));
     }
   }
-  // photoValidation(files) {
-  //   if (files.length > 0 && (!this.isValidFileExtension(files))) {
-  //     return;
-  //   }
-  // }
+ 
 
   private isValidFileExtension(files) {
     var extensions = (this.fileExt.split(','))

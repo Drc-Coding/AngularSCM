@@ -16,17 +16,31 @@ export class ViewListBarcode implements OnInit {
   public filterQuery: string = "";
   public sortBy: string = "";
   public sortOrder: string = "desc";
+  gifFail: boolean=true;
   
   constructor(private barcodeService: BarcodeService, private router: Router) {
   }
-  getBarcode() {
-    if (AppComponent.usertype == "\"SuperAdmin\" ") {
-      this.barcodeService.superViewProduct().then(product => { this.data = product});
-    } else {
-      this.barcodeService.viewProduct(AppComponent.companyID, AppComponent.branchID, AppComponent.locRefName1, AppComponent.locrefID1).then(product => this.data = product);
-    }
-  }
+ 
   ngOnInit(): void {
     this.getBarcode();
   }
+
+
+  getBarcode() {
+    if (AppComponent.usertype == "\"SuperAdmin\" ") {
+      setTimeout(() => {
+      this.barcodeService.superViewProduct().then(product => { this.data = product});
+      this.gifFail=false;
+      },3000);
+    }
+     else {
+      setTimeout(() => {
+      this.barcodeService.viewProduct(AppComponent.companyID, AppComponent.branchID, AppComponent.locRefName1, AppComponent.locrefID1).then(product => this.data = product);
+        this.gifFail=false;
+    },3000);
+
+      }
+
+  }
+
 }
