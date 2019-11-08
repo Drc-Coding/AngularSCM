@@ -19,20 +19,7 @@
   }
 
 
-  th{
-
-
-font-family: 'Madana', sans-serif;
-font-size: 14px;
-background-color: white;
-text-align: center;
-font-weight:normal;
-
-    }
-
-
-
-
+ 
 </style>
 
 
@@ -63,7 +50,13 @@ font-weight:normal;
       </div>
 
     </div><br>
-    <!-- <div class="panel-heading">User information</div>-->
+  
+
+  	<div align="center">
+		<img src="assets/images/loading.gif" height="100px" *ngIf="gifFail">
+	  </div><br>
+	  
+    
     <div style="overflow: auto">
       <table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery"
         #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">

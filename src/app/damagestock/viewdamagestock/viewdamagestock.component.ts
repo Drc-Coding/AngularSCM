@@ -15,18 +15,21 @@ export class viewDamageComponent implements OnInit {
   data: Array<any>;
   eid: any;
   number;
+  gifFail: boolean=true;
+
   constructor(private viewdama: DamagestockService, private router: Router) {
     this.data = new Array<any>();
   }
+  
   ngOnInit() {
 
-
+    setTimeout(() => {
     this.viewdama.viewDamage(AppComponent.companyID, AppComponent.branchID, AppComponent.locrefID1, AppComponent.locRefName1).subscribe(data => { this.data = data },
       error => {
         console.log('Error ocuured On viewDamage()');
-      }
-
-    );
+      });
+      this.gifFail=false;
+    },3000);
   }
 
   /* EDIT PURCHASE INVOICE */

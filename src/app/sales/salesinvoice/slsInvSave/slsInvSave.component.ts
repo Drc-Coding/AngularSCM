@@ -236,10 +236,12 @@ export class slsInvSaveComponent implements OnInit {
   ClosePresc() {
     $('.image ').hide();
   }
+
   viewsPresc() {
     this.images = [['api/slsinv/viewPresImage?search=' + this.registerForm.get('prescpath').value]];
     $('.image ').show();
   }
+  
   autofocusin() {
     this.autoincr = setInterval(() => {
       if (this.registerForm.get('autonamenew').value) {
@@ -1093,6 +1095,7 @@ export class slsInvSaveComponent implements OnInit {
       totalamount: subtotal.toFixed(2),
     });
   }
+
   fileChange(event) {
     var valflag = 0;
     let fileList: FileList = event.target.files;
@@ -1111,6 +1114,7 @@ export class slsInvSaveComponent implements OnInit {
   //     return;
   //   }
   // }
+
   private isValidFileExtension(files) {
     var extensions = (this.fileExt.split(','))
       .map(function (x) { return x.toLocaleUpperCase().trim() });
@@ -1122,6 +1126,8 @@ export class slsInvSaveComponent implements OnInit {
       }
     }
   }
+
+
   remove() {
     const control = <FormArray>this.registerForm.controls['invoice'];
     const controlrem = <FormArray>this.registerForm.controls['dummy'];

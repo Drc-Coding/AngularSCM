@@ -4,24 +4,12 @@ import 'rxjs/add/operator/map';
 
 
 
-
-
-
-
-
 @Injectable()
 export class ViewShipmentServices {
 
     options;
 
-
-
-
-
-    constructor(private http:Http){
-
-
-    }
+    constructor(private http:Http){ }
 
 
     viewShipp(serobj:any){
@@ -31,10 +19,5 @@ export class ViewShipmentServices {
             return this.http
               .post(`api/shi/viewShipp`, serobj, options).map((res: Response) => res.json());
           }
-
-
-
-
-
     
 }

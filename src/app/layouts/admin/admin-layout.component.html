@@ -23,6 +23,16 @@
     overflow-x: hidden; 
   }
 
+
+  .form-controls{
+	font-size:17px !important;
+  border:none;
+  margin-left:5px;
+  font-weight:bold;
+  font-family: Montserrat;
+}
+
+
   /*.ng-tns-c1-0 i{
   color:white;
  }*/
@@ -90,6 +100,7 @@
                   {{shop}}
                 </li>
               </ul>
+
               <li class="header-notification lng-dropdown">
                 <a href="javascript:;" id="dropdown-active-item">Choose Language</a>
                 <ul class="show-notification">
@@ -177,16 +188,40 @@
 
               <li class="user-profile header-notification">
 
-                <img src="assets/images/user.png" alt="User-Profile-Image">
-                <span>{{username}}</span>
-                <i class="ti-angle-down"></i>
+               <span style="cursor:pointer">
+                <img [src]="imgURL" (click)="image()"
+                style="border-radius:50px;margin-left:5px;height:41px;width:41px">
 
-                <ul class="show-notification profile-notification">
+                <h6 style="color:white;font-family:montserrat;font-size:15px">{{username}}</h6>
+              </span>
+                
+                <ul class="show-notification profile-notification" style="margin-top:-8px">
 
                   <li>
-                    <a [routerLink]="['/']">
-                      <i class="ti-layout-sidebar-left"></i> Logout
+                    <a style="cursor: pointer" (click)="modalOverflow.show()">
+                      <i class="ti-user"></i> Personal Info
                     </a>
+                   
+                  </li>
+                 
+                  <li>
+                    <a style="cursor: pointer" (click)="modalOverflow1.show()">
+                      <i class="ti-pencil-alt"></i> Update Info
+                    </a>
+                    
+                  </li>
+                  <li>
+                    <a style="cursor: pointer">
+                      <i class="ti-key"></i> Change Password
+                    </a>
+                    
+                  </li>
+                  <li>
+                      <!-- [routerLink]="['/']" -->
+                    <a (click)="openConfirmsSwal()" style="font-size:18px;font-weight:bold;cursor: pointer">
+                      <i class="ti-power-off"></i> Logout
+                    </a>
+                    
                   </li>
                 </ul>
               </li>
@@ -286,6 +321,7 @@
             </ul>
           </div>
         </nav>
+        
         <div class="pcoded-content">
           <div class="pcoded-inner-content" (click)="onClicked3($event)">
             <div class="main-body">
@@ -303,5 +339,139 @@
         </div>
       </div>
     </div>
+
+    <app-modal-basic #modalOverflow [hideHeader]="true" [hideFooter]="true">
+      <div class="app-modal-body">
+          <button type="button" class="close basic-close-light-box" style="cursor:pointer" (click)="modalOverflow.hide()">
+              <span aria-hidden="true">&times;</span>
+          </button>
+         <form [formGroup]="userinfo">
+           <div class="sub-title">
+             Personal Info
+           </div>
+           <div class="col-lg-12 mx-4">
+            <div class="form-inline ml-5">
+                <label class="form-label semibold" for="exampleInput">
+                    Name:
+                </label>
+                <span class="form-controls">{{username}}</span>
+               
+            </div>
+          </div>
+          <div class="col-lg-12 mx-4">
+            <div class="form-inline ml-5">
+                <label class="form-label semibold" for="exampleInput">
+                    Employee Code:
+                </label>
+                <span class="form-controls">{{empcode}}</span>
+              </div>
+          </div>
+          <div class="col-lg-12 mx-4">
+            <div class="form-inline ml-5">
+                <label class="form-label" for="exampleInput">
+                    Gender:
+                </label>
+                <span class="form-controls">{{gender}}</span>
+            </div>
+          </div>
+          <div class="col-lg-12 mx-4">
+            <div class="form-inline ml-5">
+                <label class="form-label semibold" for="exampleInput">
+                    Date of Birth:
+                </label>
+                <span class="form-controls">{{dob}}</span>
+            </div>
+          </div><br>
+
+          <div class="sub-title">
+            Contact Info
+          </div>
+          <div class="col-lg-12 mx-4">
+           <div class="form-inline ml-5">
+               <label class="form-label semibold" for="exampleInput">
+                  Address:
+               </label>
+               <span class="form-controls">{{address}}</span>
+           </div>
+         </div>
+         <div class="col-lg-12 mx-4">
+           <div class="form-inline ml-5">
+               <label class="form-label semibold" for="exampleInput">
+                   State:
+               </label>
+               <span class="form-controls">{{state}}</span>
+           </div>
+         </div>
+         <div class="col-lg-12 mx-4">
+           <div class="form-inline ml-5">
+               <label class="form-label semibold" for="exampleInput">
+                   Mobile No:
+               </label>
+               <span class="form-controls">{{mobno}}</span>
+           </div>
+         </div>
+         <div class="col-lg-12 mx-4">
+           <div class="form-inline ml-5">
+               <label class="form-label semibold" for="exampleInput">
+                   Email-Id:
+               </label>
+               <span class="form-controls">{{mailid}}</span>
+           </div>
+         </div>
+         </form>
+      </div>
+  </app-modal-basic>
+
+
+  <app-modal-basic #modalOverflow1 [hideHeader]="true" [hideFooter]="true">
+    <div class="app-modal-body">
+        <button type="button" class="close basic-close-light-box" style="cursor:pointer" (click)="modalOverflow1.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+       <form [formGroup]="edituserinfo">
+         <div class="sub-title">
+           Update Info
+         </div>
+
+        <div class="col-lg-12 mx-4">
+         <div class="form-inline ml-5">
+             <label class="form-label semibold" for="exampleInput" autofocus>
+                Address:
+             </label>
+             <input type="text" class="form-controls" placeholder="  " formControlName="empaddress1"
+             />
+         </div>
+       </div>
+    
+       <div class="col-lg-12 mx-4">
+         <div class="form-inline ml-5">
+             <label class="form-label semibold" for="exampleInput">
+                 Mobile No:
+             </label>
+             <input type="text" class="form-controls"  placeholder="  " formControlName="mobileno"
+             />
+         </div>
+       </div>
+
+       <div class="col-lg-12 mx-4">
+         <div class="form-inline ml-5">
+             <label class="form-label semibold" for="exampleInput">
+                 Email-Id:
+             </label>
+             <input type="text" class="form-controls" placeholder=" " formControlName="email"
+              />
+         </div>
+       </div>
+
+       <div class="col-lg-12 mr-4" align="right">
+
+        <label class="btn btn-round" (click)="editinfo()">Update</label>
+       </div>
+       
+       </form>
+    </div>
+</app-modal-basic>
+
+
   </div>
 </div>

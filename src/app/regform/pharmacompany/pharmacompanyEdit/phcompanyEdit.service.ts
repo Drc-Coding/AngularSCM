@@ -17,14 +17,14 @@ export class PhcompanyEditService {
          this.options = new RequestOptions({headers: header});
     
       }
+
   savePhcompany(serobj: string) {
     let header = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: header});
     return this.http
-      .post(this.URL+`updatePhCompany`, serobj, options).map((res: Response) => res.json());
-    
-    
+      .post(this.URL+`updatePhCompany`, serobj, options).map((res: Response) => res.json()); 
   }
+  
   saveComptype(serobj: string) {
     
     

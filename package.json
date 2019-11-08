@@ -48,6 +48,7 @@
     "echarts": "^3.6.2",
     "famfamfam-flags": "^1.0.0",
     "flag-icon-css": "^2.8.0",
+    "getmac": "^1.4.6",
     "jquery-knob": "github:aterrien/jQuery-Knob",
     "jquery-sparkline": "^2.4.0",
     "moment": "^2.22.2",

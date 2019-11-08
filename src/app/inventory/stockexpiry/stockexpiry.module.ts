@@ -22,7 +22,7 @@ import { DxDataGridModule, DxSparklineModule, DxTemplateModule } from 'devextrem
     RouterModule.forChild(stockexpiryRoutes),
    SharedModule
   ],
-  declarations: [   stkexpSaveComponent  , stkexpEditComponent  ,stkexpViewComponent]
+  declarations: [   stkexpSaveComponent  , stkexpEditComponent,  CategoryPipe  ,stkexpViewComponent]
 })
 
 export class stockexpiryModule {}

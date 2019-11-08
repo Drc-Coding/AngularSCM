@@ -226,7 +226,6 @@ export const AppRoutes: Routes = [{
 
 
 
-
     //prasad
     {
       path: 'Patient',
@@ -368,14 +367,7 @@ export const AppRoutes: Routes = [{
     },
 
 
-   
-     
-
-
-
-
-
-
+  
   ]
 }, {
   path: '',

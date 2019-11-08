@@ -40,7 +40,7 @@ export class viewdrugComponent implements OnInit, AfterViewInit {
   totalRec: number;
   page: number = 1;
   checkedvalues: any = [];
-  imagePath: any;
+ 
   public gifFail: boolean = true;
   public indx;
   
@@ -57,7 +57,7 @@ export class viewdrugComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    this.imagePath = "assets/images/loading.gif";
+   
     this.drugForm.get('drugsearch').setValue(true);
     this.indx=0;
 
@@ -167,14 +167,18 @@ export class viewdrugComponent implements OnInit, AfterViewInit {
 
   public image: any = [];
   private readonly imageType: any = 'data:image/*;base64,';
+
   sid: number = 1;
   showInfo(id) {
+   
     this.viewdrug.getImage(id)
       .subscribe(data =>
         this.image = this.sanitizer.bypassSecurityTrustUrl(this.imageType + data.content), error => {
-          console.log('Error Occured on getImages  : ' + this.image)
+          console.log('Error Occured on getImages  : ' + this.image);
+         
         });
   }
+
   ngAfterViewInit() {
 
   }

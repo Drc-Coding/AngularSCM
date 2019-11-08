@@ -138,19 +138,6 @@ export class slsInvSaveService  {
    
 
 
-
-
-
-                
-
-
-
-
-
-
-
-                
-
                 savePresImage(serobj: FormData) {
                   let header = new Headers();
                   let options = new RequestOptions({headers: header});

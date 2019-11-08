@@ -15,18 +15,19 @@ export class ViewpickingComponent implements OnInit {
   public filterQuery: string = "";
   public sortBy: string = "";
   public sortOrder:string = "desc";
+  gifFail: boolean=true;
   
   constructor(private viewslspickingService :salespickingService, private router: Router ) {}
 
   ngOnInit() {
 
-
+    setTimeout(() => {
     this.viewslspickingService.getViewpicking(AppComponent.companyID,AppComponent.branchID,AppComponent.locRefName1,AppComponent.locrefID1).subscribe(data => {this.data = data},
   err=> {
     console.log('Error Occured View Picking');
   });
-  
-
+  this.gifFail=false;
+    },3000);
   }
 
 }

@@ -151,6 +151,7 @@ export class DistributorComponent implements OnInit {
       return;
     }
   }
+
   saveDistPhcompany(data: any) {
     this.multype = this.registerForm.get('phcompany').value;
     if (this.multype != null) {
@@ -165,6 +166,8 @@ export class DistributorComponent implements OnInit {
     this.multype = [];
     this.mulservtype = [];
   }
+  
+  
   savevalid(data: any) {
     if (data == 1) {
       this.notificationsComponent.addToast({ title: 'Success', msg: 'Data  Saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
@@ -173,6 +176,7 @@ export class DistributorComponent implements OnInit {
       this.notificationsComponent.addToast({ title: 'Error', msg: 'Data Not  saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
     }
   }
+
   saveIndvDistType1(c) {
     c('Close click')
     var frmdata = { frmint1: '', frmstr1: this.registerForm.get('indvdisttype').value, createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname };

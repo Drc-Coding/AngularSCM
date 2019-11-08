@@ -43,7 +43,7 @@ export class EmployeeService{
   private editBranchUrl = 'api/geteditBranch';
   private isEmployeeUpdateExistUrl = 'api/isEmployeeUpdateExist';
 
-  
+  private imgUrl = 'api/uploademployeephoto';
   //View Employee
 
   private viewUrl='api/viewEmployee';
@@ -132,6 +132,18 @@ export class EmployeeService{
     return this.http.post(this.createEmp, employeecreate, {headers: head}).map((res:Response)=>{
       return {"res":res.json()}
     })         
+  }
+
+
+  //saveimage
+
+  saveimage(image: any) {
+   
+    return this.http.post(this.imgUrl, image).map((res:Response)=>{
+      return {"res":res.json()}
+    })
+    
+   
   }
 
 
