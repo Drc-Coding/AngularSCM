@@ -9,7 +9,7 @@ import { BarcodeService } from "./barcode.service";
 import { ViewListBarcode } from "./viewBarcode/barcodelist.component";
 import { CategoryPipe } from "./viewBarcode/barcode-list.pipe";
 //  import { BrowserModule } from "@angular/platform-browser"; 
-import {NgxBarcodeModule} from 'ngx-barcode';   
+//import {NgxBarcodeModule} from 'ngx-barcode';   
   import { from } from "rxjs/observable/from";
 
 @NgModule({
@@ -18,7 +18,7 @@ import {NgxBarcodeModule} from 'ngx-barcode';
       RouterModule.forChild(BarcodeRoutes),
       SharedModule,
       
-      NgxBarcodeModule
+    //  NgxBarcodeModule
        
         
             
