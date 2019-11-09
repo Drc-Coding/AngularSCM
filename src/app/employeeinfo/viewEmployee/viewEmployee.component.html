@@ -17,17 +17,16 @@
     font-size: 15px;
     color: red;
   }
-
 </style>
 
 <app-card>
 
-    <div align=right>
-        
-          <button type="submit" class="btn btn-round" [routerLink]="['/Employee/AddNewEmployee']">Add Employee</button>
-        
-    </div><br>
-  
+  <div align=right>
+
+    <button type="submit" class="btn btn-round" [routerLink]="['/Employee/AddNewEmployee']">Add Employee</button>
+
+  </div><br>
+
   <div class="row">
 
     <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
@@ -47,7 +46,7 @@
     <div class="col-xs-12 col-sm-12 col-md-6">
       <div class="form-inline justify-content-end">
         <strong class="searchlabel">Search:</strong>
-          <input type="search" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Enter Employee Name">
+        <input type="search" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Enter Employee Name">
       </div>
     </div>
 
@@ -55,15 +54,16 @@
   <!-- <div class="panel-heading">User information</div>-->
 
   <div class="dt-responsive" style="overflow-x:auto">
-    <table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery"
-      #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+    <table class="table table-striped table-bordered table-responsive full-data-table"
+      [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy"
+      [(mfSortOrder)]="sortOrder">
       <thead>
         <tr>
           <th>
             S.No
           </th>
           <th>
-           Company Name
+            Company Name
           </th>
           <th>
             Branch Name
@@ -78,19 +78,26 @@
             First Name
           </th>
           <th>
-           Last Name
+            Last Name
           </th>
           <th>
-           Department
+            Department
           </th>
           <th>
-           Division
+            Sub Department
           </th>
           <th>
-           Designation
+            Division
           </th>
           <th>
-           Action
+            Sub Division
+          </th>
+     
+          <th>
+            Designation
+          </th>
+          <th>
+            Action
           </th>
         </tr>
         <tr>
@@ -109,6 +116,9 @@
           <td></td>
           <td></td>
           <td></td>
+          <td></td>
+          <td></td>
+        
         </tr>
         <tr *ngFor="let val of mf.data;let i=index">
           <td>{{i+1}}</td>
@@ -119,6 +129,16 @@
           <td>{{val[5]}}</td>
           <td>{{val[6]}}</td>
           <td>{{val[7]}}</td>
+         
+         
+         
+          <td> {{val[10]}} </td>
+          <td>{{val[11]}} </td>
+        
+
+
+
+
           <td>{{val[8]}}</td>
           <td>{{val[9]}}</td>
           <td ngbDropdown class="text-center">
@@ -130,11 +150,10 @@
             <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
 
               <span class="dropdown-item" href="javascript:;" [routerLink]="['/Employee/editEmployee',val[0]]"
-               skipLocationChange style="cursor: pointer">
+                skipLocationChange style="cursor: pointer">
                 <i class="icofont icofont-ui-edit"></i>Edit</span>
 
-              <span class="dropdown-item" href="javascript:;" (click)="employeeDelete(val[0])" 
-              style="cursor:pointer">
+              <span class="dropdown-item" href="javascript:;" (click)="employeeDelete(val[0])" style="cursor:pointer">
                 <i class="icofont icofont-attachment"></i>Delete</span>
 
             </div>
@@ -143,14 +162,14 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="12">
+          <td colspan="13">
             <mfBootstrapPaginator class="pagination-main f-right"></mfBootstrapPaginator>
           </td>
         </tr>
       </tfoot>
     </table>
   </div>
-  
-  
+
+
 </app-card>
 <ng2-toasty [position]="position"></ng2-toasty>

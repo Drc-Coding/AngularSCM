@@ -25,12 +25,27 @@ export class viewEmployeeComponent implements OnInit {
   constructor(private userService: EmployeeService, private route: Router, private notificationsComponent: NotificationsComponent) {
   }
   ngOnInit() {
+
+
+    this.userService.employeeViewByID(AppComponent.companyID, AppComponent.branchID, AppComponent.locRefName1, AppComponent.locrefID1).subscribe(data => { this.data = data },
+      err => {
+        console.log('Error in view Employee Service');
+      });
+
+
+
+      
+
     if (AppComponent.usertype == "\"SuperAdmin\" ") {
       this.userService.employeeView().subscribe(data => { this.data = data },
         err => {
           console.log('Error in view Employee Service');
         });
-    } else {
+    } 
+    
+    else {
+
+      alert('HI');
       this.userService.employeeViewByID(AppComponent.companyID, AppComponent.branchID, AppComponent.locRefName1, AppComponent.locrefID1).subscribe(data => { this.data = data },
         err => {
           console.log('Error in view Employee Service');
@@ -38,6 +53,11 @@ export class viewEmployeeComponent implements OnInit {
     }
 
   }
+
+
+
+
+
 
   private employeeDelete(id: number): void {
          
