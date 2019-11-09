@@ -18,14 +18,14 @@ export class ViewShipmentComponent implements OnInit{
 
 
     
-  public data: any;
+  public data= [];
   public rowsOnPage: number = 10;
   public filterQuery: string = "";
   public sortBy: string = "";
   public sortOrder: string = "desc";
 
-
     selobj;
+  gifFail: boolean=true;
 
 
 
@@ -51,18 +51,16 @@ export class ViewShipmentComponent implements OnInit{
     viewShipp(){
 
 
-
         
       var frmdata1 = { frmint1: '', frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, 
       companyrefid:this.selobj.companyid, locname: this.selobj.locname, branchrefid:this.selobj.branchid };
-
+      
+      setTimeout(() => {
       this.viewShipmentServices.viewShipp(JSON.stringify(frmdata1)).subscribe(data => { this.data = data },
-
-
         errorCode => console.log(errorCode));
-
-
-
+        
+        this.gifFail=false;
+      },3000);
 
     }
 

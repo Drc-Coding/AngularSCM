@@ -11,6 +11,8 @@ export class addEmployeeService{
   private getCompanies = 'api/getEmpCompany';
   private getBranches = 'api/getEmpBranch';
   private getShops = 'api/getEmpShop';
+
+  
   
  // private header = new Headers({'Content-Type': 'application/json'});
 
@@ -30,6 +32,7 @@ export class addEmployeeService{
     //Get States 
     return this.http.get(this.getShops + '/' + branchid).map(response => response.json());
    }
+
   createEmployee(employeecreate: String) {
     let head = new Headers({'Content-Type': 'application/json'});
     this.http.post(this.empUrl, employeecreate, {headers: head}).map(response => response.json())
@@ -37,7 +40,6 @@ export class addEmployeeService{
       () => {console.log(employeecreate)}
       );
   }
-
 
   
 

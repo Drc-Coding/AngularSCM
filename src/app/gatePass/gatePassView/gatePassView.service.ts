@@ -12,7 +12,7 @@ export class gatePassViewService  {
 
   options  ;
 
-    private viewURL='api/viewgatepass';
+    private viewURL='api/viewgatepasses';
 
 
   constructor(private http: Http) {

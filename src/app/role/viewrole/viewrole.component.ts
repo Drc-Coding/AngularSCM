@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class ViewroleComponent implements OnInit {
   public data = [];
-  public rowsOnPage: number = 20;
+  public rowsOnPage: number = 10;
   public filterQuery: string = "";
   public sortBy: string = "";
   public sortOrder: string = "desc";

@@ -19,6 +19,8 @@ export class stkexpViewComponent implements OnInit {
     dataall = [];
   
     selobj ;
+  gifFail: boolean=true;
+
     constructor(private userService: stkexpViewService) {}
   
     ngOnInit() {
@@ -35,9 +37,12 @@ export class stkexpViewComponent implements OnInit {
      viewAll() {
   
       var   frmdata={ frmint1 : '' ,  frmstr1  :'', createdby  :'' , locrefid  :this.selobj.locrefid , locname  :this.selobj.locname   } ;
+      setTimeout(() => {
       this.userService.viewAll(JSON.stringify(frmdata)).subscribe(data => this.data = data,
         errorCode => console.log(errorCode));
-  
+        this.gifFail=false;
+      },3000);
+      
     }
   
 }

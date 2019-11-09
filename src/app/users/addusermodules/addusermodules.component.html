@@ -24,20 +24,28 @@
       </div>
       <div class="col-sm-4">
         <label class="form-label semibold"><h6>Modules</h6></label>
-        <select name="select" class="form-control" formControlName="moduleid" (change)="getuserSubmodule()">
+
+        <!-- <select name="select" class="form-control" formControlName="moduleid1" (change)="getuserSubmodule()">
           <option selected disabled value="opt1">---Select Modules---</option>
-          <option *ngFor="let coun of usermodulelist" value={{coun[0]}}>{{coun[1]}}</option>
-        </select>
+          <option *ngFor="let coun of mulservList" value={{coun[0]}}>{{coun[1]}}</option>
+        </select> -->
+
+        <angular2-multiselect [data]="mulList" [settings]="mulSettings" [(ngModel)]="selectedItems" (click)="getuserSubmodule()" formControlName="moduleid">
+          </angular2-multiselect>
       </div>
     </div>
+    
     <div class="form-group row mt-2">
       <div class="col-sm-4">
         <label class="form-label semibold"><h6>Sub Module</h6></label>
-        <select multiple name="select" class="form-control" formControlName="submoduleid">
+        <!-- <select multiple name="select" class="form-control" formControlName="submoduleid">
           <option selected disabled value="opt1">---Select SubModules---</option>
           <option *ngIf="submodulelist==''" value="noData" style="color: black">SubModule Not Available</option>
           <option *ngFor="let sub of submodulelist" value={{sub[0]}}>{{sub[1]}}</option>
-        </select>
+        </select> -->
+
+        <angular2-multiselect [data]="submulList" [settings]="mulSettings" [(ngModel)]="selectedItems1" formControlName="submoduleid">
+        </angular2-multiselect>
       </div>
 
 

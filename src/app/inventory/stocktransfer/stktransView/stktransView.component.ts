@@ -17,14 +17,23 @@ export class stktransViewComponent implements OnInit {
   public sortOrder: string = "desc";
   pharmacomp = [];
   selobj;
+  gifFail: boolean=true;
+
   constructor(private userService: stktransViewService) { }
+
   ngOnInit() {
     this.selobj = { userid: AppComponent.userID, locrefid: AppComponent.locrefID1, locname: AppComponent.locRefName1, countryrefid: AppComponent.countryID, companyid: AppComponent.companyID, branchrefid: AppComponent.branchID };
     this.viewAll();
   }
+
   viewAll() {
     var frmdata = { frmint1: '', frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname };
+    setTimeout(() => {
+
     this.userService.phcompanyView(JSON.stringify(frmdata)).subscribe(data => this.data = data,
       errorCode => console.log(errorCode));
+      this.gifFail=false;
+    },3000);
+
   }
 }

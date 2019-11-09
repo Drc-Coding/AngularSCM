@@ -134,23 +134,6 @@ export class slsInvSaveService  {
                 }
   
 
-        
-   
-
-
-
-
-
-                
-
-
-
-
-
-
-
-                
-
                 savePresImage(serobj: FormData) {
                   let header = new Headers();
                   let options = new RequestOptions({headers: header});
@@ -184,6 +167,7 @@ export class slsInvSaveService  {
 
   
        viewSIProductNames(serobj: string) {
+         
         let header = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: header});
   

@@ -32,6 +32,7 @@ export class DistributorComponent implements OnInit {
   mulservList = [];
   mulservtype = [];
   multype = [];
+  gifFail: boolean;
   constructor(private formBuilder: FormBuilder, private router: Router, private dateformat: dateFormatPipe, private userService: DistributorService, private modalService: NgbModal, private notificationsComponent: NotificationsComponent) { }
   ngOnInit() {
     this.mulSettings = {
@@ -41,8 +42,11 @@ export class DistributorComponent implements OnInit {
       badgeShowLimit: 1,
       classes: "myclass custom-class"
     };
+
     var date = this.dateformat.transformnew(Date.now());
-    this.selobj = { userid: AppComponent.userID, locrefid: AppComponent.locrefID1, locname: AppComponent.locRefName1, countryrefid: AppComponent.countryID, companyid: AppComponent.companyID, branchrefid: AppComponent.branchID,cdate: AppComponent.date };
+    this.selobj = { userid: AppComponent.userID, locrefid: AppComponent.locrefID1, locname: AppComponent.locRefName1, 
+      countryrefid: AppComponent.countryID,  companyid: AppComponent.companyID, 
+      branchrefid: AppComponent.branchID,cdate: AppComponent.date };
     
     this.registerForm = this.formBuilder.group({
 
@@ -99,16 +103,19 @@ export class DistributorComponent implements OnInit {
       status: [0, []],
       distributortypeid: ['', []],
       phcompanyid: [, []],
-      phcompany: [, []],
+      phcompany: [, [Validators.required]],
       leadtime: [, []]
     });
     
     var frmdata = { frmint1: '', frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname };
+   
     this.userService.viewDistType(JSON.stringify(frmdata)).subscribe(data => { this.disttypes = data},
       errorCode => console.log(errorCode));
+
     this.userService.viewCountry(JSON.stringify(frmdata)).subscribe(data => this.countries = data,
       errorCode => console.log(errorCode));
-    this.userService.viewDstPhCompanies(JSON.stringify(frmdata)).subscribe(data => { this.mulservList = data, this.viewPharmaCompany() },
+
+    this.userService.viewDstPhCompanies(JSON.stringify(frmdata)).subscribe(data => { this.mulservList = data,this.viewPharmaCompany() },
       errorCode => console.log(errorCode));
     // $(document).ready(function () {
     //   setInterval("yourAjaxCall()", 1000);
@@ -116,21 +123,26 @@ export class DistributorComponent implements OnInit {
     //   }
     // });
   }
+
+  viewPharmaCompany() {
+    for (this.i = 0; this.i < this.mulservList.length; this.i++) {
+      this.mulList.push({ id: this.mulservList[this.i][0], itemName: this.mulservList[this.i][1] });
+    }
+  }
+
+
   onSubmit() {
   //  var answer = confirm("Save data?");
-  
+      
       this.registerForm.get('clientcdate').setValue(AppComponent.date);
+      this.gifFail=true;
       this.userService.saveDistributor(JSON.stringify(this.registerForm.value)).subscribe(data => { this.saveDistPhcompany(data), this.savevalid(data) },
         errorCode => console.log(errorCode));
         setTimeout(() => {
           this.router.navigate(['Distributor/ViewDistributor']);
         }, 2000);
   }
-  viewPharmaCompany() {
-    for (this.i = 0; this.i < this.mulservList.length; this.i++) {
-      this.mulList.push({ id: this.mulservList[this.i][0], itemName: this.mulservList[this.i][1] });
-    }
-  }
+  
   getadddistributortype(event, contentadddis) {
     if (event == 'addditributor') {
       this.open(contentadddis);
@@ -139,6 +151,7 @@ export class DistributorComponent implements OnInit {
       return;
     }
   }
+
   saveDistPhcompany(data: any) {
     this.multype = this.registerForm.get('phcompany').value;
     if (this.multype != null) {
@@ -153,13 +166,17 @@ export class DistributorComponent implements OnInit {
     this.multype = [];
     this.mulservtype = [];
   }
+  
+  
   savevalid(data: any) {
     if (data == 1) {
       this.notificationsComponent.addToast({ title: 'Success', msg: 'Data  Saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
+      this.gifFail=false;
     } else {
       this.notificationsComponent.addToast({ title: 'Error', msg: 'Data Not  saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
     }
   }
+
   saveIndvDistType1(c) {
     c('Close click')
     var frmdata = { frmint1: '', frmstr1: this.registerForm.get('indvdisttype').value, createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname };

@@ -1,7 +1,4 @@
 
-
-<div class="row">
-	<div class="col-sm-12">
 		<app-card>
 			<div class="sub-title">Employee Details
 				<i class="fa fa-user ficon"></i>
@@ -137,14 +134,14 @@
 						<fieldset class="form-group">
 							<label class="form-label">Department</label>
 							<input type="text" class="form-control" id="department" placeholder="Enter Employee Department"
-							 formControlName="department">
-							 <div class="messages text-danger" *ngIf="myForm.controls.department.errors?.pattern">Text only Accepts!</div>
+							 formControlName="deptrefid">
+							 <!-- <div class="messages text-danger" *ngIf="myForm.controls.deptrefid.errors?.pattern">Numbers only Accepts!</div> -->
 						</fieldset>
 					</div>
 					<div class="col-lg-4">
 						<fieldset class="form-group">
 							<label class="form-label">Division</label>
-							<input type="text" class="form-control" id="division" placeholder="Enter Employee Division" formControlName="division">
+							<input type="text" class="form-control" id="divisionid" placeholder="Enter Employee Division" formControlName="division">
 							<!-- <div class="messages text-danger" *ngIf="myForm.controls.division.errors?.pattern">Text only Allowed!</div> -->
 						</fieldset>
 					</div>
@@ -268,24 +265,31 @@
 							</fieldset>
 						</div>
 
-						<div class="col-lg-4">
 
-								<div class="form-inline">
-									<label class="form-label">Employee Photo (Max File Upload 500kb)</label>
-									<input type="file" formControlName="emphoto" #file class="form-control"
-										  (change)="preview(file.files)" accept="image/*"/>
-										 <span class="fa fa-eye mt-2" style="cursor: pointer" id="viewimg"></span>
-										 <span class="fa fa-trash mt-2 ml-2" style="cursor: pointer" (click)="reset()"></span>
-								</div><br>
+						<div class="col=lg-4">
 
-								<div class="imageview" id="imgdisplay" style="display:none">
-								<img [src]="imgURL" height="180" width="260" *ngIf="imgURL"> 
-								<i class="fa fa-times" style="cursor:pointer;position:absolute" id="hideimg"></i>
-								</div>
-			
-								<span style="color:red;" *ngIf="message">{{message}}</span>
-						</div>
-			
+							<label class="form-label">Employee Photo (Max Size File Upload 500KB)</label>
+							
+							<div class="form-inline">
+							<input type="file" class="form-control" id="imagefile"
+							(change)="fileChange($event)" #fileInput accept="image/*"/>
+
+							<span class="fa fa-eye mt-2" style="cursor: pointer" (click)="imageshow()" *ngIf="showeye"></span>
+							<span class="fa fa-eye-slash mt-2" style="cursor: pointer" (click)="hide()" *ngIf="showimage"></span>
+							<span class="fa fa-trash mt-2 ml-2" style="cursor: pointer" (click)="reset()"></span>
+							</div><br>
+
+							<div class="imageview" *ngIf="showimage">
+							<img [src]="imgURL" height="180" width="260"/>
+							</div>
+
+							<span style="color:red;" *ngIf="message">{{message}}</span>
+						</div>				
+
+			</div><br>
+
+
+
 					<!-- <div class="col-lg-4">
 						<fieldset class="form-group">
 							<label class=" col-form-label">PAN Card</label>
@@ -294,20 +298,20 @@
 						</fieldset>
 					</div> -->
 
-				</div><br>
+				
 
-				<div class="form-group row">
+				<!-- <div class="form-group row">
 					
 
-					<!-- <div class="col-lg-4">
+					 <div class="col-lg-4">
 						<fieldset class="form-group">
 							<label class=" col-form-label">Aadhar Card</label>
 							<input type="text" class="form-control" id="aadharcard" placeholder="Enter Employee AdharCard Number"
 							 formControlName="aadharcard">
 							<div class="messages text-danger" *ngIf="myForm.controls.aadharcard.errors?.pattern">Number only allowed..</div>
 						</fieldset>
-					</div> -->
-				</div>
+					</div> 
+				</div> -->
 
 			
 				
@@ -318,17 +322,127 @@
 						<button type="submit" [disabled]="!myForm.valid" class="btn btn-round">Save</button>
 					</div>
 
-					<div class="col-lg-3">
-						<button type="submit" class="btn btn-round" [routerLink]="['/Employee/ViewEmployee']">View</button>
-					</div>
+					<input type="file" id="fileLoader" style="display:none"/>
+				
+					<!-- <div class="col-lg-2">
+						<label class="btn btn-round mt-4" (click)="opensubdivision(subdivision)">Tax Except</label>
+					</div> -->
 
 				</div>
 
+
+<!-- 				
+				<ng-template #dept let-c="close" let-d="dismiss">
+					<div class="modal-header">
+						<label class="form-label"> Add Department</label>
+						<i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer"></i>
+					</div>
+					<img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+	
+					<div class="modal-body mx-5">
+						<input class="form-control" id="genericnumber" formControlName="" placeholder="Enter Generic Name" />
+	
+					</div>
+					<div class="modal-footer">
+						<label class="btn modbtn" id="type" (click)="saveGeneric(c)">Save Generic Name</label>
+					
+					</div>
+				</ng-template>
+	 -->
+		  <!-- <ng-template #subdept let-c="close" let-d="dismiss">
+					<div class="modal-header">
+						<label class="form-label"> Add Sub Department</label>
+						<i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer"></i>
+					</div>
+			<img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+			
+			
+					<div class="modal-body mx-5">
+
+							<select name="select" class="form-control" placeholder="Select Main Group" formControlName="">
+									<option selected disabled value="0">---Select Department---</option>
+								  
+									</select><br>
+							
+						<input class="form-control" id="genericnumber" formControlName="" placeholder="Enter Generic Name" />
+	
+					</div>
+					<div class="modal-footer">
+						<label class="btn modbtn" id="type" (click)="saveGeneric(c)">Save Generic Name</label>
+					
+					</div>
+				</ng-template>
+	 -->
+		  <!-- <ng-template #division let-c="close" let-d="dismiss">
+					<div class="modal-header">
+						<label class="form-label"> Add Division</label>
+						<i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer"></i>
+					</div>
+			<img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+			
+		
+					<div class="modal-body mx-5">
+
+							<select name="select" class="form-control" placeholder="Select Main Group" formControlName="">
+									<option selected disabled value="0">---Select Department---</option>
+								  
+								  </select><br>
+						  
+								  <select name="select" class="form-control" placeholder="Select Main Group" formControlName="">
+									<option selected disabled value="0">---Select Sub Department---</option>
+										
+									</select><br>
+	
+						<input class="form-control" id="genericnumber" formControlName="" placeholder="Enter Generic Name" />
+	
+					</div>
+					<div class="modal-footer">
+						<label class="btn modbtn" id="type" (click)="saveGeneric(c)">Save Generic Name</label>
+					
+					</div>
+		  </ng-template>
+		  
+	
+		  <ng-template #subdivision let-c="close" let-d="dismiss">
+					<div class="modal-header">
+						<label class="form-label"> Add Sub Division</label>
+						<i class="fa fa-times" (click)="c('Close click')" style="cursor:pointer"></i>
+					</div>
+					<img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
+	
+		
+	
+					<div class="modal-body mx-5">
+
+							<select name="select" class="form-control" placeholder="Select Main Group" formControlName="">
+									<option selected disabled value="0">---Select Department---</option>
+								  
+								  </select><br>
+						  
+								  <select name="select" class="form-control" placeholder="Select Main Group" formControlName="">
+									<option selected disabled value="0">---Select Sub Department---</option>
+								  
+								  </select><br>
+						  
+								  <select name="select" class="form-control" placeholder="Select Main Group" formControlName="">
+									<option selected disabled value="0">---Select Division---</option>
+								  
+								  </select><br>
+
+						<input class="form-control" id="genericnumber" formControlName="" placeholder="Enter Generic Name" />
+	
+					</div>
+
+					<div class="modal-footer">
+						<label class="btn modbtn" id="type" (click)="saveGeneric(c)">Save Generic Name</label>
+					
+					</div>
+				</ng-template> -->
+	
+
 			</form>
-			<!-- <div id="google_translate_element"></div> -->
-
-
+		
+			<ng2-toasty [position]="position"></ng2-toasty>
 		</app-card>
-		<ng2-toasty [position]="position"></ng2-toasty>
-	</div>
-</div>
+		
+	

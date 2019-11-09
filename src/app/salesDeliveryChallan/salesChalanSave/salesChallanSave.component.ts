@@ -42,7 +42,10 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
   x;
   polist = [];
   coltax: any;
-  constructor(private challanService: salesChallanServices, private router: Router, private formBuilder: FormBuilder, private notificationsComponent: NotificationsComponent, private appComponent: AppComponent) {
+  sendsalesorderid: any;
+
+  constructor(private challanService: salesChallanServices, private router: Router, private formBuilder: FormBuilder, 
+    private notificationsComponent: NotificationsComponent, private appComponent: AppComponent,private dateformat: dateFormatPipe) {
   
   
     this.deliveryForm = this.formBuilder.group({
@@ -68,7 +71,7 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
       locname: ['', []],
       locrefid: ['', []],
       clientcdate: ['', []],
-      deliverydate: ['', []],
+      deliverydate: [this.dateformat.transform05(Date.now()), []],
       stockno: ['', []],
       salesno: ['', []],
       fromlocrefid: ['', []],
@@ -77,6 +80,7 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
       tolocrefid: ['', []],
       dcno: ['', []],
       billtyperefid: ['1', []],
+      salesorderrefid:['',[]],
       brandDetails: this.formBuilder.array([
       ]),
     });
@@ -366,8 +370,6 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
         BoxQuantity += parseFloat(setData[this.j].boxqty);
       }
 
-
-
       /* Row Wise SubTotal Amount */
 
 
@@ -388,23 +390,6 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
       this.deliveryForm.get('totaltabqty').setValue(TabQuantity);
       //To set Temporary Values In Bottom Input types    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
   }
 
@@ -423,18 +408,15 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
     if (this.returnValid == true) {
       this.appComponent.ngOnInit();
       this.deliveryForm.get('clientcdate').setValue(AppComponent.date);
-
+      this.deliveryForm.get('salesorderrefid').setValue(this.sendsalesorderid);
       //alert("saveDeliveryChallan" + JSON.stringify(this.deliveryForm.value));
 
+     
 
       this.deliveryForm.get('billtyperefid').setValue(1);
 
       this.challanService.getDeliveryChallan(JSON.stringify(this.deliveryForm.value)).subscribe(
-        data => {
-
-
-        //  alert(data);
-
+        data => { alert(data);
 
           if (data == true) {
             const saveData = this.deliveryForm.controls['brandDetails'];
@@ -444,7 +426,7 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
                 if (data == true) {
                   this.notificationsComponent.addToast({ title: 'SUCCESS MESSAGE', msg: 'DATA SAVED SUCCESSFULLY..', timeout: 5000, theme: 'success', position: 'top-right', type: 'success' });
 
-                  window.location.href = "SalesDeliveryReceipt/ViewSalesDelivery";
+                  //window.location.href = "SalesDeliveryReceipt/ViewSalesDelivery";
                 }
               },
               error => {
@@ -671,6 +653,9 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
       const getData = <FormArray>this.deliveryForm.controls['brandDetails'];
       let setData = getData.value;
       for (this.i = 0; this.i < data.length; this.i++) {
+        
+         this.sendsalesorderid=  data[this.i][9];
+
         for (this.x = 0; this.x < setData.length; this.x++) {
           if (data[this.i][0] == setData[this.x].productid) {
             flag = 1;
@@ -701,7 +686,8 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
             data[this.i][3],
             data[this.i][4],
             data[this.i][6],
-            data[this.i][8]
+            data[this.i][8],
+            data[this.i][9]
 
           ));
         }
@@ -712,10 +698,9 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
     }
   }
 
-  showPOdata(pid: any, barandname: any, bqty: any, sqty: any, tabqty: any, batno: any, batid: any): any {
+  showPOdata(pid: any, barandname: any, bqty: any, sqty: any, tabqty: any, 
+    batno: any, batid: any,soid:any): any {
     return this.formBuilder.group({
-
-
 
       drugproductrefid: [pid, []],
       dcrefid: ['', []],
@@ -727,8 +712,8 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
       totalqty: ['', []],
       batchrefid: [batid, []],
       billtyperefid: ['1', []],
-      stockno: [this.deliveryForm.get('stockno').value, []]
-
+      stockno: [this.deliveryForm.get('stockno').value, []],
+      salesorderrefid:[soid,[]]
 
 
 

@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { AppComponent } from '../../app.component';
 import { window } from 'rxjs/operator/window';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Body } from '@angular/http/src/body';
 
 const textPattern = "[a-zA-Z ]*";
 const textnumbers = '^[0-9]+(\.[0-9]{1,2})?$';
@@ -42,7 +44,14 @@ export class addEmployeeComponent implements OnInit {
   selobj: any;
   errors: any;
   @Input() fileExt: string = "JPG, GIF, PNG";
-  constructor(private addEmployee: EmployeeService, private router: Router, formBuilder: FormBuilder, private notificationsComponent: NotificationsComponent) {
+  closeResult: string;
+  ephoto: File;
+  showimage: boolean=false;
+  showeye: boolean=true;
+  show: any;
+
+  constructor(private addEmployee: EmployeeService, private router: Router, formBuilder: FormBuilder, 
+    private notificationsComponent: NotificationsComponent,private modalService: NgbModal) {
     let companyid = new FormControl();
     let branchid = new FormControl();
     let storerefid = new FormControl();
@@ -52,8 +61,8 @@ export class addEmployeeComponent implements OnInit {
     let emplastname = new FormControl('', Validators.pattern(textPattern));
     let employeemode = new FormControl();
     let employeetype = new FormControl();
-    let department = new FormControl('', Validators.pattern(textPattern));
-    let division = new FormControl('', );
+    let  deptrefid = new FormControl();
+    let divisionid = new FormControl('', );
     let desgination = new FormControl('', Validators.pattern(textPattern));
     let joiningdate = new FormControl('', Validators.required);
     let empsalary = new FormControl();
@@ -70,7 +79,7 @@ export class addEmployeeComponent implements OnInit {
     let aadharcard = new FormControl('', Validators.pattern(textnumbers));
     let storerecheckfid = new FormControl();
     let passport = new FormControl();
-    let emphoto=new FormControl();
+    //let emphoto=new FormControl();
     let warehouserefid = new FormControl();
     let hospitalrefid = new FormControl();
     let locname = new FormControl();
@@ -88,8 +97,8 @@ export class addEmployeeComponent implements OnInit {
       emplastname: emplastname,
       employeemode: employeemode,
       employeetype: employeetype,
-      department: department,
-      division: division,
+      deptrefid:  deptrefid,
+      divisionid: divisionid,
       desgination: desgination,
       joiningdate: joiningdate,
       empsalary: empsalary,
@@ -108,7 +117,7 @@ export class addEmployeeComponent implements OnInit {
       locrefid: locrefid,
       createdby:createdby,
       clientcdate:clientcdate,
-      emphoto:emphoto
+      //emphoto:emphoto
     });
 
 
@@ -134,58 +143,80 @@ export class addEmployeeComponent implements OnInit {
     }
 
 
-  /* Image Preview if eye icon click */
-
-
-  $(document).ready(function () {
-
-    $("#viewimg").click(function () {
-
-      $("#imgdisplay").show();
-      $("#hideimg").show();
-
-    });
-
-    $("#hideimg").click(function () {
-
-      $("#imgdisplay").hide();
-      $("#hideimg").hide();
-
-    });
-
-  });
-
   }/* Ng oninit  end*/
 
 
-  /*Employee Image PreView */
 
-  preview(files) {
-    if (files.length === 0)
-      return;
- 
-    var mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.message = "Only images are supported.";
-      return;
-    }
- 
-    var reader = new FileReader();
-    this.imagePath = files;
-    reader.readAsDataURL(files[0]); 
-    reader.onload = (_event) => { 
-      this.imgURL = reader.result; 
-    }
+//Employee Image Save
+
+fileChange(event: any) {
+
+  this.message="";
+
+  // when the load event is fired and the file not empty
+  if(event.target.files && event.target.files.length > 0) {
+
+    
+     //Check & Print Type Error Message
+     var mimeType = event.target.files[0].type;
+     if (mimeType.match(/image\/*/) == null) {
+       this.showimage=false;
+       this.message = "Only images are supported.";
+        return;
+     }
+    
+
+    if (event.target.files[0].size < 500000) {
+
+    // Fill file variable with the file content
+    this.ephoto = event.target.files[0];
+
+  
+    // Instantiate an object to read the file content
+    let reader = new FileReader();
+
+      //To read Encrypted file and send url to display in html
+      reader.readAsDataURL(this.ephoto); 
+      reader.onload = (_event) => { 
+        this.imgURL = reader.result; 
+      }
+
   }
+
+  else{
+    this.message = "Max Image Size 500KB Only & Check File Format";
+  }
+
+
+}
+ 
+}
+
+
+/* Image Preview if Eye icon click */
+imageshow(){
+  this.showimage=true;
+  this.showeye=false;
+}
+
+/* Hide Image if Eye slash icon click */
+hide(){
+  this.showimage=false;
+  this.showeye=true;
+}
+
+/* Reset Details if Trash icon click */
 
   reset() {
-    this.myForm.get('emphoto').setValue("");
+    //this.myForm.get('emphoto').setValue("");
+    (<HTMLInputElement>document.getElementById('imagefile')).value = '';
     this.imgURL='';
-    $("#hideimg").hide();
+    this.showimage=false;
+    this.message="";
   }
 
 
-  /* Image End */
+  /* Employee Image End */
 
 
   getBranche() {
@@ -312,24 +343,109 @@ export class addEmployeeComponent implements OnInit {
   }
 
 
-
+private imageresponse;//declare var for get image response
 
   private createRecord(): void {
     this.addEmployee.createEmployee(JSON.stringify(this.myForm.value)).subscribe(
-      (result: any) => {
+     (result: any) => {
       let re = result.res;  
+      
       if (re == true) {
-        this.notificationsComponent.addToast({ title: 'SUCESS MESSAGE', msg: 'DATA SAVED SUUCCESSFULLY', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'success' });
-        setTimeout(() => {
-       this.router.navigate(['Employee/ViewEmployee']);
-     }, 2000);
- 
+
+        this.saveimage();//call image api to store seperate table
+        this.imageresponse=this.saveimage();
+          alert("Image Response"+this.imageresponse);
+        if(this.imageresponse==true){
+
+          this.notificationsComponent.addToast({ title: 'SUCCESS MESSAGE', msg: 'DATA & IMAGE SAVED SUUCCESSFULLY', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
+          this.router.navigate(['Employee/ViewEmployee']);
+        }
+
+       else{
+        this.notificationsComponent.addToast({ title: 'WARNING MESSAGE', msg: 'DATA ONLY SAVED IMAGE UNSAVED', timeout: 5000, theme: 'default', position: 'top-right', type: 'warning' }); 
+       }
+   
+      }
+
+      else{
+        
+        this.notificationsComponent.addToast({ title: 'ERROR MESSAGE', msg: 'DATA UNSAVED', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
       }
     
     
     });
    
   }
+
+
+  saveimage(){
+
+    // Instantiate a FormData to store form fields and encode the file
+    let body = new FormData();
+    // Add file content to prepare the request
+    body.append("file", this.ephoto);
+   
+    // Launch post request Service Call
+    this.addEmployee.saveimage(body).subscribe( (data) =>{ let re = data.res;
+
+       return re});
+ }
+
+
+  // Popup Modal Open Code
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  opendept(dept) {
+
+    this.modalService.open(dept).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+  }
+
+  opensubdept(subdept) {
+
+    this.modalService.open(subdept).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+  }
+
+
+  opendivision(division) {
+
+    this.modalService.open(division).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+  }
+
+  opensubdivision(subdivision) {
+
+    this.modalService.open(subdivision).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+  }
+
+
+
  
 }
 

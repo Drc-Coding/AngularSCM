@@ -31,6 +31,7 @@ export class PharmacompanyViewComponent implements OnInit {
   datall = [];
 
   selobj;
+  gifFail: boolean=true;
   constructor(private userService: PharmacompanyViewService) { }
 
   ngOnInit() {
@@ -48,9 +49,11 @@ export class PharmacompanyViewComponent implements OnInit {
   viewAll() {
 
     var frmdata = { frmint1: '', frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname };
+    setTimeout(() => {
     this.userService.phcompanyView(JSON.stringify(frmdata)).subscribe(data => this.data = data,
       errorCode => console.log(errorCode));
-
+      this.gifFail=false;
+    },3000);
 
 
   }

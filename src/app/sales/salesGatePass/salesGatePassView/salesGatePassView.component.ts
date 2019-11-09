@@ -23,14 +23,41 @@ export class salesGatePassViewComponent implements OnInit {
   
   billtyperefid =1;
   selobj ;
-    constructor(private userService: salesGatePassViewService) {}
+  gifFail: boolean=true;
+  viewgatepass: FormGroup;
+    constructor(private userService: salesGatePassViewService,private formBuilder:FormBuilder) {
+
+
+      this.viewgatepass=this.formBuilder.group({
+        companyid: ['', []],
+        branchid: ['', []],
+        locname: ['', []],
+        locref: ['', []],
+      });
+
+    }
   
     ngOnInit() {
+
+      setTimeout(() => {
         this.userService.viewDeliveryChallan(AppComponent.companyID,AppComponent.branchID,AppComponent.locRefName1,
-          AppComponent.locrefID1, this.billtyperefid).subscribe(data => {this.data=data },
+          AppComponent.locrefID1, this.billtyperefid).subscribe(data => {this.data=data,this.setData(data) },
           errorCode => console.log(errorCode));
+            this.gifFail=false;
+      },3000);
   
         
+    }
+
+    setData(data :any){
+
+      if(data!=null||undefined){
+        this.viewgatepass.get('companyid').setValue(data[0][0]);
+        this.viewgatepass.get('branchid').setValue(data[0][1]);
+        this.viewgatepass.get('locname').setValue(data[0][2]);
+        this.viewgatepass.get('locref').setValue(data[0][3]);
+      }
+      
     }
  
 }

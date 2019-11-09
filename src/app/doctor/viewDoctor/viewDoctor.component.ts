@@ -17,13 +17,17 @@ export class DoctorlistComponent implements OnInit {
   public filterQuery: string = "";
   public sortBy: string = "";
   public sortOrder: string = "desc";
+  gifFail: boolean=true;
   constructor(private router: Router, private doctorService: DoctorService, private notificationsComponent: NotificationsComponent) { }
 
   ngOnInit(): void {
+    setTimeout(() => {
     this.doctorService.viewDoctor(AppComponent.companyID, AppComponent.branchID).subscribe(data => this.data = data,
       err => {
         console.log('Error Occured On view Doctor()');
       });
+      this.gifFail=false;
+    },3000);
   }
 
   deleteDoctor(id: any) {

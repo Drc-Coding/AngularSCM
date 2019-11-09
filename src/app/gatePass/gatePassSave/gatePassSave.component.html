@@ -65,7 +65,7 @@
                             <div class="col-sm-3">
                                 <label for="stock" class="form-label">Stock Delivery Challan No
                                     <span style="color:red">*</span></label>
-                                <ng-select [options]="distributors" placeholder="Search Stock Number"
+                                <ng-select [options]="distributors" placeholder="Type: DCH0000"
                                     (change)="getStockNumber()" (click)="getStockNumber()"
                                     (input)="getStock($event.target.value, 3)" formControlName="stockno">
                                 </ng-select>

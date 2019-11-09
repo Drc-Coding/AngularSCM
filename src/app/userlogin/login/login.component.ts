@@ -9,8 +9,6 @@ import * as $ from 'jquery';
 import { AppComponent } from '../../app.component';
 
 
-
-
 //Encrypt
 import * as CryptoJS from 'crypto-js';
 var key = CryptoJS.enc.Utf8.parse('7061737323313233');
@@ -86,25 +84,6 @@ export class LoginComponent implements OnInit {
     this.chooseSection.get('warehouseid').setValue("0");
 
 
-
-
-
-
-
-
-     
-
-
-  
-  
-
-
-
-
-
-
-
-
   }
 
   userid: any;
@@ -115,15 +94,12 @@ export class LoginComponent implements OnInit {
 
 
 
-
-
-
   onSubmit() {
     this.reFlag = this.loginValidation();
     if (this.reFlag == true) {
 
 
-this.loader = true;
+      this.loader = true;
       this.username = this.loginForm.get('username').value;
       this.pass = this.loginForm.get('password').value;
       this.companyName = this.loginForm.get('companyid').value;
@@ -195,6 +171,7 @@ this.loader = true;
   userHospital = [];
   userShop = [];
   userWarehouse = [];
+  
   openMyModal(event) {
     document.querySelector("#" + event).classList.add('md-show');
   }
@@ -202,6 +179,7 @@ this.loader = true;
   closeMyModal(event) {
     ((event.target.parentElement.parentElement).parentElement).classList.remove('md-show');
   }
+
   getBranch() {
     this.loginService.getBranch(this.loginForm.get('companyid').value, this.userid).subscribe(data => this.userbranch = data, err => {
       console.log('Error occured On getBranch()');

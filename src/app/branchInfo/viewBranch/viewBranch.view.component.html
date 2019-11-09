@@ -43,8 +43,13 @@
 					<input type="search" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Search Branch Name">
 				
 			</div>
-              </div>
-            </div><br>
+     </div>
+    </div><br>
+    
+    <div align="center">
+        <img src="assets/images/loading.gif" height="100px" *ngIf="gifFail">
+    </div><br>
+
             <div class="dt-responsive">
             <div style="overflow-x:auto">
             <!-- <div class="panel-heading">User information</div>-->

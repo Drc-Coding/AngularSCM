@@ -1,0 +1,24 @@
+<app-card>
+
+  <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
+		<div class="form-group row">
+
+			<div class="col-lg-4">
+				<label class="form-label semibold">
+					Department<span style="color:red">*</span>
+				</label>
+      <input type="text" class="form-control" placeholder="Enter Department"
+      formControlName="departmentname" >
+      <p class="messages text-danger" *ngIf="departmentForm.controls.departmentname.errors?.required">
+          This Field is Required*</p>
+			</div>
+			
+    </div><br>
+    <div class="form-group row">
+        <div class="col-lg-4">
+          <button type="submit" class="btn btn-round" style="margin:26px;" [disabled]="!departmentForm.valid">Save</button>
+        </div>
+      </div>
+
+</form>
+</app-card>

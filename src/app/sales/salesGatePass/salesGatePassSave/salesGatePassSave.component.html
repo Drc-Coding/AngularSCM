@@ -75,7 +75,7 @@
                                     <label for="sales" class=" form-label">Sales Invoice
                                         <span style="color:red">*</span></label>
                                    
-                                         <ng-select [options]="salesinvoice" placeholder="Search Stock Number" (click)="getDeliverChallanNo()" (change)="getDeliverChallanNo()"  (input)="getDeliverChallan($event.target.value)"
+                                         <ng-select [options]="salesinvoice" placeholder="Type: SDC00000" (click)="getDeliverChallanNo()" (change)="getDeliverChallanNo()"  (input)="getDeliverChallan($event.target.value)"
                                                  formControlName="salesno">
                                         </ng-select>
                                     </div>
@@ -160,14 +160,12 @@
         </div>
     </div>
                 
-
-
                    <div class="flow" style="overflow:auto;" formArrayName="brandDetails">
                     <table rz-table class="table styletab">
                         <thead class="stylehead">
                             <tr>
                                 <th>
-                                    <input type="checkbox" class="checkAll tabcheck" name="checkAll" />
+                                    <input type="checkbox" class="checkAll" style="height:1.3em;width:1.4em" name="checkAll" />
                                 </th>
                                 <th>S.No</th>
                                 <th>Prod Code</th>
@@ -221,7 +219,7 @@
                           
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="check" class="tabcheck" id="width1" />
+                                    <input type="checkbox" class="tabcheck" id="width1" />
                                     </td>                                                   
                                     <td>
                                         <input type="text" id="width2" >

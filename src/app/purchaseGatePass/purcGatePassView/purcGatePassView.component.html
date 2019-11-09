@@ -21,20 +21,16 @@
         font-size: 15px;
         color: red;
       } 
-      .data-search
-        {
-           width: 350px;
-           margin-left: 0.5em;
-           display: inline-block;
-        }
-
-        th{
-
-          text-align: center;
-          font-weight: normal;
-        }
+     
+      .bform{
+        border:2px solid #b3b3b3;
+        border-radius:5px;
+        padding:1em;
+      }
+      
     </style>
-<app-card [title]= '"Purchase Gate Pass View"'>
+<app-card>
+  <br>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
       <div>
@@ -50,54 +46,86 @@
       </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-6">
-      <div class="labelalign">
-        <label>Search:
-          <input type="search" [(ngModel)]="filterQuery" class="form-control input-sm full-data-search" placeholder="Gate Pass Number">
-        </label>
+      <div class="form-inline justify-content-end">
+        <strong class="searchstyle">Search:</strong>
+          <input type="search" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Gate Pass Number">
       </div>
     </div>
-  </div>
-  <!-- <div class="panel-heading">User information</div>-->
-  <div class="dt-responsive" style="overflow:scroll">
+  </div><br>
+
+  <div align="center">
+      <img src="assets/images/loading.gif" height="100px" *ngIf="gifFail">
+    </div><br>
+     
+  <form [formGroup]="viewpurchasegatepass">
+
+      <div class="bform">
+    
+        <div class="row">
+    
+        <div class="col-lg-3">
+           
+            <label for="email" class="form-label">Company Name</label>
+               <input type="text"  class="form-control"  formControlName="companyid" disabled>   
+        
+        </div>
+    
+        <div class="col-lg-3">
+           
+            <label for="email" class="form-label">Branch Name</label>
+               <input type="text"  class="form-control"  formControlName="branchid" disabled>   
+        
+      </div>
+    
+       <div class="col-lg-3">
+           
+          <label for="email" class="form-label">Location</label>
+             <input type="text"  class="form-control"  formControlName="locname" disabled>   
+      
+        </div>
+    
+        <div class="col-lg-3">
+           
+            <label for="email" class="form-label">Name</label>
+               <input type="text"  class="form-control"  formControlName="locref" disabled>   
+        
+        </div>
+    
+      </div>
+    
+      </div>
+    </form><br>
+  
+ 
+  <div class="dt-responsive" style="overflow:auto">
     <table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery"
       #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
       <thead >
         <tr>
           <th>
-            <mfDefaultSorter by="sno">S.No</mfDefaultSorter>
+           S.No
+          </th>
+               
+          <th>
+            From Location
           </th>
           <th>
-            <mfDefaultSorter by="empfirstname">Company Name</mfDefaultSorter>
+           From Location Name
           </th>
           <th>
-            <mfDefaultSorter by="emplastname">Branch Name</mfDefaultSorter>
+           To Location
           </th>
           <th>
-            <mfDefaultSorter by="department">Location</mfDefaultSorter>
+           To Location Name
           </th>
           <th>
-            <mfDefaultSorter by="department">Name</mfDefaultSorter>
-          </th>          
-          <th>
-            <mfDefaultSorter by="desgination">From Location</mfDefaultSorter>
+            Gate Pass Number
           </th>
           <th>
-            <mfDefaultSorter by="desgination">From Location Name</mfDefaultSorter>
+            Gate Pass Date
           </th>
           <th>
-            <mfDefaultSorter by="desgination">To Location</mfDefaultSorter>
-          </th>
-          <th>
-            <mfDefaultSorter by="desgination">To Location Name</mfDefaultSorter>
-          </th>
-          <th>
-            <mfDefaultSorter by="desgination">Gate Pass Number</mfDefaultSorter>
-          </th>
-          <th>
-            <mfDefaultSorter by="desgination">Gate Pass Date</mfDefaultSorter>
-          </th>
-          <th>
-            <mfDefaultSorter by="Action">Action</mfDefaultSorter>
+            Action
           </th>
         </tr>
         <tr>
@@ -113,17 +141,11 @@
               <td></td>
 							<td></td> 
               <td></td>     
-              <td></td> 
-              <td></td> 
-              <td></td>    
-              <td></td>    
+                
 							</tr>  	
-        <tr *ngFor="let val of data;let i=index">
+        <tr *ngFor="let val of mf.data;let i=index">
           <td>{{i+1}}</td>
-          <td>{{val[0]}}</td>
-          <td>{{val[1]}}</td>
-          <td>{{val[2]}}</td>
-          <td>{{val[3]}}</td>
+         
           <td>{{val[4]}}</td>
           <td>{{val[5]}}</td>
           <td>{{val[6]}}</td>

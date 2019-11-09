@@ -39,6 +39,7 @@ export class ConvertsalesComponent implements OnInit {
       sodetails: this.fb.array([]),
     })
   }
+
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.solead.fetchsaleslead(AppComponent.companyID, AppComponent.branchID, AppComponent.locRefName1, AppComponent.locrefID1, this.id).subscribe(data => {
@@ -59,13 +60,17 @@ export class ConvertsalesComponent implements OnInit {
       this.solead.autoIcrement(AppComponent.companyID,AppComponent.branchID,AppComponent.locrefID1,AppComponent.locRefName1).subscribe(data => {
         this.salesorderlead.get('salesorderno').setValue(data.toString())
       });
+
   }
+
+
   getProvalues() {
     this.solead.getprpductvalues(AppComponent.companyID, AppComponent.branchID, AppComponent.locRefName1, AppComponent.locrefID1, this.salesorderlead.get('productid').value).subscribe(
       data => this.getTabledata(data),
       error => console.log("Errors occurs in getprpductvalues()")
     )
   }
+
   getsalesleaddata(data: any) {
     if (data !== undefined || data !== null) {
       for (let p = 0; p < data.length; p++) {
@@ -80,6 +85,7 @@ export class ConvertsalesComponent implements OnInit {
       }
     }
   }
+
   fetchdata(cust: any, contact: any, type: any, dtype: any, onlineno: any, date: any) {
     return {
       patientid: cust,
@@ -90,6 +96,8 @@ export class ConvertsalesComponent implements OnInit {
       orderdate: date
     }
   }
+
+
   fetchsoleadproduct(data) {
     const getData = <FormArray>this.salesorderlead.controls['sodetails']
     if (data !== undefined || data !== null) {
@@ -104,6 +112,8 @@ export class ConvertsalesComponent implements OnInit {
       }
     }
   }
+
+
   fetchproduct(pc: any, pn: any, dos: any, form: any, qty: any) {
     return this.fb.group({
 
@@ -117,6 +127,7 @@ export class ConvertsalesComponent implements OnInit {
       tabletqty: 0
     })
   }
+
   i;
   x;
   getTabledata(data: any) {
@@ -146,6 +157,8 @@ export class ConvertsalesComponent implements OnInit {
       }
     }
   }
+
+
   showBrandlist(a1: any, a2: any, a3: any, a4: any) {
     return this.fb.group({
       drugproductid: a1,
@@ -158,6 +171,8 @@ export class ConvertsalesComponent implements OnInit {
       tabletqty: 0
     })
   }
+
+
   getProduct(val: string) {
     this.solead.getProductlist(val, AppComponent.companyID, AppComponent.branchID, AppComponent.locRefName1, AppComponent.locrefID1).subscribe(data => {
       this.characters = [];
@@ -166,6 +181,8 @@ export class ConvertsalesComponent implements OnInit {
       }
     });
   }
+
+
   removeRow(index: number) {
     const getData = <FormArray>this.salesorderlead.controls['sodetails'];
     getData.removeAt(index);
@@ -177,6 +194,7 @@ export class ConvertsalesComponent implements OnInit {
 
 
   onSubmit() {
+    this.openMyModal('effect-1');
     const getData = <FormArray>this.salesorderlead.controls['sodetails'];
     let data: any = getData.value
      this.salesorderlead.get('totalitem').setValue(data.length);
@@ -200,7 +218,20 @@ export class ConvertsalesComponent implements OnInit {
         }
       },
       error => console.log("Error occurs in savesaleslead()"))
+
+     
   }
+
+  
+
+  openMyModal(event) {
+    document.querySelector("#" + event).classList.add('md-show');
+  }
+
+  closeMyModal(event) {
+    ((event.target.parentElement.parentElement).parentElement).classList.remove('md-show');
+  }
+
   ngAfterViewInit(){
    //Panel Show and Hide 
    $(document).ready(function () {
@@ -209,4 +240,6 @@ export class ConvertsalesComponent implements OnInit {
     });
   });
 }
+
+
 }

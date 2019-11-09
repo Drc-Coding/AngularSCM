@@ -6,7 +6,7 @@ import { challanRoutes } from './deliveryChallan.routing';
 import { challanSaveComponent } from './chalanSave/challanSave.component'; 
 import { challanEditComponent } from './challanEdit/challanEdit.component';
 import { challanViewComponent } from './challanView/challanView.component';
-
+import {CategoryPipe}from './challanView/challanview.pipe';
 
 import { DxDataGridModule,
   DxSparklineModule,
@@ -24,7 +24,7 @@ import { DxDataGridModule,
     RouterModule.forChild(challanRoutes),
    SharedModule
   ],
-  declarations: [ challanSaveComponent  , challanEditComponent   ,  challanViewComponent ],
+  declarations: [ challanSaveComponent  , challanEditComponent   ,  CategoryPipe , challanViewComponent ],
   
 
   bootstrap: [challanSaveComponent]
