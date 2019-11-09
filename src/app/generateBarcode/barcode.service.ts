@@ -41,8 +41,6 @@ export class BarcodeService {
     let head = new Headers({ 'Content-Type': 'application/json' });
     return this.http.post(this.genBarcodeUrl, barcode1, { headers: head })
     .map(res => res.json());
-
-
   }
   // getMbarcode(Mbarcode:any,companyid:any,branchrefid:any,locname:any,locrefid:any){
   //   return this.http.get(this.mbarcode +'/'+ Mbarcode + '/' + companyid + '/' + branchrefid + '/' + locname + '/' + locrefid).map(response => response.json());
