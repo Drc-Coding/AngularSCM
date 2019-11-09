@@ -38,6 +38,7 @@
     "angular2-multiselect-dropdown": "^2.8.0",
     "angular2-notifications": "^0.7.4",
     "angular2-wizard": "^0.4.0",
+    "angularx-qrcode": "^1.0.1",
     "bootstrap": "^4.0.0-beta",
     "c3": "^0.4.16",
     "chartist": "^0.11.0",
