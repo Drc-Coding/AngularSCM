@@ -21,6 +21,8 @@ const pattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 export class editEmployeeComponent implements OnInit {
 
 
+  selobj: any;
+
   $:any;
 
   public imagePath;
@@ -39,6 +41,10 @@ export class editEmployeeComponent implements OnInit {
   firms = [];
   employeeEdit: FormGroup;
   flag: boolean = false;
+  departmentarr: any;
+  subdepartmentarr: any;
+  divsionarr: any;
+  subdivsionarr: any;
   constructor(private employeeServices: EmployeeService, private route: ActivatedRoute, private router: Router, private notificationsComponent: NotificationsComponent) {
     let id = new FormControl();
     let companyid = new FormControl();
@@ -74,7 +80,9 @@ export class editEmployeeComponent implements OnInit {
     let locrefid = new FormControl();
     let modifiedby = new FormControl();
     let clientmdate = new FormControl();
-   
+    let subdepartment = new FormControl();
+   let subdivision = new FormControl();
+
     this.employeeEdit = new FormGroup({
       id: id,
       companyid: companyid,
@@ -86,8 +94,12 @@ export class editEmployeeComponent implements OnInit {
       emplastname: emplastname,
       employeemode: employeemode,
       employeetype: employeetype,
+      
       department: department,
+      subdepartment: subdepartment,
+      subdivision:subdivision,
       division: division,
+     
       desgination: desgination,
       joiningdate: joiningdate,
       empsalary: empsalary,
@@ -113,6 +125,23 @@ export class editEmployeeComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
+
+this.employeeEdit.get('department').setValue('0');
+this.employeeEdit.get('subdepartment').setValue('0');
+this.employeeEdit.get('subdivision').setValue('0');
+this.employeeEdit.get('division').setValue('0');
+
+
+this.selobj = {
+  userid: AppComponent.userID, locrefid: AppComponent.locrefID1, locname: AppComponent.locRefName1, countryrefid: AppComponent.countryID,
+  companyid: AppComponent.companyID
+  , branchrefid: AppComponent.branchID, vatdispflag: AppComponent.vatDispFlag, boxdispflag: AppComponent.BoxDispFlag
+  , stripdispflag: AppComponent.StripDispFlag, tabdispflag: AppComponent.TabDispFlag
+};
+
+
 
     if (AppComponent.usertype == "\"SuperAdmin\" ") {               
       this.employeeServices.getCompany().subscribe(data => this.companies = data,
@@ -195,9 +224,68 @@ export class editEmployeeComponent implements OnInit {
     });
 
   });
-
+this. getDepartment();
 
   }  /* Ng Oninit End */
+
+
+  getDepartment() {
+
+
+
+    this.employeeServices.getDepartment(this.selobj.companyid, this.selobj.branchrefid,
+      this.selobj.locname, this.selobj.locrefid).subscribe(data => this.departmentarr = data,
+        err => {
+          console.log('Error Occured Get getDepartment');
+        });
+
+  }
+
+
+
+
+  getSubDepartment() {
+
+
+
+
+    this.employeeServices.getSubDepartment(this.selobj.companyid, this.selobj.branchrefid,
+      this.selobj.locname, this.selobj.locrefid, this.employeeEdit.get('department').value).subscribe(data => this.subdepartmentarr = data,
+        err => {
+          console.log('Error Occured Get getDepartment');
+        });
+
+  }
+
+  getDivision() {
+
+    this.employeeServices.getDivision(this.selobj.companyid, this.selobj.branchrefid, this.selobj.locname,
+      this.selobj.locrefid, this.employeeEdit.get('department').value, this.employeeEdit.get('subdepartment').value).subscribe(data => this.divsionarr = data,
+        err => {
+          console.log('Error Occured Get getDivision');
+        });
+
+
+
+  }
+
+
+  getSubDivision() {
+    this.employeeServices.getSubDivision(this.selobj.companyid, this.selobj.branchrefid,
+      this.selobj.locname, this.selobj.locrefid, this.employeeEdit.get('department').value, this.employeeEdit.get('subdepartment').value,
+      this.employeeEdit.get('division').value).subscribe(data => this.subdivsionarr = data,
+        err => {
+          console.log('Error Occured Get getSubDivision');
+        });
+
+
+
+  }
+
+
+
+
+
 
 
    /*Employee Image PreView */
