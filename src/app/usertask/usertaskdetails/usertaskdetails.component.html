@@ -1,0 +1,161 @@
+<style>
+  .form-controls {
+    border: none;
+  }
+</style>
+
+<app-card>
+
+  <form [formGroup]="usertaskdetails" (ngSubmit)="onSubmit()" class="mx-3">
+
+    <ngb-tabset>
+      <ngb-tab title="Basic Information">
+        <ng-template ngbTabContent>
+          <div [@fadeInOutTranslate] class="m-t-15">
+            <br>
+            <div class="sub-title">Basic Details
+
+            </div>
+            <br>
+            <div class="row">
+
+              <div class="col-md-4">
+
+                <label class="form-label semibold" for="exampleInput">
+                  Task Title
+                </label>
+                <br>
+                <input type="text" class="form-controls" placeholder="" formControlName="task_type_id" readonly />
+
+
+              </div>
+              <div class="col-md-4">
+
+                <label class="form-label semibold" for="exampleInput">
+                  Assigned By
+                </label>
+                <br>
+                <input type="text" class="form-controls" placeholder="  " formControlName="task_assigned_by" readonly />
+
+
+              </div>
+              <div class="col-md-4">
+
+                <label class="form-label semibold" for="exampleInput">
+                  Assigned To
+                </label>
+                <br>
+
+                <input type="text" class="form-controls" placeholder="  " formControlName="task_assigned_to" readonly />
+
+
+              </div>
+            </div>
+            <br>
+            <div class="row">
+
+              <div class="col-md-4">
+
+                <label class="form-label semibold" for="exampleInput">
+                  Assigned Date
+                </label>
+                <br>
+                <input type="text" class="form-controls" placeholder="  " formControlName="createddate" readonly />
+
+
+              </div>
+              <div class="col-md-4">
+
+                <label class="form-label semibold" for="exampleInput">
+                  Due Date
+                </label>
+                <br>
+                <input type="text" class="form-controls" placeholder="  " formControlName="task_due_date" readonly />
+
+
+              </div>
+              <div class="col-md-4">
+
+                <label class="form-label semibold" for="exampleInput">
+                  Complete Date
+                </label>
+                <br>
+
+                <input type="text" class="form-controls" placeholder="  " formControlName="completed_date" readonly />
+
+
+              </div>
+            </div>
+            <br>
+            <div class="row">
+
+              <div class="col-md-4">
+
+                <label class="form-label semibold" for="exampleInput">
+                  Priority
+                </label>
+                <br>
+                <input type="text" class="form-controls" placeholder="  " formControlName="priority_id" readonly />
+
+
+              </div>
+              <div class="col-md-4">
+
+                <label class="form-label semibold" for="exampleInput">
+                  Response Date
+                </label>
+                <br>
+                <input type="text" class="form-controls" placeholder="  " formControlName="response_date" readonly />
+
+
+              </div>
+
+              <div class="col-md-4">
+
+                <label class="form-label semibold" for="exampleInput">
+                  Task Status
+                </label>
+                <br>
+                <input type="text" class="form-controls" placeholder="  " formControlName="task_status_id" readonly />
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <label class="form-label semibold" for="exampleInput">
+                Description
+              </label>
+              <br>
+              <textarea readonly rows="3" cols="100" class="form-controls" formControlName="description"
+                placeholder=" ">
+        </textarea>
+
+            </div>
+            <br>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Task Comments">
+        <ng-template ngbTabContent>
+          <div [@fadeInOutTranslate] class="m-t-15">
+            <div class="m-4">
+              <h6>Task Comments</h6>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing lorem impus dolorsit.onsectetur adipiscing</p>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Task Documents">
+        <ng-template ngbTabContent>
+          <div [@fadeInOutTranslate] class="m-t-15">
+            <div class="m-4">
+              <h6>Task Documents</h6>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing lorem impus dolorsit.onsectetur adipiscing</p>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+
+    </ngb-tabset>
+  </form>
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>
