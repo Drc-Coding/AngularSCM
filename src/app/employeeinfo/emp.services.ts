@@ -10,6 +10,7 @@ export class EmployeeService {
   headers: any;
   //Add Employee
   private createEmp = 'api/empcreateRecord';
+  private imagesave = 'api/getsendImage';
   private getCompanies = 'api/getEmpCompany';
   private getBranches = 'api/getEmpBranch';
   private getShops = 'api/getEmpShops';
@@ -135,6 +136,13 @@ export class EmployeeService {
   createEmployee(employeecreate: String) {
     let head = new Headers({ 'Content-Type': 'application/json' });
     return this.http.post(this.createEmp, employeecreate, { headers: head }).map((res: Response) => {
+      return { "res": res.json() }
+    })
+  }
+
+  saveimage(image) {
+   
+    return this.http.post(this.imagesave, image).map((res: Response) => {
       return { "res": res.json() }
     })
   }

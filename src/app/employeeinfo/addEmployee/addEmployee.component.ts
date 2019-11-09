@@ -56,12 +56,18 @@ export class addEmployeeComponent implements OnInit {
   boolval1: boolean;
   boolval2: boolean;
   boolval3: boolean;
+  showimage: boolean=false;
+  ephoto: File;
+  showeyeslash: boolean=false;
+  showeye: boolean=true;
+  imageresponse: any;
+
   constructor(private addEmployee: EmployeeService, private router: Router, formBuilder: FormBuilder,
     private notificationsComponent: NotificationsComponent, private modalService: NgbModal) {
     let companyid = new FormControl();
     let branchid = new FormControl();
     let storerefid = new FormControl();
-    let employeecode = new FormControl();
+    
     let emptitle = new FormControl();
     let empfirstname = new FormControl('', [Validators.required, Validators.pattern(textPattern)]);
     let emplastname = new FormControl('', Validators.pattern(textPattern));
@@ -71,12 +77,6 @@ export class addEmployeeComponent implements OnInit {
     let subdepartment = new FormControl('', Validators.pattern(textPattern));
     let division = new FormControl('');
     let subdivision = new FormControl('');
-
-
-
-
-
-
     let desgination = new FormControl('', Validators.pattern(textPattern));
     let joiningdate = new FormControl('', Validators.required);
     let empsalary = new FormControl();
@@ -110,13 +110,7 @@ export class addEmployeeComponent implements OnInit {
     let divisionid = new FormControl();
     let subdivisionid = new FormControl();
 
-    
-    
-    
-    
-    
-    
-    
+  
     this.myForm = new FormGroup({
 
 
@@ -133,7 +127,6 @@ export class addEmployeeComponent implements OnInit {
       companyid: companyid,
       branchid: branchid,
       storerefid: storerefid,
-      employeecode: employeecode,
       emptitle: emptitle,
       empfirstname: empfirstname,
       emplastname: emplastname,
@@ -228,10 +221,6 @@ export class addEmployeeComponent implements OnInit {
 
 
     this.getDepartment();
-
-
-
-
 
 
   }/* Ng oninit  end*/
@@ -329,11 +318,6 @@ export class addEmployeeComponent implements OnInit {
       })
     return this.boolval1;
   }
-
-
-
-
-
 
 
 
@@ -522,17 +506,6 @@ export class addEmployeeComponent implements OnInit {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
   saveSubDivision(c) {
 
 
@@ -543,41 +516,73 @@ export class addEmployeeComponent implements OnInit {
 
 
 
+//Employee Image Validation & Preview
 
+  fileChange(event: any) {
 
-
-
-
-
-
-
-  /*Employee Image PreView */
-
-  preview(files) {
-    if (files.length === 0)
-      return;
-
-    var mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.message = "Only images are supported.";
-      return;
+    this.message="";
+  
+    // when the load event is fired and the file not empty
+    if(event.target.files && event.target.files.length > 0) {
+  
+      
+       //Check & Print Type Error Message
+       var mimeType = event.target.files[0].type;
+       if (mimeType.match(/image\/*/) == null) {
+         this.showimage=false;
+         this.message = "Only images are supported.";
+          return;
+       }
+      
+  
+      if (event.target.files[0].size < 500000) {
+  
+      // Fill file variable with the file content
+      this.ephoto = event.target.files[0];
+  
+    
+      // Instantiate an object to read the file content
+      let reader = new FileReader();
+  
+        //To read Encrypted file and send url to display in html
+        reader.readAsDataURL(this.ephoto); 
+        reader.onload = (_event) => { 
+          this.imgURL = reader.result; 
+        }
+  
     }
-
-    var reader = new FileReader();
-    this.imagePath = files;
-    reader.readAsDataURL(files[0]);
-    reader.onload = (_event) => {
-      this.imgURL = reader.result;
+  
+    else{
+      this.message = "Max Image Size 500KB Only & Check File Format";
     }
+  
+  
+  }
+   
+  }
+  
+
+  imageshow(){
+    this.showimage=true;
+    this.showeyeslash=false;
+    this.showeye=true;
   }
 
-  reset() {
+  hide(){
+    this.showimage=false;
+    this.showeyeslash=false;
+    this.showeye=true;
+  }
+
+  reset(){
+
     this.myForm.get('emphoto').setValue("");
     this.imgURL = '';
-    $("#hideimg").hide();
+    this.showimage=false;
+    this.showeyeslash=false;
+    this.showeye=true;
   }
-
-
+ 
   /* Image End */
 
 
@@ -894,35 +899,28 @@ export class addEmployeeComponent implements OnInit {
 
   private createRecord(): void {
 
-
-  
-
-
     this.myForm.get('deptrefid').setValue(this.myForm.get('department').value);
     this.myForm.get('subdeptrefid').setValue( this.myForm.get('subdepartment').value);
     this.myForm.get('divisionid').setValue(this.myForm.get('division').value);
     this.myForm.get('subdivisionid').setValue(this.myForm.get('subdivision').value);
 
-
-
-
-
-
-
-
-
-
-
-
-
     this.addEmployee.createEmployee(JSON.stringify(this.myForm.value)).subscribe(
       (result: any) => {
         let re = result.res;
         if (re == true) {
-          this.notificationsComponent.addToast({ title: 'SUCESS MESSAGE', msg: 'DATA SAVED SUUCCESSFULLY', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'success' });
-          setTimeout(() => {
-          //  this.router.navigate(['Employee/ViewEmployee']);
-          }, 2000);
+          this.saveimage();
+          this.imageresponse=this.saveimage();
+          if(this.imageresponse==true){
+
+            this.notificationsComponent.addToast({ title: 'SUCESS MESSAGE', msg: 'DATA & IMAGE SAVED SUUCCESSFULLY', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'success' });
+            this.router.navigate(['Employee/ViewEmployee']);
+          }
+          else{
+
+            this.notificationsComponent.addToast({ title: 'Error Message', msg: ' DATA ONLY SAVED & IMAGE UNSAVED....', timeout: 5000, theme: 'default', position: 'top-right', type: 'warning' });
+            this.router.navigate(['Employee/ViewEmployee']);
+          }
+         
 
         }
 
@@ -936,6 +934,18 @@ export class addEmployeeComponent implements OnInit {
 
   }
 
+  saveimage(){
+
+    // Instantiate a FormData to store form fields and encode the file
+    let body = new FormData();
+    // Add file content to prepare the request
+    body.append("file", this.ephoto);
+   
+    // Launch post request Service Call
+    this.addEmployee.saveimage(body).subscribe( (data) => { 
+      let re = data.res; return re;});
+
+ }
 
   // Popup Modal Open Code
 
