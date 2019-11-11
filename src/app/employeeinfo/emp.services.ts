@@ -140,7 +140,6 @@ export class EmployeeService {
     })
   }
 
-  //Employee image save
   saveimage(image) {
    
     return this.http.post(this.imagesave, image).map((res: Response) => {

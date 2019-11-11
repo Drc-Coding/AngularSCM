@@ -67,7 +67,7 @@ export class addEmployeeComponent implements OnInit {
     let companyid = new FormControl();
     let branchid = new FormControl();
     let storerefid = new FormControl();
-    
+    let employeecode = new FormControl();
     let emptitle = new FormControl();
     let empfirstname = new FormControl('', [Validators.required, Validators.pattern(textPattern)]);
     let emplastname = new FormControl('', Validators.pattern(textPattern));
@@ -77,6 +77,7 @@ export class addEmployeeComponent implements OnInit {
     let subdepartment = new FormControl('', Validators.pattern(textPattern));
     let division = new FormControl('');
     let subdivision = new FormControl('');
+
     let desgination = new FormControl('', Validators.pattern(textPattern));
     let joiningdate = new FormControl('', Validators.required);
     let empsalary = new FormControl();
@@ -127,6 +128,7 @@ export class addEmployeeComponent implements OnInit {
       companyid: companyid,
       branchid: branchid,
       storerefid: storerefid,
+      employeecode: employeecode,
       emptitle: emptitle,
       empfirstname: empfirstname,
       emplastname: emplastname,
@@ -938,7 +940,6 @@ export class addEmployeeComponent implements OnInit {
 
     // Instantiate a FormData to store form fields and encode the file
     let body = new FormData();
-    
     // Add file content to prepare the request
     body.append("file", this.ephoto);
    

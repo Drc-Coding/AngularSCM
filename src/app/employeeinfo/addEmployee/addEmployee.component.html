@@ -36,8 +36,7 @@
 							</select>
 						</fieldset>
 					</div>
-
-					<div class="col-lg-4">
+					<div class="col-lg-2">
 						<fieldset class="form-group">
 							<label class="form-label">Location Name</label>
 							<select name="select" class="form-control" formControlName="locname" (change)="getLoc()"
@@ -49,21 +48,7 @@
 							</select>
 						</fieldset>
 					</div>
-				
-
-				</div>
-
-				<div class="form-group row">
-
-					<!-- <div class="col-lg-4">
-						<fieldset class="form-group">
-							<label class="form-label">Employee Code</label>
-							<input type="text" onkeyup="this.value = this.value.toUpperCase();" class="form-control"
-								formControlName="employeecode" placeholder="Enter the EmployeeCode">
-						</fieldset>
-					</div> -->
-
-					<div class="col-lg-4">
+					<div class="col-lg-2">
 
 						<fieldset class="form-group">
 							<label class="form-label">Firm Name</label>
@@ -76,6 +61,18 @@
 								<option *ngFor="let locrefid of firms" value={{locrefid[0]}}>{{locrefid[1]}}</option>
 
 							</select>
+						</fieldset>
+					</div>
+
+				</div>
+
+				<div class="form-group row">
+
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label">Employee Code</label>
+							<input type="text" onkeyup="this.value = this.value.toUpperCase();" class="form-control"
+								formControlName="employeecode" placeholder="Enter the EmployeeCode">
 						</fieldset>
 					</div>
 
@@ -244,10 +241,35 @@
 								</option>
 							</select> 
 
+
+
+
+
+
+
+
+
+
+
+
+
 							<!-- <div class="messages text-danger" *ngIf="myForm.controls.division.errors?.pattern">Text only Allowed!</div> -->
+
+
+
+
+
+
+
+
+
 
 						</fieldset>
 					</div>
+			
+			
+			
+			
 			
 				</div>
 
@@ -374,7 +396,6 @@
 					</div>
 
 				</div>
-				
 				<div class="form-group row">
 
 					<div class="col-lg-4">

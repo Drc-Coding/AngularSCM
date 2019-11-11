@@ -22,42 +22,33 @@ export class viewEmployeeComponent implements OnInit {
   public filterQuery: string = "";
   public sortBy: string = "";
   public sortOrder: string = "desc";
+  gifFail: boolean=true;
+
   constructor(private userService: EmployeeService, private route: Router, private notificationsComponent: NotificationsComponent) {
   }
   ngOnInit() {
-
-
-    this.userService.employeeViewByID(AppComponent.companyID, AppComponent.branchID, AppComponent.locRefName1, AppComponent.locrefID1).subscribe(data => { this.data = data },
-      err => {
-        console.log('Error in view Employee Service');
-      });
-
-
-
-      
-
     if (AppComponent.usertype == "\"SuperAdmin\" ") {
+
+      setTimeout(() => {
       this.userService.employeeView().subscribe(data => { this.data = data },
         err => {
           console.log('Error in view Employee Service');
         });
+        this.gifFail=false;
+      },3000);
     } 
-    
-    else {
-
-      alert('HI');
+    else
+     {
+      setTimeout(() => {
       this.userService.employeeViewByID(AppComponent.companyID, AppComponent.branchID, AppComponent.locRefName1, AppComponent.locrefID1).subscribe(data => { this.data = data },
         err => {
           console.log('Error in view Employee Service');
         });
+        this.gifFail=false;
+      },3000);
     }
 
   }
-
-
-
-
-
 
   private employeeDelete(id: number): void {
          

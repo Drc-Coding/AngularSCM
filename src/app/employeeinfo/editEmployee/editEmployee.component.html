@@ -144,134 +144,20 @@
 					<div class="col-lg-4">
 						<fieldset class="form-group">
 							<label class="form-label">Department</label>
-
-
-							<!-- <input type="text" class="form-control" id="department" placeholder="Enter Employee Department"
+							<input type="text" class="form-control" id="department" placeholder="Enter Employee Department"
 							 formControlName="department">
-							<div class="messages text-danger" *ngIf="employeeEdit.controls.department.errors?.pattern">
-								Text Only Accepts!</div> -->
-						
-								<select name="select" class="form-control" placeholder="Select Department"
-								formControlName="department"
-								(change)="getSubDepartment()">
-								<option selected disabled value="0">---Select Department---</option>
-								<option *ngFor="let dept of departmentarr;" value="{{dept[0]}}"> {{dept[1]}}
-								</option>
-							</select>
-						
+							<div class="messages text-danger" *ngIf="employeeEdit.controls.department.errors?.pattern">Text Only Accepts!</div>
 						</fieldset>
 					</div>
 
-
-
 					<div class="col-lg-4">
-							<fieldset class="form-group">
-								<label class="form-label">Sub Department</label>
-	
-								<!-- <input type="text" class="form-control" id="department"
-									placeholder="Enter Employee Sub Department" formControlName="subdepartment"> -->
-	
-	
-								<select name="select" class="form-control" placeholder="Select Sub Department"
-									formControlName="subdepartment" 	(change)="getDivision()">
-									<option selected disabled value="0">---Select Sub Department---</option>
-								
-									<option *ngFor="let subdept of subdepartmentarr;" value="{{subdept[0]}}"> {{subdept[1]}}
-									</option>
-								</select>
-	
-		
-								<!-- <div class="messages text-danger" *ngIf="myForm.controls.department.errors?.pattern">Text
-									only Accepts!</div> -->
-	
-	
-							</fieldset>
-						</div>
-	
+						<fieldset class="form-group">
+							<label class="form-label">Division</label>
+							<input type="text" class="form-control" id="division" placeholder="Enter Employee Division" formControlName="division">
+							<div class="messages text-danger" *ngIf="employeeEdit.controls.division.errors?.pattern">Text Only Accepts!</div>
+						</fieldset>
+					</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-					<div class="col-lg-4">
-							<fieldset class="form-group">
-								<label class="form-label">Division</label>
-	
-								<!-- <input type="text" class="form-control" id="division" placeholder="Enter Employee Division"
-									formControlName="division"> -->
-	
-									<select name="select" class="form-control" placeholder="Select Division"
-									formControlName="division" (change)="getSubDivision()">
-									<option selected disabled value="0">---Select Division---</option>
-								
-									<option *ngFor="let division of divsionarr;" value="{{division[0]}}"> {{division[1]}}
-									</option>
-								     </select> 
-	
-	
-								<!-- <div class="messages text-danger" *ngIf="myForm.controls.division.errors?.pattern">Text only Allowed!</div> -->
-	
-								</fieldset>
-						</div>
-				
-
-				
-
-					<div class="col-lg-4">
-							<fieldset class="form-group">
-								<label class="form-label">Sub Division</label>
-								<!-- <input type="text" class="form-control" id="division"
-									placeholder="Enter Employee Sub Division" formControlName="subdivision"> -->
-	
-	
-	
-								<select name="select" class="form-control" placeholder="Select Sub Division"
-									formControlName="subdivision"
-									(click)="searchwithcodeforsubdivsion($event.target.value, subdivsionmodel)">
-	
-									<option selected disabled value="0">---Select Sub Division---</option>
-		
-									<option *ngFor="let subdivision of subdivsionarr;" value="{{subdivision[0]}}">
-										{{subdivision[1]}}
-									</option>
-	
-								</select>
-	
-								<!-- <div class="messages text-danger" *ngIf="myForm.controls.division.errors?.pattern">Text only Allowed!</div> -->
-	
-	
-							</fieldset>
-						</div>
-	
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 					<div class="col-lg-4">
 						<fieldset class="form-group">
 							<label class="form-label">Desgination</label>
