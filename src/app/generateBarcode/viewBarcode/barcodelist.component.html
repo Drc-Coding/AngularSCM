@@ -48,7 +48,7 @@
 			<div class="form-inline justify-content-end">
 
 				<strong class="searchstyle">Search:</strong>
-					<input type="search" [(ngModel)]="filterQuery" [ngModelOptions]="{standalone: true}" class="form-control w-50" placeholder="Search Barcode">
+					<input type="search" [(ngModel)]="filterQuery" class="form-control w-50" placeholder=" Enter Product Name">
 			
 			</div>
 		</div>
@@ -57,8 +57,8 @@
 	<!-- <div class="panel-heading">User information</div>-->
 	<div class="dt-responsive" style="overflow:auto">
 
-		<table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable"
-		[mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+		<table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery"
+		 #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 			<thead>
 				<tr>
 					<th>
