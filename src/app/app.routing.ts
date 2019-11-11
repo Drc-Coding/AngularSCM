@@ -71,7 +71,7 @@ export const AppRoutes: Routes = [{
       loadChildren: './usersetting/usersetting.module#AddModules'
     }, {
       path: 'warehouse',
-      loadChildren: './warehouse/warehouse.module#WarehouseModules'
+      loadChildren: './warehouse/warehouse.module#WarehouseModule'
     }, {
       path: 'StockEntryForm',
       loadChildren: './stocks/stocks.module#StocksModule'
