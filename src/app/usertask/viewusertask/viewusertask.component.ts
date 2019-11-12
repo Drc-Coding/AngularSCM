@@ -311,7 +311,7 @@ export class ViewusertaskComponent implements OnInit {
 
   getTableValues() {
 
-    alert("data "+this.data);
+    //alert("data "+this.data);
 
     this.retrunFlag = this.basicValidation();
 

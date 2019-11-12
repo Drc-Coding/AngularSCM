@@ -31,7 +31,7 @@ export const UsertaskRoutes: Routes = [
 
         {
 
-            path: 'Usertask',
+            path: 'UserTask',
 
             component: AddUsertaskComponent,
 
@@ -42,7 +42,7 @@ export const UsertaskRoutes: Routes = [
         }, 
         
         {
-            path: 'Viewusertask',
+            path: 'ViewUserTask',
             component: ViewusertaskComponent,
             data: {
                 breadcrumb: 'View User Task',
@@ -50,7 +50,7 @@ export const UsertaskRoutes: Routes = [
         },
         
         {
-            path: 'Viewmytasks',
+            path: 'ViewMyTasks',
             component: ViewmytasksComponent,
             data: {
                 breadcrumb: 'View My Tasks',
@@ -61,7 +61,7 @@ export const UsertaskRoutes: Routes = [
     
         
         {
-            path: 'Pendingtasks',
+            path: 'PendingTasks',
             component: PendingtasksComponent,
             data: {
                 breadcrumb: 'Pendingtasks',
