@@ -77,9 +77,14 @@
         font-weight:bold;
         font-size:18px;
     }
+
     .paycheck{
         height:1.3em;
         width:1.4em;
+    }
+
+    .refill:disabled{
+       border-color:brown;
     }
    
 </style>
@@ -550,6 +555,7 @@
                     <div class="row">
                         <div class="col-lg-1"></div>
                         <div class="col-lg-7">
+                            <h5 *ngIf="setcusname" style="font-family:Montserrat;font-weight:bold">This Customer <span style="color:red"> {{cusname}} </span> is a Refill Customer</h5>
                             <h6 style="font-family:Montserrat;font-weight:bold;">
                                 If you Alert Customer for Refill
                                  <span (click)="openrefill()" *ngIf="opnrefill" class="ml-3" style="color:#52a00c;font-size:21px;cursor:pointer">Click Here!</span>
@@ -560,8 +566,12 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-1"></div>
-                        <div class="col-lg-3">
-                            <input type="text" class="form-control" *ngIf="refill" formControlName="refilldays" placeholder="Enter Days"  style="font-size:20px;font-weight:bold"/>
+                        <div class="col-lg-4" *ngIf="refill">
+                            <div class="form-inline">
+                            <input type="checkbox" class="tabcheck"  formControlName="refillcus" (click)="refillprocess($event,1)"/>
+                            <input type="text" class="form-control refill ml-2"  formControlName="refilldays" placeholder="Enter Days"
+                            style="font-size:20px;font-weight:bold" disabled/>
+                            </div>
                         </div>
                     </div>
       

@@ -1,5 +1,5 @@
 import { DoctorService } from '../doctor.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponent } from '../../app.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
@@ -12,6 +12,10 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 })
 export class DoctorlistComponent implements OnInit {
 
+  
+ // @ViewChild('widgetsContent', { read: ElementRef }) public widgetsContent: ElementRef<any>;
+
+
   public data: any;
   public rowsOnPage: number = 20;
   public filterQuery: string = "";
@@ -20,6 +24,7 @@ export class DoctorlistComponent implements OnInit {
   gifFail: boolean=true;
   constructor(private router: Router, private doctorService: DoctorService, private notificationsComponent: NotificationsComponent) { }
 
+  
   ngOnInit(): void {
     setTimeout(() => {
     this.doctorService.viewDoctor(AppComponent.companyID, AppComponent.branchID).subscribe(data => this.data = data,
@@ -28,6 +33,18 @@ export class DoctorlistComponent implements OnInit {
       });
       this.gifFail=false;
     },3000);
+  }
+
+
+  public scrollRight(): void {
+    document.querySelector('div.middle').scrollLeft += 150;
+   // alert(get);
+    //get.nativeElement.scrollBy({ left: (get.nativeElement.scrollLeft + 150), behavior: 'smooth' });
+  }
+
+  public scrollLeft(get): void {
+    document.querySelector('div.middle').scrollLeft -= 150;
+    //get.nativeElement.scrollBy({ left: (get.nativeElement.scrollLeft - 150), behavior: 'smooth' });
   }
 
   deleteDoctor(id: any) {
@@ -47,7 +64,5 @@ export class DoctorlistComponent implements OnInit {
     });
   }
 }
-  addDoctor() {
-    this.router.navigate(['Doctor/AddDoctor']);
-  }
+
 }

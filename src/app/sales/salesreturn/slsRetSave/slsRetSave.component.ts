@@ -39,8 +39,10 @@ export class slsRetSaveComponent implements OnInit {
     i;
     selobj;
     truncatepos=2;
-  
-    constructor(private userService: slsRetSaveService  ,    private   dateformat: dateFormatPipe ,private formBuilder: FormBuilder ,config: NgbDropdownConfig  ,  private notificationsComponent:NotificationsComponent,private router: Router  ) {
+    deviceObj:any;
+
+    constructor(private userService: slsRetSaveService  ,    private   dateformat: dateFormatPipe ,private formBuilder: FormBuilder ,config: NgbDropdownConfig  ,  
+    private notificationsComponent:NotificationsComponent,private router: Router,private appComponent: AppComponent) {
   
         config.autoClose = false;
     }
@@ -177,6 +179,28 @@ export class slsRetSaveComponent implements OnInit {
     }
 
 
+    
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
 
 
 
@@ -184,7 +208,7 @@ onSubmit(){
   
     var  valflag:Number =0 ;
   
-        valflag  =this.validnew( )  ;
+        valflag =this.validnew()  ;
 
      const control = <FormArray>this.registerForm.controls['invoice'];
 
@@ -196,12 +220,11 @@ onSubmit(){
       this.userService.saveSalesReturn(JSON.stringify(this.registerForm.value)  ).subscribe(data => {this.saveSrProducts(data)  ,  this.saveCreditNote(data) },
         errorCode => console.log(errorCode));
         }
-        setTimeout(() => {
-          this.router.navigate(['SalesReturn/ViewSalesReturn']);
-        }, 2000);
+
+        this.router.navigate(['SalesReturn/ViewSalesReturn']);
+
   }
     
-
 
 
 
@@ -212,6 +235,7 @@ onSubmit(){
   if(data==1){ 
             this.userService.saveSrProducts(JSON.stringify( control.value) ) .subscribe(data => {this.savevalid(data)   },
             errorCode => console.log(errorCode));
+
   }
     
     }
@@ -241,6 +265,12 @@ onSubmit(){
     savevalid(data:any){
       if(data==1){ 
       
+        this.devicedetails();
+        this.deviceObj.apiname="api/slsretn/saveSalesReturn";
+        this.deviceObj.description="SalesReturn Created";
+
+        this.userService.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+        
             this.notificationsComponent.addToast({title:'Success', msg:'Data  Saved  ', timeout: 5000, theme:'default', position:'top-right',type:'success'}); 
             this.clear() ; 
     
@@ -249,7 +279,8 @@ onSubmit(){
         this.notificationsComponent.addToast({title:'Error', msg:'Data Not  saved  ', timeout: 5000, theme:'default', position:'top-right',type:'error'}); 
     
       }
-        }
+       
+    }
 
 
 
@@ -617,15 +648,6 @@ var sprod=control.value ;
 
 
 
-
-
-
-
-
-
-
-
-
 viewSInvoiceProduct() {
       
 
@@ -687,9 +709,6 @@ viewServSiProduct(data:any) {
 
 
     v  = 1  ;
-
-
-
   
     control.insert(0,this.formBuilder.group({
 
@@ -697,10 +716,7 @@ viewServSiProduct(data:any) {
                 srrefid:  [ , []] ,  
                 sirefid:  [data[this.i][v++    ] , []]  , 
                 drugproductid:  [data[this.i][v++    ] , []]  ,   
-           
-            
-         
-              
+
                 batchrefid:  [data[this.i][v++    ] , []]  ,  
                 totalqty: [data[this.i][v++    ]  , []] , 
                 unitprice:  [(data[this.i][v++]).toFixed(2) , []]  , 
@@ -720,13 +736,7 @@ viewServSiProduct(data:any) {
                 sgstamt:  [data[this.i][v++    ] , []]  ,   
                 cgstamt:  [data[this.i][v++    ] , []]  ,    
                 igstamt:  [data[this.i][v++    ] , []]  ,  
-        
-        
-        
-            
-             
-              
-              
+
                clientcdate: [ this.dateformat.transform04()   , []],
                clientcdate1: [ this.dateformat.transform04()   , []],
                 createdby   : [this.selobj.userid   , []], 
@@ -741,9 +751,6 @@ viewServSiProduct(data:any) {
                 gstflag:[data[this.i][v++    ] , []]  ,
                 frgstflag: [data[this.i][v++    ] , []]  ,
                 convfactor: [data[this.i][v++    ] , []]  ,  
-               
-        
-              
             
                 crntsiqty:  [data[this.i][v++    ] , []], 
                 crntstkqty: [data[this.i][v++    ] , []]  ,
@@ -765,14 +772,8 @@ viewServSiProduct(data:any) {
                 siprodrefid: [data[this.i][v++    ] , []]  , 
                }));
     
-               
-
-      
 
   }
-
- 
-
 
 }
 
@@ -866,13 +867,6 @@ init(){
 
 
 }
-
-
-
-
-
-
-
 
 
 

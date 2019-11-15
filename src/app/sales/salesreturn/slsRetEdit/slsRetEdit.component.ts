@@ -3,23 +3,12 @@ import {Component, OnInit  ,ViewChild} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup, Validators  ,  FormArray} from '@angular/forms';
 import {CustomValidators} from 'ng2-validation';
-
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import {NotificationsComponent }  from  '../../../notifications/notifications.component'  ;
-
 import {slsRetEditService} from './slsRetEdit.service' ;
-
-
-
 import { DxDataGridComponent } from "devextreme-angular";
-
- import {dateFormatPipe }  from  '../../../notifications/notifications.datepipe'  ;
-
-
- import { AppComponent } from '../../../app.component';
- 
-
-
+import {dateFormatPipe }  from  '../../../notifications/notifications.datepipe'  ;
+import { AppComponent } from '../../../app.component';
 
 @Component({
   selector: 'app-slsRetEdit',
@@ -46,15 +35,16 @@ export class slsRetEditComponent implements OnInit {
 
     editdata=[]  ;
     truncatepos=2;
+  deviceObj: any ;
  
-   constructor(private userService: slsRetEditService ,private router: Router    ,    private   dateformat: dateFormatPipe    ,private formBuilder: FormBuilder ,config: NgbDropdownConfig ,  private notificationsComponent:NotificationsComponent    , private route: ActivatedRoute ) {
+   constructor(private userService: slsRetEditService ,private router: Router  ,  private   dateformat: dateFormatPipe ,
+    private formBuilder: FormBuilder ,config: NgbDropdownConfig ,  private notificationsComponent:NotificationsComponent    ,
+    private route: ActivatedRoute,private appComponent: AppComponent ) {
  
        config.autoClose = false;
    }
  
    ngOnInit() {
-
- 
 
     this.selobj  = {   userid  : AppComponent.userID , locrefid  :AppComponent. locrefID1 , locname  :AppComponent.locRefName1  , countryrefid  :AppComponent.countryID   , companyid  :AppComponent.companyID  
       , branchrefid  :AppComponent.branchID     , vatdispflag  :AppComponent.vatDispFlag   , boxdispflag  :AppComponent.BoxDispFlag  
@@ -158,10 +148,31 @@ export class slsRetEditComponent implements OnInit {
 
 
 
+  }
 
- 
-   }
 
+
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
 
 
 
@@ -175,19 +186,13 @@ onSubmit(){
      const control = <FormArray>this.registerForm.controls['invoice'];
 
 
-     
-
    var answer =  confirm("Save data?");
    
 if (answer&& valflag==0) { 
 this.userService.saveSalesReturn(JSON.stringify(this.registerForm.value)).subscribe(data => {this.saveSrProducts(data)},
 errorCode => console.log(errorCode));
 
-
 }
-setTimeout(() => {
-  this.router.navigate(['SalesReturn/ViewSalesReturn']);
-}, 2000);
    
  }
 
@@ -195,14 +200,20 @@ setTimeout(() => {
  
    
     saveSrProducts(data:any){
+
       const control = <FormArray>this.registerForm.controls['invoice'];
       if(data==1){ 
 
-  
           this.userService.saveSrProducts(JSON.stringify( control.value  ) ) .subscribe(data => {this.savevalid(data)},
           errorCode => console.log(errorCode));
 
+         
       }
+
+
+  setTimeout(() => {
+  this.router.navigate(['SalesReturn/ViewSalesReturn']);
+  }, 2000);
   
   }
   
@@ -211,6 +222,12 @@ setTimeout(() => {
 
 
     if(data==1){ 
+
+      this.devicedetails();           
+      this.deviceObj.apiname="api/slsretn/updateSalesReturn";
+      this.deviceObj.description="Update SalesReturn";
+     
+      this.userService.editdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
     
           this.notificationsComponent.addToast({title:'Success', msg:'Data  Saved  ', timeout: 5000, theme:'default', position:'top-right',type:'success'}); 
    
@@ -229,7 +246,7 @@ setTimeout(() => {
             this.router.navigateByUrl("/SalesReturn/ViewSalesReturn");
             }else{
       
-          this.notificationsComponent.addToast({title:'Error', msg:' Not Delted', timeout: 5000, theme:'default', position:'top-right',type:'error'}); 
+          this.notificationsComponent.addToast({title:'Error', msg:' Not Deleted', timeout: 5000, theme:'default', position:'top-right',type:'error'}); 
       
         }
          
@@ -880,19 +897,13 @@ for (this.i = 0; this.i < data.length; this.i++) {
       gstflag: [data[this.i][v++    ] , []]   ,
       frgstflag: [data[this.i][v++    ] , []]   ,
       convfactor:  [data[this.i][v++    ] , []]  ,
-
-
       indvqty: [  , []]  ,
-
-      
       crntsiqty:  [data[this.i][v++    ] , []], 
       crntstkqty: [data[this.i][v++    ] , []]  ,
       sinvrefid : [data[this.i][v++    ] , []]   ,  
       siqty: [data[this.i][v++    ] , []] , 
       clientcdate  :   [data[this.i][v    ] , []] ,
       clientcdate1  :   [data[this.i][v++    ] , []] ,
-
-
 
       productname: [data[this.i][0    ] , []]   ,   
       calcflag: [0  , []]   , 
@@ -909,10 +920,7 @@ for (this.i = 0; this.i < data.length; this.i++) {
 
 }
 
-
-
 }
-
 
 
 
@@ -928,7 +936,14 @@ for (this.i = 0; this.i < data.length; this.i++) {
       errorCode => console.log(errorCode));
           
    }
-    }
+
+   this.devicedetails();           
+   this.deviceObj.apiname="api/slsretn/deleteSalesRetn";
+   this.deviceObj.decription="Delete SalesReturn";
+  
+   this.userService.deletedevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+   
+  }
 
 
 

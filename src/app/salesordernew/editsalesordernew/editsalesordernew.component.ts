@@ -22,9 +22,13 @@ export class editsalesOrderComponentnew implements OnInit {
   textnumbers = '^[0-9]+(\.[0-9]{1,2})?$';
   pattern: any = '^[0-9]+(\.[0-9]{1,3})?$';
   id: any;
+  deviceForm: FormGroup;
+  deviceObj: any;
+
   constructor(private salesOrderService: salesOrderServicenew, private dateformat: dateFormatPipe,private notificationsComponent: NotificationsComponent,
     private fb: FormBuilder, private rout: ActivatedRoute, private route: Router, private appComponent: AppComponent) {
-    this.salesOrderForm = this.fb.group({
+   
+      this.salesOrderForm = this.fb.group({
       id: this.id,
       orderdate: ['',[]],
       drugproductid: ['', []],
@@ -44,13 +48,15 @@ export class editsalesOrderComponentnew implements OnInit {
       ]),
 
     });
+
+
   }
 
   ngOnInit() {
     this.id = this.rout.snapshot.paramMap.get('id');
     this.salesOrderForm.get('deliverytype').setValue('opt1');
     this.salesOrderForm.get('patientid').setValue('opt1');
-    
+
     this.salesOrderService.editSalesdata(this.id).subscribe(data => {
       this.salesOrderForm.patchValue(data);
     //  this.salesOrderForm.get('orderdate').setValue(data.orderdate);
@@ -91,9 +97,11 @@ export class editsalesOrderComponentnew implements OnInit {
         console.log('Error occured On searchProduct()');
       });
   }
+
   setFocus() {
     this.qty.nativeElement.focus();
   }
+
   getProductInfo() {
     if (this.salesOrderForm.get('drugproductid').value == '' || this.salesOrderForm.get('drugproductid').value == null) {
       this.notificationsComponent.addToast({ title: 'Error Message', msg: 'Please Select Your Product', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
@@ -101,10 +109,9 @@ export class editsalesOrderComponentnew implements OnInit {
       this.salesOrderService.getsalesProdcut(this.salesOrderForm.get('drugproductid').value).subscribe(data => { this.getProoductData(data) });
     }
   }
+
+
   inc = 0;
-
-
-
   getProoductData(data: any) {
     let flag: number = 0;
     if (data !== null || data !== undefined) {
@@ -183,6 +190,30 @@ flag1:boolean = false;
   }
 
 
+  //Get Device Details
+
+
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        decription:'',
+        apiname:''
+
+      };
+  
+}
 
 
   public flag: boolean = false;
@@ -200,7 +231,13 @@ flag1:boolean = false;
         if (data == true) {
           this.salesOrderService.updateSaleRecord(JSON.stringify(getData.value)).subscribe(data => {
             if (data == true) {
-              // this.dataSource = [];
+              
+              this.devicedetails();
+              this.deviceObj.apiname="api/updateSalesorder";
+              this.deviceObj.description="SalesOrder Modified";
+              
+              this.salesOrderService.editdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+
               this.notificationsComponent.addToast({ title: 'Sucess', msg: 'Data Updated Sucessfully..', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
               this.route.navigate(['SalesOrder/ViewSalesOrder']);
             }
@@ -279,6 +316,6 @@ flag1:boolean = false;
   }
 
   goBack() {
-    this.route.navigate(['SalesOrder/ViewSalesOrder']);
+    this.route.navigate(['SalesOrder/SalesOrderHistory']);
   }
 }

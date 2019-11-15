@@ -59,6 +59,10 @@ export class slsInvSaveComponent implements OnInit {
   showimage: boolean=false;
   showeyeslash: boolean=false;
   showeye: boolean=true;
+  refillset: any;
+  typeval: boolean;
+  cusname: any;
+  setcusname: boolean=false;
   
  
 
@@ -72,6 +76,7 @@ export class slsInvSaveComponent implements OnInit {
       , stripdispflag: AppComponent.StripDispFlag, tabdispflag: AppComponent.TabDispFlag
     };
     this.registerForm = this.formBuilder.group({
+      refillcus:[,[]],
       salesorderrefid: [, []],
       salesbillid: [, []],
       salesbilltype: [, []],
@@ -235,6 +240,8 @@ export class slsInvSaveComponent implements OnInit {
     this.init();
     $('#autolist').hide();
     $('#autolist1').hide();
+
+    this.typeval=true;
   }
 
 
@@ -758,6 +765,23 @@ export class slsInvSaveComponent implements OnInit {
       }));
     }
   }
+
+  refillprocess(event,id){
+
+    if(event.target.checked){
+    this.refillset=id;
+    this.registerForm.get('refilldays').enable();
+    }
+
+    else{
+      this.refillset=0;
+      this.registerForm.get('refilldays').disable();
+   
+    }
+
+
+  }
+
   onSubmit() {
     //  alert(JSON.stringify(this.registerForm.value));
     var valflag: Number = 0;
@@ -773,10 +797,12 @@ export class slsInvSaveComponent implements OnInit {
       } else {
         this.registerForm.get('salesorderrefid').setValue(0);
       }
+      this.registerForm.get('refillcus').setValue(this.refillset);
       this.userService.saveSalesInvoice(JSON.stringify(this.registerForm.value)).subscribe(data => { this.saveSIProducts(data), this.saveSISalesJournal(data), this.saveSIReceipt(data) },
         errorCode => console.log(errorCode));
     }
   }
+
   poprint() {
     this.onSubmit();
     if (this.soid != undefined || null || '') {
@@ -804,9 +830,6 @@ export class slsInvSaveComponent implements OnInit {
         //alert(this.soid);
         this.notificationsComponent.addToast({ title: 'Success', msg: 'Data  Saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
         this.clear();
-
-
-
 
       },
 
@@ -1313,9 +1336,22 @@ export class slsInvSaveComponent implements OnInit {
     this.userService.getcustemail(this.registerForm.get('customerrefid').value).subscribe(
       data => {
 
-
+        this.cusname=data[0][1];
         this.registerForm.get('customername').setValue(data[0][1]),
-          this.registerForm.get('email').setValue(data[0][2])
+        this.registerForm.get('email').setValue(data[0][2])
+
+          if(data[0][3]==1){
+            this.refill=true;
+            this.clsrefill=true;
+            this.opnrefill=false;
+            this.setcusname=true;
+          }
+          else{
+            this.refill=false;
+            this.clsrefill=false;
+            this.opnrefill=true;
+            this.setcusname=false;
+          }
       });
 
 
@@ -1380,6 +1416,7 @@ export class slsInvSaveComponent implements OnInit {
     this.refill=false;
     this.clsrefill=false;
     this.opnrefill=true;
+    this.setcusname=false;
   }
 
 

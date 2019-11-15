@@ -20,6 +20,7 @@ export class slsRetEditService  {
   options  ;
   
     private    URL='api/slsretn/';
+    private deviceURL='api/User/saveUserActivity';
 
 
   ngOnInit() {
@@ -125,5 +126,25 @@ export class slsRetEditService  {
     return this.http.post( this.URL+`deleteSalesRetn`, serobj, options)
                 .map((res: Response) => res.json());
  }
+
+
+ 
+ editdevicedetails(data) {
+  let header = new Headers({'Content-Type': 'application/json'});
+  let options = new RequestOptions({headers: header});
+
+   return this.http.post( this.deviceURL, data, options)
+    .map((res: Response) => res.json());
+}
+
+
+deletedevicedetails(data) {
+  
+  let header = new Headers({'Content-Type': 'application/json'});
+  let options = new RequestOptions({headers: header});
+
+   return this.http.post( this.deviceURL, data, options)
+    .map((res: Response) => res.json());
+}
 
 }

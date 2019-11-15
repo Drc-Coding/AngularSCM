@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { dateFormatPipe } from './notifications/notifications.datepipe';
 import { AppService } from './app.service';
+import { Ng2DeviceService } from 'ng2-device-detector';
 //***decrypt***/
 import * as CryptoJS from 'crypto-js';
 
@@ -39,9 +40,14 @@ export class AppComponent implements OnInit {
 
   localList: any;
   ipAddress: any;
+  deviceInfo: any=null;
+  devicetype: any;
+  browser: any;
+  os: any;
+  osversion: any;
 
   constructor(private router: Router, private dateformatPipe: dateFormatPipe,
-    private appservice: AppService ) { }
+    private appservice: AppService,private deviceService: Ng2DeviceService ) { }
   
   ngOnInit() {
     this.menu = JSON.parse(sessionStorage.getItem("user"));
@@ -54,16 +60,46 @@ export class AppComponent implements OnInit {
     AppComponent.date = this.dateformatPipe.transform(dates);
     this.getDecrypt();
     this.getIP();
+    this.devicedetails();
   }
 
   getIP()
   {
     this.appservice.getIPAddress().subscribe(data=>{
-        this.ipAddress=JSON.stringify(data);
-       
+      this.ipAddress=JSON.stringify(data.ip).replace(/^"|"$/g, '')
+     
   });
   }
 
+
+  devicedetails() {
+
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    
+    this.browser=this.deviceInfo.browser;
+    this.os=this.deviceInfo.os;
+    this.osversion=this.deviceInfo.os_version;
+
+    const isMobile = this.deviceService.isMobile();
+    const isTablet = this.deviceService.isTablet();
+    const isDesktopDevice = this.deviceService.isDesktop();
+    
+    if(isMobile==true){
+      this.devicetype="Mobile"
+    }
+      else if(isTablet==true){
+        this.devicetype="Tablet"
+      }
+
+      else if(isDesktopDevice==true){
+        this.devicetype="Desktop"
+      }
+
+      else{
+        this.devicetype="Other Devices"
+      }
+    
+  }
 
    
   getDecrypt(): any {

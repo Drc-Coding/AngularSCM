@@ -36,7 +36,7 @@
 							</select>
 						</fieldset>
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-4">
 						<fieldset class="form-group">
 							<label class="form-label">Location Name</label>
 							<select name="select" class="form-control" formControlName="locname" (change)="getLoc()"
@@ -48,34 +48,29 @@
 							</select>
 						</fieldset>
 					</div>
-					<div class="col-lg-2">
-
-						<fieldset class="form-group">
-							<label class="form-label">Firm Name</label>
-							<select name="select" class="form-control" formControlName="locrefid" (click)="getFirm()"
-								onfocus="if(this.options.length>5){this.size=5;}"
-								onmousedown="if(this.options.length>5){this.size=5;}"
-								onkeypress="if(this.options.length>5){this.size=5;}" onchange='this.size=0;'
-								onblur="this.size=0;">
-								<option value="opt1" selected disabled>--Select Firm Name--</option>
-								<option *ngFor="let locrefid of firms" value={{locrefid[0]}}>{{locrefid[1]}}</option>
-
-							</select>
-						</fieldset>
-					</div>
+				
 
 				</div>
 
 				<div class="form-group row">
 
-					<div class="col-lg-4">
-						<fieldset class="form-group">
-							<label class="form-label">Employee Code</label>
-							<input type="text" onkeyup="this.value = this.value.toUpperCase();" class="form-control"
-								formControlName="employeecode" placeholder="Enter the EmployeeCode">
-						</fieldset>
-					</div>
+						<div class="col-lg-4">
 
+								<fieldset class="form-group">
+									<label class="form-label">Firm Name</label>
+									<select name="select" class="form-control" formControlName="locrefid" (click)="getFirm()"
+										onfocus="if(this.options.length>5){this.size=5;}"
+										onmousedown="if(this.options.length>5){this.size=5;}"
+										onkeypress="if(this.options.length>5){this.size=5;}" onchange='this.size=0;'
+										onblur="this.size=0;">
+										<option value="opt1" selected disabled>--Select Firm Name--</option>
+										<option *ngFor="let locrefid of firms" value={{locrefid[0]}}>{{locrefid[1]}}</option>
+		
+									</select>
+								</fieldset>
+							</div>
+
+				
 					<div class="col-lg-4">
 						<fieldset class="form-group">
 							<label class="form-label">Employee Mode</label>
@@ -136,6 +131,14 @@
 				</div>
 
 				<!-- <div class="form-group row">
+
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label">Employee Code</label>
+							<input type="text" onkeyup="this.value = this.value.toUpperCase();" class="form-control"
+								formControlName="employeecode" placeholder="Enter the EmployeeCode">
+						</fieldset>
+					</div>
 					
 					 <div class="col-lg-4">
 						<fieldset class="form-group">
@@ -170,15 +173,6 @@
 								<option *ngFor="let dept of departmentarr;" value="{{dept[0]}}"> {{dept[1]}}
 								</option>
 							</select>
-
-
-
-
-
-
-
-
-
 						</fieldset>
 					</div>
 
@@ -202,18 +196,8 @@
 								</option>
 							</select>
 
-
-
-
-
-
 							<!-- <div class="messages text-danger" *ngIf="myForm.controls.department.errors?.pattern">Text
 								only Accepts!</div> -->
-
-
-
-
-
 
 						</fieldset>
 					</div>
@@ -227,12 +211,9 @@
 							<!-- <input type="text" class="form-control" id="division" placeholder="Enter Employee Division"
 								formControlName="division"> -->
 
-
-
-
 							<select name="select" class="form-control" placeholder="Select Division"
 								formControlName="division"
-								(click)="searchwithcodefordivision($event.target.value, divsionmodel)"
+								(change)="searchwithcodefordivision($event.target.value, divsionmodel)"
 								(change)="getSubDivision()">
 								<option selected disabled value="0">---Select Division---</option>
 								<option value="division" style="background-color: #52aa0c"> Add Division
@@ -241,35 +222,10 @@
 								</option>
 							</select> 
 
-
-
-
-
-
-
-
-
-
-
-
-
 							<!-- <div class="messages text-danger" *ngIf="myForm.controls.division.errors?.pattern">Text only Allowed!</div> -->
-
-
-
-
-
-
-
-
-
 
 						</fieldset>
 					</div>
-			
-			
-			
-			
 			
 				</div>
 
@@ -277,7 +233,6 @@
 
 
 				<div class="form-group row">
-
 
 					<div class="col-lg-4">
 						<fieldset class="form-group">
@@ -289,7 +244,7 @@
 
 							<select name="select" class="form-control" placeholder="Select Sub Division"
 								formControlName="subdivision"
-								(click)="searchwithcodeforsubdivsion($event.target.value, subdivsionmodel)">
+								(change)="searchwithcodeforsubdivsion($event.target.value, subdivsionmodel)">
 
 								<option selected disabled value="0">---Select Sub Division---</option>
 
@@ -396,6 +351,8 @@
 					</div>
 
 				</div>
+
+
 				<div class="form-group row">
 
 					<div class="col-lg-4">
@@ -451,6 +408,8 @@
 
 					<div class="col-lg-4">
 
+							<label class="form-label">Employee Photo (Upload Size Max 500 KB)</label>
+
 							<div class="form-inline">
 								<input type="file" class="form-control" id="imagefile"
 								(change)="fileChange($event)" #fileInput accept="image/*"/>
@@ -498,27 +457,7 @@
 
 					<div class="col-lg-1"></div>
 					<div class="col-lg-3">
-						<button type="submit"  class="btn btn-round">Save</button>
-					</div>
-
-
-					<div class="col-lg-3">
-						<button type="submit"  class="btn btn-round" [routerLink]="['/Employee/editEmployee/:id']">Edit</button>
-					</div>
-
-
-					<!-- [attr.disabled]="!myForm.valid" -->
-					<div class="col-lg-3">
-						<button type="submit" class="btn btn-round"
-							[routerLink]="['/Employee/ViewEmployee']">View</button>
-					</div>
-
-					<div class="col-lg-2">
-						<label class="btn btn-round mt-4" (click)="opendept(dept)">Tax Excempt</label>
-					</div>
-
-					<div class="col-lg-2">
-						<label class="btn btn-round mt-4" (click)="opensubdivision(subdivision)">Tax Except</label>
+						<button type="submit"  class="btn btn-round" [disabled]="!myForm.valid">Save</button>
 					</div>
 
 				</div>

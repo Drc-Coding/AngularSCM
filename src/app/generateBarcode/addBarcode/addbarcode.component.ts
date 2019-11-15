@@ -9,6 +9,7 @@ import { empty } from 'rxjs/Observer';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { AppComponent } from '../../app.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
+
 @Component({
   selector: 'app-addBarcode',
   templateUrl: './addBarcode.component.html',

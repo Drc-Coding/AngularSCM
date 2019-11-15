@@ -23,9 +23,12 @@ export class addsalesOrderComponentnew implements OnInit {
   destination = [];
   sotype=[];
   selobj;
+  deviceObj: any;
+
   constructor(private salesOrderService: salesOrderServicenew, private notificationsComponent: NotificationsComponent,
     private fb: FormBuilder, private route: Router, private appComponent: AppComponent,private dateformat: dateFormatPipe) {
     this.selobj = { userid: AppComponent.userID, locrefid: AppComponent.locrefID1, locname: AppComponent.locRefName1, countryrefid: AppComponent.countryID, companyid: AppComponent.companyID, branchrefid: AppComponent.branchID };
+    
     this.salesOrderForm = this.fb.group({
       orderdate: [this.dateformat.transform05(Date.now()), []],
       drugproductid: ['', []],
@@ -50,8 +53,12 @@ export class addsalesOrderComponentnew implements OnInit {
       sDetails: this.fb.array([
       ]),
     });
+
   }
+
+
   ngOnInit() {
+
     this.salesOrderForm.get('deliverytype').setValue('opt1');
     this.salesOrderForm.get('patientid').setValue('opt1');
     this.salesOrderForm.get('tolocname').setValue(0);
@@ -64,8 +71,10 @@ export class addsalesOrderComponentnew implements OnInit {
       err => {
         console.log('Error Occured ');
        });
+
     if (AppComponent.shopID != 0) {
       this.salesOrderForm.get('locrefid').setValue(AppComponent.shopID);
+     
       this.salesOrderService.patientList(AppComponent.companyID, AppComponent.branchID, AppComponent.shopID, AppComponent.locrefID).subscribe(data => { this.patientlist = data },
         err => {
           console.log('Error occured On patientList()');
@@ -74,6 +83,7 @@ export class addsalesOrderComponentnew implements OnInit {
     }
     if (AppComponent.warehouseID != 0) {
       this.salesOrderForm.get('locrefid').setValue(AppComponent.warehouseID);
+     
       this.salesOrderService.patientList(AppComponent.companyID, AppComponent.branchID, AppComponent.warehouseID, AppComponent.locrefID).subscribe(data => { this.patientlist = data },
         err => {
           console.log('Error occured On patientList()');
@@ -82,6 +92,7 @@ export class addsalesOrderComponentnew implements OnInit {
     }
     if (AppComponent.hospitalID != 0) {
       this.salesOrderForm.get('locrefid').setValue(AppComponent.hospitalID);
+     
       this.salesOrderService.patientList(AppComponent.companyID, AppComponent.branchID, AppComponent.hospitalID, AppComponent.locrefID).subscribe(data => { this.patientlist = data },
         err => {
           console.log('Error occured On patientList()');
@@ -89,6 +100,9 @@ export class addsalesOrderComponentnew implements OnInit {
       this.autoIncrement(AppComponent.companyID, AppComponent.branchID, AppComponent.hospitalID, AppComponent.locrefID);
     }
   }
+
+
+
   autoIncrement(cid: any, bid: any, lrefid: any, lname: any) {
     this.salesOrderService.autoIcrement(cid, bid, lrefid, lname).subscribe(data => {
       this.salesOrderForm.get('salesorderno').setValue(data.toString())
@@ -97,6 +111,7 @@ export class addsalesOrderComponentnew implements OnInit {
         console.log('Error occured On autoIcrement()');
       });
   }
+
   searchProduct(searchValue: any) {
     this.salesOrderService.searchProduct(searchValue, this.salesOrderForm.get('companyrefid').value, this.salesOrderForm.get('branchrefid').value, this.salesOrderForm.get('locrefid').value, this.salesOrderForm.get('locname').value).subscribe(data => {
       this.searchProducts = [];
@@ -108,6 +123,7 @@ export class addsalesOrderComponentnew implements OnInit {
         console.log('Error occured On searchProduct()');
       });
   }
+
   setFocus() {
     this.qty.nativeElement.focus();
   }
@@ -119,6 +135,7 @@ export class addsalesOrderComponentnew implements OnInit {
       this.salesOrderService.getsalesProdcut(this.salesOrderForm.get('drugproductid').value).subscribe(data => { this.getProoductData(data) });
     }
   }
+
   inc = 0;
   getProoductData(data: any) {
     
@@ -150,6 +167,7 @@ export class addsalesOrderComponentnew implements OnInit {
       }
     }
   }
+  
   setProoductData(d0: any, d1: any, d2: any, d3: any) {
     return this.fb.group({
       ID: this.inc,
@@ -164,35 +182,59 @@ export class addsalesOrderComponentnew implements OnInit {
       tabletqty: 0,
     });
   }
-  // getdata(event) {
-  //   //Table dataSource Function Write Here//
-  // }
+ 
+
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        decription:'',
+        apiname:''
+
+      };
+  
+}
+
   public flag: boolean = false;
-
-
   onSubmit() {
+
     this.flag = this.salesOrderValidation();
+
     if (this.flag == true) {
       this.appComponent.ngOnInit();
       this.salesOrderForm.get('clientcdate').setValue(this.dateformat.transform04());
-
-     
+    
       const getData = <FormArray>this.salesOrderForm.controls['sDetails'];
      let data: any = getData.value
       this.salesOrderForm.get('totalitem').setValue(data.length);
 
-  
 
       this.salesOrderService.createSalesorder(JSON.stringify(this.salesOrderForm.value)).subscribe(data => {
         if (data == true) {
-        
           this.salesOrderService.createSaleRecord(JSON.stringify(getData.value)).subscribe(data => {
+           
             if (data == true) {
+             
+              this.devicedetails();
+              this.deviceObj.apiname="api/saveSalesorder";
+              this.deviceObj.description="Add SalesOrder"
+
+              this.salesOrderService.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+             
               this.notificationsComponent.addToast({ title: 'Success Message', msg: 'Data Saved Successfully.', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
-             setTimeout(() => {
               this.route.navigate(['SalesOrder/SalesOrderHistory']);
-             }, 2000);
-              
+            
             }
           });
         } else {
@@ -204,6 +246,8 @@ export class addsalesOrderComponentnew implements OnInit {
         })
     }
   }
+
+
   salesOrderValidation(): boolean {
     if (this.salesOrderForm.get('orderdate').value == '' || this.salesOrderForm.get('orderdate').value == null) {
       this.notificationsComponent.addToast({ title: 'Error Message', msg: 'Required Order Date', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });

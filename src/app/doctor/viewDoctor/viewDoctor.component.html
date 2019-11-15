@@ -18,14 +18,152 @@
           font-size: 15px;
           color: red;
       } 
+
+/* Start  */
+
+  ol.progtrckr {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+ol.progtrckr li {
+    display: inline-block;
+    text-align: center;
+    line-height: 3.5em;
+    width:20%;
+}
+
+ol.progtrckr li.progtrckr-done {
+    color: black;
+    border-bottom: 4px solid yellowgreen;
+    counter-increment: section;
+}
+
+ol.progtrckr li:after {
+    content: "\00a0\00a0";
+}
+ol.progtrckr li:before {
+    position: relative;
+    bottom: -2.5em;
+    float: left;
+    left: 50%;
+    line-height: 1em;
+}
+
+ol.progtrckr li.progtrckr-done:before {
+    /* content: "\2713";   Tick Content*/ 
+   
+    content: counter(section);
+    color: white;
+    background-color: yellowgreen;
+    height: 2.2em;
+    width: 2.2em;
+    line-height: 2.2em;
+    border: none;
+    border-radius: 2.2em;
+}
+
+li.progtrckr-done:nth-child(5n+1) {
+    border-left: 4px solid yellowgreen;  
+}
+
+
+li.progtrckr-done:first-child {
+    border-left: 0px;  
+}
+
+
+/*  End */
+
+.middle{
+  width:500px;
+  overflow-x:auto;
+}
+
+.progs{
+  width:23%;
+  border-bottom: 3px solid green;
+}
+
+.progtrckrs{
+  text-align: center;
+  font-weight:bold;
+  padding:1.3em;
+}
+
+.count{
+    padding: 0.5em;
+    text-align: center; 
+    height: 2.5em;
+    width: 2.5em;
+    color: white;
+    background-color: yellowgreen;
+    border-radius: 2.2em;
+    position: absolute;
+    left: 10%;
+    margin-top: -1.3em;
+}
+
   </style>
 
     <app-card>  
 
-        	<div align="right">
-              <button class="btn btn-round" (click)="addDoctor()">Add Doctor</button>
-            </div>  <br> 
-             
+      <div class="container">
+        <ol class="progtrckr">
+            <li class="progtrckr-done" *ngFor="let val of data;let i=index">{{val[0]}}</li>      
+        </ol> 
+      </div>
+      
+        <!-- Scrolll  -->
+<!-- #widgetsContent -->
+       
+<!--   
+<div style="float: left">
+    <button (click)="scrollLeft(widgetsContent)">left</button>
+</div> -->
+<!-- 
+  <div class="middle">
+        <div class="form-inline">
+         
+           <!-- <div class="progs" *ngFor="let val of data;let i=index">
+            <div class="progtrckr">{{val[0]}}</div>
+            <!-- <div class="count">{{i+1}}</div> 
+           </div>  
+
+             <div class="progs">
+              <div class="progtrckr">Sales</div>
+              <div class="count">i</div>
+             </div> 
+
+             <div class="progs">
+                <div class="progtrckr">Sales</div>
+                <div class="count">i</div>
+               </div> 
+
+               <div class="progs">
+                  <div class="progtrckr">Sales</div>
+                  <div class="count">i</div>
+                 </div> 
+
+                 <div class="progs">
+                    <div class="progtrckr">Sales</div>
+                    <div class="count">i</div>
+                   </div> 
+
+                   <div class="progs">
+                      <div class="progtrckr">Sales</div>
+                      <div class="count">i</div>
+                     </div> 
+         </div>
+  </div> -->
+
+        <!-- <div style="float: right">
+            <button (click)="scrollRight(widgetsContent)">right</button>
+        </div>
+      -->
+
+      <br>
         <div class="dt-responsive">
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
@@ -143,7 +281,10 @@
             </tfoot>
           </table>
         </div>
-        </div>     
+        </div> 
+        
+        
+
       </app-card>
       <ng2-toasty [position]="position"></ng2-toasty>
   

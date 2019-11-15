@@ -156,12 +156,6 @@ export class AdminLayoutComponent implements OnInit {
     this.app.getDecrypt();
     this.getIP();
 
-    // require('getmac').getMac(function(err, macAddress){
-    //   alert("MAC Ad"+macAddress);
-    //   if (err)  throw err
-    //   console.log(macAddress)
-    //  });
-
     
     this.adservice.getShopName(AppComponent.locrefID1).subscribe(data => { this.shop = data[0][1] });//
 

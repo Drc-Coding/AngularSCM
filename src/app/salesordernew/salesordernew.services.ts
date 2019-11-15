@@ -6,6 +6,7 @@ export class salesOrderServicenew {
 
   
   private    URL='api/indreq/';
+  private deviceurl='api/User/saveUserActivity';
 
   
   constructor(private http: Http) { }
@@ -32,6 +33,8 @@ export class salesOrderServicenew {
     let head = new Headers({ 'Content-Type': 'application/json' });
     return this.http.post('api/saveSalesorderRecord', data, { headers: head }).map(response => response.json());
   }
+
+
 
   viewSalesorder(cid: any, bid: any, locrefid: any, locname: any) {
     return this.http.get('api/getallSalesorderview' + '/' + cid + '/' + bid + '/' + locrefid + '/' + locname).map(res => res.json()).catch(this.handleError);
@@ -75,18 +78,6 @@ export class salesOrderServicenew {
     return this.http.get('api/salesOrderType').map(response => response.json());
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
   
   
   viewWareHouse(  serobj: string ) {
@@ -117,18 +108,32 @@ viewHospital(serobj: string ) {
 
     let header = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: header});
-
-
     
-           return this.http.post( this.URL+`viewHospital`, serobj, options)
+    return this.http.post( this.URL+`viewHospital`, serobj, options)
 .map((res: Response) => res.json());
 }
 
 
+adddevicedetails(data){
 
+  let head = new Headers({ 'Content-Type': 'application/json' });
+  return this.http.post(this.deviceurl, data, { headers: head }).map(response => response.json());
 
+}
+ 
+editdevicedetails(data){
 
+  let head = new Headers({ 'Content-Type': 'application/json' });
+  return this.http.post(this.deviceurl, data, { headers: head }).map(response => response.json());
 
+}
+
+viewdevicedetails(data){
+
+  let head = new Headers({ 'Content-Type': 'application/json' });
+  return this.http.post(this.deviceurl, data, { headers: head }).map(response => response.json());
+
+}
 
   
 }

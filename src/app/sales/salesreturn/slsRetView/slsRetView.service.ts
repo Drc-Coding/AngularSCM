@@ -17,6 +17,8 @@ export class slsRetViewService  {
   options  ;
   
     private    URL='api/slsretn/';
+    private deviceURL='api/User/saveUserActivity';
+
 
 
   ngOnInit() {
@@ -25,6 +27,8 @@ export class slsRetViewService  {
          this.options = new RequestOptions({headers: header});
     
       }
+
+
     phcompanyView(serobj: string ) {
         let header = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: header});
@@ -34,6 +38,15 @@ export class slsRetViewService  {
     .map((res: Response) => res.json());
     }
   
+    viewdevicedetails(data) {
+
+      let header = new Headers({'Content-Type': 'application/json'});
+      let options = new RequestOptions({headers: header});
+
+      return this.http.post( this.deviceURL, data, options)
+      .map((res: Response) => res.json());
+  }
+
 
 
 }

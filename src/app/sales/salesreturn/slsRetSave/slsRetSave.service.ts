@@ -9,16 +9,14 @@ import 'rxjs/add/observable/throw';
 export class slsRetSaveService  {
 
 
-
-
-
-
   constructor(private http: Http) {}
-  
-  
   
     options  ;
       private    URL='api/slsretn/';
+      private deviceurl='api/User/saveUserActivity';
+
+
+
     ngOnInit() {
       
           let header = new Headers({'Content-Type': 'application/json'});
@@ -95,6 +93,15 @@ export class slsRetSaveService  {
     }
   
   
+    adddevicedetails(data) {
+          
+          
+      let header = new Headers({'Content-Type': 'application/json'});
+      let options = new RequestOptions({headers: header});
+  
+      return this.http
+        .post(this.deviceurl, data, options)  .map((res: Response) => res.json());
+    }
 
 
 

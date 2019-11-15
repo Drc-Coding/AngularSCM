@@ -136,7 +136,7 @@
                                          <td><input  formControlName="siqty"     readonly/></td>
 
                                 
-                                         <td><input  formControlName="indvqty" id="width3"  (keydown)="calc($event)"  type="text"/></td>
+                                         <td><input  formControlName="indvqty" id="width3"  (keydown)="calc($event)" (blur)="calcGST()"  type="text"/></td>
                                          <td><input  formControlName="totalqty" id="width3"    readonly /></td>
                                          <td><input  formControlName="unitprice" class="right"   (keydown)="calc($event)"  type="number"/></td>
                                          <td><input  formControlName="unitdiscount" id="width2"    readonly/></td>

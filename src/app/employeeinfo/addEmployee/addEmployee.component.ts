@@ -67,16 +67,16 @@ export class addEmployeeComponent implements OnInit {
     let companyid = new FormControl();
     let branchid = new FormControl();
     let storerefid = new FormControl();
-    let employeecode = new FormControl();
+    //let employeecode = new FormControl();
     let emptitle = new FormControl();
     let empfirstname = new FormControl('', [Validators.required, Validators.pattern(textPattern)]);
     let emplastname = new FormControl('', Validators.pattern(textPattern));
     let employeemode = new FormControl();
     let employeetype = new FormControl();
-    let department = new FormControl('', Validators.pattern(textPattern));
-    let subdepartment = new FormControl('', Validators.pattern(textPattern));
-    let division = new FormControl('');
-    let subdivision = new FormControl('');
+    let department = new FormControl();
+    let subdepartment = new FormControl();
+    let division = new FormControl();
+    let subdivision = new FormControl();
 
     let desgination = new FormControl('', Validators.pattern(textPattern));
     let joiningdate = new FormControl('', Validators.required);
@@ -128,7 +128,7 @@ export class addEmployeeComponent implements OnInit {
       companyid: companyid,
       branchid: branchid,
       storerefid: storerefid,
-      employeecode: employeecode,
+     // employeecode: employeecode,
       emptitle: emptitle,
       empfirstname: empfirstname,
       emplastname: emplastname,
@@ -203,23 +203,23 @@ export class addEmployeeComponent implements OnInit {
     /* Image Preview if eye icon click */
 
 
-    $(document).ready(function () {
+    // $(document).ready(function () {
 
-      $("#viewimg").click(function () {
+    //   $("#viewimg").click(function () {
 
-        $("#imgdisplay").show();
-        $("#hideimg").show();
+    //     $("#imgdisplay").show();
+    //     $("#hideimg").show();
 
-      });
+    //   });
 
-      $("#hideimg").click(function () {
+    //   $("#hideimg").click(function () {
 
-        $("#imgdisplay").hide();
-        $("#hideimg").hide();
+    //     $("#imgdisplay").hide();
+    //     $("#hideimg").hide();
 
-      });
+    //   });
 
-    });
+    // });
 
 
     this.getDepartment();
@@ -450,16 +450,11 @@ export class addEmployeeComponent implements OnInit {
     this.isexistvalidation(c);
 
 
-
     //debugger;
     c('Close click')
 
     // var frmdata = { frmint1: '', frmstr1: this.drugForm.get('addgeneric').value, createdby: '', 
     // locrefid: this.selobj.locrefid, locname: this.selobj.locname };
-
-
-
-
 
   }
 
@@ -468,8 +463,6 @@ export class addEmployeeComponent implements OnInit {
   saveSubDepartment(c) {
 
     this.isexistvalidation1(c);
-
-
 
   }
 
@@ -527,7 +520,6 @@ export class addEmployeeComponent implements OnInit {
     // when the load event is fired and the file not empty
     if(event.target.files && event.target.files.length > 0) {
   
-      
        //Check & Print Type Error Message
        var mimeType = event.target.files[0].type;
        if (mimeType.match(/image\/*/) == null) {
@@ -566,8 +558,8 @@ export class addEmployeeComponent implements OnInit {
 
   imageshow(){
     this.showimage=true;
-    this.showeyeslash=false;
-    this.showeye=true;
+    this.showeyeslash=true;
+    this.showeye=false;
   }
 
   hide(){
@@ -578,7 +570,8 @@ export class addEmployeeComponent implements OnInit {
 
   reset(){
 
-    this.myForm.get('emphoto').setValue("");
+    //this.myForm.get('emphoto').setValue("");
+    (<HTMLInputElement>document.getElementById("imagefile")).value = '';
     this.imgURL = '';
     this.showimage=false;
     this.showeyeslash=false;
@@ -869,15 +862,6 @@ export class addEmployeeComponent implements OnInit {
   }
 
 
-
-
-
-
-
-
-
-
-
   private employeeValidation(): boolean {
     if (this.myForm.get('companyid').value == "opt1") {
       this.notificationsComponent.addToast({ title: 'ERROR MESSAGE', msg: 'COMPANY IS NOT SELECTED', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'error' });
@@ -910,16 +894,19 @@ export class addEmployeeComponent implements OnInit {
       (result: any) => {
         let re = result.res;
         if (re == true) {
+
           this.saveimage();
           this.imageresponse=this.saveimage();
+          alert("Image Response"+this.imageresponse);
+          
           if(this.imageresponse==true){
-
+          
             this.notificationsComponent.addToast({ title: 'SUCESS MESSAGE', msg: 'DATA & IMAGE SAVED SUUCCESSFULLY', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'success' });
             this.router.navigate(['Employee/ViewEmployee']);
           }
           else{
 
-            this.notificationsComponent.addToast({ title: 'Error Message', msg: ' DATA ONLY SAVED & IMAGE UNSAVED....', timeout: 5000, theme: 'default', position: 'top-right', type: 'warning' });
+            this.notificationsComponent.addToast({ title: 'Warning Message', msg: 'DATA ONLY SAVED & IMAGE UNSAVED....', timeout: 5000, theme: 'default', position: 'top-right', type: 'warning' });
             this.router.navigate(['Employee/ViewEmployee']);
           }
          
