@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Http, Response, RequestOptions , Headers} from '@angular/http';
+
 @Injectable()
 export class salesreportService {
  private countryURL = 'api/getCountry';
@@ -7,6 +8,8 @@ export class salesreportService {
  private getState = 'api/getState';
  private getCitys = 'api/getCity';
  private countryCode = 'api/getCountrycode';
+ private deviceurl='api/User/saveUserActivity';
+
 
  private headers = new Headers({ 'Content-Type': 'application/json' });
 
@@ -44,6 +47,16 @@ getManufacturer(value: string) {
 
   return this.http.get('api/getPharmacompany' + '/' + value).map(response => response.json());
 }
+
+viewdevicedetails(data){
+  let header = new Headers({'Content-Type': 'application/json'});
+  let options = new RequestOptions({headers: header});
+
+  return this.http
+    .post(this.deviceurl, data, options)  .map((res: Response) => res.json());
+}
+
+
 }
 
 

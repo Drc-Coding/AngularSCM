@@ -43,6 +43,7 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
   polist = [];
   coltax: any;
   sendsalesorderid: any;
+  deviceObj: any;
 
   constructor(private challanService: salesChallanServices, private router: Router, private formBuilder: FormBuilder, 
     private notificationsComponent: NotificationsComponent, private appComponent: AppComponent,private dateformat: dateFormatPipe) {
@@ -285,6 +286,7 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
       this.getSum();
     }
   }
+
   showBrandlist(pid: any, pname: any, form: any, dosage: any, mfrg: any, vats: any,
     gsts: any, cgsts: any, mrps: any, sgsts: any, dosageId: number, formID: number, mfgId: number) {
     return this.formBuilder.group({
@@ -403,20 +405,42 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
 
   /* Table calculation End*/
   // keyup while typing show data...keyup.enter  while entering show data..keydown.Tab while tab 
+
+  
+     
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+
   onSubmit(): any {
+
     this.returnValid = this.invoiceDatavalidation();
     if (this.returnValid == true) {
       this.appComponent.ngOnInit();
       this.deliveryForm.get('clientcdate').setValue(AppComponent.date);
       this.deliveryForm.get('salesorderrefid').setValue(this.sendsalesorderid);
-      //alert("saveDeliveryChallan" + JSON.stringify(this.deliveryForm.value));
-
-     
-
       this.deliveryForm.get('billtyperefid').setValue(1);
 
       this.challanService.getDeliveryChallan(JSON.stringify(this.deliveryForm.value)).subscribe(
-        data => { alert(data);
+        data => { 
 
           if (data == true) {
             const saveData = this.deliveryForm.controls['brandDetails'];
@@ -424,8 +448,15 @@ export class salesChallanSaveComponent implements OnInit, AfterViewInit {
             this.challanService.getDeliveryChallanProduct(JSON.stringify(saveData.value)).subscribe(
               data => {
                 if (data == true) {
-                  this.notificationsComponent.addToast({ title: 'SUCCESS MESSAGE', msg: 'DATA SAVED SUCCESSFULLY..', timeout: 5000, theme: 'success', position: 'top-right', type: 'success' });
 
+                  this.devicedetails();
+                  this.deviceObj.apiname="api/saveDeliveryChallan";
+                  this.deviceObj.description="Sales DeliverChallan Created";
+          
+                  this.challanService.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+                  
+
+                  this.notificationsComponent.addToast({ title: 'SUCCESS MESSAGE', msg: 'DATA SAVED SUCCESSFULLY..', timeout: 5000, theme: 'success', position: 'top-right', type: 'success' });
                   //window.location.href = "SalesDeliveryReceipt/ViewSalesDelivery";
                 }
               },

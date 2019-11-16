@@ -75,14 +75,16 @@ export class slsRetViewComponent implements OnInit {
       this.userService.phcompanyView(JSON.stringify(frmdata)  ).subscribe(data => {this.data = data },
         errorCode => console.log(errorCode));
         this.gifFail=false;
+
+        this.devicedetails();           
+        this.deviceObj.apiname="api/slsretn/viewSalesReturnAll";
+        this.deviceObj.description="View SalesReturn";
+       
+        this.userService.viewdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+     
       },3000);
 
-      this.devicedetails();           
-      this.deviceObj.apiname="api/slsretn/viewSalesReturnAll";
-      this.deviceObj.description="View SalesReturn";
-     
-      this.userService.viewdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
-   
+    
     }
   
 

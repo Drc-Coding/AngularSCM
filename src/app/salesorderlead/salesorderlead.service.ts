@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Http,Headers } from "@angular/http";
+import { Http, Response, RequestOptions , Headers} from '@angular/http';
 
 @Injectable()
 export class SalesorderleadService {
@@ -9,6 +9,9 @@ export class SalesorderleadService {
  private fetchsolead = 'api/fetchsoleadrecord';
  private provalue = 'api/addsolproduct';
  private prolist = 'api/getPibrandlist';
+ private deviceURL='api/User/saveUserActivity';
+
+ 
  private handleError(error: any): Promise<any> {
     return Promise.reject(error.message || error);
   }
@@ -69,5 +72,15 @@ export class SalesorderleadService {
 
       autoIcrement(cid: any, bid: any, locrefid: any, locname: any) {
         return this.http.get('api/salesOrderIncrement' + '/' + cid + '/' + bid + '/' + locrefid + '/' + locname).map(response => response.json());
+      }
+
+
+      viewdevicedetails(data){
+
+        let header = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions({headers: header});
+  
+        return this.http.post( this.deviceURL, data, options)
+        .map((res: Response) => res.json());
       }
 }

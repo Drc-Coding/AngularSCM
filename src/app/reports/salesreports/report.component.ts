@@ -4,9 +4,8 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup, Validators,FormControl} from '@angular/forms';
 import {CustomValidators} from 'ng2-validation';
 import {salesreportService} from './report.services';
-
 import {AppComponent} from '../../app.component';
-
+import { dateFormatPipe } from 'app/notifications/notifications.datepipe';
 
 
 @Component({
@@ -37,7 +36,11 @@ export class reportComponent implements OnInit {
  stype: any;
  sotype = [];
  Manufacturername: any;
- constructor(private salesservice:salesreportService,private fb:FormBuilder) {
+ deviceObj: any;
+ 
+ 
+ constructor(private salesservice:salesreportService,private fb:FormBuilder,
+  private appComponent: AppComponent,private dateformat: dateFormatPipe) {
     this.myForm = this.fb.group({
      countryid: ['', []],
      stateid: ['', []],
@@ -57,6 +60,7 @@ export class reportComponent implements OnInit {
 
 
  ngOnInit() {
+
    this.branchid=  AppComponent.branchID;
    this.locname=  AppComponent.locRefName1;
    this.locrefid= AppComponent.locrefID1;
@@ -83,7 +87,41 @@ this.salesservice.getsotype().subscribe(data => this.sotype = data,
        err => {
          console.log('Error Occured ');
         });
+
+
+        this.devicedetails();
+        this.deviceObj.apiname="api/slsinv/salesOrderType";
+        this.deviceObj.description="View Sales Reports";
+
+        this.salesservice.viewdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+
  }
+
+
+      
+ devicedetails(){
+
+  this.deviceObj = {
+
+      userid: AppComponent.userID,
+      companyrefid: AppComponent.companyID,
+      branchrefid: AppComponent.branchID,
+      locname: AppComponent.locRefName1,
+      locrefid: AppComponent.locrefID1,
+      clientcdate:this.dateformat.transform04(),
+      ipaddress: this.appComponent.ipAddress, 
+      browsertype: this.appComponent.browser,
+      ostype: this.appComponent.os,
+      osversion: this.appComponent.osversion,
+      devicetype: this.appComponent.devicetype,
+      description:'',
+      apiname:''
+
+    };
+
+}
+
+
   getCustomer() {
    this.patname=this.myForm.get('custname').value;
 

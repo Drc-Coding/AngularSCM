@@ -268,7 +268,6 @@
 
 
 
-
 					<div class="col-lg-4">
 						<fieldset class="form-group">
 							<label class="form-label">Designation</label>
@@ -278,14 +277,8 @@
 								only Accepts!</div>
 						</fieldset>
 					</div>
-				</div>
 
-
-
-
-
-				<div class="form-group row">
-
+				
 					<div class="col-lg-4">
 						<fieldset class="form-group">
 							<label class="form-label semibold">Date Of Join</label>
@@ -293,6 +286,26 @@
 								required="true" formControlName="joiningdate">
 							<div class="messages text-danger" *ngIf="myForm.controls.joiningdate.errors?.required">This
 								Field is Required*</div>
+						</fieldset>
+					</div>
+				
+				</div>
+
+
+
+				<div class="form-group row">
+
+				
+					<div class="col-lg-4">
+						<fieldset class="form-group">
+							<label class="form-label semibold">Allow Login</label>
+							<br>
+							<label>
+								<input type="radio" value="Yes" name="allowlogin" formControlName="allowlogin">Yes
+							</label>
+							<label>
+								<input type="radio" value="No" name="allowlogin" formControlName="allowlogin">No
+							</label>
 						</fieldset>
 					</div>
 
@@ -310,18 +323,7 @@
 					</div>
 
 
-					<div class="col-lg-4">
-						<fieldset class="form-group">
-							<label class="form-label semibold">Allow Login</label>
-							<br>
-							<label>
-								<input type="radio" value="Yes" name="allowlogin" formControlName="allowlogin">Yes
-							</label>
-							<label>
-								<input type="radio" value="No" name="allowlogin" formControlName="allowlogin">No
-							</label>
-						</fieldset>
-					</div>
+				
 
 					<div class="col-lg-4">
 						<fieldset class="form-group">
@@ -350,11 +352,6 @@
 						</fieldset>
 					</div>
 
-				</div>
-
-
-				<div class="form-group row">
-
 					<div class="col-lg-4">
 						<fieldset class="form-group">
 							<label class="form-label">Employee Email Id</label>
@@ -365,6 +362,13 @@
 
 						</fieldset>
 					</div>
+
+				</div>
+
+
+				<div class="form-group row">
+
+					
 
 					<div class="col-lg-4">
 						<fieldset class="form-group">
@@ -384,9 +388,6 @@
 						</fieldset>
 					</div>
 
-				</div>
-
-				<div class="form-group row">
 
 					<div class="col-lg-4">
 						<fieldset class="form-group">
@@ -397,6 +398,10 @@
 								Correct Mail!</div>
 						</fieldset>
 					</div>
+
+				</div>
+
+				<div class="form-group row">
 
 					<div class="col-lg-4">
 						<fieldset class="form-group">
@@ -425,6 +430,28 @@
 	
 								<span style="color:red;" *ngIf="message">{{message}}</span>
 						</div>
+
+
+						<div class="col-lg-4">
+
+							<label class="form-label">Employee Signature (Upload Size Max 500 KB)</label>
+
+							<div class="form-inline">
+								<input type="file" class="form-control" id="signfile"
+								(change)="signChange($event)" #fileInput accept="image/*"/>
+	
+								<span class="fa fa-eye mt-2" style="cursor: pointer" (click)="signshow()" *ngIf="signshoweye"></span>
+								<span class="fa fa-eye-slash mt-2" style="cursor: pointer" (click)="signhide()" *ngIf="signshoweyeslash"></span>
+								<span class="fa fa-trash mt-2 ml-2" style="cursor: pointer" (click)="signreset()"></span>
+							</div><br>
+	
+								<div class="imageview" *ngIf="signshowimage">
+								<img [src]="signimgURL" height="180" width="260"/>
+								</div>
+	
+								<span style="color:red;" *ngIf="signmessage">{{signmessage}}</span>
+						</div>
+
 
 				
 				</div><br>

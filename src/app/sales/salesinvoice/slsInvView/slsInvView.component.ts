@@ -4,6 +4,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CustomValidators} from 'ng2-validation';
 import { AppComponent } from '../../../app.component';
+import { dateFormatPipe } from '../../../notifications/notifications.datepipe';
 
 
 import {slsInvViewService} from './slsInvView.service'  ;
@@ -30,7 +31,10 @@ export class slsInvViewComponent implements OnInit {
   
     selobj ;
   gifFail: boolean=true;
-    constructor(private userService: slsInvViewService) {}
+  deviceObj: any;
+
+    constructor(private userService: slsInvViewService,private appComponent: AppComponent,
+      private dateformat: dateFormatPipe) {}
   
     ngOnInit() {
   
@@ -43,6 +47,29 @@ export class slsInvViewComponent implements OnInit {
   
     }
   
+        
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+
   
   
       viewAll() {
@@ -54,7 +81,17 @@ export class slsInvViewComponent implements OnInit {
         errorCode => console.log(errorCode));
   
         this.gifFail=false;
+
+        this.devicedetails();
+        this.deviceObj.apiname="api/slsinv/viewSalesInvoiceAll";
+        this.deviceObj.description="View SalesInvoice";
+
+        this.userService.viewdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+        
       },3000);
+
+       
+
    
     }
   

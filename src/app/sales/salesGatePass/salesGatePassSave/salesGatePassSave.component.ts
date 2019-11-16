@@ -3,14 +3,7 @@ import { Component, OnInit, Input, Output, AfterViewInit, ViewChild, ElementRef,
 import { FormBuilder, FormControl, Validators, FormArray } from "@angular/forms";
 import { providers } from 'ng2-toasty';
 import { Router } from '@angular/router';
-
-
 import { salesGatePassSaveService } from './salesGatePassSave.service';
-
-
-
-
-
 import { empty } from 'rxjs/Observer';
 import { NotificationsComponent } from 'app/notifications/notifications.component';
 import { dateFormatPipe } from 'app/notifications/notifications.datepipe';
@@ -49,6 +42,7 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
   polist = [];
   coltax: any;
   sendsalesorderid: any;
+  deviceObj: any;
 
   constructor(private invoiceService: salesGatePassSaveService, private router: Router, private formBuilder: FormBuilder, private notificationsComponent: NotificationsComponent,
      private appComponent: AppComponent,private dateformat: dateFormatPipe) {
@@ -238,27 +232,6 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
   }
 
 
-
-
-
-
-  // this.deliveryForm.get('totalproduct').setValue("");
-  // this.deliveryForm.get('totalqty').setValue("");
-  // this.deliveryForm.get('totalboxqty').setValue("");
-  // this.deliveryForm.get('totalstripqty').setValue("");
-  // this.deliveryForm.get('totaltabqty').setValue("");
-
-
-
-
-
-
-
-
-
-
-
-
   getDeliverChallanNo(): any {
     let val = this.deliveryForm.get('salesno').value;
     if (this.deliveryForm.get('salesno').value !== undefined) {
@@ -267,10 +240,6 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
         AppComponent.branchID,
         AppComponent.locRefName1,
         AppComponent.locrefID1
-
-
-
-
 
       ).subscribe(data => { this.pushTableData1(data) },
         error => {
@@ -349,40 +318,6 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-  // getStockNumber(): any {     
-  //   let val=this.deliveryForm.get('stockno').value;
-  //   if(this.deliveryForm.get('stockno').value!==undefined){
-  //   this.invoiceService.getStockTransferProduct(this.deliveryForm.get('stockno').value).subscribe(data => { this.pushTableData(data) },
-  //     error => {
-  //       console.log('Error occured On getPotablelist()');
-  //     });
-  //   }
-  // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   getFirm() {
 
     if (AppComponent.usertype == "\"SuperAdmin\" ") {
@@ -436,10 +371,9 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
   }
 
 
-
-
   public setvatTax: boolean = false;
   public setgstTax: boolean = false;
+
   getTabledata(data: any) {
     if (data !== undefined || data !== null) {
       let flag: number = 0;
@@ -491,6 +425,7 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
       this.getSum();
     }
   }
+
   showBrandlist(pid: any, pname: any, form: any, dosage: any, mfrg: any, vats: any,
     gsts: any, cgsts: any, mrps: any, sgsts: any, dosageId: number, formID: number, mfgId: number) {
     return this.formBuilder.group({
@@ -540,17 +475,6 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
     for (this.j = 0; this.j < setData.length; this.j++) {
 
 
-
-      // this.getSBQuantity(setData[this.j].drugproductrefid);
-      // Stripperbox = this.sbQuantity[0][0];
-      // Quantityperstrip = this.sbQuantity[0][1];
-
-
-
-
-
-
-
       /* To Get Total Products */
       if (parseInt(setData.length) !== null) {
         txtproduct = parseInt(setData.length);
@@ -585,12 +509,7 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
       }
 
 
-
       /* Row Wise SubTotal Amount */
-
-
-
-
 
 
       setData[this.j].totalqty = txttabletquantity + txtstripquantity + txtboxquantity;
@@ -618,9 +537,35 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
       }
   }
 
+
+     
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+
   /* Table calculation End*/
   // keyup while typing show data...keyup.enter  while entering show data..keydown.Tab while tab 
+
   onSubmit(): any {
+
     this.returnValid = this.invoiceDatavalidation();
     if (this.returnValid == true) {
       this.appComponent.ngOnInit();
@@ -632,10 +577,18 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
         data => {
    
           if (data == true) {
+
             const saveData = this.deliveryForm.controls['brandDetails'];
             this.invoiceService.getDeliveryChallanProduct(JSON.stringify(saveData.value)).subscribe(
               data => {
                 if (data == true) {
+
+                  this.devicedetails();
+                  this.deviceObj.apiname="api/savegatepass";
+                  this.deviceObj.description="Sales GatePass Created";
+          
+                  this.invoiceService.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+                  
                   this.notificationsComponent.addToast({ title: 'SUCCESS MESSAGE', msg: 'DATA SAVED SUCCESSFULLY..', timeout: 5000, theme: 'success', position: 'top-right', type: 'success' });
                   
                   window.location.href = "SalesGatePass/ViewSalesGatePass";

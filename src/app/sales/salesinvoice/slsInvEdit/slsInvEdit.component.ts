@@ -33,9 +33,13 @@ export class slsInvEditComponent implements OnInit {
   editdata = [];
   priceflag = 3;
   truncatepos;
-  constructor(private userService: slsInvEditService, private router: Router, private dateformat: dateFormatPipe, private formBuilder: FormBuilder, config: NgbDropdownConfig, private notificationsComponent: NotificationsComponent, private route: ActivatedRoute) {
+  deviceObj: any;
+  constructor(private userService: slsInvEditService, private router: Router, private dateformat: dateFormatPipe,
+     private formBuilder: FormBuilder,  config: NgbDropdownConfig, private notificationsComponent: NotificationsComponent,
+     private route: ActivatedRoute,private appComponent: AppComponent) {
     config.autoClose = false;
   }
+
   ngOnInit() {
     this.selobj = {
       userid: AppComponent.userID, locrefid: AppComponent.locrefID1, locname: AppComponent.locRefName1, countryrefid: AppComponent.countryID, companyid: AppComponent.companyID
@@ -119,13 +123,17 @@ export class slsInvEditComponent implements OnInit {
       this.registerForm.get('invdispflag').setValue(0);
     }
   }
+
+
   ClosePresc() {
     $('.image ').hide();
   }
+
   viewsPresc() {
     this.images = [['api/slsinv/viewPresImage?search=' + this.registerForm.get('prescpath').value]];
     $('.image ').show();
   }
+
   autofocusin() {
     this.autoincr = setInterval(() => {
       if (this.registerForm.get('autonamenew').value) {
@@ -146,6 +154,7 @@ export class slsInvEditComponent implements OnInit {
       }
     }, 610);
   }
+
   autofocusout() {
     if (this.registerForm.get('autonamenew').value) {
     } else {
@@ -153,6 +162,7 @@ export class slsInvEditComponent implements OnInit {
     }
     clearInterval(this.autoincr);
   }
+
   autokeyselect(event: KeyboardEvent, articleId: number) {
     var autoincrflag: number;
     if (event.keyCode == 38) {
@@ -175,6 +185,7 @@ export class slsInvEditComponent implements OnInit {
     }
     this.barcodeflag = 0;
   }
+
   viewBarcodeProd(event: KeyboardEvent) {
     if (event.keyCode == 13) {
       this.barcodeflag = 1;
@@ -182,6 +193,7 @@ export class slsInvEditComponent implements OnInit {
       $('#autolistnew  ul   li:nth-child(1)   input:nth-child(1) ').focus();
     }
   }
+
   viewStock(event: KeyboardEvent, stktype: number) {
     var autoincrflag: number;
     if (event.keyCode == 38) {
@@ -213,6 +225,7 @@ export class slsInvEditComponent implements OnInit {
       }
     }
   }
+
   viewServWareHouseStock(data: any, stktype: any) {
     var conversionfactor;
     var unitprice;
@@ -287,6 +300,31 @@ export class slsInvEditComponent implements OnInit {
       }));
     }
   }
+
+      
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+
+
   onSubmit() {
     var valflag: Number = 0;
     valflag = this.validnew();
@@ -297,6 +335,7 @@ export class slsInvEditComponent implements OnInit {
         errorCode => console.log(errorCode));
     }
   }
+
   saveSIProducts(data: any) {
     const control = <FormArray>this.registerForm.controls['invoice'];
     if (data == 1) {
@@ -304,17 +343,26 @@ export class slsInvEditComponent implements OnInit {
         errorCode => console.log(errorCode));
     }
   }
+
   savevalid(data: any) {
     if (data == 1) {
+
+      this.devicedetails();
+      this.deviceObj.apiname="api/slsinv/updateSalesInvoice";
+      this.deviceObj.description="Update SalesInvoice";
+
+      this.userService.editdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+
       this.notificationsComponent.addToast({ title: 'Success', msg: 'Data  Saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
       this.clear();
     } else {
       this.notificationsComponent.addToast({ title: 'Error', msg: 'Data Not  saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
     }
   }
+
   deleteValid(data: any) {
     if (data == 1) {
-      this.notificationsComponent.addToast({ title: 'Success', msg: 'Delted Succesfully    ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
+      this.notificationsComponent.addToast({ title: 'Success', msg: 'Deleted Succesfully    ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
       //  this.clear() ; 
       this.router.navigateByUrl("/SalesInvoice/SalesMaintenance");
     } else {
@@ -790,6 +838,7 @@ export class slsInvEditComponent implements OnInit {
     var vatamt: number = 0;
     var prodcount: number = 0;
     var inv;
+
     for (this.i = 0; this.i < sprod.length; this.i++) {
       if (sprod[this.i].calcflag != 1) {
         if (parseInt(sprod[this.i].indvqty)) {
@@ -864,7 +913,7 @@ export class slsInvEditComponent implements OnInit {
         } else {
           prodcount += 1;
         }
-        sprod[this.i].subtotal = preqty * preprodprice;
+        sprod[this.i].subtotal = (preqty * preprodprice).toFixed(2);
         sprod[this.i].totalqty = convfactor * preqty;
         sprod[this.i].totalfreeqty = convfactor * prefree;
         pretotprice = preqty * preprodprice;
@@ -907,6 +956,8 @@ export class slsInvEditComponent implements OnInit {
         }
       }
     }
+
+
     totgstamt = totsgstamt + totcgstamt + totigstamt + totvatamt;
     if (this.registerForm.get('disctaxflag').value == true) {
       grandtotal = subtotal - totgstamt - totdiscount;
@@ -1024,7 +1075,7 @@ export class slsInvEditComponent implements OnInit {
         countryrefid: [this.selobj.countryrefid, []],
         companyrefid: [this.selobj.companyid, []],
         branchrefid: [this.selobj.branchrefid, []],
-        subtotal: [data[this.i][v++], []],
+        subtotal: [(data[this.i][v++]).toFixed(2), []],
         drgtyp: [data[this.i][v++], []],
         gstflag: [data[this.i][v++], []],
         frgstflag: [data[this.i][v++], []],

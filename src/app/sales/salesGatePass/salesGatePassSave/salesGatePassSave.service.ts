@@ -15,31 +15,18 @@ export class salesGatePassSaveService {
   private poURl = 'api/purchaseorderlist';
   private potableURl = 'api/purchaseordertable';
   private prolist = 'api/getPibrandlist';
-
- // private getStockTransfer = 'api/getsupergatepassproduct';
-
-private getSalesProduct = 'api/getGatePassProduct';
-
-
+  private getSalesProduct = 'api/getGatePassProduct';
   private getShops = 'api/getEmpShops';
   private getWarehouses = 'api/getEmpWareHouses';
   private getHospitals = 'api/getEmpHospitals';
-
-
   private getusershopurl = 'api/getDeliveryShopUrl';
   private getuserwarehousesurl = 'api/getuserwarehouse';
   private getuserhospitalurl = 'api/getuserhospital';
-
-
   private getSuperStockNoURL = 'api/getgatepassadminstockno';
-
   private getStockNoURL = 'api/getstockno';
-
-
-
-
-
   private getAutonIncrement = 'api/getGatePassAutoIncrements';
+  private deviceurl='api/User/saveUserActivity';
+
 
   constructor(private http: Http) { }
 
@@ -88,20 +75,6 @@ private getSalesProduct = 'api/getGatePassProduct';
     //Get Distributor
     return this.http.get(`api/getGatePassNo` + '/' + searchValue + '/' + compid + '/' + brnchid + '/' + locname + '/' + locrefid + '/' + billtyperefid).map(response => response.json());
   }
-
-
-
-  // getStockNo(searchValue: string,compid: number,brnchid: number,locname:number,locrefid: number) {
-  //   //Get Distributor
-  //   return this.http.get(this.getStockNoURL+ '/'+searchValue+'/'+compid+'/'+brnchid+'/'+locname+'/'+locrefid).map(response => response.json());
-  // }
-
-
-
-
-
-
-
 
 
 
@@ -163,13 +136,6 @@ private getSalesProduct = 'api/getGatePassProduct';
   }
 
 
-
-
-
-
-
-  
-
   getTaxmaster(cid: any, bid: any, locrefid: any, locname: any) {
     return this.http.get('api/getTaxmaster' + '/' + cid + '/' + bid + '/' + locrefid + '/' + locname).map(res => res.json());
   }
@@ -177,6 +143,15 @@ private getSalesProduct = 'api/getGatePassProduct';
   getLocalstore() {
     //Get Coutries 
     return this.http.get('api/getMain').map(response => response.json());
+  }
+
+
+  adddevicedetails(data){
+    let header = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: header});
+
+    return this.http
+      .post(this.deviceurl, data, options)  .map((res: Response) => res.json());
   }
 
 

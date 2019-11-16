@@ -13,12 +13,24 @@ export class challanViewService  {
   options  ;
 
     private viewURL='api/viewdeliverychallan';
+    private deviceurl='api/User/saveUserActivity';
 
 
   constructor(private http: Http) {}
   
     viewDeliveryChallan(comp:any,brnch:any,locname:any,locrefid:any) {
            return this.http.get(this.viewURL+'/'+comp+'/'+brnch+'/'+locname+'/'+locrefid).map((res: Response) => res.json());
+    }
+
+
+    viewdevicedetails(data){
+
+      let header = new Headers({'Content-Type': 'application/json'});
+      let options = new RequestOptions({headers: header});
+    
+      return this.http
+        .post(this.deviceurl, data, options)  .map((res: Response) => res.json());
+    
     }
   
 }

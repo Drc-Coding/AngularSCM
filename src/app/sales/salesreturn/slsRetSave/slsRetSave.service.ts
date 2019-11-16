@@ -16,7 +16,6 @@ export class slsRetSaveService  {
       private deviceurl='api/User/saveUserActivity';
 
 
-
     ngOnInit() {
       
           let header = new Headers({'Content-Type': 'application/json'});

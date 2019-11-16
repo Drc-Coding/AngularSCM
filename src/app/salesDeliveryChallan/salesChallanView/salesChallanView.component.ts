@@ -6,6 +6,7 @@ import {CustomValidators} from 'ng2-validation';
 import {challanViewService} from './salesChallanView.service'  ;
 import { AppComponent } from '../../app.component';
 import { data } from 'jquery';
+import { dateFormatPipe } from 'app/notifications/notifications.datepipe';
 
 @Component({
   selector: 'app-salesdeliveryChallan',
@@ -26,8 +27,10 @@ export class salesChallanViewComponent implements OnInit {
   
   selobj ;
   gifFail: boolean=true;
+  deviceObj: any;
 
-    constructor(private userService: challanViewService,private formBuilder:FormBuilder) {
+    constructor(private userService: challanViewService,private formBuilder:FormBuilder,
+      private appComponent: AppComponent,private dateformat: dateFormatPipe) {
 
       this.viewchallan=this.formBuilder.group({
         companyid: ['', []],
@@ -46,6 +49,13 @@ export class salesChallanViewComponent implements OnInit {
           errorCode => {console.log(errorCode)});
 
           this.gifFail=false;
+
+          this.devicedetails();
+          this.deviceObj.apiname="api/viewdeliverychallan";
+          this.deviceObj.description="View Sales DeliveryChallan";
+  
+          this.userService.viewdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+        
       },3000);
 
   
@@ -63,5 +73,30 @@ export class salesChallanViewComponent implements OnInit {
       }
       
     }
+
+
+    
+     
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
 
   }

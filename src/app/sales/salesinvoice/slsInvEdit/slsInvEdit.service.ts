@@ -21,7 +21,8 @@ export class slsInvEditService  {
     options  ;
     
       private    URL='api/slsinv/';
-  
+      private deviceurl='api/User/saveUserActivity';
+
   
     ngOnInit() {
       
@@ -164,6 +165,16 @@ export class slsInvEditService  {
       .map((res: Response) => res.json());
       }
 
+
+      editdevicedetails(data){
+
+        let header = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions({headers: header});
+    
+        return this.http
+          .post(this.deviceurl, data, options)  .map((res: Response) => res.json());
+      }
+      
 
 
 }

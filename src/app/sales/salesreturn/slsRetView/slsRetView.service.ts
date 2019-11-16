@@ -20,7 +20,6 @@ export class slsRetViewService  {
     private deviceURL='api/User/saveUserActivity';
 
 
-
   ngOnInit() {
     
         let header = new Headers({'Content-Type': 'application/json'});

@@ -20,9 +20,8 @@ export class slsInvSaveService  {
     options  ;
   
       private    URL='api/slsinv/';
-  
-  
-    
+      private deviceurl='api/User/saveUserActivity';
+
     ngOnInit() {
       
           let header = new Headers({'Content-Type': 'application/json'});
@@ -65,11 +64,7 @@ export class slsInvSaveService  {
           return this.http
             .post(this.URL+`saveSalesInvoice`, serobj, options).map((res: Response) => res.json());
         }
-  
-  
-  
-  
-  
+
   
           saveSIProducts(serobj: string) {
           
@@ -175,62 +170,7 @@ export class slsInvSaveService  {
    return this.http.post( this.URL+`viewSIProductNames`, serobj, options)
       .map((res: Response) => res.json());
          }
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+               
   
         viewSIProductName(serobj: string   ) {
           let header = new Headers({'Content-Type': 'application/json'});
@@ -260,7 +200,6 @@ export class slsInvSaveService  {
 
 
     
-  
 
         viewPriceSettings(serobj: string   ) {
           let header = new Headers({'Content-Type': 'application/json'});
@@ -347,7 +286,14 @@ export class slsInvSaveService  {
         }
 
 
+        adddevicedetails(data){
 
+          let header = new Headers({'Content-Type': 'application/json'});
+          let options = new RequestOptions({headers: header});
+      
+          return this.http
+            .post(this.deviceurl, data, options)  .map((res: Response) => res.json());
+        }
         
 
 

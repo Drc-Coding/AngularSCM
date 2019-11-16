@@ -564,13 +564,14 @@
                         
                         </div>
                     </div>
+                    
                     <div class="row">
                         <div class="col-lg-1"></div>
-                        <div class="col-lg-4" *ngIf="refill">
+                        <div class="col-lg-4">
                             <div class="form-inline">
-                            <input type="checkbox" class="tabcheck"  formControlName="refillcus" (click)="refillprocess($event,1)"/>
+                            <input type="checkbox" class="tabcheck" *ngIf="refillcheck"  formControlName="refillcus" (click)="refillprocess($event,1)"/>
                             <input type="text" class="form-control refill ml-2"  formControlName="refilldays" placeholder="Enter Days"
-                            style="font-size:20px;font-weight:bold" disabled/>
+                            style="font-size:20px;font-weight:bold" *ngIf="refill" disabled/>
                             </div>
                         </div>
                     </div>

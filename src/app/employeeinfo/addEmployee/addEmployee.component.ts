@@ -26,8 +26,7 @@ export class addEmployeeComponent implements OnInit {
   $: any;
 
   public imagePath;
-  imgURL: any;
-  public message: string;
+  
 
   returnValid: any;
   departmentarr = [];
@@ -56,11 +55,24 @@ export class addEmployeeComponent implements OnInit {
   boolval1: boolean;
   boolval2: boolean;
   boolval3: boolean;
-  showimage: boolean=false;
+
+//Employee Phot declare
+  imgURL: any;
+  message: string;
   ephoto: File;
+  showimage: boolean=false;
   showeyeslash: boolean=false;
   showeye: boolean=true;
   imageresponse: any;
+
+  // Employee Sign Declare
+  signimgURL: any;
+  signmessage: string;
+  signphoto: File;
+  signshowimage: boolean=false;
+  signshoweyeslash: boolean=false;
+  signshoweye: boolean=true;
+  signresponse: any;
 
   constructor(private addEmployee: EmployeeService, private router: Router, formBuilder: FormBuilder,
     private notificationsComponent: NotificationsComponent, private modalService: NgbModal) {
@@ -576,10 +588,83 @@ export class addEmployeeComponent implements OnInit {
     this.showimage=false;
     this.showeyeslash=false;
     this.showeye=true;
+    this.message='';
   }
  
-  /* Image End */
+  /* Employee Image End */
 
+
+  //Employee Signature Save
+
+
+  signChange(event: any) {
+
+    this.signmessage="";
+  
+    // when the load event is fired and the file not empty
+    if(event.target.files && event.target.files.length > 0) {
+  
+       //Check & Print Type Error Message
+       var mimeType = event.target.files[0].type;
+       if (mimeType.match(/image\/*/) == null) {
+         this.signshowimage=false;
+         this.signmessage = "Only images are supported.";
+          return;
+       }
+      
+  
+      if (event.target.files[0].size < 500000) {
+  
+      // Fill file variable with the file content
+      this.signphoto = event.target.files[0];
+  
+    
+      // Instantiate an object to read the file content
+      let reader = new FileReader();
+  
+        //To read Encrypted file and send url to display in html
+        reader.readAsDataURL(this.signphoto); 
+        reader.onload = (_event) => { 
+          this.signimgURL = reader.result; 
+        }
+        this.savesignimage();
+    }
+  
+    else{
+      this.signmessage = "Max Image Size 500KB Only & Check File Format";
+    }
+  
+  
+  }
+   
+  }
+
+
+  
+  signshow(){
+    this.signshowimage=true;
+    this.signshoweyeslash=true;
+    this.signshoweye=false;
+  }
+
+  signhide(){
+    this.signshowimage=false;
+    this.signshoweyeslash=false;
+    this.signshoweye=true;
+  }
+
+  signreset(){
+
+    //this.myForm.get('emphoto').setValue("");
+    (<HTMLInputElement>document.getElementById("signfile")).value = '';
+    this.signimgURL = '';
+    this.signshowimage=false;
+    this.signshoweyeslash=false;
+    this.signshoweye=true;
+    this.signmessage='';
+  }
+
+  //Employee Sign Image End
 
   getBranche() {
 
@@ -724,6 +809,7 @@ export class addEmployeeComponent implements OnInit {
 
 
   onSubmit() {
+
     this.submitted = true;
     this.flag = this.employeeValidation();
     if (this.flag == true) {
@@ -738,7 +824,6 @@ export class addEmployeeComponent implements OnInit {
       });*/
 
     }
-
 
   }
 
@@ -895,12 +980,15 @@ export class addEmployeeComponent implements OnInit {
         let re = result.res;
         if (re == true) {
 
-          this.saveimage();
-          this.imageresponse=this.saveimage();
+          this.saveempimage();
+          
+          this.imageresponse=this.saveempimage();
           alert("Image Response"+this.imageresponse);
           
           if(this.imageresponse==true){
-          
+           
+            this.savesignimage();
+            
             this.notificationsComponent.addToast({ title: 'SUCESS MESSAGE', msg: 'DATA & IMAGE SAVED SUUCCESSFULLY', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'success' });
             this.router.navigate(['Employee/ViewEmployee']);
           }
@@ -923,18 +1011,31 @@ export class addEmployeeComponent implements OnInit {
 
   }
 
-  saveimage(){
+  saveempimage(){
 
     // Instantiate a FormData to store form fields and encode the file
     let body = new FormData();
     // Add file content to prepare the request
-    body.append("file", this.ephoto);
+    body.append("empfile", this.ephoto);
    
     // Launch post request Service Call
     this.addEmployee.saveimage(body).subscribe( (data) => { 
-      let re = data.res; return re;});
+      let re = data.res; alert("Emp imgres"+re); return re;});
 
  }
+
+ savesignimage(){
+
+  // Instantiate a FormData to store form fields and encode the file
+  let body = new FormData();
+  // Add file content to prepare the request
+  body.append("signfile", this.signphoto);
+ 
+  // Launch post request Service Call
+  this.addEmployee.savesignimage(body).subscribe( (data) => { 
+    let re = data.res; alert("Signres"+re); return re;});
+
+}
 
   // Popup Modal Open Code
 

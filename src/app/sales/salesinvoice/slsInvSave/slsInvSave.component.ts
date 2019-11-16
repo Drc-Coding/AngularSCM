@@ -63,12 +63,17 @@ export class slsInvSaveComponent implements OnInit {
   typeval: boolean;
   cusname: any;
   setcusname: boolean=false;
+  deviceObj: any;
+  refillcheck: boolean;
   
  
 
-  constructor(private userService: slsInvSaveService, private dateformat: dateFormatPipe, private formBuilder: FormBuilder, config: NgbDropdownConfig, private notificationsComponent: NotificationsComponent, private modalService: NgbModal, private domSanitizer: DomSanitizer) {
+  constructor(private userService: slsInvSaveService, private dateformat: dateFormatPipe, private formBuilder: FormBuilder,
+     config: NgbDropdownConfig, private notificationsComponent: NotificationsComponent, private modalService: NgbModal,
+     private domSanitizer: DomSanitizer,private appComponent: AppComponent) {
     config.autoClose = false;
   }
+
   ngOnInit() {
     this.selobj = {
       userid: AppComponent.userID, locrefid: AppComponent.locrefID1, locname: AppComponent.locRefName1, countryrefid: AppComponent.countryID, companyid: AppComponent.companyID
@@ -288,6 +293,7 @@ export class slsInvSaveComponent implements OnInit {
       }
     }, 1010);
   }
+
   autofocusout() {
     if (this.registerForm.get('autonamenew').value) {
     } else {
@@ -295,6 +301,7 @@ export class slsInvSaveComponent implements OnInit {
     }
     clearInterval(this.autoincr);
   }
+
   autokeyselect(event: KeyboardEvent, articleId: number) {
     var autoincrflag: number;
     if (event.keyCode == 38) {
@@ -319,6 +326,7 @@ export class slsInvSaveComponent implements OnInit {
     }
     this.barcodeflag = 0;
   }
+
   autofocusin1() {
     this.autoincr1 = setInterval(() => {
       if (this.registerForm.get('autonamenew1').value) {
@@ -338,6 +346,7 @@ export class slsInvSaveComponent implements OnInit {
       }
     }, 610);
   }
+
   autofocusout1() {
     if (this.registerForm.get('autonamenew1').value) {
     } else {
@@ -345,6 +354,7 @@ export class slsInvSaveComponent implements OnInit {
     }
     clearInterval(this.autoincr1);
   }
+
   autokeyselect1(event: KeyboardEvent, articleId: number) {
     var autoincrflag: number;
     if (event.keyCode == 38) {
@@ -409,6 +419,7 @@ export class slsInvSaveComponent implements OnInit {
       }
     }
   }
+
   viewvalue(data: any) {
     var r = 0;
     for (this.i = 0; this.i < data.length; this.i++) {
@@ -779,8 +790,32 @@ export class slsInvSaveComponent implements OnInit {
    
     }
 
-
   }
+
+
+     
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+
 
   onSubmit() {
     //  alert(JSON.stringify(this.registerForm.value));
@@ -820,14 +855,22 @@ export class slsInvSaveComponent implements OnInit {
     }
 
   }
+
   saveSIProducts(data: any) {
+
     const control = <FormArray>this.registerForm.controls['invoice'];
     if (data == 1) {
       this.userService.saveSIProducts(JSON.stringify(control.value)).subscribe(data => {
         let res = data.res;
         this.soid = res[1];
         this.saveEmailAttach()
-        //alert(this.soid);
+      
+        this.devicedetails();
+        this.deviceObj.apiname="api/slsinv/saveSalesInvoice";
+        this.deviceObj.description="SalesInvoice Created";
+
+        this.userService.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+
         this.notificationsComponent.addToast({ title: 'Success', msg: 'Data  Saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
         this.clear();
 
@@ -876,6 +919,7 @@ export class slsInvSaveComponent implements OnInit {
     this.userService.saveSISalesJournal(JSON.stringify(this.registerForm1.value)).subscribe(data => { },
       errorCode => console.log(errorCode));
   }
+
   saveSIReceipt(data: any) {
     this.registerForm2.patchValue({
       debitamount: this.registerForm.get('paidamt').value,
@@ -887,11 +931,13 @@ export class slsInvSaveComponent implements OnInit {
         errorCode => console.log(errorCode));
     }
   }
+
   calc(e) {
     if (e.keyCode == 9) {
       this.calcGST();
     }
   }
+  
   setDiscAmt() {
     var custdiscamt: number = 0;
     const control = <FormArray>this.registerForm.controls['invoice'];
@@ -1331,6 +1377,7 @@ export class slsInvSaveComponent implements OnInit {
     }
 
   }
+
   getcustemail() {
 
     this.userService.getcustemail(this.registerForm.get('customerrefid').value).subscribe(
@@ -1340,24 +1387,29 @@ export class slsInvSaveComponent implements OnInit {
         this.registerForm.get('customername').setValue(data[0][1]),
         this.registerForm.get('email').setValue(data[0][2])
 
-          if(data[0][3]==1){
+          if(data[0][3]==12){
+            this.refillcheck=false;
             this.refill=true;
-            this.clsrefill=true;
+            this.clsrefill=false;
             this.opnrefill=false;
             this.setcusname=true;
+            this.registerForm.get('refilldays').enable();
           }
+
           else{
-            this.refill=false;
+            this.refillcheck=true;
+            this.refill=true;
             this.clsrefill=false;
             this.opnrefill=true;
             this.setcusname=false;
+            this.registerForm.get('refilldays').disable();
           }
+
       });
 
-
-
-
   }
+
+
   addscheme() {
     if (this.scheme[0][6] == 1) {
       if (this.registerForm.get('grandtotal').value > this.scheme[0][4]) {
@@ -1373,6 +1425,7 @@ export class slsInvSaveComponent implements OnInit {
       }
     }
   }
+
   calcpoints(data: any) {
     var points;
     var custprevamt;
@@ -1396,6 +1449,7 @@ export class slsInvSaveComponent implements OnInit {
     points = (custprevamt * eqpoint) / amteq;
     this.points = points;
   }
+
   setDiscPercent(disc: any) {
     const control = <FormArray>this.registerForm.controls['invoice'];
     var sprod = control.value;
@@ -1407,20 +1461,23 @@ export class slsInvSaveComponent implements OnInit {
   }
 
   openrefill(){
+    this.refillcheck=true;
     this.refill=true;
     this.clsrefill=true;
     this.opnrefill=false;
+    this.setcusname=false;
   }
 
   closerefill(){
+    this.refillcheck=false;
     this.refill=false;
     this.clsrefill=false;
     this.opnrefill=true;
     this.setcusname=false;
   }
 
-
   clear() {
     this.ngOnInit();
   }
+
 }

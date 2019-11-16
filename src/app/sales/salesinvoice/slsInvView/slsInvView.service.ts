@@ -17,7 +17,7 @@ export class slsInvViewService  {
   options  ;
   
     private    URL='api/slsinv/';
-
+    private deviceurl='api/User/saveUserActivity';
 
   ngOnInit() {
     
@@ -25,6 +25,7 @@ export class slsInvViewService  {
          this.options = new RequestOptions({headers: header});
     
       }
+
     phcompanyView(serobj: string) {
       let header = new Headers({'Content-Type': 'application/json'});
       let  options = new RequestOptions({headers: header});
@@ -35,7 +36,14 @@ export class slsInvViewService  {
     }
   
 
+  viewdevicedetails(data) {
+      let header = new Headers({'Content-Type': 'application/json'});
+      let  options = new RequestOptions({headers: header});
 
+        
+               return this.http.post( this.deviceurl, data, options)
+    .map((res: Response) => res.json());
+    }
 
 
 

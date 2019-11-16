@@ -13,21 +13,18 @@ export class salesChallanServices {
   private poURl = 'api/purchaseorderlist';
   private potableURl = 'api/purchaseordertable';
   private prolist = 'api/getPibrandlist';
-
   private getStockTransfer = 'api/getsalesinvoiceproduct';
   private getShops = 'api/getEmpShops';
   private getWarehouses = 'api/getEmpWareHouses';
   private getHospitals = 'api/getEmpHospitals';
-
-
   private getusershopurl = 'api/getDeliveryShopUrl';
   private getuserwarehousesurl = 'api/getuserwarehouse';
   private getuserhospitalurl = 'api/getuserhospital';
-
-
   private getSuperStockNoURL = 'api/getsuperadminsalesno';
   private getStockNoURL = 'api/getsalesno';
   private getAutonIncrement = 'api/getSalesDelveryAutoIncrements';
+  private deviceurl='api/User/saveUserActivity';
+
 
   constructor(private http: Http) { }
 
@@ -179,14 +176,15 @@ export class salesChallanServices {
   }
 
 
+adddevicedetails(data){
 
+  let header = new Headers({'Content-Type': 'application/json'});
+  let options = new RequestOptions({headers: header});
 
+  return this.http
+    .post(this.deviceurl, data, options)  .map((res: Response) => res.json());
 
-
-
-
-
-
+}
 
 
 
