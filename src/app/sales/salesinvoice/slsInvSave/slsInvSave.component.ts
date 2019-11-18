@@ -22,6 +22,7 @@ export class slsInvSaveComponent implements OnInit {
   registerForm1: FormGroup;
   registerForm2: FormGroup;
   customers = [];
+  customers1 = [];
   doctors = [];
   prcsettings = [];
   sorders = [];
@@ -200,7 +201,8 @@ export class slsInvSaveComponent implements OnInit {
       calcflag: [0, []],
     });
     var frmdata = { frmint1: '', frmstr1: this.dateformat.transform05(Date.now()), createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
-    this.userService.viewCustomers(JSON.stringify(frmdata)).subscribe(data => { this.customers = data },
+    var frmdata1 = { frmint1: '', frmstr1: this.dateformat.transform05(Date.now()), createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
+    this.userService.viewsoCustomers(JSON.stringify(frmdata1)).subscribe(data => { this.customers = data },
       errorCode => console.log(errorCode));
     this.userService.viewDoctors(JSON.stringify(frmdata)).subscribe(data => { this.doctors = data },
       errorCode => console.log(errorCode));
@@ -228,6 +230,20 @@ export class slsInvSaveComponent implements OnInit {
     $('#autolist').hide();
     $('#autolist1').hide();
   }
+
+  searchCustomer(searchValue: any) {
+    var frmdata = { frmint1: '', frmstr1: this.dateformat.transform05(Date.now()), createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid,searchvalue: searchValue };
+    this.userService.viewCustomers(JSON.stringify(frmdata)).subscribe(data => {
+      this.customers1 = [];
+      for (let j = 0; j < data.length; j++) {
+        this.customers1.push({ value: data[j][7], label: data[j][1] });
+      }
+    },
+      err => {
+        console.log('Error occured On searchProduct()');
+      });
+  }
+
   ClosePresc() {
     $('.image ').hide();
   }
@@ -335,6 +351,7 @@ export class slsInvSaveComponent implements OnInit {
     this.barcodeflag = 2;
   }
   viewStock(event: KeyboardEvent, stktype: number) {
+    if(this.registerForm.get('customerrefid').value){
     var autoincrflag: number;
     if (event.keyCode == 38) {
       autoincrflag = stktype - 1;
@@ -375,6 +392,10 @@ export class slsInvSaveComponent implements OnInit {
       }
     }
   }
+  else {
+    this.notificationsComponent.addToast({ title: 'Error', msg: 'Please Select Customer', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
+  }
+}
   viewvalue(data: any) {
     var r = 0;
     for (this.i = 0; this.i < data.length; this.i++) {
@@ -447,6 +468,9 @@ export class slsInvSaveComponent implements OnInit {
   }
 
   viewSalesOrderProd() {
+    var frmdata1 = { frmint1: '', frmstr1: this.dateformat.transform05(Date.now()), createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
+    this.userService.viewsoCustomers(JSON.stringify(frmdata1)).subscribe(data => { this.customers = data },
+      errorCode => console.log(errorCode));
     this.registerForm.get('salesorderrefid').setValue(this.sorders[this.registerForm.get('sotempflag').value][0]);
     this.registerForm.get('customerrefid').setValue(this.sorders[this.registerForm.get('sotempflag').value][2]);
     this.registerForm.get('scitizenflag').setValue(this.sorders[this.registerForm.get('sotempflag').value][4]);
@@ -1250,7 +1274,7 @@ export class slsInvSaveComponent implements OnInit {
     }
   }
   viewCustOutstandingTot() {
-
+    
     this.registerForm.get('customerrefid').setValue(this.customers[this.registerForm.get('custdummyid').value][0]);
     this.registerForm.get('scitizenflag').setValue(this.customers[this.registerForm.get('custdummyid').value][3]);
     this.registerForm.get('phycapflag').setValue(this.customers[this.registerForm.get('custdummyid').value][4]);
