@@ -303,7 +303,10 @@ export class slsInvSaveComponent implements OnInit {
   }
 
   autokeyselect(event: KeyboardEvent, articleId: number) {
+
+   
     var autoincrflag: number;
+
     if (event.keyCode == 38) {
       var autoincrflag = articleId - 1;
       if (autoincrflag == 1) {
@@ -324,7 +327,19 @@ export class slsInvSaveComponent implements OnInit {
       $('#autolistnew  ul   li:nth-child(1)   input:nth-child(1) ').focus();
       $(document).unbind('scroll');
     }
+
     this.barcodeflag = 0;
+  }
+
+  //mobile click drug load
+  mobselect(event, articleId: number){
+      
+    this.drgid = articleId - 2;
+    this.autodatacopy = this.autodata;
+    this.autodata = [];
+    $('.boxname ').show();
+    $('#autolistnew  ul   li:nth-child(1)   input:nth-child(1) ').focus();
+    $(document).unbind('scroll');
   }
 
   autofocusin1() {
@@ -356,6 +371,7 @@ export class slsInvSaveComponent implements OnInit {
   }
 
   autokeyselect1(event: KeyboardEvent, articleId: number) {
+    
     var autoincrflag: number;
     if (event.keyCode == 38) {
       autoincrflag = articleId - 1;
@@ -365,10 +381,12 @@ export class slsInvSaveComponent implements OnInit {
         $("#autolist1 li:nth-child(" + autoincrflag + ") input").focus();
       }
     }
+
     if (event.keyCode == 40) {
       autoincrflag = articleId + 1;
       $("#autolist1 li:nth-child(" + autoincrflag + ") input").focus();
     }
+
     if (event.keyCode == 13) {
       this.drgid1 = articleId - 2;
       this.autodatacopy1 = this.autodata1;
@@ -376,18 +394,23 @@ export class slsInvSaveComponent implements OnInit {
       $('.boxname').show();
       $('#autolistnew  ul   li:nth-child(1)   input:nth-child(1) ').focus();
     }
+
     this.barcodeflag = 2;
   }
+
   viewStock(event: KeyboardEvent, stktype: number) {
     var autoincrflag: number;
+
     if (event.keyCode == 38) {
       autoincrflag = stktype - 1;
       $("#autolistnew li:nth-child(" + autoincrflag + ") input").focus();
     }
+
     if (event.keyCode == 40) {
       autoincrflag = stktype + 1;
       $("#autolistnew li:nth-child(" + autoincrflag + ") input").focus();
     }
+
     if (event.keyCode == 13) {
       if (this.barcodeflag == 0) {
         var drg = this.autodatacopy[this.drgid][1];
@@ -399,14 +422,16 @@ export class slsInvSaveComponent implements OnInit {
         $('.boxname ').hide();
         this.registerForm.get('autonamenew').setValue('');
         this.autodatacopy = [];
-      } else if (this.barcodeflag == 1) {
+      } 
+      else if (this.barcodeflag == 1) {
         var frmdata1 = { frmint1: '', frmstr1: this.registerForm.get('barcode').value, createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
         this.userService.viewBarCodeProd(JSON.stringify(frmdata1)).subscribe(data => { this.viewServWareHouseStock(data, stktype) },
           errorCode => console.log(errorCode));
         $('.boxname ').hide();
         $(".barcode").focus();
         this.registerForm.get('barcode').setValue('');
-      } else if (this.barcodeflag == 2) {
+      }
+       else if (this.barcodeflag == 2) {
         var drg1 = this.autodatacopy1[this.drgid1][1];
         var bth1 = this.autodatacopy1[this.drgid1][2];
         var frmdata2 = { frmint1: drg1, frmint2: bth1, frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
@@ -417,6 +442,42 @@ export class slsInvSaveComponent implements OnInit {
         this.registerForm.get('autonamenew1').setValue('');
         this.autodatacopy1 = [];
       }
+    }
+
+  }
+
+  //mobile click box strip tab
+  mobview (event,  stktype: number) {
+  
+    if (this.barcodeflag == 0) {
+      var drg = this.autodatacopy[this.drgid][1];
+      var bth = this.autodatacopy[this.drgid][2];
+      var frmdata = { frmint1: drg, frmint2: bth, frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
+      this.userService.viewSIProductName(JSON.stringify(frmdata)).subscribe(data => { this.viewServWareHouseStock(data, stktype) },
+        errorCode => console.log(errorCode));
+      $("#autoname").focus();
+      $('.boxname ').hide();
+      this.registerForm.get('autonamenew').setValue('');
+      this.autodatacopy = [];
+    } 
+    else if (this.barcodeflag == 1) {
+      var frmdata1 = { frmint1: '', frmstr1: this.registerForm.get('barcode').value, createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
+      this.userService.viewBarCodeProd(JSON.stringify(frmdata1)).subscribe(data => { this.viewServWareHouseStock(data, stktype) },
+        errorCode => console.log(errorCode));
+      $('.boxname ').hide();
+      $(".barcode").focus();
+      this.registerForm.get('barcode').setValue('');
+    }
+     else if (this.barcodeflag == 2) {
+      var drg1 = this.autodatacopy1[this.drgid1][1];
+      var bth1 = this.autodatacopy1[this.drgid1][2];
+      var frmdata2 = { frmint1: drg1, frmint2: bth1, frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
+      this.userService.viewSIProductName(JSON.stringify(frmdata2)).subscribe(data => { this.viewServWareHouseStock(data, stktype) },
+        errorCode => console.log(errorCode));
+      $("#autoname1").focus();
+      $('.boxname').hide();
+      this.registerForm.get('autonamenew1').setValue('');
+      this.autodatacopy1 = [];
     }
   }
 

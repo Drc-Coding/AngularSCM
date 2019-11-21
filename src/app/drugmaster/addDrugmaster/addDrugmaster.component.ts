@@ -10,19 +10,18 @@ import swal from 'sweetalert2';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { AppComponent } from '../../app.component';
 import { Router } from '@angular/router';
+import { dateFormatPipe } from 'app/notifications/notifications.datepipe';
+
 @Component({
   selector: 'app-drugmaster',
   templateUrl: './addDrugmaster.component.html',
   providers: [adddrugService, NotificationsComponent]
 })
+
 export class adddrugComponent implements OnInit {
-
-
 
   @Input() multiple: boolean = false;
   @ViewChild('fileInput') inputEl: ElementRef;
-
-
 
   nod: boolean = false;
 
@@ -72,8 +71,12 @@ export class adddrugComponent implements OnInit {
   drugForm: FormGroup;
   textPattern = "[a-zA-Z][a-zA-Z ]+";
   textnumbers = '^[0-9]+(\.[0-9]{1,2})?$';
-  constructor(private drugservice: adddrugService, private sanitizer: DomSanitizer,
-    private notificationsComponent: NotificationsComponent, private fb: FormBuilder, private router: Router, private modalService: NgbModal) {
+  deviceObj: any;
+  
+  constructor(private drugservice: adddrugService, private sanitizer: DomSanitizer, private fb: FormBuilder, 
+  private notificationsComponent: NotificationsComponent, private router: Router, private modalService: NgbModal,
+  private appComponent: AppComponent, private dateformat: dateFormatPipe ) {
+
     let brandname = new FormControl();
     let selectedCountry = new FormControl();
     let genericid = new FormControl();
@@ -585,9 +588,32 @@ export class adddrugComponent implements OnInit {
     this.drugForm.get('choosephotos').setValue("");
   }
 
+
+      
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+
   private formSubmitAttempt: boolean;
   public reFlag: boolean = false;
-
   onSubmit() {
     this.submitted = true;
     this.reFlag = this.drugInputValidation();
@@ -642,10 +668,6 @@ export class adddrugComponent implements OnInit {
     //   return false;
     // }
 
-
-
-
-
     if (this.drugForm.get('mrp').value == '' || this.drugForm.get('mrp').value == null) {
       this.notificationsComponent.addToast({ title: 'Error Message', msg: 'SRP must Not be Empty', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
       return false;
@@ -663,8 +685,7 @@ export class adddrugComponent implements OnInit {
       return false;
     }
 
-
-
+    return true;
     // if (this.drugForm.get('maingroupid').value == '0' || this.drugForm.get('maingroupid').value == null) {
     //   this.notificationsComponent.addToast({ title: 'Error', msg: 'Main Group must not be empty', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
     //   return false;
@@ -678,21 +699,27 @@ export class adddrugComponent implements OnInit {
     //   return false;
     // }
 
-
-
-
-
-
-
-    return true;
+    
   }
+
+
   private createRecord() {
+
     this.insu = this.drugForm.get('insuranceid').value;
+
     this.drugservice.createDrug(JSON.stringify(this.drugForm.value)).subscribe(data => {
       if (data == true) {
+
+        this.devicedetails();           
+        this.deviceObj.apiname="api/drugcreateRecord";
+        this.deviceObj.description="Save Drug Details";
+       
+        this.drugservice.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+        
         const inputEl: HTMLInputElement = this.inputEl.nativeElement;
         const newCount: number = inputEl.files.length;
         if (newCount != 0) {
+
           this.notificationsComponent.addToast({ title: 'Info Message', msg: 'Please Wait your Files are Uploading...', timeout: 7000, theme: 'default', position: 'top-right', type: 'info' });
           setTimeout(() => {
             this.drugservice.insuranceSave(JSON.stringify(this.insu));
@@ -722,6 +749,7 @@ export class adddrugComponent implements OnInit {
       }
     });
   }
+
   sanitizedImageData: any;
   sid: number = 1;
   public image: any = [];
@@ -781,6 +809,7 @@ export class adddrugComponent implements OnInit {
     if (size > this.maxSize)
       this.errors.push("Error (File Size): " + file.name + ": exceed file size limit of " + this.maxSize + "MB ( " + size + "MB )");
   }
+  
   openSuccessSwal() {
     swal({
       title: 'Good job!',

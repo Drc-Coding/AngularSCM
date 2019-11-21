@@ -15,8 +15,9 @@ export class PickapprovalComponent implements OnInit {
   pickedapproveForm: any;
   picklist: any;
   CheckingEmployee: any;
+  deviceObj: any;
   constructor(private pickedchecking: salespickingService, private Notification: NotificationsComponent, private router: Router,
-    private appcomponent: AppComponent,private dateformat: dateFormatPipe, private formbuilder: FormBuilder) {
+    private appComponent: AppComponent,private dateformat: dateFormatPipe, private formbuilder: FormBuilder) {
     this.pickedapproveForm = this.formbuilder.group({
       picklistid: ['',[Validators.required]],
       createdBy: ['', []],
@@ -195,21 +196,58 @@ export class PickapprovalComponent implements OnInit {
       countryrefid: [AppComponent.countryID, []],
     })
   }
+
+
+  //device details
+
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+
+
   onSubmit() {
+
     const getData = <FormArray>this.pickedapproveForm.controls['SOrederproduct'];
     let data: any = getData.value
     this.pickedapproveForm.get('totalprod').setValue(data.length);
+
     this.pickedchecking.Savechecksalespick(JSON.stringify(this.pickedapproveForm.value)).subscribe(data => {
       if (data == true) {
         // const getData = this.salespickingForm.controls['SOrederproduct'];
         this.pickedchecking.Savecheckpickproduct(JSON.stringify(getData.value)).subscribe(
           data => {
             if (data == true) {
-              this.Notification.addToast({ title: 'success msg', msg: 'Data Saved Successfully..', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
+
+              this.devicedetails();           
+              this.deviceObj.apiname="api/checksavePicking";
+              this.deviceObj.description="Picking Approval";
+       
+              this.pickedchecking.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+     
+              this.Notification.addToast({ title: 'Success Msg', msg: 'Data Saved Successfully..', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
               setTimeout(() => {
                 this.router.navigate(['Picking/ViewPicking']);
               }, 2000);
             }
+
             else {
               this.Notification.addToast({ title: 'Error Msg', msg: 'Data not Save..', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
             }

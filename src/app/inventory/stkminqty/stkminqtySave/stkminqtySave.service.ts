@@ -9,18 +9,13 @@ import 'rxjs/add/observable/throw';
 export class stkminqtySaveService {
 
 
-
-
-
   constructor(private http: Http) { }
 
   options;
 
   private URL = 'api/stkmin/';
-
-
   private URL1 = 'api/slsinv/';
-
+  private deviceurl='api/User/saveUserActivity';
 
 
   ngOnInit() {
@@ -40,18 +35,6 @@ export class stkminqtySaveService {
     return this.http
       .post(this.URL + `saveStkMinQty`, serobj, options).map((res: Response) => res.json());
   }
-
-
-
-  // oneProduct(newproductname: any, companyid: any, branchrefid: any, locrefid: any, locname: any) {
-
-
-  //   return this.http.get(this.URL1 + `oneProduct` + '/' + newproductname +
-
-
-
-  //       '/' + companyid + '/' + branchrefid + '/' + locrefid + '/' + locname).map((res: Response) => res.json());
-  // }
 
 
 
@@ -89,11 +72,6 @@ export class stkminqtySaveService {
 
 
 
-
-
-
-
-
   viewMinimumStock(serobj: string) {
     let header = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: header });
@@ -122,7 +100,15 @@ export class stkminqtySaveService {
       .map((res: Response) => res.json());
   }
 
+adddevicedetails(data){
 
+  let header = new Headers({'Content-Type': 'application/json'});
+  let options = new RequestOptions({headers: header});
+
+  return this.http
+    .post(this.deviceurl, data, options)  .map((res: Response) => res.json());
+
+}
 
 
 

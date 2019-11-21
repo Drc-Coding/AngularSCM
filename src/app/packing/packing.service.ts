@@ -1,10 +1,15 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers } from "@angular/http";
+import { Http, Headers,Response, RequestOptions } from "@angular/http";
 
 @Injectable()
 
 export class packingService {
+  
   constructor(private http: Http) { }
+
+  private deviceurl='api/User/saveUserActivity';
+
+
   getpicklist(cid: number, bid: number, loc: number, lrid: number) {
     return this.http.get('api/getpicklist' + '/' + cid + '/' + bid + '/' + loc + '/' + lrid).map(response => response.json());
   }
@@ -60,5 +65,16 @@ export class packingService {
 
   getapprovepackingno(cid: number, bid: number, loc: number, lrid: number) {
     return this.http.get('api/getapprovepackingno' + '/' + cid + '/' + bid + '/' + loc + '/' + lrid).map(response => response.json());
+  }
+
+
+  devicedetails(data){
+
+    let header = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: header});
+
+    return this.http.post( this.deviceurl, data, options)
+    .map((res: Response) => res.json());
+
   }
 }

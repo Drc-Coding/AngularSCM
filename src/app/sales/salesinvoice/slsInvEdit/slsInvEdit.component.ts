@@ -333,6 +333,7 @@ export class slsInvEditComponent implements OnInit {
     if (answer && valflag == 0) {
       this.userService.saveSalesInvoice(JSON.stringify(this.registerForm.value)).subscribe(data => { this.saveSIProducts(data) },
         errorCode => console.log(errorCode));
+        window.location.href="[SalesInvoice/SalesMaintenance]";
     }
   }
 

@@ -141,10 +141,6 @@
                                 <th *ngIf="registerForm.controls.stripdispflag.value=='1'"> Approved Strip</th>
                                 <th *ngIf="registerForm.controls.tabdispflag.value=='1'"> Approved No Of Qty </th>
 
-
-
-
-
                                 <th>Required Qty</th>
                                 <th>Min Qty </th>
 
@@ -208,7 +204,7 @@
 
 
                         </tr>
-</tbody>
+                        </tbody>
                     </table>
 
                 </div>
@@ -217,65 +213,9 @@
 
 
 
-
-
-            <h5></h5>
-
-            <div class="row">
-                <!--.row1start-->
-
-
-                <div class="col-lg-4">
-                    <div class="row">
-
-
-
-
-
-
-
-
-
-
-
-
-                    </div>
-                    <!-- rrghghf-->
-
-
-                </div>
-
-
-                <div class="col-lg-4">
-                    <div class="row">
-
-
-
-                    </div>
-                    <!-- rrghghf-->
-
-
-                </div>
-
-
-
-                <div class="col-lg-4">
-                    <div class="row">
-
-
-
-                        <ng2-toasty [position]="position"></ng2-toasty>
-                    </div>
-                    <!-- rrghghf-->
-
-
-                </div>
-
-            </div>
-            <!-- rrghghf 1-->
-
         </div>
         <!-- box-typical-->
+        <ng2-toasty [position]="position"></ng2-toasty>
 
     </form>
 
@@ -283,19 +223,12 @@
 
     <div class="row">
         <!-- row Start-->
-
+        <div class="col-lg-1"></div>
         <div class="col-lg-3">
             <button type="button" class="btn btn-round" (click)="onSubmit()"> Approve </button>
         </div>
 
-        <div class="col-lg-3">
-            <button type="button" class="btn btn-round"
-                [routerLink]="['/RequisitionApproval/EditIndentApproval' ]">
-                Edit </button>
-        </div>
-
-
-
+      
     </div>
     <!-- row end-->
 

@@ -36,7 +36,7 @@ export class SalesorderleadComponent implements OnInit {
     this.deviceObj.apiname="api/salesOrderlead";
     this.deviceObj.description="View SalesOrder Lead";
    
-    this.saleslead.viewdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+    this.saleslead.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
 
   }
 

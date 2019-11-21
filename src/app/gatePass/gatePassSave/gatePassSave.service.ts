@@ -14,35 +14,21 @@ export class gatePassSaveService {
   private potableURl = 'api/purchaseordertable';
   private prolist = 'api/getPibrandlist';
 
-  // private getStockTransfer='api/getsupergatepassproduct';
-
-
   private getStockTransfer='api/getGatePassNo';
-
   private getShops = 'api/getEmpShops';
   private getWarehouses = 'api/getEmpWareHouses';
   private getHospitals = 'api/getEmpHospitals';
-
-
   private getusershopurl = 'api/getDeliveryShopUrl';
   private getuserwarehousesurl = 'api/getuserwarehouse';
   private getuserhospitalurl = 'api/getuserhospital';
-
-
   private getSuperStockNoURL= 'api/getgatepassadminstockno';
-
-
-
   private getStockNoURL='api/getGatePassNo';
-
-
-
   private getAutonIncrement= 'api/getGatePassAutoIncrements';
-
   private getGrid='api/getgpinvoiceno';
-
-
   private getGrid1='api/getGatePassProduct';
+
+  private deviceurl='api/User/saveUserActivity';
+
 
   constructor(private http: Http) { }
 
@@ -162,8 +148,6 @@ export class gatePassSaveService {
 return this.http.get(this.getGrid +'/'+sin+'/'+compid+'/'+branid+'/'+locrefid+'/'+locname).map(response=>response.json());
 
 
-
-
   }
 
 
@@ -173,11 +157,17 @@ return this.http.get(this.getGrid +'/'+sin+'/'+compid+'/'+branid+'/'+locrefid+'/
     return this.http.get(this.getGrid1 +'/'+dprod+'/'+compid+'/'+branid+'/'+locname+'/'+locrefid).map(response=>response.json());
     
     
-    
-    
       }
 
+  adddevicedetails(data){
 
+    let header = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: header});
+  
+    return this.http
+      .post(this.deviceurl, data, options)  .map((res: Response) => res.json());  
+  
+  }
 
 
 

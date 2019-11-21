@@ -41,7 +41,7 @@
 	<div class="sub-title">Product Details
 		<i class="fa fa- ficon"></i>
 	</div><br>
-	<form [formGroup]="drugForm" (ngSubmit)="onSubmit()">
+	<form [formGroup]="drugForm" (ngSubmit)="onSubmit()" class="mx-2">
 		<div class="box-typical box-typical-padding">
 
 			<div class="form-group row">
@@ -607,7 +607,8 @@
  -->
 
 			<div class="form-group row">
-				<div class="col-lg-4">
+				<div clasa="col-lg-1"></div>
+				<div class="col-lg-3">
 					<button [disabled]="!drugForm.valid" type="submit" class="btn btn-round">Save</button>
 				</div>
 			</div>

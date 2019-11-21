@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
   osversion: any;
 
   constructor(private router: Router, private dateformatPipe: dateFormatPipe,
-    private appservice: AppService,private deviceService: Ng2DeviceService ) { }
+    private appservice: AppService,private deviceService: Ng2DeviceService) { }
   
   ngOnInit() {
     this.menu = JSON.parse(sessionStorage.getItem("user"));
@@ -66,8 +66,8 @@ export class AppComponent implements OnInit {
   getIP()
   {
     this.appservice.getIPAddress().subscribe(data=>{
-      this.ipAddress=JSON.stringify(data.ip).replace(/^"|"$/g, '')
-     
+      this.ipAddress=JSON.stringify(data.ip).replace(/^"|"$/g, '');
+      
   });
   }
 

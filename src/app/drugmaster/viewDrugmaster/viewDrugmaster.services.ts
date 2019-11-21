@@ -8,6 +8,9 @@ export class drugviewService {
   private drugviewUrl = 'api/viewDruginfo';
   private deletecmpUrl = 'api/deleteDrugdetails';
   private getFileuploadedURL = 'api/getUploadfiles';
+
+  private deviceurl='api/User/saveUserActivity';
+  
   constructor(private http: Http) { }
 
 
@@ -27,5 +30,16 @@ export class drugviewService {
         return response.json();
       })
   }
+
+
+  
+  devicedetails(data){
+
+    let header = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: header});
+  
+    return this.http
+      .post(this.deviceurl, data, options)  .map((res: Response) => res.json());  
+}
 
 }

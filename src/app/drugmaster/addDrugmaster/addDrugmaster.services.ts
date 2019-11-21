@@ -17,13 +17,7 @@ export class adddrugService {
   private therapeuticUrl = 'api/getTherapeutic';
   private subtherapeuticUrl = 'api/getsubTherapeutic';
   private formulationUrl = 'api/getFormulation';
-
-
-
   private getDistributorchnURL =  'api/getdistinfo';
-
-
-
   private getManufactureUrl = 'api/getPharmacompany';
 
   //private manufactuereDivisionUrl = 'api/manufacturerdivision';
@@ -53,7 +47,7 @@ export class adddrugService {
   private subgroup1Url = 'api/getsubgroup1';
   private subgroup2Url = 'api/getsubgroup2';
 
-
+  private deviceurl='api/User/saveUserActivity';
 
   constructor(private http: Http, private http1: HttpClient) { }
 
@@ -261,14 +255,13 @@ export class adddrugService {
     return this.http.post(this.saveSubgroup2URL, subgroupobj2, { headers: header }).map(response => response.json());
   }
 
+  devicedetails(data){
 
-
-  //   viewGenericName(serobj: string) {
-  //     let header = new Headers({'Content-Type': 'application/json'});
-  //     let options = new RequestOptions({headers: header});
-
-  //      return this.http.post( this.genericnameURL, serobj, options)
-  // .map((res: Response) => res.json());
-  //   }
+    let header = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: header});
+  
+    return this.http
+      .post(this.deviceurl, data, options)  .map((res: Response) => res.json());  
+}
 
 }

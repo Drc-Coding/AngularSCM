@@ -18,8 +18,12 @@ export class ConvertsalesComponent implements OnInit {
   characters: any;
   patientlist: any;
   sotypes: any;
+  deviceObj: any;
   
-  constructor(private solead: SalesorderleadService, private fb: FormBuilder, private route: ActivatedRoute, private datepipe: dateFormatPipe, private notificationsComponent: NotificationsComponent, private router: Router) {
+  constructor(private solead: SalesorderleadService, private fb: FormBuilder, private route: ActivatedRoute, 
+    private dateformat: dateFormatPipe, private notificationsComponent: NotificationsComponent,
+     private router: Router, private appComponent: AppComponent ) {
+
     this.salesorderlead = this.fb.group({
       patientid: ['', []],
       contactno: ['', []],
@@ -194,6 +198,28 @@ export class ConvertsalesComponent implements OnInit {
   }
 
 
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+
   onSubmit() {
     this.openMyModal('effect-1');
     const getData = <FormArray>this.salesorderlead.controls['sodetails'];
@@ -206,6 +232,14 @@ export class ConvertsalesComponent implements OnInit {
           this.solead.saveSaleleadRecord(JSON.stringify(getData.value)).subscribe(
             data => {
               if (data == true) {
+
+
+                this.devicedetails();           
+                this.deviceObj.apiname="api/saveSalesorder";
+                this.deviceObj.description="Converted SalesOrder";
+               
+                this.solead.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+                
                 this.notificationsComponent.addToast({ title: 'Success Message', msg: 'Data Saved Successfully.', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
                 setTimeout(() => {
                   this.router.navigate(['SalesOrder/ViewSalesOrder']);

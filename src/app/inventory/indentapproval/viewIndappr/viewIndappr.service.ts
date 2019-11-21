@@ -9,11 +9,10 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class viewIndapprService {
 
+  options;
 
-
-  options  ;
-  private    URL='api/indappr/';
-
+  private URL='api/indappr/';
+  private deviceurl='api/User/saveUserActivity';
 
 
   constructor(private http: Http) {}
@@ -37,7 +36,15 @@ export class viewIndapprService {
     .map((res: Response) => res.json());
     }
   
-   
+   viewdevicedetails(data){
+
+    let header = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: header});
+  
+    return this.http
+      .post(this.deviceurl, data, options)  .map((res: Response) => res.json());  
+
+   }
 
 
 

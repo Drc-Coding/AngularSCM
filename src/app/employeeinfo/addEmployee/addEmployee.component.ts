@@ -212,28 +212,6 @@ export class addEmployeeComponent implements OnInit {
     }
 
 
-    /* Image Preview if eye icon click */
-
-
-    // $(document).ready(function () {
-
-    //   $("#viewimg").click(function () {
-
-    //     $("#imgdisplay").show();
-    //     $("#hideimg").show();
-
-    //   });
-
-    //   $("#hideimg").click(function () {
-
-    //     $("#imgdisplay").hide();
-    //     $("#hideimg").hide();
-
-    //   });
-
-    // });
-
-
     this.getDepartment();
 
 
@@ -524,49 +502,47 @@ export class addEmployeeComponent implements OnInit {
 
 
 //Employee Image Validation & Preview
+empphotoChange(event: any) {
 
-  fileChange(event: any) {
+  this.message="";
 
-    this.message="";
-  
-    // when the load event is fired and the file not empty
-    if(event.target.files && event.target.files.length > 0) {
-  
-       //Check & Print Type Error Message
-       var mimeType = event.target.files[0].type;
-       if (mimeType.match(/image\/*/) == null) {
-         this.showimage=false;
-         this.message = "Only images are supported.";
-          return;
-       }
-      
-  
-      if (event.target.files[0].size < 500000) {
-  
-      // Fill file variable with the file content
-      this.ephoto = event.target.files[0];
-  
-    
-      // Instantiate an object to read the file content
-      let reader = new FileReader();
-  
-        //To read Encrypted file and send url to display in html
-        reader.readAsDataURL(this.ephoto); 
-        reader.onload = (_event) => { 
-          this.imgURL = reader.result; 
-        }
-  
+ // when the load event is fired and the file not empty
+ if(event.target.files && event.target.files.length > 0) {
+
+    //Check & Print Type Error Message
+    var mimeType = event.target.files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      this.showimage=false;
+      this.message = "Only images are supported.";
+       return;
     }
-  
-    else{
-      this.message = "Max Image Size 500KB Only & Check File Format";
-    }
-  
-  
-  }
    
-  }
-  
+
+   if (event.target.files[0].size < 500000) {
+
+   // Fill file variable with the file content
+   this.ephoto = event.target.files[0];
+
+ 
+   // Instantiate an object to read the file content
+   let reader = new FileReader();
+
+     //To read Encrypted file and send url to display in html
+     reader.readAsDataURL(this.ephoto); 
+     reader.onload = (_event) => { 
+       this.imgURL = reader.result; 
+     }
+
+ }
+
+ else{
+   this.message = "Max Image Size 500KB Only & Check File Format";
+ }
+
+
+}
+
+}
 
   imageshow(){
     this.showimage=true;
@@ -590,13 +566,11 @@ export class addEmployeeComponent implements OnInit {
     this.showeye=true;
     this.message='';
   }
- 
   /* Employee Image End */
 
 
+
   //Employee Signature Save
-
-
   signChange(event: any) {
 
     this.signmessage="";
@@ -627,7 +601,7 @@ export class addEmployeeComponent implements OnInit {
         reader.onload = (_event) => { 
           this.signimgURL = reader.result; 
         }
-        this.savesignimage();
+       
     }
   
     else{
@@ -663,8 +637,8 @@ export class addEmployeeComponent implements OnInit {
     this.signshoweye=true;
     this.signmessage='';
   }
-
   //Employee Sign Image End
+
 
   getBranche() {
 
@@ -966,8 +940,7 @@ export class addEmployeeComponent implements OnInit {
   }
 
 
-
-
+ 
   private createRecord(): void {
 
     this.myForm.get('deptrefid').setValue(this.myForm.get('department').value);
@@ -978,64 +951,81 @@ export class addEmployeeComponent implements OnInit {
     this.addEmployee.createEmployee(JSON.stringify(this.myForm.value)).subscribe(
       (result: any) => {
         let re = result.res;
+
         if (re == true) {
 
           this.saveempimage();
-          
-          this.imageresponse=this.saveempimage();
-          alert("Image Response"+this.imageresponse);
-          
-          if(this.imageresponse==true){
-           
-            this.savesignimage();
-            
-            this.notificationsComponent.addToast({ title: 'SUCESS MESSAGE', msg: 'DATA & IMAGE SAVED SUUCCESSFULLY', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'success' });
-            this.router.navigate(['Employee/ViewEmployee']);
-          }
-          else{
-
-            this.notificationsComponent.addToast({ title: 'Warning Message', msg: 'DATA ONLY SAVED & IMAGE UNSAVED....', timeout: 5000, theme: 'default', position: 'top-right', type: 'warning' });
-            this.router.navigate(['Employee/ViewEmployee']);
-          }
+          this.savesignimage();
          
+            }
 
-        }
+      else{
+        this.notificationsComponent.addToast({ title: 'Error Message', msg: ' DATA NOT SAVED....', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
 
-        else{
-          this.notificationsComponent.addToast({ title: 'Error Message', msg: ' DATA NOT SAVED....', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
-
-        }
-
+      }
 
       });
 
   }
+
 
   saveempimage(){
 
     // Instantiate a FormData to store form fields and encode the file
     let body = new FormData();
     // Add file content to prepare the request
-    body.append("empfile", this.ephoto);
+    body.append("file", this.ephoto);
    
     // Launch post request Service Call
-    this.addEmployee.saveimage(body).subscribe( (data) => { 
-      let re = data.res; alert("Emp imgres"+re); return re;});
+    this.addEmployee.saveimage(body).subscribe( (data) => {
+    
+      //Employee image  notification start
+      if(data==true){
+      
+        this.notificationsComponent.addToast({ title: 'SUCESS MESSAGE', msg: 'DATA & EMPLOYEE IMAGE SAVED SUUCCESSFULLY', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'success' });
+        this.myForm.reset();
+        (<HTMLInputElement>document.getElementById("imagefile")).value = '';
+      }
+      else{
 
- }
+        this.notificationsComponent.addToast({ title: 'Warning Message', msg: 'DATA ONLY SAVED & EMPLOYEE IMAGE UNSAVED....', timeout: 5000, theme: 'default', position: 'top-right', type: 'warning' });
+      }
+     //Employee image  notification end
+    
+    });
+
+    }
+
 
  savesignimage(){
 
   // Instantiate a FormData to store form fields and encode the file
   let body = new FormData();
   // Add file content to prepare the request
-  body.append("signfile", this.signphoto);
- 
-  // Launch post request Service Call
-  this.addEmployee.savesignimage(body).subscribe( (data) => { 
-    let re = data.res; alert("Signres"+re); return re;});
+  body.append("file", this.signphoto);
 
-}
+  // Launch post request Service Call
+  this.addEmployee.savesignimage(body).subscribe( (data) => {
+
+      //SIGN response toast Notification
+      if(data==true){
+        alert("Signres"+data);
+        this.notificationsComponent.addToast({ title: 'SUCESS MESSAGE', msg: 'DATA & EMP SIGN IMAGE SAVED SUUCCESSFULLY', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'success' });
+        setTimeout(() => {
+        this.router.navigate(['Employee/ViewEmployee']);
+        },5000);  
+      
+      }
+
+      else{
+
+        this.notificationsComponent.addToast({ title: 'Warning Message', msg: 'DATA ONLY SAVED & EMP SIGN IMAGE UNSAVED....', timeout: 5000, theme: 'default', position: 'top-right', type: 'warning' });
+        
+      }
+     
+  });
+
+  }
 
   // Popup Modal Open Code
 

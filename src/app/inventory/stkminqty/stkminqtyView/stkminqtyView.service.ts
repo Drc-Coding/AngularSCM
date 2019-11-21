@@ -11,7 +11,8 @@ export class stkminqtyViewService  {
   options  ;
 
     private    URL='api/stkmin/';
-private URL1 ='api/slsinv/';
+    private URL1 ='api/slsinv/';
+    private deviceurl='api/User/saveUserActivity';
 
 
   constructor(private http: Http) {}
@@ -39,15 +40,14 @@ private URL1 ='api/slsinv/';
           }
 
 
-          // viewStockRecord(id: any){
+      viewdevicedetails(data){
 
-
-          //   return this.http.get(this.URL+'viewStockRecord' +'/'+ id).map((res: Response) => res.json());
-
-
-
-
-          // }
+        let header = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions({headers: header});
+      
+        return this.http
+          .post(this.deviceurl, data, options)  .map((res: Response) => res.json());
+      }
 
 
 

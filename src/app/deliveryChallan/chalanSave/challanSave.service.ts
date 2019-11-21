@@ -31,6 +31,9 @@ export class challanSaveService {
   private getStockNoURL='api/getstockno';
   private getAutonIncrement= 'api/getDelveryAutoIncrements';
 
+  private deviceurl='api/User/saveUserActivity';
+
+
   constructor(private http: Http) { }
 
 
@@ -137,6 +140,16 @@ export class challanSaveService {
   getLocalstore() {
     //Get Coutries 
     return this.http.get('api/getMain').map(response => response.json());
+  }
+
+  adddevicedetails(data){
+   
+    let header = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: header});
+  
+    return this.http
+      .post(this.deviceurl, data, options)  .map((res: Response) => res.json());  
+  
   }
 
 

@@ -14,7 +14,8 @@ export class saveIndapprService {
   options  ;
 
   
-  private    URL='api/indappr/';
+  private URL='api/indappr/';
+  private deviceurl='api/User/saveUserActivity';
  
 
   constructor(private http: Http) {}
@@ -28,8 +29,6 @@ export class saveIndapprService {
     
       }
   
-  
-
   
   
     saveIndentConfirm(serobj: string) {
@@ -65,10 +64,8 @@ export class saveIndapprService {
   
   
   
-  
   viewIndentProduct(serobj: string  ) {
   
-
     let header = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: header});
           return this.http.post( this.URL+`viewSelIndentproduct`, serobj, options)
@@ -76,12 +73,6 @@ export class saveIndapprService {
   }
 
 
-
-  
-
-
-
-      
     viewLocName(serobj: string  ) {
     
   
@@ -91,6 +82,13 @@ export class saveIndapprService {
       .map((res: Response) => res.json());
     }
 
+    adddevicedetails(data){
+      let header = new Headers({'Content-Type': 'application/json'});
+      let options = new RequestOptions({headers: header});
+            return this.http.post( this.deviceurl, data, options)
+      .map((res: Response) => res.json());
+
+    }
       
 
 

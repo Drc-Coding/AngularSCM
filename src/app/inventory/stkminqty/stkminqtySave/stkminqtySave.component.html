@@ -140,6 +140,8 @@
                 </tbody>
             </table>
         </div>
+
+        
         <div formArrayName="stkminqty1" class="flow" *ngIf="vflag==1">
             <table class="table styletab" width="auto-align">
                 <thead class="stylehead">
@@ -183,24 +185,23 @@
         <br>
         <!--. table     end-->
         <ng2-toasty [position]="position"></ng2-toasty>
+
+           <!-- row Start-->
         <div class="row button">
             <div class="col-lg-1"></div>
-            <!-- row Start-->
+         
             <div class="col-lg-3">
+
                 <button type="button" class="btn btn-round" (click)="onSubmit()"
                     [disabled]="!registerForm.get('minstockflag').value==1 || !registerForm.get('minstockflag').value==2">
                     Save
                 </button>
+
+                <button type="button" class="btn btn-round ml-3" [routerLink]="['/ReorderForm/ViewReorderForm']">
+                Back </button>
             </div>
-            <div class="col-lg-3">
-                <button type="button" class="btn btn-round"
-                    [routerLink]="['/ReorderForm/ViewReorderForm' ]">
-                    Back </button>
-            </div>
-            <!-- <div class="col-lg-3">
-                <button type="button" class="btn btn-success btn-round" [routerLink]="['/ReorderForm/stkminqtyEdit' ]">
-                    Edit </button>
-            </div> -->
+        
+         
         </div>
         <!-- row end-->
     </form>

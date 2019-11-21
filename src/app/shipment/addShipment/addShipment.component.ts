@@ -4,6 +4,7 @@ import { NotificationsComponent } from "app/notifications/notifications.componen
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from "@angular/forms";
 import { AppComponent } from "app/app.component";
 import { dateFormatPipe } from "app/notifications/notifications.datepipe";
+import { Router } from "@angular/router";
 
 
 
@@ -22,8 +23,6 @@ export class addShipment implements OnInit {
     productinfo;
     i;
 
-
-
     selobj;
 
     shipmentForm: FormGroup;
@@ -37,15 +36,12 @@ export class addShipment implements OnInit {
     cities = [];
 
     shtabhide;
+    deviceObj: any;
 
 
-    constructor(private addShipmentservices: addShipmentServices, private formBuilder: FormBuilder, private notificationsComponent: NotificationsComponent, private dateformat: dateFormatPipe) {
-
-
-
-
-
-    }
+    constructor(private addShipmentservices: addShipmentServices, private formBuilder: FormBuilder, 
+        private router: Router, private notificationsComponent: NotificationsComponent, 
+        private appComponent: AppComponent, private dateformat: dateFormatPipe) { }
 
 
 
@@ -256,10 +252,6 @@ export class addShipment implements OnInit {
 
 
 
-
-
-
-
     rowincrease() {
 
         const rowinc = <FormArray>this.shipmentForm.controls['shipmentcalculation'];
@@ -314,20 +306,43 @@ export class addShipment implements OnInit {
 
         })
 
-
-
     }
 
-    public retrunFlag: boolean = false;
 
+    //device details
+
+              
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+
+
+    public retrunFlag: boolean = false;
 
     onSubmit() {
 
         //debugger;
 
-
         this.retrunFlag = this.basicValidation();
-
+        alert("returnflag"+this.retrunFlag);
         if (this.retrunFlag) {
             this.addShipmentservices.saveShipping(JSON.stringify(this.shipmentForm.value)).subscribe(
 
@@ -415,8 +430,6 @@ export class addShipment implements OnInit {
 
 
 
-
-
     saveShippingdetail(data: any) {
 
 
@@ -444,20 +457,12 @@ export class addShipment implements OnInit {
             }
 
 
-            this.addShipmentservices.saveShippingdetail(JSON.stringify(arr)).subscribe(data => {
-                this.savevalid(data);
+            this.addShipmentservices.saveShippingdetail(JSON.stringify(arr)).subscribe(data => { this.savevalid(data);
+               
+                this.router.navigate(['shipment/ViewShipment']) },
+                //window.location.href = "shipment/ViewShipment";
 
-
-
-                window.location.href = "shipment/ViewShipment";
-
-                // [routerLink]="['/shipment/ViewShipment']"
-            },
-
-
-                errorCode => console.log(errorCode)
-
-            );
+                errorCode => console.log(errorCode));
 
 
 
@@ -472,7 +477,14 @@ export class addShipment implements OnInit {
 
 
         if (data == 1) {
-            this.notificationsComponent.addToast({ title: 'Success', msg: 'Data  Saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
+
+            this.devicedetails();
+            this.deviceObj.apiname="api/shi/saveShipping";
+            this.deviceObj.description="Save Shipment Details";
+          
+            this.addShipmentservices.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+
+            this.notificationsComponent.addToast({ title: 'Success', msg: 'Data  Saved SuccessFully ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
 
         } else {
             this.notificationsComponent.addToast({ title: 'Error', msg: 'Data Not  saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });

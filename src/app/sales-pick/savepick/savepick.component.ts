@@ -6,6 +6,7 @@ import { AppComponent } from '../../app.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { salespickingService } from '../salespicking.service';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { dateFormatPipe } from 'app/notifications/notifications.datepipe';
 @Component({
   selector: 'app-savepick',
   templateUrl: './savepick.component.html',
@@ -22,8 +23,10 @@ export class SavepickComponent implements OnInit {
   sotype:any;
   sino;any;
   empname:any;
-  constructor(private formbuilder: FormBuilder, private router:Router,private appcomponent:AppComponent,private notificationcomponent: NotificationsComponent,
-    private salespicking: salespickingService , private Notificationcomponent:NotificationsComponent) { 
+  deviceObj: any;
+  constructor(private formbuilder: FormBuilder, private router:Router,private appComponent:AppComponent,
+    private notificationcomponent: NotificationsComponent, private salespicking: salespickingService , 
+    private Notificationcomponent:NotificationsComponent,private dateformat: dateFormatPipe) { 
     this.salespickingForm = this.formbuilder.group({
       
       createdBy:['',[]],
@@ -241,11 +244,40 @@ soproduct(data:any){
   
       }
     }
+
+
+    //device details
+
+
+             
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
   
     onSubmit() {
+
       const getData = <FormArray>this.salespickingForm.controls['SOrederproduct'];
       let data:any = getData.value    
       this.salespickingForm.get('totalprod').setValue(data.length);
+
       this.salespicking.Savesalespick(JSON.stringify(this.salespickingForm.value)).subscribe(data =>
          {
          if(data == true){
@@ -253,13 +285,20 @@ soproduct(data:any){
           this.salespicking.Savepickproduct(JSON.stringify(getData.value)).subscribe(
             data => {
               if(data == true){
-                this.notificationcomponent.addToast({title: 'success msg', msg: 'Data Saved Successfully..', timeout: 5000, theme: 'default', position: 'top-right', type: 'success'});
+                
+                this.devicedetails();
+                this.deviceObj.apiname="api/savePicking";
+                this.deviceObj.description="Save Picking";
+        
+                this.salespicking.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+              
+                this.notificationcomponent.addToast({title: 'Success Msg', msg: 'Data Saved Successfully..', timeout: 5000, theme: 'default', position: 'top-right', type: 'success'});
               setTimeout(() => {
                 this.router.navigate(['Picking/ViewPicking']);
-              },2000);
+              },3000);
               }
               else{
-                this.notificationcomponent.addToast({title: 'Error Msg', msg: 'Data not Save..', timeout: 5000, theme:'default', position: 'top-right', type: 'error'});
+                this.notificationcomponent.addToast({title: 'Error Msg', msg: 'Data Not Saved..', timeout: 5000, theme:'default', position: 'top-right', type: 'error'});
               }
             },
             error => console.log("Error Occure in SavePick"))
@@ -267,10 +306,9 @@ soproduct(data:any){
         
           }
     })
-  
-// Need So Date    
+     
          
-           } 
+  } 
       
     
 

@@ -236,7 +236,7 @@ flag1:boolean = false;
               this.deviceObj.apiname="api/updateSalesorder";
               this.deviceObj.description="SalesOrder Modified";
               
-              this.salesOrderService.editdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+              this.salesOrderService.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
 
               this.notificationsComponent.addToast({ title: 'Sucess', msg: 'Data Updated Sucessfully..', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
               this.route.navigate(['SalesOrder/ViewSalesOrder']);

@@ -8,49 +8,18 @@ import 'rxjs/add/operator/map';
 export class addShipmentServices {
 
     private URL = 'api/shi/';
-
     private productinfoUrl = 'api/getproductinfo';
 
     private getCountries = 'api/getCountry';
     private getState = 'api/getState';
     private getCitys = 'api/getCity';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    private deviceurl='api/User/saveUserActivity';
 
     options;
 
 
-    constructor(private http: Http) {
-
-
-    }
-
-
-
-
-
+    constructor(private http: Http) { }
 
 
     getCountry() {
@@ -72,35 +41,16 @@ export class addShipmentServices {
 
 
 
-
-
-
     saveShipping(data: any) {
         alert(data)
-
 
         let header = new Headers({ 'Content-Type': 'application/json' });
 
         let options = new RequestOptions({ headers: header });
 
-        return this.http.post(this.URL + `saveShipping`, data, options).map(res => res.json());
-
-
-
+        return this.http.post(this.URL + `saveShipping`, data, options).map(res => res.json())
 
     }
-
-
-
-    // getProductinfo(id: number) {
-    //     //Get product Info
-    //     return this.http.get(this.productinfoUrl + '/' + id).map(response => response.json());
-    // }
-
-
-
-
-
 
 
 
@@ -112,8 +62,6 @@ export class addShipmentServices {
         let options = new RequestOptions({ headers: header });
 
         return this.http.post(this.URL + `saveShippingdetail`, data, options).map(res => res.json());
-
-
 
 
     }
@@ -147,8 +95,16 @@ export class addShipmentServices {
         return this.http.post(this.URL + `gettablevalue`, obj, options).map((res: Response) => res.json());
 
     }
+    
+    adddevicedetails(data){
 
+        let header = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: header});
+  
+    return this.http
+      .post(this.deviceurl, data, options)  .map((res: Response) => res.json());  
 
+    }
 
 
 

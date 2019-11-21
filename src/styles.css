@@ -24129,6 +24129,65 @@ font-size:21px !important;
   }
 
 
+  
+@media (max-width: 500px) {
+
+  .btn-round {
+    font-size:14px;
+    padding:7px 14px;
+    margin-top:3px;
+   }
+
+   
+.flow{
+  max-height:270px;
+  }
+  
+  .stylehead th{
+  font-size:16px !important;
+  padding:0.2em;
+  }
+ 
+  .stylebody td{
+  font-size:16px;
+  padding:0.2em;
+  vertical-align: middle;
+  width:100px;
+  }
+
+  .stylebody td input{
+    width:100px;
+    font-size:16px;
+  }
+
+ 
+  .stylebody #width1{
+    width:30px !important;
+  }
+
+  .stylebody #width2{
+    width:50px !important
+  }
+
+  .stylebody #width3{
+    width:80px !important
+  }
+
+  .stylebody #width4{
+    width:120px !important;
+  }
+
+  .stylebody #width5{
+    width:150px !important;
+  }
+ 
+  .stylebody #width6{
+    width:180px !important;
+  }
+  
+}
+
+
    /* Inedx Pills Loader */
 
    

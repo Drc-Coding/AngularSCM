@@ -5,6 +5,7 @@ import { FormGroup } from "@angular/forms";
 import { IOption } from 'ng-select';
 import { retry } from 'rxjs/operator/retry';
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
+
 @Injectable()
 export class editdrugService {
   handleError: any;
@@ -17,9 +18,7 @@ export class editdrugService {
   private therapeuticUrl = 'api/getTherapeutic';
   private subtherapeuticUrl = 'api/getsubTherapeutic';
   private formulationUrl = 'api/getFormulation';
-private  getDistributorchnURL =  'api/getdistinfo';
-
-
+  private  getDistributorchnURL =  'api/getdistinfo';
 
   private scheduleUrl = 'api/getSchedule';
   private insuranceUrl = 'api/getInsurance';
@@ -33,12 +32,10 @@ private  getDistributorchnURL =  'api/getdistinfo';
   /** Edit values From view URL**/
   private editValURL = 'api/getdrugeditval';
   private editSubthreaURL = 'api/getEditsubthreabetic';
-
   private geteditInsur = 'api/getEditinsurance';
 
-
+  private deviceurl='api/User/saveUserActivity';
   
-
 
   constructor(private http: Http, private http1: HttpClient) { }
 
@@ -184,9 +181,6 @@ private  getDistributorchnURL =  'api/getdistinfo';
   }
 
 
-
-
-
   geteditSchedule(id: any) {
     return this.http.get('api/geteditschedule' + '/' + id).map(response => response.json());
   }
@@ -217,4 +211,13 @@ private  getDistributorchnURL =  'api/getdistinfo';
     return this.http.get('api/geteditgeneric' + '/' + id).map(response => response.json());
   }
 
+  
+  devicedetails(data){
+
+    let header = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: header});
+  
+    return this.http
+      .post(this.deviceurl, data, options)  .map((res: Response) => res.json());  
+    }
 }

@@ -1,27 +1,14 @@
 
-
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 
 import { saveIndapprService } from './saveIndappr.service';
-
-
-
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
-
-
 import { NotificationsComponent } from '../../../notifications/notifications.component';
-
 import { dateFormatPipe } from '../../../notifications/notifications.datepipe';
-
-
-
 import { AppComponent } from '../../../app.component';
-
-
 import { DxDataGridComponent } from "devextreme-angular";
 
 
@@ -46,9 +33,12 @@ export class saveIndapprComponent implements OnInit {
   selobj;
 
   i;
+  deviceObj: any;
 
 
-  constructor(private userService: saveIndapprService, private route: ActivatedRoute, private dateformat: dateFormatPipe, private formBuilder: FormBuilder, config: NgbDropdownConfig, private notificationsComponent: NotificationsComponent) {
+  constructor(private userService: saveIndapprService, private route: ActivatedRoute, private dateformat: dateFormatPipe,
+    private formBuilder: FormBuilder, config: NgbDropdownConfig, private notificationsComponent: NotificationsComponent,
+    private router:Router, private appComponent: AppComponent) {
 
     config.autoClose = false;
   }
@@ -147,7 +137,28 @@ export class saveIndapprComponent implements OnInit {
 
   }
 
+       
+  devicedetails(){
 
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
 
 
   onSubmit() {
@@ -188,13 +199,21 @@ export class saveIndapprComponent implements OnInit {
       this.userService.saveIndentConfirmProd(JSON.stringify(control.value)).subscribe(data => { this.savevalid(data) },
         errorCode => console.log(errorCode));
 
+        this.router.navigate(['RequisitionReceiving/ViewRequisitionReceiving']);
     }
 
   }
+
   savevalid(data: any) {
     if (data == 1) {
 
-      this.notificationsComponent.addToast({ title: 'Success', msg: 'Data  Saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
+      this.devicedetails();
+      this.deviceObj.apiname="api/indappr/saveIndentConfirm";
+      this.deviceObj.description="Save Intent Requisition";
+
+      this.userService.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+
+      this.notificationsComponent.addToast({ title: 'Success', msg: 'Data  Saved SuccessFully ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
       this.clear();
 
     } else {

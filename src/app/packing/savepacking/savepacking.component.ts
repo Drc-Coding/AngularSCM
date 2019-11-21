@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { AppComponent } from 'app/app.component';
 import { NotificationsComponent } from 'app/notifications/notifications.component';
 import { Router } from '@angular/router';
+import { dateFormatPipe } from 'app/notifications/notifications.datepipe';
 
 @Component({
   selector: 'app-savepacking',
@@ -17,7 +18,11 @@ export class SavepackingComponent implements OnInit {
   PackingForm: FormGroup;
   picklist: any;
   empname: any;
-  constructor(private modalService: NgbModal, private packservice: packingService, private fb: FormBuilder, private notificationsComponent: NotificationsComponent, private router: Router) {
+  deviceObj: any;
+  constructor(private modalService: NgbModal, private packservice: packingService, private fb: FormBuilder,
+    private notificationsComponent: NotificationsComponent, private router: Router,
+    private appComponent: AppComponent,private dateformat: dateFormatPipe) {
+
     this.PackingForm = this.fb.group({
       picklistrefid: ['', []],
       salesorderrefid: ['', []],
@@ -230,7 +235,31 @@ export class SavepackingComponent implements OnInit {
     )
   }
 
+      
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+
   onSubmit() {
+
     const getData = <FormArray>this.PackingForm.controls['packingpro'];
     let data: any = getData.value
      this.PackingForm.get('totalprod').setValue(data.length);
@@ -241,6 +270,13 @@ export class SavepackingComponent implements OnInit {
           this.packservice.savePackingprod(JSON.stringify(getData.value)).subscribe(
             data => {
               if (data == true) {
+
+                this.devicedetails();           
+                this.deviceObj.apiname="api/savepacking";
+                this.deviceObj.description="Save Packing";
+               
+                this.packservice.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+                
                 this.notificationsComponent.addToast({ title: 'Success Message', msg: 'Data Saved Successfully.', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
                 setTimeout(() => {
                   this.router.navigate(['Packing/Viewpacking']);

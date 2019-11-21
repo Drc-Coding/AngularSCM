@@ -8,6 +8,8 @@ import 'rxjs/add/operator/map';
 export class ViewShipmentServices {
 
     options;
+    private deviceurl='api/User/saveUserActivity';
+
 
     constructor(private http:Http){ }
 
@@ -18,6 +20,17 @@ export class ViewShipmentServices {
         let options = new RequestOptions({headers: header});
             return this.http
               .post(`api/shi/viewShipp`, serobj, options).map((res: Response) => res.json());
+          }
+
+          
+          viewdevicedetails(data){
+      
+          let header = new Headers({'Content-Type': 'application/json'});
+          let options = new RequestOptions({headers: header});
+        
+          return this.http
+            .post(this.deviceurl, data, options)  .map((res: Response) => res.json());  
+      
           }
     
 }

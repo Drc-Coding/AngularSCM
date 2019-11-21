@@ -8,6 +8,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AppComponent } from '../../app.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
+import { dateFormatPipe } from 'app/notifications/notifications.datepipe';
 @Component({
   selector: 'app-viewDrugmaster',
   templateUrl: './viewDrugmaster.component.html',
@@ -43,8 +44,11 @@ export class viewdrugComponent implements OnInit, AfterViewInit {
  
   public gifFail: boolean = true;
   public indx;
+  deviceObj: any;
   
-  constructor(private viewdrug: drugviewService, private router: Router, private formBuilder: FormBuilder, private sanitizer: DomSanitizer, private notificationsComponent: NotificationsComponent) { this.data = new Array<any>();
+  constructor(private viewdrug: drugviewService, private router: Router, private formBuilder: FormBuilder, 
+    private sanitizer: DomSanitizer, private notificationsComponent: NotificationsComponent,
+    private appComponent: AppComponent, private dateformat: dateFormatPipe ) { this.data = new Array<any>();
   
     
     this.drugForm = this.formBuilder.group({
@@ -71,7 +75,15 @@ export class viewdrugComponent implements OnInit, AfterViewInit {
         });
         
       this.gifFail = false;
+
+      this.devicedetails();           
+      this.deviceObj.apiname="api/viewDruginfo";
+      this.deviceObj.description="View Drug Details";
+     
+      this.viewdrug.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+
     }, 3000);
+
 
     //alert(this.checkedvalues);
     $(document).ready(function () {
@@ -127,6 +139,29 @@ export class viewdrugComponent implements OnInit, AfterViewInit {
     });
   }
 
+   
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+
 
   check(event, id: number) {
 
@@ -155,13 +190,25 @@ export class viewdrugComponent implements OnInit, AfterViewInit {
 
 
   deleteDrug(id: number) {
+
+    var answer = confirm("Delete data?");
+    if (answer) {
+
     this.viewdrug.deletedrug(id).subscribe(deletedata => console.log(JSON.stringify(deletedata)),
       errorCode => console.log(errorCode));
-    // window.location.href = '/ProductMaster/ViewProductList';
+   
+      this.devicedetails();
+      this.deviceObj.apiname="api/deleteDrugdetails";
+      this.deviceObj.description="Removed Drug Data"
+      
+      this.viewdrug.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+
     this.notificationsComponent.addToast({ title: 'SUCESS MESSAGE', msg: 'DATA DELETED SUCESSFULLY.', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'success' });
     setTimeout(() => {
       this.ngOnInit();
-    }, 2000);
+      }, 2000);
+
+    }
   }
 
 

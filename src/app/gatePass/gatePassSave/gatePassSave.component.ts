@@ -43,6 +43,7 @@ export class gatePassSaveComponent implements OnInit, AfterViewInit {
   x;
   polist = [];
   coltax: any;
+  deviceObj: any;
   constructor(private invoiceService: gatePassSaveService, private router: Router, private formBuilder: FormBuilder, private notificationsComponent: NotificationsComponent, 
     private appComponent: AppComponent,private dateformat: dateFormatPipe) {
 
@@ -461,9 +462,35 @@ export class gatePassSaveComponent implements OnInit, AfterViewInit {
       }
   }
 
+
+       
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+ 
   /* Table calculation End*/
   // keyup while typing show data...keyup.enter  while entering show data..keydown.Tab while tab 
+
   onSubmit(): any {
+
     this.returnValid = this.invoiceDatavalidation();
     if (this.returnValid == true) {
       //this.appComponent.ngOnInit();
@@ -478,6 +505,13 @@ export class gatePassSaveComponent implements OnInit, AfterViewInit {
             this.invoiceService.getDeliveryChallanProduct(JSON.stringify(saveData.value)).subscribe(
               data => {
                 if (data == true) {
+
+                  this.devicedetails();
+                  this.deviceObj.apiname="api/savegatepassproduct";
+                  this.deviceObj.description="Save Stock Transfer GatePass";
+          
+                  this.invoiceService.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+
                   this.notificationsComponent.addToast({ title: 'SUCCESS MESSAGE', msg: 'DATA SAVED SUCCESSFULLY..', timeout: 5000, theme: 'success', position: 'top-right', type: 'success' });
                   window.location.href = "GatePass/ViewGatePass";
                 }

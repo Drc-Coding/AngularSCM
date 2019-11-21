@@ -11,11 +11,11 @@ export class editIndapprService  {
 
 
   
-  
-  
   options  ;
   
-        private    URL='api/indappr/';
+        private URL='api/indappr/';
+        private deviceurl='api/User/saveUserActivity';
+
 
 
   constructor(private http: Http) {}
@@ -59,6 +59,14 @@ viewIndentConfirmNo(serobj: string) {
   .map((res: Response) => res.json());
 }
 
+editdevicedetails(data){
+
+  let header = new Headers({'Content-Type': 'application/json'});
+  let options = new RequestOptions({headers: header});
+
+  return this.http
+    .post(this.deviceurl, data, options)  .map((res: Response) => res.json());  
+}
 
 
 }

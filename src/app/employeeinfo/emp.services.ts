@@ -10,7 +10,7 @@ export class EmployeeService {
   headers: any;
   //Add Employee
   private createEmp = 'api/empcreateRecord';
-  private imagesave = 'api/getsendImage';
+  private imagesave = 'api/uploademployeephoto';
   private signsave = 'api/saveemployeesignimage';
   private getCompanies = 'api/getEmpCompany';
   private getBranches = 'api/getEmpBranch';
@@ -142,18 +142,14 @@ export class EmployeeService {
   }
 
   saveimage(image) {
-   
-    return this.http.post(this.imagesave, image).map((res: Response) => {
-      return { "res": res.json() }
-    })
+  
+    return this.http.post(this.imagesave, image).map((res: Response) => res.json());
   }
 
 
   savesignimage(image) {
-   
-    return this.http.post(this.signsave, image).map((res: Response) => {
-      return { "res": res.json() }
-    })
+  
+    return this.http.post(this.signsave, image).map((res: Response) => res.json() );
   }
 
 

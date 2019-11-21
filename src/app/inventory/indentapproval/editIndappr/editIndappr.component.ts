@@ -38,16 +38,15 @@ export class editIndapprComponent implements OnInit {
 
 
   editdata=[]  ;
+  deviceObj: any;
 
-constructor(private userService: editIndapprService    ,    private   dateformat: dateFormatPipe    ,private formBuilder: FormBuilder ,config: NgbDropdownConfig , private route: ActivatedRoute ) {
+constructor(private userService: editIndapprService    ,    private   dateformat: dateFormatPipe    ,private formBuilder: FormBuilder ,
+config: NgbDropdownConfig , private route: ActivatedRoute, private appComponent: AppComponent ) {
 
    config.autoClose = false;
 }
 
 ngOnInit() {
-
-
-
 
   this.selobj  = {   userid  : AppComponent.userID , locrefid  :AppComponent. locrefID1 , locname  :AppComponent.locRefName1  , countryrefid  :AppComponent.countryID   , companyid  :AppComponent.companyID  
     , branchrefid  :AppComponent.branchID     , vatdispflag  :AppComponent.vatDispFlag   , boxdispflag  :AppComponent.BoxDispFlag  
@@ -64,7 +63,6 @@ ngOnInit() {
   formno  : [   , []],
 
    date: [   , []],
- 
 
    id  : [   , []],
    invdispflag: [   , []],
@@ -110,55 +108,65 @@ if(this.id){
 var   frmdata={ frmint1 : this.id ,  frmstr1  :'', createdby  :'' , locrefid  :this.selobj.locrefid , locname  :this.selobj.locname   , companyid  :this.selobj.companyid   } ;
 
 
-
-
 this.userService.viewSelIndentproduct(JSON.stringify(frmdata)).subscribe(data => {this.viewServFormProd(data)  },
 errorCode => console.log(errorCode));
 
-this.userService.viewIndentConfirmAll( JSON.stringify(frmdata) ).subscribe(data => {this.editdata=data    },
+this.userService.viewIndentConfirmAll( JSON.stringify(frmdata) ).subscribe(data => {this.editdata=data},
   errorCode => console.log(errorCode));
 
-  this.userService.viewIndentConfirmNo(JSON.stringify(frmdata)  ).subscribe(data => {    this.registerForm.get('formno').setValue(data[0]) },
+this.userService.viewIndentConfirmNo(JSON.stringify(frmdata)  ).subscribe(data => {this.registerForm.get('formno').setValue(data[0]) },
   errorCode => console.log(errorCode));
   
 this.init() ;
 
+this.devicedetails();
+this.deviceObj.apiname="api/indappr/viewSelIndentproduct";
+this.deviceObj.description="View Selected Intent Requisition";
+
+this.userService.editdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+
 
 }
   
- 
 
+      
+devicedetails(){
 
+  this.deviceObj = {
 
-onSubmit(){
+      userid: AppComponent.userID,
+      companyrefid: AppComponent.companyID,
+      branchrefid: AppComponent.branchID,
+      locname: AppComponent.locRefName1,
+      locrefid: AppComponent.locrefID1,
+      clientcdate:this.dateformat.transform04(),
+      ipaddress: this.appComponent.ipAddress, 
+      browsertype: this.appComponent.browser,
+      ostype: this.appComponent.os,
+      osversion: this.appComponent.osversion,
+      devicetype: this.appComponent.devicetype,
+      description:'',
+      apiname:''
 
+    };
 
-   
 }
-
-
-
 
 
 viewEdit(){
   
   var   frmdata={ frmint1 :   this.registerForm.get('id').value  ,  frmstr1  :'', createdby  :'' , locrefid  :this.selobj.locrefid , locname  :this.selobj.locname   , companyid  :this.selobj.companyid   } ;
-  
-
-                         
+                   
   this.userService.viewSelIndentproduct(JSON.stringify(frmdata)  ).subscribe(data => {this.viewServFormProd(data)  },
   errorCode => console.log(errorCode));
   
-         }   
+  }   
 
 
 
 
 viewServFormProd(data:any  ) {
-
-
-
-                         
+            
 const control = <FormArray>this.registerForm.controls['indappr'];
 
 var w= 0  ;
@@ -184,9 +192,6 @@ for (this.i = 0; this.i < data.length; this.i++) {
   drugprdrefid  :   [data[this.i ] [i++ ], []], 
   boxqty   : [data[this.i ] [i++ ], []], 
   stripqty :  [data[this.i ] [i++ ], []],   
-  
-
- 
   apprboxqty   : [, []] , 
   apprstripqty :   [, []] ,     
   apprtabqty   :   [ data[this.i ] [6 ], []] ,  
@@ -223,12 +228,6 @@ for (this.i = 0; this.i < data.length; this.i++) {
 }
 
 
-
-
-
-  
-  
-  
   this.registerForm.get('date').setValue(this.dateformat.transform05(data[0][2])) ;
 
 

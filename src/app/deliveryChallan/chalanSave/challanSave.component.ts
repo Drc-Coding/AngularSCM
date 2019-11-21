@@ -45,6 +45,7 @@ export class challanSaveComponent implements OnInit, AfterViewInit {
   x;
   polist = [];
   coltax: any;
+  deviceObj: any;
   
   constructor(private challanService: challanSaveService, private router: Router, private formBuilder: FormBuilder, private notificationsComponent: NotificationsComponent, 
     private appComponent: AppComponent,private dateformat: dateFormatPipe) {
@@ -459,6 +460,31 @@ export class challanSaveComponent implements OnInit, AfterViewInit {
 
   /* Table calculation End*/
   // keyup while typing show data...keyup.enter  while entering show data..keydown.Tab while tab 
+
+           
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+
+
   onSubmit(): any {
 
 
@@ -477,8 +503,15 @@ export class challanSaveComponent implements OnInit, AfterViewInit {
             this.challanService.getDeliveryChallanProduct(JSON.stringify(saveData.value)).subscribe(
               data => {
                 if (data == true) {
+
+                  this.devicedetails();
+                  this.deviceObj.apiname="api/saveDeliveryChallan";
+                  this.deviceObj.description="Save Stock Trans Delivery Challan";
+                
+                  this.challanService.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+
                   this.notificationsComponent.addToast({ title: 'SUCCESS MESSAGE', msg: 'DATA SAVED SUCCESSFULLY..', timeout: 5000, theme: 'success', position: 'top-right', type: 'success' });
-                  window.location.href = "DeliveryReceipt/ViewDeliveryReceipt";
+                  this.router.navigate(['DeliveryReceipt/ViewDeliveryReceipt']);
                 }
               },
               error => {

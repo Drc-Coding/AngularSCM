@@ -230,7 +230,7 @@ export class addsalesOrderComponentnew implements OnInit {
               this.deviceObj.apiname="api/saveSalesorder";
               this.deviceObj.description="Add SalesOrder"
 
-              this.salesOrderService.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+              this.salesOrderService.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
              
               this.notificationsComponent.addToast({ title: 'Success Message', msg: 'Data Saved Successfully.', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
               this.route.navigate(['SalesOrder/SalesOrderHistory']);

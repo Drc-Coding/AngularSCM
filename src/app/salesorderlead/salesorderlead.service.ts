@@ -75,7 +75,7 @@ export class SalesorderleadService {
       }
 
 
-      viewdevicedetails(data){
+      devicedetails(data){
 
         let header = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: header});

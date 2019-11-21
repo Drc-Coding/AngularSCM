@@ -389,11 +389,13 @@
         <div class="col-lg-1"></div>
         
         <div class="col-lg-3">
-            <button  type="button" class="btn btn-round" [routerLink]="['/SalesInvoice/SalesMaintenance' ]" (click)="onSubmit()"   [disabled]="!registerForm.valid"  > Update  </button>  </div> 
-        <div class="col-lg-3">
-            <button  type="button" class="btn btn-round"(click)="deleteSalesInvoice()"  > Delete  </button>  </div>
-        <div class="col-lg-3">
-            <button  type="button" class="btn btn-round" [routerLink]="['/SalesInvoice/SalesMaintenance' ]"   > Back  </button>  
+
+            <button  type="button" class="btn btn-round" (click)="onSubmit()"
+            [disabled]="!registerForm.valid"  > Update  </button> 
+      
+            <button  type="button" class="btn btn-round ml-3"(click)="deleteSalesInvoice()"> Delete  </button>  
+      
+            <button  type="button" class="btn btn-round ml-3" [routerLink]="['SalesInvoice/SalesMaintenance']"> Back  </button>  
         </div>
 
     </div>

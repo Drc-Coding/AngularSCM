@@ -38,7 +38,7 @@ export class viewSalesOrderComponentnew implements OnInit {
                 this.deviceObj.apiname="api/getallSalesorderview";
                 this.deviceObj.description="View SalesOrder";
 
-                this.viewOrder.viewdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+                this.viewOrder.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
         }
         if (AppComponent.warehouseID != 0) {
             this.viewOrder.viewSalesorder(AppComponent.companyID, AppComponent.branchID, AppComponent.warehouseID, AppComponent.locrefID).subscribe(data => this.data = data,
@@ -51,7 +51,7 @@ export class viewSalesOrderComponentnew implements OnInit {
                 this.deviceObj.apiname="api/getallSalesorderview";
                 this.deviceObj.description="View SalesOrder";
 
-                this.viewOrder.viewdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+                this.viewOrder.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
 
         }
         if (AppComponent.hospitalID != 0) {
@@ -64,7 +64,7 @@ export class viewSalesOrderComponentnew implements OnInit {
                 this.deviceObj.apiname="api/getallSalesorderview";
                 this.deviceObj.description="View SalesOrder";
 
-                this.viewOrder.viewdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+                this.viewOrder.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
 
         }
     }
@@ -109,7 +109,7 @@ export class viewSalesOrderComponentnew implements OnInit {
         this.deviceObj.apiname="api/deletesalesOrder";
         this.deviceObj.description="Removed SalesOrder Data"
         
-        this.viewOrder.viewdevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+        this.viewOrder.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
 
         this.ngOnInit();
        }

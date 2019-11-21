@@ -6,6 +6,7 @@ import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { AppComponent } from '../../app.component';
+import { dateFormatPipe } from 'app/notifications/notifications.datepipe';
 @Component({
   selector: 'app-drugmaster',
   templateUrl: './editDrugmaster.component.html',
@@ -53,8 +54,11 @@ distchannel =[];
   drugForm: FormGroup;
   textPattern = "[a-zA-Z][a-zA-Z ]+";
   textnumbers = '^[0-9]+(\.[0-9]{1,2})?$';
+  deviceObj: any;
+
   constructor(private drugservice: editdrugService, private route: ActivatedRoute, private router: Router,
-    private notificationsComponent: NotificationsComponent) {
+    private notificationsComponent: NotificationsComponent,private appComponent: AppComponent, private dateformat: dateFormatPipe) {
+
     let brandname = new FormControl('', [Validators.required, Validators.pattern(this.textPattern)]);
     let selectedCountry = new FormControl();
     let genericid = new FormControl();
@@ -384,6 +388,29 @@ distchannel =[];
     }
   }
 
+
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
+
   public reFlag: boolean = false;
   onSubmit() {
     this.submitted = true;
@@ -394,17 +421,27 @@ distchannel =[];
   }
 
   private updateRecord() {
+
     this.insu = this.drugForm.get('insuranceid').value;
+
     if (this.drugForm.get('genericids').value != null) {
       this.drugForm.get('genericid').setValue(this.drugForm.get('genericids').value);
     }
+
     this.drugservice.updteDrug(JSON.stringify(this.drugForm.value)).subscribe(data => {
       if (data == true) {
         this.drugservice.insuranceSave(JSON.stringify(this.insu));
+
+        this.devicedetails();
+        this.deviceObj.apiname="api/drugupdateRecord";
+        this.deviceObj.description="Update Drug Data";
+        
+        this.drugservice.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+
+        this.notificationsComponent.addToast({ title: 'Success Message', msg: 'DATA UPDATED SUCCESSFULLY', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
         this.router.navigate(['ProductMaster/ViewProductList']);
       }
-    }
-    );
+    });
   }
 
   drugInputValidation(): boolean {

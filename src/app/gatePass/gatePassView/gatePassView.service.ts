@@ -13,7 +13,7 @@ export class gatePassViewService  {
   options  ;
 
     private viewURL='api/viewgatepasses';
-
+    private deviceurl='api/User/saveUserActivity';
 
   constructor(private http: Http) {
 
@@ -21,6 +21,16 @@ export class gatePassViewService  {
   
     viewDeliveryChallan(comp:any,brnch:any,locname:any,locrefid:any, billtyperefid:any) {
            return this.http.get(this.viewURL+'/'+comp+'/'+brnch+'/'+locname+'/'+locrefid +'/'+ billtyperefid).map((res: Response) => res.json());
+    }
+
+    viewdevicedetails(data){
+
+      let header = new Headers({'Content-Type': 'application/json'});
+      let options = new RequestOptions({headers: header});
+    
+      return this.http
+        .post(this.deviceurl, data, options)  .map((res: Response) => res.json());  
+    
     }
   
 }

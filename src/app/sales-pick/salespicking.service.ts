@@ -14,6 +14,8 @@ export class salespickingService {
     private getpickdata = 'api/packingdatas';
     private getpickprod = 'api/packingfielddatas';
 
+    private deviceurl='api/User/saveUserActivity';
+
     constructor(private http: Http) { }
 
 //get salesorder Number 
@@ -93,4 +95,17 @@ Savecheckpickproduct(data:string){
     let head = new Headers({'Content-type': 'application/json'});
     return this.http.post('api/checksavePickingProducts',data, {headers: head}).map(Response =>Response.json());
 }
+
+
+devicedetails(data){
+
+    let header = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: header});
+  
+    return this.http
+      .post(this.deviceurl, data, options)  .map((res: Response) => res.json());  
+}
+
+
+
 }

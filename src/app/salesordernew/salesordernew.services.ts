@@ -114,21 +114,7 @@ viewHospital(serobj: string ) {
 }
 
 
-adddevicedetails(data){
-
-  let head = new Headers({ 'Content-Type': 'application/json' });
-  return this.http.post(this.deviceurl, data, { headers: head }).map(response => response.json());
-
-}
- 
-editdevicedetails(data){
-
-  let head = new Headers({ 'Content-Type': 'application/json' });
-  return this.http.post(this.deviceurl, data, { headers: head }).map(response => response.json());
-
-}
-
-viewdevicedetails(data){
+devicedetails(data){
 
   let head = new Headers({ 'Content-Type': 'application/json' });
   return this.http.post(this.deviceurl, data, { headers: head }).map(response => response.json());

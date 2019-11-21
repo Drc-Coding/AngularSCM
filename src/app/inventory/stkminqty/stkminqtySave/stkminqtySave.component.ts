@@ -24,8 +24,10 @@ export class stkminqtySaveComponent implements OnInit {
 
 
   vflag: number;
+  deviceObj: any;
 
-  constructor(private userService: stkminqtySaveService, private formBuilder: FormBuilder, private dateformat: dateFormatPipe, private notificationsComponent: NotificationsComponent, private router:Router) { }
+  constructor(private userService: stkminqtySaveService, private formBuilder: FormBuilder, private dateformat: dateFormatPipe, 
+    private notificationsComponent: NotificationsComponent, private router:Router,private appComponent: AppComponent) { }
   ngOnInit() {
 
     this.vflag = 0;
@@ -211,11 +213,8 @@ export class stkminqtySaveComponent implements OnInit {
 
   onSubmit() {
 
-
     const control = <FormArray>this.registerForm.get('stkminqty');
     let setData = control.value;
-
-
 
 
     if (this.registerForm.get('minstockflag').value == 1) {
@@ -226,10 +225,8 @@ export class stkminqtySaveComponent implements OnInit {
       valflag = this.validnew();
       let selected = 0;
       var answer = confirm("Save data?");
+
       if (answer && valflag == 0) {
-
-
-
 
         for (let i = 0; i < setData.length; i++) {
           if (setData[i].selectflag && setData[i].drugproductid != undefined || null || '') {
@@ -246,32 +243,17 @@ export class stkminqtySaveComponent implements OnInit {
           return;
         }
 
-
-
-
-
-
-        setTimeout(() => {
-
-
+        this.devicedetails();
+        this.deviceObj.apiname="api/stkmin/saveStkMinQty";
+        this.deviceObj.description="Save Stock Minimum Qty";
+  
         this.userService.saveStkMinQty(JSON.stringify(arr)).subscribe(data => { this.savevalid(data) },
           errorCode => console.log(errorCode));
 
-
-
           this.router.navigate(['ReorderForm/ViewReorderForm']);
-        }, 2000);
-        // this.ngOnInit();
-
-
 
       }
     }
-
-
-
-
-
 
 
 
@@ -309,14 +291,10 @@ export class stkminqtySaveComponent implements OnInit {
 
 
 
-
-
         this.userService.oneProduct(JSON.stringify(arr1)).subscribe(data => {
 
 
-
           if (data == true) {
-
 
 
             const filteredArr = arr1.reduce((acc, current) => {
@@ -331,26 +309,20 @@ export class stkminqtySaveComponent implements OnInit {
 
 
 
-
-
             this.userService.saveNewprod(JSON.stringify(filteredArr)).subscribe(data => {
-
 
 
               if (data == true) {
 
-
-
-                setTimeout(() => {
-
-
-
+                this.devicedetails();
+                this.deviceObj.apiname="api/slsinv/savenewprodminqty";
+                this.deviceObj.description="Save New Product";
+          
                 this.userService.saveStkMinQty1(JSON.stringify(filteredArr)).subscribe(data => { this.savevalid(data) },
                   errorCode => console.log(errorCode));
 
-
                   this.router.navigate(['ReorderForm/ViewReorderForm']);
-                }, 2000);
+              
               
 
               }
@@ -369,25 +341,10 @@ export class stkminqtySaveComponent implements OnInit {
         });
 
 
-
-
-
-
-
-
-
-
       }
     }
+
   }
-
-
-
-
-
-
-
-
 
 
 
@@ -400,19 +357,6 @@ export class stkminqtySaveComponent implements OnInit {
     return valflag;
 
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -512,6 +456,28 @@ export class stkminqtySaveComponent implements OnInit {
   }
 
 
+      
+  devicedetails(){
+
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
 
 
   viewProd() {
@@ -523,6 +489,13 @@ export class stkminqtySaveComponent implements OnInit {
       var frmdata = { frmint1: '', frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyrefid: this.selobj.companyid, branchrefid: this.selobj.branchrefid };
       this.userService.viewMinimumStock(JSON.stringify(frmdata)).subscribe(data => { this.viewServWareHouseStock(data) },
         errorCode => console.log(errorCode));
+
+
+        this.devicedetails();
+        this.deviceObj.apiname="api/stkmin/viewMinimumStock";
+        this.deviceObj.description="Loaded Minimum Stock";
+
+        this.userService.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
     }
 
 
@@ -531,15 +504,17 @@ export class stkminqtySaveComponent implements OnInit {
 
       this.vflag = 1;
 
-
-
-
-
       var frmdata = { frmint1: '', frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyrefid: this.selobj.companyid, branchrefid: this.selobj.branchrefid };
-
 
       this.userService.viewMinimumProdNew(JSON.stringify(frmdata)).subscribe(data => { this.viewServMinimumProdNew(data), this.vflag = 1 },
         errorCode => console.log(errorCode));
+      
+    
+        this.devicedetails();
+        this.deviceObj.apiname="api/stkmin/viewMinimumProdNew";
+        this.deviceObj.description="Loaded New Product";
+
+        this.userService.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
 
 
 
@@ -580,7 +555,6 @@ export class stkminqtySaveComponent implements OnInit {
 
 
 
-
   selectAll1(event1: any) {
     const control1 = <FormArray>this.registerForm.controls['stkminqty1'];
     let setData1 = control1.value;
@@ -601,6 +575,9 @@ export class stkminqtySaveComponent implements OnInit {
 
   savevalid(data: number) {
     if (data == 1) {
+
+      this.userService.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+
       this.notificationsComponent.addToast({ title: 'Success', msg: 'Data  Saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
       //this.clear();
     } else {
