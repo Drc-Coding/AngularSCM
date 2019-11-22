@@ -134,6 +134,23 @@ export class slsInvSaveService  {
                 }
   
 
+        
+   
+
+
+
+
+
+                
+
+
+
+
+
+
+
+                
+
                 savePresImage(serobj: FormData) {
                   let header = new Headers();
                   let options = new RequestOptions({headers: header});
@@ -153,6 +170,15 @@ export class slsInvSaveService  {
        return this.http.post( this.URL+`viewSICustomers`, serobj, options)
                .map((res: Response) => res.json());
          }
+
+         viewsoCustomers(serobj: string) {
+          let header = new Headers({'Content-Type': 'application/json'});
+          let options = new RequestOptions({headers: header});
+  
+            
+       return this.http.post( this.URL+`viewSICustomers1`, serobj, options)
+               .map((res: Response) => res.json());
+         }
              
          
          viewDoctors(serobj: string) {
@@ -167,7 +193,6 @@ export class slsInvSaveService  {
 
   
        viewSIProductNames(serobj: string) {
-         
         let header = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: header});
   

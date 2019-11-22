@@ -22,6 +22,7 @@ export class slsInvSaveComponent implements OnInit {
   registerForm1: FormGroup;
   registerForm2: FormGroup;
   customers = [];
+  customers1 = [];
   doctors = [];
   prcsettings = [];
   sorders = [];
@@ -52,16 +53,8 @@ export class slsInvSaveComponent implements OnInit {
   truncatepos;
   soid: any;
   url;
+  pop: any;
   @Input() fileExt: string = "JPG, GIF, PNG";
-  refill=false;
-  opnrefill=true;
-  clsrefill=false;
-  showimage: boolean=false;
-  showeyeslash: boolean=false;
-  showeye: boolean=true;
-  
- 
-
   constructor(private userService: slsInvSaveService, private dateformat: dateFormatPipe, private formBuilder: FormBuilder, config: NgbDropdownConfig, private notificationsComponent: NotificationsComponent, private modalService: NgbModal, private domSanitizer: DomSanitizer) {
     config.autoClose = false;
   }
@@ -132,13 +125,12 @@ export class slsInvSaveComponent implements OnInit {
       phycapno: [, []],
       phydiscountflag: [false, []],
       disctaxflag: [false, []],
-      custdummyid: [, []],
+      custdummyid: ['', []],
       presc35: [, []],
       email: [, []],
       cashcheck: [, []],
       creditcheck: [, []],
       debitcheck: [, []],
-      refilldays:[,[]],
       vatdispflag: [this.selobj.vatdispflag, []],
       boxdispflag: [this.selobj.boxdispflag, []],
       stripdispflag: [this.selobj.stripdispflag, []],
@@ -210,7 +202,8 @@ export class slsInvSaveComponent implements OnInit {
       calcflag: [0, []],
     });
     var frmdata = { frmint1: '', frmstr1: this.dateformat.transform05(Date.now()), createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
-    this.userService.viewCustomers(JSON.stringify(frmdata)).subscribe(data => { this.customers = data },
+    var frmdata1 = { frmint1: '', frmstr1: this.dateformat.transform05(Date.now()), createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
+    this.userService.viewsoCustomers(JSON.stringify(frmdata1)).subscribe(data => { this.customers = data },
       errorCode => console.log(errorCode));
     this.userService.viewDoctors(JSON.stringify(frmdata)).subscribe(data => { this.doctors = data },
       errorCode => console.log(errorCode));
@@ -229,7 +222,9 @@ export class slsInvSaveComponent implements OnInit {
       errorCode => console.log(errorCode));
     this.registerForm.get('freeflag').setValue(1);
 
-  
+    $(document).ready(function () {
+      $('.image').hide();
+    });
     $('.boxname ').hide();
     this.images = [];
     this.init();
@@ -237,31 +232,26 @@ export class slsInvSaveComponent implements OnInit {
     $('#autolist1').hide();
   }
 
-
-  viewsPresc() {
-    //this.images = [['api/slsinv/viewPresImage?search=' + this.registerForm.get('prescpath').value]];
-  
-    this.showimage=true;
-    this.showeye=false;
-    this.showeyeslash=true;
+  searchCustomer(searchValue: any) {
+    var frmdata = { frmint1: '', frmstr1: this.dateformat.transform05(Date.now()), createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid,searchvalue: searchValue };
+    this.userService.viewCustomers(JSON.stringify(frmdata)).subscribe(data => {
+      this.customers1 = [];
+      for (let j = 0; j < data.length; j++) {
+        this.customers1.push({ value: data[j][7], label: data[j][1] });
+      }
+    },
+      err => {
+        console.log('Error occured On searchProduct()');
+      });
   }
 
   ClosePresc() {
-    this.showimage=false;
-    this.showeyeslash=false;
-    this.showeye=true;
+    $('.image ').hide();
   }
-
-  reset() {
-  
-    (<HTMLInputElement>document.getElementById('imagefile')).value = '';
-    this.images=[''];
-    this.showimage=false;
-    this.showeyeslash=false;
-    this.showeye=true;
-  //this.message="";
+  viewsPresc() {
+    this.images = [['api/slsinv/viewPresImage?search=' + this.registerForm.get('prescpath').value]];
+    $('.image ').show();
   }
-  
   autofocusin() {
     this.autoincr = setInterval(() => {
       if (this.registerForm.get('autonamenew').value) {
@@ -362,6 +352,7 @@ export class slsInvSaveComponent implements OnInit {
     this.barcodeflag = 2;
   }
   viewStock(event: KeyboardEvent, stktype: number) {
+    if(this.registerForm.get('customerrefid').value){
     var autoincrflag: number;
     if (event.keyCode == 38) {
       autoincrflag = stktype - 1;
@@ -402,6 +393,10 @@ export class slsInvSaveComponent implements OnInit {
       }
     }
   }
+  else {
+    this.notificationsComponent.addToast({ title: 'Error', msg: 'Please Select Customer', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
+  }
+}
   viewvalue(data: any) {
     var r = 0;
     for (this.i = 0; this.i < data.length; this.i++) {
@@ -474,6 +469,9 @@ export class slsInvSaveComponent implements OnInit {
   }
 
   viewSalesOrderProd() {
+    var frmdata1 = { frmint1: '', frmstr1: this.dateformat.transform05(Date.now()), createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
+    this.userService.viewsoCustomers(JSON.stringify(frmdata1)).subscribe(data => { this.customers = data },
+      errorCode => console.log(errorCode));
     this.registerForm.get('salesorderrefid').setValue(this.sorders[this.registerForm.get('sotempflag').value][0]);
     this.registerForm.get('customerrefid').setValue(this.sorders[this.registerForm.get('sotempflag').value][2]);
     this.registerForm.get('scitizenflag').setValue(this.sorders[this.registerForm.get('sotempflag').value][4]);
@@ -758,7 +756,7 @@ export class slsInvSaveComponent implements OnInit {
       }));
     }
   }
-  onSubmit() {
+  onSubmit():Boolean{
     //  alert(JSON.stringify(this.registerForm.value));
     var valflag: Number = 0;
     //    this.addscheme()  ;
@@ -773,16 +771,21 @@ export class slsInvSaveComponent implements OnInit {
       } else {
         this.registerForm.get('salesorderrefid').setValue(0);
       }
-      this.userService.saveSalesInvoice(JSON.stringify(this.registerForm.value)).subscribe(data => { this.saveSIProducts(data), this.saveSISalesJournal(data), this.saveSIReceipt(data) },
+      this.userService.saveSalesInvoice(JSON.stringify(this.registerForm.value)).subscribe(data => {
+         this.saveSIProducts(data), this.saveSISalesJournal(data), this.saveSIReceipt(data) 
+      },
         errorCode => console.log(errorCode));
     }
+    return true;
   }
+  
   poprint() {
-    this.onSubmit();
+    this.pop = this.onSubmit();
+    if(this.pop  == true){
     if (this.soid != undefined || null || '') {
       this.notificationsComponent.addToast({ title: 'ALERT MESSAGE', msg: 'Value not fetching', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'error' });
     }
-    else {
+    else if(this.registerForm.get('disctaxflag').value == true) {
       // let companyurl: string="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/BillPrint_PurchaseOrder/Billprnt_PO.rptdesign&Companyrefid="+this.locname;
       setTimeout(() => {
         window.location.href = "http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Vtaexpt/Bill_Vatexpt.rptdesign&salesrefid=" + this.soid + "&__format=PDF";
@@ -792,13 +795,19 @@ export class slsInvSaveComponent implements OnInit {
       //  }, 2000);
 
     }
-
+    else{
+      setTimeout(() => {
+        window.location.href = "http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Bill_CashPrint123/Cash_Bill.rptdesign&salesrefid=" + this.soid + "&__format=PDF";
+      }, 7000);
+    }
+  }
   }
   saveSIProducts(data: any) {
     const control = <FormArray>this.registerForm.controls['invoice'];
     if (data == 1) {
       this.userService.saveSIProducts(JSON.stringify(control.value)).subscribe(data => {
         let res = data.res;
+        this.pop =res[0];
         this.soid = res[1];
         this.saveEmailAttach()
         //alert(this.soid);
@@ -1115,7 +1124,6 @@ export class slsInvSaveComponent implements OnInit {
       totalamount: subtotal.toFixed(2),
     });
   }
-
   fileChange(event) {
     var valflag = 0;
     let fileList: FileList = event.target.files;
@@ -1125,22 +1133,15 @@ export class slsInvSaveComponent implements OnInit {
       formData.append('file', file, file.name);
       formData.append('locrefid', this.selobj.locrefid);
       formData.append('locname', this.selobj.locname);
-
-        // Instantiate an object to read the file content
-    let reader = new FileReader();
-
-    //To read Encrypted file and send url to display in html
-    reader.readAsDataURL(file); 
-    reader.onload = (_event) => { 
-      this.images = [reader.result]; 
-    }
-
       this.userService.savePresImage(formData).subscribe(data => { this.registerForm.get('prescpath').setValue(data) },
         errorCode => console.log(errorCode));
     }
   }
- 
-
+  // photoValidation(files) {
+  //   if (files.length > 0 && (!this.isValidFileExtension(files))) {
+  //     return;
+  //   }
+  // }
   private isValidFileExtension(files) {
     var extensions = (this.fileExt.split(','))
       .map(function (x) { return x.toLocaleUpperCase().trim() });
@@ -1152,8 +1153,6 @@ export class slsInvSaveComponent implements OnInit {
       }
     }
   }
-
-
   remove() {
     const control = <FormArray>this.registerForm.controls['invoice'];
     const controlrem = <FormArray>this.registerForm.controls['dummy'];
@@ -1287,7 +1286,7 @@ export class slsInvSaveComponent implements OnInit {
     }
   }
   viewCustOutstandingTot() {
-
+   
     this.registerForm.get('customerrefid').setValue(this.customers[this.registerForm.get('custdummyid').value][0]);
     this.registerForm.get('scitizenflag').setValue(this.customers[this.registerForm.get('custdummyid').value][3]);
     this.registerForm.get('phycapflag').setValue(this.customers[this.registerForm.get('custdummyid').value][4]);
@@ -1369,20 +1368,6 @@ export class slsInvSaveComponent implements OnInit {
       }
     }
   }
-
-  openrefill(){
-    this.refill=true;
-    this.clsrefill=true;
-    this.opnrefill=false;
-  }
-
-  closerefill(){
-    this.refill=false;
-    this.clsrefill=false;
-    this.opnrefill=true;
-  }
-
-
   clear() {
     this.ngOnInit();
   }
