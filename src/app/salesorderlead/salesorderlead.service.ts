@@ -7,7 +7,7 @@ export class SalesorderleadService {
  private solead = 'api/soleadrecord';
  private salesdata = 'api/fetchsalesOrderlead';
  private fetchsolead = 'api/fetchsoleadrecord';
- private provalue = 'api/getsalesProduct';
+ private provalue = 'api/addsolproduct';
  private prolist = 'api/getPibrandlist';
  private handleError(error: any): Promise<any> {
     return Promise.reject(error.message || error);
@@ -32,14 +32,14 @@ export class SalesorderleadService {
 
     }
 
-    fetchsoleadrecord(cid: number, bid: number, loc: number, lrid: number,id: number){
-        return this.http.get(this.fetchsolead+'/'+cid+'/'+bid+'/'+loc+'/'+lrid+'/'+id).map(response => response.json());
+    fetchsoleadrecord(id: number){
+        return this.http.get(this.fetchsolead+'/'+id).map(response => response.json());
 
     }
 
-    getprpductvalues(cid: number, bid: number, loc: number, lrid: number,pid: number,qty: number){
+    getprpductvalues(cid: number, bid: number, loc: number, lrid: number,soid: number){
 
-        return this.http.get(this.provalue+'/'+cid+'/'+bid+'/'+loc+'/'+lrid+'/'+pid+'/'+qty).map(response => response.json());
+        return this.http.get(this.provalue+'/'+cid+'/'+bid+'/'+loc+'/'+lrid+'/'+soid).map(response => response.json());
 
     }
 
@@ -70,24 +70,4 @@ export class SalesorderleadService {
       autoIcrement(cid: any, bid: any, locrefid: any, locname: any) {
         return this.http.get('api/salesOrderIncrement' + '/' + cid + '/' + bid + '/' + locrefid + '/' + locname).map(response => response.json());
       }
-
-      getsolproducts(cid: any, bid: any, locrefid: any, locname: any,soid: any) {
-        return this.http.get('api/solproducts' + '/' + cid + '/' + bid + '/' + locrefid + '/' + locname + '/' + soid).map(response => response.json());
-      }
-
-      stockcheck(cid: number, bid: number, loc: number, lrid: number,id: number){
-        return this.http.get('api/getstockcheck' +'/'+cid+'/'+bid+'/'+loc+'/'+lrid+'/'+id).map(response => response.json());
-
-    }
-
-    savestocking(data: String) {
-      let head = new Headers({ 'Content-Type': 'application/json' });
-      return this.http.post('api/indreq/saveIndentRequest1', data, { headers: head }).map(response => response.json());
-    }
-
-    saveprodstocking(data: String){
-      let head = new Headers({ 'Content-Type': 'application/json' });
-      return this.http.post('api/indreq/saveIndentProducts1', data, { headers: head }).map(response => response.json());
-   
-    }
 }
