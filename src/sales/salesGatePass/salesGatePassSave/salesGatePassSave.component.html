@@ -1,0 +1,295 @@
+<style>
+#swidth{
+    width:320px;
+}
+</style>
+<app-card>  
+        <div class="sub-title">Sales Gate Pass
+				<i class="fa fa-ticket ficon"></i>
+			</div><br>  
+           <div class="container">
+            <form [formGroup]="deliveryForm"  (ngSubmit)="onSubmit()">      
+                    <div class="title">Entry Details</div>  <br> <br>  
+                <div class="card">
+                           
+                            <div class="card-body bg-light">
+                              
+                      
+                    <div class="form-group row">    
+                            <div class="col-sm-3">
+                                    <label for="email" class="form-label">Location Type
+                                        <span style="color:red">*</span></label>
+                                    
+                                            <select class="select2"    class="form-control" 
+                                            (change)="getFirm()"   formControlName="tolocname"  > 
+                                            <option  value="opt1" disabled>----Select Location Type----</option> 
+                                                <option  value="1" >Shop</option>
+        
+                                                <option  value="2" >Warehouse </option>
+        
+                                                <option  value="3" >Hospital  </option>
+                                                    
+                                            </select>
+                                    </div>
+                        
+                        
+                            <!-- <label for="email" class="col-sm-2 col-form-label">Sales Gate Pass_No#</label>
+                            <div class="col-sm-4">
+                                <input type="text"  class="form-control inputline"  formControlName="gpno" disabled>   
+                            </div> -->
+
+
+                                 <!-- <div class="form-group row">                                                  
+                                <label for="stock"  class="col-sm-2 col-form-label">Stock Transfer#</label>
+                                 <div class="col-sm-4">
+                                <ng-select [options]="distributors" placeholder="Search Stock Number" (change)="getStockNumber()" (click)="getStockNumber()" (input)="getStock($event.target.value)"
+                                  formControlName="stockno">
+                                </ng-select>
+                               </div>  
+                          </div>  
+                    -->  
+                    <div class="col-sm-3">
+                            <label for="password" class=" form-label">Location Name
+                                <span style="color:red">*</span></label>
+                         
+                                    <select   class="form-control"
+                                    formControlName="tolocrefid">
+                                    <option  value="opt1" disabled>----Select Location Name----</option> 
+                                       <option *ngFor="let item of firms; let i = index"
+                                           value={{item[0]}}>{{item[1]}}</option>
+                                   </select>
+                            </div>
+                   
+
+
+
+
+                          
+                    
+                            <div class="col-sm-3">                          
+                            <label for="email" class=" form-label">Gate Entry Date</label>
+                            
+                              <input type="date"  class="form-control inputline"  placeholder="Enter the date" required="true" formControlName="gatepassdate" >
+                            </div>
+                            <div class="col-sm-3">
+                                    <label for="sales" class=" form-label">Sales Invoice
+                                        <span style="color:red">*</span></label>
+                                   
+                                         <ng-select [options]="salesinvoice" placeholder="Search Stock Number" (click)="getDeliverChallanNo()" (change)="getDeliverChallanNo()"  (input)="getDeliverChallan($event.target.value)"
+                                                 formControlName="salesno">
+                                        </ng-select>
+                                    </div>
+                     </div>
+                     <br>
+
+                     <!-- <div class="form-group row">                                                  
+                                <label for="stock"  class="col-sm-2 col-form-label">Stock Transfer#</label>
+                                 <div class="col-sm-4">
+                                <ng-select [options]="distributors" placeholder="Search Stock Number" (change)="getStockNumber()" (click)="getStockNumber()" (input)="getStock($event.target.value)"
+                                  formControlName="stockno">
+                                </ng-select>
+                               </div>  
+                          </div>  
+                    -->
+                   
+
+
+                </div>
+            </div>
+            <div class="title">Other Details</div><br><br>
+0            <div class="card">
+                   
+                    <div class="card-body bg-light">
+                      
+              
+            <div class="form-group row"> 
+                    <div class="col-sm-4">                         
+                    <label for="email" class="form-label">Transport Type
+                        <span style="color:red">*</span></label>
+                    
+                            <select class="select2"    class="form-control"    formControlName="transportdetails"  > 
+                            <option  value="opt1" disabled>----Select Transport----</option> 
+                                <option  value="1" >Own Transport</option>
+
+                                <option  value="2" >Spare Transport </option>
+                                    
+                            </select>
+                    </div>
+                    <div class="col-sm-4">
+                    <label for="email" class="form-label">Bill Type</label>
+                   <input type="text" class="form-control" formControlName="billtype"/>
+                            <!-- <select class="select2"   class="form-control"  formControlName="billtype"  > 
+                            <option  value="opt1" disabled>----Select Bill Type----</option> 
+                                <option  value="1" >Sales Invoice</option>
+
+                                <option  value="2" >Stock Transfer </option>
+                                    
+                            </select> -->
+                    </div>
+                    <div class="col-sm-4">
+                            <label for="sales" class="form-label">Bill Date</label>
+                         
+                                 <input type="date"  class="form-control inputline"  placeholder="Enter the date" required="true" formControlName="billdate" >
+                          </div>
+                   
+             </div>
+
+             <div class="form-group row">                           
+                  
+                    <div class="col-sm-4">
+                    <label for="password" class="form-label">Bill/Cash Memo No</label>
+                   
+                            <input type="text"  class="form-control inputline"  placeholder="Enter Bill No"  formControlName="billno" >
+                          </div>
+           
+           
+                          <div class="col-sm-4">   
+                                <label for="email" class="form-label">Transport Description</label>
+                                   
+                                      <input type="text"  class="form-control inputline"  placeholder="Enter Description"  formControlName="transportno" >
+                                    </div>
+                                                          
+                    <div class="col-sm-4">       
+                <label for="stock"  class="form-label">Remarks</label>               
+                              
+                                        <input type="text"  class="form-control"  placeholder="Enter if any remarks"   formControlName="remarks" >
+                               
+                       </div>                                                       
+                      
+           </div>                 
+        </div>
+    </div>
+                
+
+
+                   <div class="flow" style="overflow:auto;" formArrayName="brandDetails">
+                    <table rz-table class="table styletab">
+                        <thead class="stylehead">
+                            <tr>
+                                <th>
+                                    <input type="checkbox" class="checkAll tabcheck" name="checkAll" />
+                                </th>
+                                <th>S.No</th>
+                                <th>Prod Code</th>
+                                <th>Prod Name</th>
+                                <th>Batch No</th>  
+                                
+                                
+                                <!-- <th>Box Quantity</th> -->
+                                <!-- <th>Strip Quantity</th> -->
+
+
+
+                                <th>Tablet Qty</th>                                                                                                                                                                                
+                            </tr>
+                        </thead>
+                        <tbody class="stylebody">
+                            <tr *ngFor="let brand of deliveryForm.controls.brandDetails.controls; let i = index" [formGroupName]="i">
+                                <td>
+                                    <input type="checkbox" name="check" class="tabcheck" id="width1"/></td>
+                                    <td id="width2">{{i+1}}</td>
+                                    <td>
+                                        <input type="text" formControlName="drugproductrefid"  readonly>
+                                    </td>
+                                    <td>
+                                         <input type="text" formControlName="productname" id="swidth" style="text-align:left"  readonly>  
+                                            
+                                            
+                                            <!-- disabled -->
+                                    </td>   
+                                    <td>
+                                        <input type="text" formControlName="batchno" id="width5" style="text-align:left" readonly>
+                                    </td> 
+                                    
+                                    
+                                    <!-- <td>
+                                        <input type="text" align="center" formControlName="boxqty" class="tds boxqfocus" (change)="getSum()" (click)="getSum()">
+                                        <div *ngIf="brand.hasError('pattern', 'boxqty')" style="color:red;">Invalid Charcters..</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" formControlName="stripqty" class="tds stripqfocus" (change)="getSum()" (click)="getSum()">
+                                        <div *ngIf="brand.hasError('pattern', 'stripqty')" style="color:red;">Invalid Charcters..</div>
+                                    </td> -->
+
+
+
+                                    <td>
+                                        <input type="text" formControlName="tabqty" class="tabqfocus" (change)="getSum()" (click)="getSum()" autofocus>
+                                        <div *ngIf="brand.hasError('pattern', 'tabqty')" style="color:red;">Invalid Charcters..</div>
+                                    </td>                                                                                                                                                                                                                                                                
+                            </tr>
+                          
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="check" class="tabcheck" id="width1" />
+                                    </td>                                                   
+                                    <td>
+                                        <input type="text" id="width2" >
+                                    </td>
+                                    <td>
+                                        <input type="text" >
+                                    </td>
+                                    <td>
+                                        <input type="text" id="width6" >
+                                    </td>
+                                    <td>
+                                        <input type="text" id="width4">
+                                    </td>                                  
+                                   
+                                     
+                                    <td>
+                                        <input type="text">
+                                    </td>                                                                        
+                            </tr>
+                           
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                </div>
+                <br>
+                <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label class="form-label">Total produtcs</label>
+                            <input type="text" class="form-control" placeholder="Products" formControlName="totalproduct" 
+                                disabled>
+                        </div>
+
+
+                        <!-- <div class="col-lg-2">
+                            <label class="col-form-label labal">Total Quantity</label>
+                            <input type="text" class="form-control" placeholder="Quantity" formControlName="totalqty" style="width:150px;height:30px"
+                                disabled>
+                        </div>                     
+                        <div class="col-lg-2">
+                            <label class="col-form-label labal">Box Quantity</label>
+                            <input type="text" class="form-control" placeholder="Box Quantity" formControlName="totalboxqty" style="width:150px;height:30px"
+                                disabled>
+            
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="col-form-label labal">Strip Quantity</label>
+                            <input type="text" class="form-control" placeholder="Strip Quantity" formControlName="totalstripqty" style="width:150px;height:30px"
+                                disabled>
+                        </div> -->
+
+
+
+                        <div class="col-lg-3">
+                            <label class="form-label">Total Tablet Quantity</label>
+                            <input type="text" class="form-control" placeholder="Table Quantity" formControlName="totaltabqty"
+                                disabled>
+            
+                        </div>
+                    </div>
+                    <div class="col-lg-3 ml-4">
+                        <button type="submit"  class="btn btn-round">Save</button>
+                    </div>
+              </form>
+              </div>
+            </app-card>  
+            <ng2-toasty [position]="position"></ng2-toasty>
+
+
+                
+    
