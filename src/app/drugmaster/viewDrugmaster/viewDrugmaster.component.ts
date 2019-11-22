@@ -190,24 +190,34 @@ export class viewdrugComponent implements OnInit, AfterViewInit {
 
 
   deleteDrug(id: number) {
-
+    
     var answer = confirm("Delete data?");
     if (answer) {
 
-    this.viewdrug.deletedrug(id).subscribe(deletedata => console.log(JSON.stringify(deletedata)),
+    this.viewdrug.deletedrug(id).subscribe(data => {
+
+      if(data==1){
+        
+        this.devicedetails();
+        this.deviceObj.apiname="api/deleteDrugdetails";
+        this.deviceObj.description="Removed Drug Data"
+        
+        this.viewdrug.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+  
+      this.notificationsComponent.addToast({ title: 'SUCESS MESSAGE', msg: 'DATA DELETED SUCESSFULLY.', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'success' });
+      setTimeout(() => {
+       this.ngOnInit();
+        }, 3000);
+  
+      }
+      else{
+
+        this.notificationsComponent.addToast({ title: 'ERROR MESSAGE', msg: 'DATA NOT DELETED...', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'error' });
+      }
+
+    },
       errorCode => console.log(errorCode));
-   
-      this.devicedetails();
-      this.deviceObj.apiname="api/deleteDrugdetails";
-      this.deviceObj.description="Removed Drug Data"
-      
-      this.viewdrug.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
-
-    this.notificationsComponent.addToast({ title: 'SUCESS MESSAGE', msg: 'DATA DELETED SUCESSFULLY.', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'success' });
-    setTimeout(() => {
-      this.ngOnInit();
-      }, 2000);
-
+     
     }
   }
 

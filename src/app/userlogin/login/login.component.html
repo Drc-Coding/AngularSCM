@@ -16,7 +16,17 @@
 		margin-left: -12px;
 		margin-right: 8px;
 	}
+	
+	@media (max-width: 500px){
+
+		.modbtn{
+			margin-top:-10px;
+		}
+
+	}
+	
 </style>
+
 <section class="login p-fixed d-flex text-center bg-primary common-img-bg" style="overflow-y: scroll">
 	<div class="auth-fluid">
 		<div class="row">
@@ -144,8 +154,7 @@
 		</div>
 	
 	<div class="modal-footer">
-	<label id="enter" class="btn modbtn"
-		(click)="chooseModel()">Enter</label>				
+	<label id="enter" class="btn modbtn" (click)="chooseModel()">Enter</label>				
 	</div>
 
 		<button (click)="closeMyModal($event);loader=false" aria-label="Close" class="md-close-btn">
