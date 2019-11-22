@@ -1,4 +1,5 @@
 <style>
+
     #autolist {
         border: 2px solid #b3b3b3;
         border-radius: 5px;
@@ -9,20 +10,18 @@
         max-height: 230px;
         overflow-y: scroll;
     }
-
+   
     #autolist li input {
         border: transparent;
         font-family: Montserrat;
-        margin-right: 4px;
-        font-size: 16px;
-        width: 278px;
+        margin-right:4px;
+        font-size:16px;
+        width:278px;
     }
-
     #autolist li input:focus {
-        background-color: #b3b3b3;
+       background-color:#b3b3b3;
     }
-
-    #autolist .lhead {
+    #autolist .lhead{
         text-align: center;
         background-color: #0073aa;
         font-family: Montserrat;
@@ -30,12 +29,11 @@
         font-weight: bold;
         color: #FFFFFF;
     }
-
-    #autolist .lbody {
+    #autolist .lbody{
         font-family: Montserrat;
-        font-size: 16px;
+        font-size:16px;
     }
-
+  
     #autolistnew {
         border: 3px solid #b3b3b3;
         position: absolute;
@@ -44,53 +42,51 @@
         width: 12em;
         max-height: 200px;
         overflow-y: scroll;
-
+     
     }
-
     #autolistnew li input {
         border: transparent;
     }
-
     #autolistnew li input:focus {
-        background-color: #b3b3b3;
+       background-color:#b3b3b3;
     }
-
+   
     .image {
         position: absolute;
         width: 320px;
         height: 350px;
-        top: 8px;
+        top:8px;
         overflow-y: scroll;
         overflow-x: scroll;
-        background-color: white;
-        left: 60%;
+        background-color:white;
+        left:60%;
         /*
     display:none  ;
  
    */
     }
-
+  
     .borderform {
         border: 2px solid #b3b3b3;
         border-radius: 5px;
-        padding: 0.8em;
+        padding:0.8em;
     }
-
-
-
+  
+   
+  
     .form-control:disabled,
     .form-control[readonly] {
         background-color: transparent;
-        font-weight: bold;
-        font-size: 18px;
+        font-weight:bold;
+        font-size:18px;
     }
-
-    .paycheck {
-        height: 1.3em;
-        width: 1.4em;
+    .paycheck{
+        height:1.3em;
+        width:1.4em;
     }
+   
 </style>
-<app-card>
+<app-card >
     <div class="sub-title">Sales Invoice Details
         <i class="ti-receipt ficon"></i>
     </div><br>
@@ -101,34 +97,33 @@
             <div class="borderform">
                 <!-- splitcolumnbefore1   start-->
                 <!-- splitcolumn   start-->
-
-                <div class="row topadding">
-                    <div class="col-lg-4">
-                        <label class="form-label semibold" for="exampleInput">Invoice No
-                        </label>
-
-                        <input type="text" class="form-control" formControlName="custinvoiceno" />
-                    </div>
-                    <div class="col-lg-4">
-                        <label class="form-label semibold"> Invoice date
-                        </label>
-
-                        <input type="date" class="form-control" formControlName="date" />
-                    </div>
-                    <div class="col-lg-4">
-                        <!-- subcolumn  start-->
-                        <label class="form-label semibold" for="exampleInput"> Barcode
-                        </label>
-
-                        <input type="text" class="form-control barcode" (keydown)="viewBarcodeProd($event)"
-                            formControlName="barcode" />
-                    </div>
-
-
-                </div>
-                <div class="row topadding mt-3">
-
-                    <!-- <div class="col-lg-3" *ngIf="registerForm.controls.sorderflag.value==0">
+                 
+                        <div class="row topadding">
+                            <div class="col-lg-4">
+                                <label class="form-label semibold" for="exampleInput">Invoice No
+                                </label>
+                         
+                                <input type="text" class="form-control" formControlName="custinvoiceno" />
+                            </div>
+                            <div class="col-lg-4">
+                                    <label class="form-label semibold"> Invoice date
+                                    </label>
+                              
+                                    <input type="date" class="form-control" formControlName="date" />
+                                </div>
+                                <div class="col-lg-4">
+                                        <!-- subcolumn  start-->
+                                        <label class="form-label semibold" for="exampleInput"> Barcode
+                                        </label>
+                                 
+                                        <input type="text" class="form-control barcode" (keydown)="viewBarcodeProd($event)" formControlName="barcode" />
+                                </div>
+                            
+                     
+                        </div>
+                        <div class="row topadding mt-3">
+                            
+                                <div class="col-lg-3" *ngIf="registerForm.controls.sorderflag.value==0">
                                         <label class="form-label semibold" for="exampleInput">Customer Name </label>
                                     <select class="form-control" (change)="viewCustOutstandingTot()" (change)="getcustemail()" formControlName="custdummyid">
                                         <option *ngFor="let item of   customers; let i = index" value={{i}}>{{item[1]}}
@@ -136,109 +131,86 @@
                                     </select>
                                     <p class="messages text-danger marginzero" *ngIf="registerForm.controls.customerrefid.errors?.required">Select Customer
                                     </p>
-                                </div> -->
-                    <div class="col-sm-3" *ngIf="registerForm.controls.sorderflag.value==0">
-                        <label class="form-label">Customer Name</label>
-                        <ng-select [options]="customers1" formControlName="custdummyid"
-                            (change)="viewCustOutstandingTot()" (change)="getcustemail()"
-                            placeholder="Search By Customer Name" (input)="searchCustomer($event.target.value)">
-                        </ng-select>
-                        <p class="messages text-danger marginzero"
-                            *ngIf="registerForm.controls.customerrefid.errors?.required">Select Customer
-                        </p>
-                    </div>
-
-                    <!-- <div class="col-sm-3" *ngIf="registerForm.controls.sorderflag.value==1">
-                        <label class="form-label">Customer Name</label>
-                        <ng-select [options]="customers" (change)="viewCustOutstandingTot()" (change)="getcustemail()" formControlName="customerrefid"
-                            placeholder="Search By Customer Name" (input)="searchCustomer($event.target.value)" disabled>
-                        </ng-select>
-                    </div> -->
-                    <div class="col-lg-3" *ngIf="registerForm.controls.sorderflag.value==1">
-                        <label class="form-label semibold" for="exampleInput">Customer Name </label>
-                        <select class="form-control" (change)="viewCustOutstandingTot()" (change)="getcustemail()"
-                            formControlName="customerrefid" disabled>
-                            <option *ngFor="let item of   customers; let i = index" value={{item[0]}}>
-                                {{item[1]}}</option>
-                        </select>
-                    </div>
-
-                    <div class="col-lg-2">
-                        <label class="btn btn-round mt-4" (click)="clickopen(content1,2)">Tax Excempt</label>
-                    </div>
-
-
-                    <div class="col-lg-3">
-                        <label class="form-label semibold" for="exampleInput">Doctor Name </label>
-
-                        <select class="select2" class="form-control" formControlName="doctorrefid">
-                            <option *ngFor="let item of   doctors; let i = index" value={{i}}>{{item[1]}}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-lg-2">
-                        <label class="form-label semibold" for="exampleInput"> Prescription Upload
-                        </label>
-
-                        <input type="file" (change)="fileChange($event)" formControlName="presc35"
-                            class="form-control" />
-                    </div>
-                    <div class="col-lg-2">
-                        <label class="btn btn-round mt-4" (click)="viewsPresc()" style="font-size: 1em; ">view
-                            Presc</label>
-                    </div>
-                </div>
-
+                                </div>
+    
+                                <div class="col-lg-3" *ngIf="registerForm.controls.sorderflag.value==1">
+                                        <label class="form-label semibold" for="exampleInput">Customer Name </label>
+                                    <select class="form-control" (change)="viewCustOutstandingTot()" (change)="getcustemail()" formControlName="customerrefid" disabled>
+                                        <option *ngFor="let item of   customers; let i = index" value={{item[0]}}>
+                                            {{item[1]}}</option>
+                                    </select>
+                                </div>
+    
+                                <div class="col-lg-2">
+                                    <label class="btn btn-round mt-4" (click)="clickopen(content1,2)">Tax Excempt</label>
+                                </div>
+    
+                         
+                            <div class="col-lg-3">
+                                <label class="form-label semibold" for="exampleInput">Doctor Name </label>
+                       
+                                <select class="select2" class="form-control" formControlName="doctorrefid">
+                                    <option *ngFor="let item of   doctors; let i = index" value={{i}}>{{item[1]}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2">
+                                    <label class="form-label semibold" for="exampleInput"> Prescription Upload
+                                    </label>
+                             
+                                    <input type="file" (change)="fileChange($event)" formControlName="presc35" class="form-control" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <label class="btn btn-round mt-4" (click)="viewsPresc()" style="font-size: 1em; ">view Presc</label>
+                                </div>          
+                             </div>
+           
                 <!-- splitcolumn  end-->
             </div><br>
-
+          
             <div class="borderform">
-
-                <div class="row topadding">
-                    <div class="col-md-6">
-                        <label class="form-label semibold" for="exampleInput"> Drug Name
-                        </label>
-
-                        <input type="text" class="form-control" id="autoname" (focus)="autofocusin()"
-                            (focusout)="autofocusout()" autocomplete="off" (keydown)="autokeyselect($event,0+1)"
-                            formControlName="autonamenew" />
-                        <div id="autolist">
-                            <ul>
-                                <li *ngIf="autodata.length>0">
-                                    <label class="lhead" style="width:278px"> Drug name </label>
-                                    <label class="lhead" style="width:130px"> Batch No </label>
-                                    <label class="lhead" style="width:130px"> Expiry Date</label>
-                                    <label class="lhead" style="width:100px">Qty </label>
-                                </li>
-                                <li *ngFor="let address of    autodata; let i=index" [formGroupName]="i"
-                                    (keydown)="autokeyselect($event,i+2)">
-                                    <input value={{address[0]}} readonly />
-                                    <label class="lbody" style="width:130px"> {{address[6]}} </label>
-                                    <label class="lbody" style="width:130px"> {{address[7]}} </label>
-                                    <label class="lbody" style="width:100px">{{address[3]}} </label>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="boxname">
-                        </div>
-
-                        <div class="boxname">
-                            <div id="autolistnew">
-                                <ul>
-                                    <li (keydown)="viewStock($event, 1)">
-                                        <input type="text" readonly value='Box' /> </li>
-                                    <li (keydown)="viewStock( $event ,2)">
-                                        <input type="text" readonly value='Strip' /> </li>
-                                    <li (keydown)="viewStock($event ,3)">
-                                        <input type="text" readonly value='Tab' /> </li>
-                                </ul>
+             
+                        <div class="row topadding">
+                            <div class="col-md-6">
+                                <label class="form-label semibold" for="exampleInput"> Drug Name
+                                </label>
+                        
+                                <input type="text" class="form-control" id="autoname" (focus)="autofocusin()" (focusout)="autofocusout()" autocomplete="off"
+                                    (keydown)="autokeyselect($event,0+1)" formControlName="autonamenew" />
+                                <div id="autolist">
+                                    <ul>
+                                        <li *ngIf="autodata.length>0">
+                                            <label class="lhead" style="width:278px"> Drug name </label>
+                                            <label class="lhead" style="width:130px"> Batch No </label>
+                                            <label class="lhead" style="width:100px">Qty </label>
+                                        </li>
+                                        <li *ngFor="let address of    autodata; let i=index" [formGroupName]="i" (keydown)="autokeyselect($event,i+2)">
+                                            <input value={{address[0]}} readonly/>
+                                            <label class="lbody" style="width:130px"> {{address[6]}} </label>
+                                            <label class="lbody" style="width:100px">{{address[3]}} </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="boxname">
+                                    </div>
+        
+                                    <div class="boxname">
+                                        <div id="autolistnew">
+                                            <ul>
+                                                <li (keydown)="viewStock($event, 1)">
+                                                    <input type="text" readonly value='Box' /> </li>
+                                                <li (keydown)="viewStock( $event ,2)">
+                                                    <input type="text" readonly value='Strip' /> </li>
+                                                <li (keydown)="viewStock($event ,3)">
+                                                    <input type="text" readonly value='Tab' /> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+        
                             </div>
-                        </div>
-
-                    </div>
-
-
-                    <!-- <div class="col-md-5 ">
+                       
+                
+                            <!-- <div class="col-md-5 ">
                                 <label class="form-label semibold" for="exampleInput"> Generic Name
                                 </label>
                           
@@ -261,30 +233,30 @@
                                     </ul>
                                 </div>
                             </div> -->
-
-
-                    <div class="col-lg-2">
-                        <input type="radio" [value]="1" formControlName="sorderflag" />
-                        <label class="form-label ml-1"> Sales Order </label><br>
-                        <input type="radio" [value]="0" formControlName="sorderflag" />
-                        <label class="form-label ml-1"> Sales Invoice </label>
-                    </div>
-                    <div class="col-lg-2">
-                        <select class="form-control" (change)="viewSalesOrderProd()" formControlName="sotempflag">
-                            <option *ngFor="let item of   sorders; let i = index" value={{i}}>{{item[1]}}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="radio" [value]="1" formControlName="freeflag" />
-                        <label class="form-label ml-1"> Normal </label> <br>
-
-                        <input type="radio" [value]="0" formControlName="freeflag" />
-                        <label class="form-label ml-1"> Free </label>
-                    </div>
-
-
-                    <!--    <div class="col-lg-4 "> </div>
+              
+                          
+                            <div class="col-lg-2">
+                                    <input type="radio" [value]="1" formControlName="sorderflag" />
+                                    <label class="form-label ml-1"> Sales Order </label><br>
+                                    <input type="radio" [value]="0" formControlName="sorderflag" />
+                                     <label class="form-label ml-1"> Sales Invoice </label>
+                            </div>
+                            <div class="col-lg-2">
+                                <select class="form-control" (change)="viewSalesOrderProd()" formControlName="sotempflag">
+                                    <option *ngFor="let item of   sorders; let i = index" value={{i}}>{{item[1]}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2">
+                                <input type="radio" [value]="1" formControlName="freeflag" />
+                                <label class="form-label ml-1"> Normal </label>     <br>
+                          
+                                <input type="radio" [value]="0" formControlName="freeflag" />
+                                <label class="form-label ml-1"> Free </label>
+                            </div>
+                            
+                          
+                            <!--    <div class="col-lg-4 "> </div>
                         <div class="col-lg-1">
                             <input type="radio" class="topmargin"  [value]="1" formControlName="freeflag" />
                         </div>
@@ -297,62 +269,61 @@
                         <div class="col-lg-2 ">
                             <label class="form-label semibold"  > Free </label>
                         </div>   -->
-                </div>
-            </div><br>
-
-
-            <div class="image">
-                <i class="fa fa-times ficon" style="cursor:pointer" (click)="ClosePresc()"></i>
-                <br><br><br>
-                <ngx-image-viewer [src]=images></ngx-image-viewer>
-            </div>
-
-            <div class="title1"><u>Invoice Products</u></div><br>
+                        </div>
+                  </div><br>
+                  
+                  
+                  <div class="image">
+                        <i class="fa fa-times ficon" style="cursor:pointer" (click)="ClosePresc()"></i>
+                        <br><br><br>  
+                        <ngx-image-viewer [src]=images></ngx-image-viewer>
+                     </div>
+        
+                <div class="title1"><u>Invoice Products</u></div><br>
             <div formArrayName="invoice" class="flow">
                 <!--. table  start-->
-
-                <table class="table styletab" (keydown)="autocleartable1()">
-                    <thead class="stylehead">
-                        <tr>
-                            <th>Select </th>
-                            <th>
-                                S. No
-                            </th>
-                            <th>Prod Code</th>
-                            <th>
-                                Prod Name
-                            </th>
-                            <th>
-                                Batch No
-                            </th>
-                            <th>
-                                Expiry Date
-                            </th>
-                            <!--    <th>   B/S/T  </th> -->
-                            <th *ngIf="registerForm.controls.sorderflag.value==1">So Qty </th>
-                            <th>Unit Qty</th>
-                            <th>Unit Free </th>
-                            <th>Available Free</th>
-                            <th>Dis % </th>
-                            <th>Total Qty </th>
-                            <th>Total Free </th>
-                            <th>
-                                Sales Price
-                            </th>
-                            <th *ngIf="registerForm.controls.vatdispflag.value=='0'">VAT </th>
-                            <th *ngIf="registerForm.controls.vatdispflag.value=='1'"> SGST </th>
-                            <th *ngIf="registerForm.controls.vatdispflag.value=='1'"> CGST </th>
-                            <th *ngIf="registerForm.controls.vatdispflag.value=='1'"> IGST </th>
-                            <th>
-                                Amount
-                            </th>
-                            <th *ngIf="registerForm.controls.sorderflag.value==1">Batch Qty </th>
-                            <th *ngIf="registerForm.controls.sorderflag.value==1">Remaining Avail Qty </th>
-                        </tr>
-                    </thead>
-                    <tbody class="stylebody">
-                        <tr *ngFor="let address of registerForm.controls.invoice.controls; let i=index"
-                            [formGroupName]="i">
+        
+                    <table class="table styletab" (keydown)="autocleartable1()">
+                        <thead class="stylehead">
+                            <tr>
+                                <th>Select </th>
+                                <th>
+                                    S. No
+                                </th>
+                                <th>Prod Code</th>
+                                <th>
+                                    Prod Name
+                                </th>
+                                <th>
+                                    Batch No
+                                </th>
+                                <th>
+                                    Expiry Date
+                                </th>
+                                <!--    <th>   B/S/T  </th> -->
+                                <th *ngIf="registerForm.controls.sorderflag.value==1">So Qty </th>
+                                <th>Unit Qty</th>
+                                <th>Unit Free </th>
+                                <th>Available Free</th>
+                                <th>Dis % </th>
+                                <th>Total Qty </th>
+                                <th>Total Free </th>
+                                <th>
+                                    Sales Price
+                                </th>
+                                <th *ngIf="registerForm.controls.vatdispflag.value=='0'">VAT </th>
+                                <th *ngIf="registerForm.controls.vatdispflag.value=='1'"> SGST </th>
+                                <th *ngIf="registerForm.controls.vatdispflag.value=='1'"> CGST </th>
+                                <th *ngIf="registerForm.controls.vatdispflag.value=='1'"> IGST </th>
+                                <th>
+                                    Amount
+                                </th>
+                                	     <th *ngIf="registerForm.controls.sorderflag.value==1" >Batch Qty  </th> 
+                                <th *ngIf="registerForm.controls.sorderflag.value==1" >Remaining Avail Qty </th>
+                            </tr>
+                        </thead>
+                        <tbody class="stylebody">
+                        <tr *ngFor="let address of registerForm.controls.invoice.controls; let i=index" [formGroupName]="i">
                             <td>
                                 <input type="checkbox" class="tabcheck" id="width1" formControlName="delflag" />
                             </td>
@@ -379,15 +350,13 @@
                                 <input formControlName="indvqty" (keydown)="calc($event)" type="number" />
                             </td>
                             <td>
-                                <input formControlName="indvfreeqty" id="width3" (keydown)="calc($event)"
-                                    type="number" />
+                                <input formControlName="indvfreeqty" id="width3" (keydown)="calc($event)" type="number" />
                             </td>
                             <td>
                                 <input formControlName="availfreeqty" id="width3" readonly />
                             </td>
                             <td>
-                                <input formControlName="unitdiscount" id="width2" (keydown)="calc($event)"
-                                    type="number" />
+                                <input formControlName="unitdiscount" id="width2" (keydown)="calc($event)" type="number" />
                             </td>
                             <td>
                                 <input formControlName="totalqty" readonly />
@@ -396,7 +365,7 @@
                                 <input formControlName="totalfreeqty" id="width3" readonly />
                             </td>
                             <td>
-                                <input formControlName="unitprice" (keydown)="calc($event)" style="text-align:right" />
+                                <input formControlName="unitprice" (keydown)="calc($event)" style="text-align:right"/>
                             </td>
                             <td *ngIf="registerForm.controls.vatdispflag.value=='0'">
                                 <input formControlName="unitvat" id="width2" readonly />
@@ -408,87 +377,84 @@
                                 <input formControlName="unitcgst" id="width2" />
                             </td>
                             <td *ngIf="registerForm.controls.vatdispflag.value=='1'">
-                                <input formControlName="unitigst" id="width2" />
+                                <input formControlName="unitigst" id="width2"/>
                             </td>
-                            <td>
+                            <td >
                                 <input formControlName="subtotal" style="text-align:right" readonly />
                             </td>
-                            <td *ngIf="registerForm.controls.sorderflag.value==1">
-                                <input formControlName="crntstkqty" /></td>
+                            	     <td  *ngIf="registerForm.controls.sorderflag.value==1">
+                                         <input  formControlName="crntstkqty" /></td> 
                             <td *ngIf="registerForm.controls.sorderflag.value==1">
                                 <input formControlName="soremainqty" readonly />
                             </td>
                         </tr>
-                    </tbody>
-                </table>
-
+                        </tbody>
+                    </table>
+               
             </div><br>
             <!-- . table     end-->
             <div class="col-lg-3">
                 <button type="button" class="btn btn-round" (click)="remove()"> Remove </button>
             </div><br>
-
-
-
-            <!-- splitcolumnbefore1   start-->
-            <div class="row">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-8">
-                    <div class="row">
-
-                        <div class="col-lg-2">
-                            <input type="checkbox" formControlName="cashcheck" class="paycheck"
-                                (click)="open($event,content,0)" />
-                            <label class="form-label ml-2" for="exampleInput">Cash </label>
-                        </div>
-
-                        <div class="col-lg-3">
-                            <input type="checkbox" formControlName="creditcheck" class="paycheck"
-                                (click)="open($event,content,1)" />
-                            <label class="form-label ml-2" for="exampleInput">Credit Card </label>
-                        </div>
-
-                        <div class="col-lg-3">
-                            <input type="checkbox" formControlName="debitcheck" class="paycheck"
-                                (click)="open($event,content,3)" />
-                            <label class="form-label ml-2" for="exampleInput">Debit Card </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2"></div>
-
-            </div><br>
-            <!-- splitcolumnbefore1   end -->
-
-
+         
+                 
+                 
+                        <!-- splitcolumnbefore1   start-->
+                        <div class="row">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-8">
+                                <div class="row">
+                        
+                            <div class="col-lg-2">
+                                    <input type="checkbox" formControlName="cashcheck" class="paycheck" (click)="open($event,content,0)" />
+                                <label class="form-label ml-2" for="exampleInput">Cash </label>
+                            </div>
+                          
+                            <div class="col-lg-3">
+                                    <input type="checkbox" formControlName="creditcheck" class="paycheck" (click)="open($event,content,1)" />
+                                <label class="form-label ml-2" for="exampleInput">Credit Card </label>
+                            </div>
+                          
+                            <div class="col-lg-3">
+                                    <input type="checkbox" formControlName="debitcheck" class="paycheck" (click)="open($event,content,3)" />
+                                <label class="form-label ml-2" for="exampleInput">Debit Card </label>
+                            </div>
+                            </div>
+                     </div>
+                            <div class="col-lg-2"></div>
+                   
+                    </div><br>
+                    <!-- splitcolumnbefore1   end -->
+             
+         
             <div class="borderform">
                 <!-- splitcolumnbefore1   start-->
                 <div class="row topadding">
                     <!-- splitcolumn2  start-->
-
-                    <div class="col-lg-8">
+                  
+                      <div class="col-lg-8">
                         <div class="row">
                             <div class="col-md-4">
                                 <label class="form-label semibold" for="exampleInput">Total Product
                                 </label>
-
+                          
                                 <input type="text" class="form-control" formControlName="totalitems" readonly />
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label semibold" for="exampleInput">Taxable Amt
                                 </label>
-
+                          
                                 <input type="text" class="form-control" formControlName="taxableamt" readonly />
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label semibold" for="exampleInput">Total Tax Amt
                                 </label>
-
+                          
                                 <input type="text" class="form-control" formControlName="totaltaxamt" readonly />
                             </div>
                         </div><br>
-
-
+                
+                
                         <!-- subcolumn  start-->
                         <div class="row">
                             <!--     <div class="col-md-5">
@@ -501,50 +467,44 @@
                             <div class="col-md-4">
                                 <label class="form-label semibold" for="exampleInput">Total Discount Amt
                                 </label>
-
+                          
                                 <input type="text" class="form-control" formControlName="totaldiscount" readonly />
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label semibold" for="exampleInput">Sub Total
-                                </label>
-
-                                <input type="text" class="form-control" formControlName="totalamount" readonly />
-                            </div>
-
+                                    <label class="form-label semibold" for="exampleInput">Sub Total
+                                    </label>
+                              
+                                    <input type="text" class="form-control" formControlName="totalamount" readonly />
+                             </div>
+                        
                             <div class="col-md-4">
                                 <label class="form-label semibold" for="exampleInput"> Paid Amt
                                 </label>
-
-                                <input type="text" class="form-control" formControlName="paidamt" readonly />
+                          
+                                <input type="text" class="form-control" formControlName="paidamt" readonly/>
                             </div><br>
                             <div class="col-md-4 mt-4">
-                                <label class="form-label semibold" for="exampleInput"> Ref No
-                                </label>
-
-                                <input type="text" class="form-control" formControlName="ptrefno" />
-                            </div>
+                                    <label class="form-label semibold" for="exampleInput"> Ref No
+                                    </label>
+                               
+                                    <input type="text" class="form-control" formControlName="ptrefno" />
+                                </div>
                         </div>
-                    </div>
-                    <!--Col-lg-8 closed-->
-
-
-                    <div class="col-lg-4" style=" border-left: 2px solid #b3b3b3;">
-                        <br><br><br>
+                      </div> <!--Col-lg-8 closed-->
+                     
+                  
+                    <div class="col-lg-4"  style=" border-left: 2px solid #b3b3b3;">
+                            <br><br><br>
                         <!-- subcolumn  start-->
                         <div class="row">
                             <div class="col-md-12">
-                                <label class="form-label semibold" for="exampleInput"
-                                    style="font-size: 1.6em; ">Previous Balance : </label>
-                                <label class="form-label semibold" for="exampleInput"
-                                    style="font-size: 2em; ">{{registerForm.controls.outstandingamt.value}} </label>
+                                <label class="form-label semibold" for="exampleInput" style="font-size: 1.6em; ">Previous Balance : </label>
+                                <label class="form-label semibold" for="exampleInput" style="font-size: 2em; ">{{registerForm.controls.outstandingamt.value}} </label>
                             </div>
                             <div class="col-md-12">
-                                <label class="form-label semibold" for="exampleInput" style="font-size: 2em; ">Grand
-                                    Total: </label>
-                                <label class="form-label semibold" for="exampleInput"
-                                    style="font-size: 2em; ">{{registerForm.controls.grandtotal.value}} </label>
-                                <p class="messages text-danger" *ngIf="registerForm.controls.grandtotal.errors?.min">
-                                    Total Zero
+                                <label class="form-label semibold" for="exampleInput" style="font-size: 2em; ">Grand Total: </label>
+                                <label class="form-label semibold" for="exampleInput" style="font-size: 2em; ">{{registerForm.controls.grandtotal.value}} </label>
+                                <p class="messages text-danger" *ngIf="registerForm.controls.grandtotal.errors?.min">Total Zero
                                 </p>
                             </div>
                         </div>
@@ -554,90 +514,88 @@
                 <!-- splitcolumn  end-->
             </div>
             <!-- splitcolumnbefore1   end-->
-
+         
         </div><br>
         <!-- box-typical  -->
         <ng2-toasty [position]="position"></ng2-toasty>
-
-        <div class="row">
-            <!-- row Start-->
-            <div class="col-lg-1"></div>
-            <div class="col-lg-3">
-                <label class="form-label semibold" for="exampleInput"> Received
-                </label>
-
-                <input type="text" class="form-control" formControlName="paidamount"
-                    style="font-size:20px;font-weight:bold" (change)="calcbal()" />
-            </div>
-            <div class="col-lg-3">
-                <label class="form-label semibold" for="exampleInput"> Balance
-                </label>
-
-                <input type="text" class="form-control" formControlName="balanceamount"
-                    style="font-size:20px;font-weight:bold" />
-            </div>
-        </div>
-        <!-- row end-->
-
-
-        <ng-template #content1 let-c="close" let-d="dismiss">
-            <div class="modal-header">Select Type:
-                <i class="fa fa-times" (click)="c('Close click');" style="color:white;cursor:pointer"></i>
-            </div>
-            <img src="assets/images/poptab.jpg" class="mt-4 modimg"><br><br>
-
-
-            <div class="modal-body">
-
-
-                <div class="row" *ngIf="registerForm.controls.cashamtflag.value==2">
-                    <!-- Split Column   Start-->
-
-                    <div class="col-lg-5">
-                        <input type="checkbox" class="paycheck ml-2" formControlName="scitizenflag" />
-                        <label class="form-label ml-1" for="exampleInput">Senior Citizen (SCW) </label>
+        
+                    <div class="row">
+                        <!-- row Start-->
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-3">
+                            <label class="form-label semibold" for="exampleInput"> Received
+                            </label>
+                     
+                            <input type="text" class="form-control" formControlName="paidamount" style="font-size:20px;font-weight:bold" (change)="calcbal()" />
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="form-label semibold" for="exampleInput"> Balance
+                            </label>
+                     
+                            <input type="text" class="form-control" formControlName="balanceamount" style="font-size:20px;font-weight:bold"/>
+                        </div>
                     </div>
+                    <!-- row end-->
+              
+      
+                    <ng-template #content1 let-c="close" let-d="dismiss">
+                        <div class="modal-header">Select Type:
+                            <i class="fa fa-times" (click)="c('Close click');" style="color:white;cursor:pointer"></i>
+                        </div>
+                        <img src="assets/images/poptab.jpg" class="mt-4 modimg"><br><br>
 
-                    <div class="col-lg-7">
-                        <input type="checkbox" class="paycheck" formControlName="phycapflag" />
-                        <label class="form-label ml-1" for="exampleInput">Physically Handicapped (PWD) </label>
-                    </div>
+            
+                        <div class="modal-body">
+            
+                          
+                            <div class="row" *ngIf="registerForm.controls.cashamtflag.value==2">
+                                <!-- Split Column   Start-->
+                          
+                                        <div class="col-lg-5">
+                                                <input type="checkbox" class="paycheck ml-2" formControlName="scitizenflag" />
+                                            <label class="form-label ml-1"  for="exampleInput">Senior Citizen (SCW) </label>
+                                        </div>
+                                      
+                                        <div class="col-lg-7">
+                                                <input type="checkbox" class="paycheck" formControlName="phycapflag" />
+                                            <label class="form-label ml-1" for="exampleInput">Physically Handicapped (PWD) </label>
+                                        </div>
+                                      
+                        
+                                           
+                                        <div class="col-lg-5">
+                                                <input type="checkbox" class="paycheck ml-2" formControlName="phydiscountflag" />
+                                            <label class="form-label ml-1" for="exampleInput">Add Discount </label>
+                                        </div>
+            
+                                        <div class="col-lg-7">
+                                                <input type="checkbox" class="paycheck" formControlName="disctaxflag" />
+                                            <label class="form-label ml-1" for="exampleInput"> Tax Excempt </label>
+                                        </div>
+                             
+                            </div>
+                            <!-- Split Column end-->
 
-
-
-                    <div class="col-lg-5">
-                        <input type="checkbox" class="paycheck ml-2" formControlName="phydiscountflag" />
-                        <label class="form-label ml-1" for="exampleInput">Add Discount </label>
-                    </div>
-
-                    <div class="col-lg-7">
-                        <input type="checkbox" class="paycheck" formControlName="disctaxflag" />
-                        <label class="form-label ml-1" for="exampleInput"> Tax Excempt </label>
-                    </div>
-
-                </div>
-                <!-- Split Column end-->
-
-            </div>
-
-            <div class="modal-footer">
-                <label class="btn modbtn" (click)="c('Close click')">Ok</label>
-            </div>
-        </ng-template>
-
+                        </div>
+            
+                        <div class="modal-footer">
+                            <label class="btn modbtn" (click)="c('Close click')">Ok</label>
+                        </div>
+                    </ng-template>
+                
         <ng-template #content let-c="close" let-d="dismiss">
             <div class="modal-header">Enter the Paid Amount:
                 <i class="fa fa-times" (click)="c('Close click');" style="color:white;cursor:pointer"></i>
             </div>
             <img src="assets/images/poptab.jpg" class="mt-4 modimg"><br>
             <div class="modal-body">
-                <input class="form-control" (change)="calcamt()" formControlName="cashamt"
-                    *ngIf="registerForm.controls.cashamtflag.value==0 " placeholder="Enter Bill Amount" />
-                <input class="form-control" (change)="calcamt()" formControlName="creditcardamt"
-                    *ngIf="registerForm.controls.cashamtflag.value==1 " placeholder="Credit Card Amount" />
-                <input class="form-control" (change)="calcamt()" formControlName="debitcardamt"
-                    *ngIf="registerForm.controls.cashamtflag.value==3 " placeholder="Debit Card Amount" />
-
+                <input class="form-control" (change)="calcamt()" formControlName="cashamt" *ngIf="registerForm.controls.cashamtflag.value==0 "
+                    placeholder="Enter Bill Amount" />
+                <input class="form-control" (change)="calcamt()" formControlName="creditcardamt" *ngIf="registerForm.controls.cashamtflag.value==1 "
+                    placeholder="Credit Card Amount" />
+                <input class="form-control" (change)="calcamt()" formControlName="debitcardamt" *ngIf="registerForm.controls.cashamtflag.value==3 "
+                    placeholder="Debit Card Amount" />
+              
             </div>
             <div class="modal-footer">
                 <label class="btn modbtn" (click)="c('Close click');">Ok</label>
@@ -646,7 +604,7 @@
 
 
 
-        <!-- New Product Popup -->
+    <!-- New Product Popup -->
 
         <ng-template #content2 let-c="close" let-d="dismiss">
 
@@ -657,13 +615,13 @@
             </div><br>
 
             <div class="modal-body">
-                <!-- 
+<!-- 
                     <input class="form-control" (change)="calcamt()" formControlName="cashamt" *ngIf="registerForm.controls.cashamtflag.value==4"
                     placeholder="Enter Bill Amount" /> -->
-
-                <!--Table Start-->
+              
+                        <!--Table Start-->
                 <div formArrayName="newproduct" class="flow">
-
+                    
                     <table class="table styletab">
                         <thead class="stylehead">
                             <tr>
@@ -677,8 +635,7 @@
                             </tr>
                         </thead>
                         <tbody class="stylebody">
-                            <tr *ngFor="let address of registerForm.controls.newproduct.controls;let i=index"
-                                [formGroupName]="i">
+                            <tr *ngFor = "let address of registerForm.controls.newproduct.controls;let i=index"  [formGroupName]="i"> 
                                 <td>
                                     <input type="text" formControlName="newproductname" id="width5" />
                                 </td>
@@ -686,21 +643,21 @@
                                     <input type="text" formControlName="reqqty" id="width3" />
                                 </td>
                                 <td>
-                                    <input type="text" formControlName="remarks" (keydown)="addnewprod($event)" />
+                                    <input type="text" formControlName="remarks"  (keydown) ="addnewprod($event)" />
                                 </td>
-
+                              
                             </tr>
-
+                           
                         </tbody>
                     </table>
                 </div>
-
+            
             </div>
 
             <div class="modal-footer">
                 <button type="button" value="save" class="btn modbtn" (click)="saveNewProduct(c)"> Save</button>
             </div>
-        </ng-template>
+        </ng-template> 
 
     </form>
     <br>
@@ -708,26 +665,24 @@
         <!-- row Start-->
         <div class="col-lg-1"></div>
         <div class="col-lg-2">
-            <button type="button" class="btn btn-round" (click)="onSubmit()" [disabled]="!registerForm.valid"> Save
-            </button>
+            <button type="button" class="btn btn-round" (click)="onSubmit()" [disabled]="!registerForm.valid"> Save </button>
         </div>
         <div class="col-lg-2">
             <button type="button" class="btn btn-round" [routerLink]="['/SalesInvoice/slsInvEdit' ]"> Edit
             </button>
         </div>
-
+        
         <div class="col-lg-2">
 
-            <button class="btn btn-round" (click)="poprint()">Print</button>
-            <!-- <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Bill_SalesInvoice/SalesInvoice.rptdesign&companyrefid={{selobj.companyid}}&branchrefid={{selobj.branchrefid}}&locname={{selobj.locname}}&locrefid={{selobj.locrefid}}&salesrefid={{soid}}&__format=PDF"
+             <button class="btn btn-round" (click)="poprint()"  >Print</button>
+        <!-- <a href="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Bill_SalesInvoice/SalesInvoice.rptdesign&companyrefid={{selobj.companyid}}&branchrefid={{selobj.branchrefid}}&locname={{selobj.locname}}&locrefid={{selobj.locrefid}}&salesrefid={{soid}}&__format=PDF"
                     class="btn btn-round" (click)="poprint()" role="submit" aria-pressed="true" routerLinkActive="active" target="form_a">Print</a> -->
-        </div>
+      </div>
 
-        <div class="col-lg-3">
-            <label class="btn btn-round" (click)="newprodopen(content2,4)" (click)="getNewProduct()"
-                style="font-size: 1em; ">Add New Product</label>
-        </div> <br>
-
+      <div class="col-lg-3">
+            <label class="btn btn-round" (click)="newprodopen(content2,4)" (click)="getNewProduct()"   style="font-size: 1em; ">Add New Product</label>
+        </div>   <br>
+           
     </div>
     <!-- row end-->
 </app-card>
