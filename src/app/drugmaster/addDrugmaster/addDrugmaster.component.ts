@@ -739,6 +739,7 @@ export class adddrugComponent implements OnInit {
   @Input() fileExt: string = "JPG, GIF, PNG";
   @Input() maxFiles: number = 6;
   @Input() maxSize: number = 0.99; // 5MB
+  
   photoValidation(files) {
     this.errors = [];
     // Validate file size and allowed extensions
@@ -746,6 +747,7 @@ export class adddrugComponent implements OnInit {
       return;
     }
   }
+  
   private isValidFiles(files) {
     // Check Number of files
     if (files.length > this.maxFiles) {

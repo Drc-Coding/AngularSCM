@@ -4,6 +4,7 @@
     width:310px;
 }
 
+
 </style>
 
 <app-card>
@@ -72,7 +73,7 @@
           </div><br>
         
 
-        <div class="flow" style="overflow:auto;" formArrayName="sodetails">
+        <div class="flow" formArrayName="sodetails">
             <table rz-table class="table styletab">
                 <thead class="stylehead">
                     <tr>
@@ -150,7 +151,85 @@
                     <button class="btn btn-round" [routerLink]="['/SalesOrderLead/salesorderlead']">
                         Go Back</button>
                 </div>
+              
         </div>
+
+        <!-- Modal Template for Add Stock-->
+
+        <app-modal-animation [modalID]="'effect-1'" [modalClass]="'md-effect-1'">
+            <div class="modal-header" style="font-size:27px">Add Stock
+            </div><br>
+        
+            <div class="mx-5">
+                    <fieldset class="form-group">
+                        <label class="form-label">Select Type</label>
+                        <select name="select" class="form-control" formControlName="">
+                            <option value="0" selected disabled>---Select Type---</option>
+                            
+                        </select>
+                    </fieldset>
+            </div>
+
+            <div formArrayName="" class="flow mx-2" style="padding:0px">
+                    
+                <table class="table styletab">
+                    <thead class="stylehead">
+                        <tr>
+                            <th>
+                            <input type="checkbox" class="" style="height:1.3em;width:1.4em" />    
+                            </th>
+                            <th>Shop Name</th>
+                            <th>
+                                Avail Qty
+                            </th>
+                            <th>
+                                Ageing
+                            </th>
+                            <th>
+                               Last Week Sale
+                            </th>
+                            <th>
+                                Req Qty
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="stylebody">
+                        <tr> 
+                            <td>
+                                <input type="text" formControlName="" id="width1" />
+                            </td>
+                            <td>
+                                <input type="text" formControlName=""  />
+                            </td>
+                            <td>
+                                <input type="text" formControlName="" id="width2" />
+                            </td>
+                            <td>
+                                <input type="text" formControlName="" id="width1" />
+                            </td>
+                            <td>
+                                <input type="text" formControlName="" id="width3" />
+                            </td>
+                            <td>
+                                <input type="text" formControlName="" id="width3" />
+                            </td>
+                          
+                        </tr>
+                       
+                    </tbody>
+                </table>
+            </div>
+        
+          
+        <div class="modal-footer">
+        <label id="enter" class="btn modbtn">Save</label>				
+        </div>
+    
+            <button (click)="closeMyModal($event)" aria-label="Close" class="md-close-btn">
+                <i class="icofont icofont-ui-close" style="font-size:12px"></i>
+            </button>
+        </app-modal-animation>
+
     </form>
 </app-card>
 <ng2-toasty [position]="position"></ng2-toasty>

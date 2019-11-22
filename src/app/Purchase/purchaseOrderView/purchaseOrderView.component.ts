@@ -20,6 +20,7 @@ export class purchaseOrderViewComponent implements OnInit {
   public sortOrder: string = "desc";
   purchaseOrder :any= [];  
   purchaseOrders: FormGroup;
+  gifFail: boolean=true;
  
   
   constructor(private poservices: purchaseOrderViewService, private route: Router, private formBuilder:FormBuilder,private notificationsComponent: NotificationsComponent) {            
@@ -48,10 +49,16 @@ export class purchaseOrderViewComponent implements OnInit {
       this.purchaseOrders.get('locref').setValue(AppComponent.hospitalID);
     }
    
+    setTimeout(() => {
     this.poservices.viewPurchaseOrders(AppComponent.companyID,AppComponent.branchID,AppComponent.locrefID,this.purchaseOrders.get('locref').value).subscribe(data =>{this.data = data},
     err =>{
       console.log('Error Occured Get States');
     });
+
+    this.gifFail=false;
+    
+  },3000);
+
   }
  // i;
   // inc=0;

@@ -18,13 +18,19 @@ export class viewshopComponent implements OnInit, AfterViewInit {
   public filterQuery: string = "";
   public sortBy: string = "";
   public sortOrder: string = "desc";
+  gifFail: boolean=true;
+  
   constructor(private viewShop: shopviewService, private router: Router, private notificationsComponent: NotificationsComponent) { }
 
   ngOnInit() {
+
+    setTimeout(() => {
     this.viewShop.viewShop(AppComponent.companyID, AppComponent.branchID).subscribe(data => this.data = data,
       err => {
         console.log('Error get values from services in view Component');
       });
+      this.gifFail=false;
+    },3000);
   }
 
   deleteShop(id: number) {

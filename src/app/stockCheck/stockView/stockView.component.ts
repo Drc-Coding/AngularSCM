@@ -25,6 +25,8 @@ export class stockViewComponent implements OnInit {
 
   
   purchaseOrder: FormGroup;
+  gifFail: boolean=true;
+  
   constructor(private userService: stockViewService, private route: Router,private formBuilder:FormBuilder) {
     this.purchaseOrder = this.formBuilder.group({
       companyid: ['', []],
@@ -32,23 +34,32 @@ export class stockViewComponent implements OnInit {
       locname: ['', []],
       locref: ['', []],
     });
-    this.purchaseOrder.get('companyid').setValue(AppComponent.companyID);
-    this.purchaseOrder.get('branchid').setValue(AppComponent.branchID);
-    this.purchaseOrder.get('locname').setValue(AppComponent.locrefID);
-
-    
+   
 
     if (AppComponent.usertype == "\"SuperAdmin\" ") { 
+      setTimeout(() => {
       this.userService.superAdminViewStock().subscribe(data => {this.data = data},
         err => {
           console.log('Error get values from services in Branch Component');
+         
         });
+        this.gifFail=false;
+        
+      },3000);
+    
       }
+      
     else{
+      setTimeout(() => {
+
       this.userService.viewStock(AppComponent.companyID,AppComponent.branchID,AppComponent.locRefName1,AppComponent.locrefID1).subscribe(data => {this.data = data,this.setdata(data)},
         err => {
           console.log('Error get values from services in Branch Component');
+          
         });
+        this.gifFail=false;
+      },3000);
+
       }
   
     

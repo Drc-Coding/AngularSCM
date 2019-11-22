@@ -1,12 +1,17 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, ElementRef, AfterViewInit, Input, Output } from '@angular/core';
 import 'rxjs/add/operator/filter';
 import { state, style, transition, animate, trigger, AUTO_STYLE } from '@angular/animations';
+
 import swal from 'sweetalert2';
 import { MenuItems } from '../../shared/menu-items/menu-items';
 import { Router } from '@angular/router';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { AppComponent } from '../../app.component';
 import { adminService } from './admin-layout.services';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
+import { OuterSubscriber } from 'rxjs/OuterSubscriber';
+declare var require:any;
 
 export interface Options {
   heading?: string;
@@ -71,7 +76,7 @@ export class AdminLayoutComponent implements OnInit {
   isCollapsedMobile = 'no-block';
   toggleOn = true;
   windowWidth: number;
-  username: any;
+ 
   menu: any;
   myNewList: any; item;
   modLabel = [];
@@ -85,11 +90,32 @@ export class AdminLayoutComponent implements OnInit {
   public errormessageCondition: boolean = false;
 
   public showNav = true;
+  showDialog:boolean = false;
+  @Input() visible: boolean;
+  
+  userinfo:FormGroup;
+  edituserinfo:FormGroup;
+  imgURL: any= "assets/images/user.png" ;
+  ip: any;
 
   @ViewChild('searchFriends') search_friends: ElementRef;
   @ViewChild('toggleButton') toggle_button: ElementRef;
   @ViewChild('sideMenu') side_menu: ElementRef;
-  constructor(public menuItems: MenuItems, private http: Http, private router: Router, private app: AppComponent, private adservice: adminService) {
+
+  username: any;
+  empid: any;
+  empcode: any;
+  gender: any;
+  dob: any;
+  address: any;
+  state: any;
+  mobno: any;
+  mailid: any;
+  getevent: any;
+  
+  
+  constructor(public menuItems: MenuItems, private http: Http, private router: Router, private app: AppComponent,
+    private formBuilder: FormBuilder,  private adservice: adminService,private sanitizer: DomSanitizer) {
     const scrollHeight = window.screen.height - 150;
     this.innerHeight = scrollHeight + 'px';
     this.windowWidth = window.innerWidth;
@@ -100,24 +126,127 @@ export class AdminLayoutComponent implements OnInit {
     console.log(this.menu[1]);
     this.myNewList = Array.from(new Set(this.menu));
     console.log(this.myNewList);
+
+
+
+    //Edit user info
+
+
+    this.edituserinfo = this.formBuilder.group({
+
+      id:['',[]],
+      clientmdate:['',[]],
+      empaddress1: ['', []],
+      mobileno: ['', []],
+      email: ['', []],
+
+    });
+
   }
 
   ngOnInit() {
+
+    //Get Value from APP Component(Another compont)
+
+        //this.app.ipAddress (or) this.app.getIP();
+  
     this.menu = JSON.parse(sessionStorage.getItem("user"));
     this.modLabel = JSON.parse(sessionStorage.getItem("moduleLabel"));
     this.messageCondition = false;
     this.app.getDecrypt();
+    this.getIP();
+
+    // require('getmac').getMac(function(err, macAddress){
+    //   alert("MAC Ad"+macAddress);
+    //   if (err)  throw err
+    //   console.log(macAddress)
+    //  });
+
+    
     this.adservice.getShopName(AppComponent.locrefID1).subscribe(data => { this.shop = data[0][1] });//
+
+    this.adservice.getuserinfo(AppComponent.userID).subscribe(data => {this.setuserdata(data),this.setuserdataedit(data)});
    
+    this.adservice.receiveimage(AppComponent.userID).subscribe(data => { this.viewimage(data) });
+   
+  }
+
+  getIP()
+  {
+    this.adservice.getIPAddress().subscribe(data=>{
+        this.ip=JSON.stringify(data);
+  });
+  }
+
+   private readonly imageType: any = 'data:image/*;base64,';
+ 
+   viewimage(data){
+
+    this.imgURL = this.sanitizer.bypassSecurityTrustUrl(this.imageType + data.content)
+    
    }
 
-  // public allowNav() {
+   setuserdata(data: any){
+    this.username=data[0][0];
+    this.empcode=data[0][1];
+    this.gender=data[0][2];
+    this.dob=data[0][3];
+    this.address=data[0][4];
+    this.state=data[0][5];
+    this.mobno=data[0][6];
+    this.mailid=data[0][7];
+   }
 
-  //   if (this.router.url == '/sinup/addsinup') {
 
-  //     this.showNav = false;
-  //   }
-  // }
+   setuserdataedit(data: any){
+    this.empid=data[0][8];
+    this.edituserinfo.get('empaddress1').setValue(data[0][4]);
+    this.edituserinfo.get('mobileno').setValue(data[0][6]);
+    this.edituserinfo.get('email').setValue(data[0][7]);
+   }
+
+  
+
+   editinfo(){
+ 
+    this.edituserinfo.get('clientmdate').setValue(AppComponent.date);
+    this.edituserinfo.get('id').setValue(this.empid);
+    this.adservice.updateinfo(this.edituserinfo.value).subscribe((data: any )=> {  
+        let re = data.res;  
+      
+      if(re==true){
+       
+        this.opensuccessSwal();
+        this.adservice.getuserinfo(AppComponent.userID).subscribe(data => {this.setuserdata(data),this.setuserdataedit(data)});
+      
+      }
+      else{
+        this.openerrorSwal();
+      }
+    errorCode => console.log(errorCode);
+   })
+  }
+
+
+  opensuccessSwal() {
+    swal({
+      title: "Information Updated Successfully!",
+      text: "Click Ok",
+      showConfirmButton: true
+    }).then((openmodel) => {
+      
+  }).catch(swal.noop);
+  }
+
+  openerrorSwal() {
+    swal({
+      title: "Update Failed!",
+      text: "Click Ok",
+      showConfirmButton: true
+    }).then((openmodel) => {
+      
+  }).catch(swal.noop);
+  }
 
   openConfirmsSwal() {
     swal({
@@ -128,11 +257,12 @@ export class AdminLayoutComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes'
     }).then(function () {
-
-      sessionStorage.clear();
-      window.location.replace('userlogin/login');
+     
+      window.location.href='userlogin/login';
+      
     }).catch(swal.noop);
   }
+
 
   onClickedOutside(e: Event) {
     if (this.windowWidth < 768 && this.toggleOn && this.verticalNavType !== 'offcanvas') {
@@ -257,4 +387,22 @@ export class AdminLayoutComponent implements OnInit {
     }
 
   }
+
+
+  // openBasicModal(event) {
+  //   this.showDialog = !this.showDialog;
+  //   setTimeout(()=> {
+  //     document.querySelector("#"+event).classList.add('md-show');
+  //   }, 25);
+  // }
+
+  // closeBasicModal(event) {
+
+  //   ((event.target.parentElement.parentElement).parentElement).classList.remove('md-show');
+  //   setTimeout(() => {
+  //     this.visible = false;
+  //     this.showDialog = !this.showDialog;
+  //   }, 300);
+  // }
+
 }

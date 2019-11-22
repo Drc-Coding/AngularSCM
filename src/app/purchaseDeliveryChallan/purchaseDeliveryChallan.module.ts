@@ -6,6 +6,7 @@ import { purchaseChallanRoutes } from './purchaseDeliveryChallan.routing';
 import { purchaseChallanSaveComponent } from './purchaseChallanSave/purchaseChallanSave.component'; 
 import { purchaseChallanEditcomponent } from './purchaseChallanEdit/purchaseChallanEdit.component';
 import { purchaseChallanViewComponent } from './purchaseChallanView/purchaseChallanView.component';
+import {CategoryPipe}from './purchaseChallanView/purchaseChallanview.pipe';
 import { DxDataGridModule,
   DxSparklineModule,
   DxTemplateModule } from 'devextreme-angular';
@@ -22,9 +23,8 @@ import { DxDataGridModule,
     RouterModule.forChild(purchaseChallanRoutes),
    SharedModule
   ],
-  declarations: [ purchaseChallanSaveComponent  , purchaseChallanEditcomponent   ,  purchaseChallanViewComponent ],
+  declarations: [ purchaseChallanSaveComponent  , purchaseChallanEditcomponent  , CategoryPipe,   purchaseChallanViewComponent ],
   
-
   bootstrap: [purchaseChallanSaveComponent]
 })
 

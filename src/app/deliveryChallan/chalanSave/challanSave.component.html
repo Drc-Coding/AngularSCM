@@ -58,10 +58,10 @@
                     
                  
                         <div class="col-sm-3">
-                                <label for="stock" class="form-label">Sales Invoice No 
+                                <label for="stock" class="form-label">Stock Transfer No 
                                      <span style="color:red">*</span></label>
                                <ng-select [options]="distributors" formControlName="stockno"
-                                   placeholder="Search Invoice Number" 
+                                   placeholder="Type: STK/TRNS/0000" 
                                    (change)="getStockNumber()"     (click)="getStockNumber()" 
                                    (input)="getSales($event.target.value)">
                                </ng-select>

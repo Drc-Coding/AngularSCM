@@ -12,15 +12,16 @@ export class purcGatePassViewService  {
 
   options  ;
 
-    private viewURL='api/viewgatepass';
+    private viewURL='api/viewgatepasses';
 
 
   constructor(private http: Http) {
 
   }
   
-    viewDeliveryChallan(comp:any,brnch:any,locname:any,locrefid:any) {
-           return this.http.get(this.viewURL+'/'+comp+'/'+brnch+'/'+locname+'/'+locrefid).map((res: Response) => res.json());
+    viewDeliveryChallan(comp:any, brnch:any, locname:any, locrefid:any, billtyperefid: any) {
+           return this.http.get(this.viewURL+'/'+comp+'/'+brnch+'/'+locname+'/'+
+           locrefid + '/' + billtyperefid).map((res: Response) => res.json());
     }
   
 }

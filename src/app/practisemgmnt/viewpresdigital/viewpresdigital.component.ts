@@ -14,13 +14,19 @@ export class ViewpresdigitalComponent implements OnInit {
   public filterQuery: string = "";
   public sortBy: string = "";
   public sortOrder: string = "desc";
+  gifFail: boolean=true;
+
   constructor(private prescrepservice: PrescriptionApprovalService) { }
 
   ngOnInit() {
+
+    setTimeout(() => {
       this.prescrepservice.viewprescription(AppComponent.companyID,AppComponent.branchID,AppComponent.locRefName1,AppComponent.locrefID1).subscribe(
         data => {
           this.data = data
-        }
-      )
+        })
+        this.gifFail=false;
+      },3000);
   }
+  
 }

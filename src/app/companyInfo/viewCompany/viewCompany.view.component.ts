@@ -17,18 +17,27 @@ export class viewcompanyComponent implements OnInit {
     public filterQuery: string = "";
     public sortBy: string = "";
     public sortOrder: string = "desc";
+    gifFail: boolean=true;
+    
     constructor(private viewCmp: companyviewService,private router: Router, private notificationsComponent: NotificationsComponent) { }
 
     ngOnInit() {
+
+        setTimeout(() => {
         this.viewCmp.viewComp().subscribe(data => this.data = data,
             err => {
                 console.log('Error get values from services in Company Component');
             });
+            this.gifFail=false;
+        },3000);
 
+        setTimeout(() => {
         this.viewCmp.getCount().subscribe(data => { this.count = data },
             err => {
                 console.log('Error get values from services in Company Component');
             });
+            this.gifFail=false;
+        },3000);
     }
 
     deleteCompany(id: number) {

@@ -48,6 +48,8 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
   x;
   polist = [];
   coltax: any;
+  sendsalesorderid: any;
+
   constructor(private invoiceService: salesGatePassSaveService, private router: Router, private formBuilder: FormBuilder, private notificationsComponent: NotificationsComponent,
      private appComponent: AppComponent,private dateformat: dateFormatPipe) {
     this.deliveryForm = this.formBuilder.group({
@@ -86,6 +88,7 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
       gpno: ['', []],
       billtyperefid: [1, []],
       dcrefid: [, []],
+      salesorderrefid:['',[]],
       brandDetails: this.formBuilder.array([
       ]),
     });
@@ -278,8 +281,6 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
 
 
 
-
-
   pushTableData1(data: any) {
 
 
@@ -287,19 +288,14 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
     getData.controls = [];
 
 
-    // this.deliveryForm.get('totalproduct').setValue("");
-    // this.deliveryForm.get('totaltabqty').setValue("");
-
-
-
-
-
-
     if (data !== undefined || data !== null) {
       let flag: number = 0;
       const getData = <FormArray>this.deliveryForm.controls['brandDetails'];
       let setData = getData.value;
       for (this.i = 0; this.i < data.length; this.i++) {
+
+        this.sendsalesorderid=data[this.i][9];
+       
         for (this.x = 0; this.x < setData.length; this.x++) {
           if (data[this.i][0] == setData[this.x].productid) {
             flag = 1;
@@ -630,7 +626,8 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
       this.appComponent.ngOnInit();
       this.deliveryForm.get('clientcdate').setValue(AppComponent.date);
       this.deliveryForm.get('dcrefid').setValue(this.deliveryForm.get('salesno').value);
-
+      this.deliveryForm.get('salesorderrefid').setValue(this.sendsalesorderid);
+     
       this.invoiceService.getDeliveryChallan(JSON.stringify(this.deliveryForm.value)).subscribe(
         data => {
    
@@ -640,10 +637,8 @@ export class salesGatePassSaveComponent implements OnInit, AfterViewInit {
               data => {
                 if (data == true) {
                   this.notificationsComponent.addToast({ title: 'SUCCESS MESSAGE', msg: 'DATA SAVED SUCCESSFULLY..', timeout: 5000, theme: 'success', position: 'top-right', type: 'success' });
+                  
                   window.location.href = "SalesGatePass/ViewSalesGatePass";
-
-                  // window.location.href = "/SalesDeliveryReceipt/ViewSalesDelivery";
-
 
                 }
               },

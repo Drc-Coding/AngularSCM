@@ -29,6 +29,7 @@ export class slsInvViewComponent implements OnInit {
      pharmacomp = [];
   
     selobj ;
+  gifFail: boolean=true;
     constructor(private userService: slsInvViewService) {}
   
     ngOnInit() {
@@ -47,10 +48,13 @@ export class slsInvViewComponent implements OnInit {
       viewAll() {
   
         var   frmdata={ frmint1 : '' ,  frmstr1  :'', createdby  :'' , locrefid  :this.selobj.locrefid , locname  :this.selobj.locname   } ;
+
+        setTimeout(() => {
       this.userService.phcompanyView(JSON.stringify(frmdata)  ).subscribe(data => {this.data = data     },
         errorCode => console.log(errorCode));
   
-  
+        this.gifFail=false;
+      },3000);
    
     }
   

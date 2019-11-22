@@ -43,11 +43,16 @@
 			<div class="form-inline justify-content-end">
 				
 					<strong class="searchstyle">Search : </strong>
-					<input type="search" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Search Order No">
+					<input type="search" [(ngModel)]="filterQuery" [ngModelOptions]="{standalone: true}" class="form-control w-50" placeholder="Search Return No">
 				
 			</div> 
 		</div>
 	</div><br>
+
+	<div align="center">
+		<img src="assets/images/loading.gif" height="100px" *ngIf="gifFail">
+	  </div><br>
+
 	<div class="dt-responsive">
 		<div style="overflow-x:auto">
 			<table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery"
@@ -57,8 +62,6 @@
 					<th>S. No </th>  
                 <th>Sales Return No</th>
                 <th>Sales Return Date</th>
-			   
-						
 				<th>Total Product</th>
                 <th>Taxable Amt</th>
                 <th>Total Tax Amt</th>
@@ -72,16 +75,13 @@
 				
 					<tr *ngFor="let item of mf.data;let i=index">
 							<td>{{i+1}}  </td> 
-                <td>{{item[1  ]}} </td>
-				<td>{{item[2  ]}} </td>
+                <td>{{item[1]}} </td>
+				<td>{{item[2]}} </td>
 				
-
-
-				<td>{{item[4  ]}} </td>
-                <td class="right">{{item[5  ]}} </td>
-				<td class="right">{{item[6  ]}} </td>
-             
-				<td class="right">{{item[7  ]}} </td>
+				<td>{{item[4]}} </td>
+                <td class="right">{{item[5]}} </td>
+				<td class="right">{{item[6]}} </td>
+				<td class="right">{{item[7]}} </td>
 
 
     

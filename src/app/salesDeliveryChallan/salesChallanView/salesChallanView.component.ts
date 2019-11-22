@@ -25,6 +25,8 @@ export class salesChallanViewComponent implements OnInit {
   viewchallan:FormGroup;
   
   selobj ;
+  gifFail: boolean=true;
+
     constructor(private userService: challanViewService,private formBuilder:FormBuilder) {
 
       this.viewchallan=this.formBuilder.group({
@@ -39,9 +41,12 @@ export class salesChallanViewComponent implements OnInit {
     ngOnInit() {
   
 
-       
+      setTimeout(() => {
         this.userService.viewDeliveryChallan(AppComponent.companyID,AppComponent.branchID,AppComponent.locRefName1,AppComponent.locrefID1).subscribe(data => {this.data=data,this.setData(data) },
           errorCode => {console.log(errorCode)});
+
+          this.gifFail=false;
+      },3000);
 
   
         
