@@ -22,6 +22,7 @@ export class slsInvSaveComponent implements OnInit {
   registerForm1: FormGroup;
   registerForm2: FormGroup;
   customers = [];
+  customers1 = [];
   doctors = [];
   prcsettings = [];
   sorders = [];
@@ -52,7 +53,10 @@ export class slsInvSaveComponent implements OnInit {
   truncatepos;
   soid: any;
   url;
+  pop: any;
+
   @Input() fileExt: string = "JPG, GIF, PNG";
+
   refill=false;
   opnrefill=true;
   clsrefill=false;
@@ -65,12 +69,11 @@ export class slsInvSaveComponent implements OnInit {
   setcusname: boolean=false;
   deviceObj: any;
   refillcheck: boolean;
-  
- 
 
-  constructor(private userService: slsInvSaveService, private dateformat: dateFormatPipe, private formBuilder: FormBuilder,
-     config: NgbDropdownConfig, private notificationsComponent: NotificationsComponent, private modalService: NgbModal,
-     private domSanitizer: DomSanitizer,private appComponent: AppComponent) {
+
+  constructor(private userService: slsInvSaveService, private dateformat: dateFormatPipe, config: NgbDropdownConfig,
+  private formBuilder: FormBuilder, private notificationsComponent: NotificationsComponent,   private modalService: NgbModal,
+ private domSanitizer: DomSanitizer,private appComponent: AppComponent) {
     config.autoClose = false;
   }
 
@@ -81,7 +84,6 @@ export class slsInvSaveComponent implements OnInit {
       , stripdispflag: AppComponent.StripDispFlag, tabdispflag: AppComponent.TabDispFlag
     };
     this.registerForm = this.formBuilder.group({
-      refillcus:[,[]],
       salesorderrefid: [, []],
       salesbillid: [, []],
       salesbilltype: [, []],
@@ -142,7 +144,7 @@ export class slsInvSaveComponent implements OnInit {
       phycapno: [, []],
       phydiscountflag: [false, []],
       disctaxflag: [false, []],
-      custdummyid: [, []],
+      custdummyid: ['', []],
       presc35: [, []],
       email: [, []],
       cashcheck: [, []],
@@ -159,7 +161,6 @@ export class slsInvSaveComponent implements OnInit {
       dummy: this.formBuilder.array([
       ]),
       newproduct: this.formBuilder.array([
-
       ]),
     });
     this.registerForm1 = this.formBuilder.group({
@@ -220,7 +221,8 @@ export class slsInvSaveComponent implements OnInit {
       calcflag: [0, []],
     });
     var frmdata = { frmint1: '', frmstr1: this.dateformat.transform05(Date.now()), createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
-    this.userService.viewCustomers(JSON.stringify(frmdata)).subscribe(data => { this.customers = data },
+    var frmdata1 = { frmint1: '', frmstr1: this.dateformat.transform05(Date.now()), createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
+    this.userService.viewsoCustomers(JSON.stringify(frmdata1)).subscribe(data => { this.customers = data },
       errorCode => console.log(errorCode));
     this.userService.viewDoctors(JSON.stringify(frmdata)).subscribe(data => { this.doctors = data },
       errorCode => console.log(errorCode));
@@ -238,24 +240,35 @@ export class slsInvSaveComponent implements OnInit {
     this.userService.viewSalesOrderAll(JSON.stringify(frmdata)).subscribe(data => { this.sorders = data },
       errorCode => console.log(errorCode));
     this.registerForm.get('freeflag').setValue(1);
-
-  
+    $(document).ready(function () {
+      $('.image').hide();
+    });
     $('.boxname ').hide();
     this.images = [];
     this.init();
     $('#autolist').hide();
     $('#autolist1').hide();
-
-    this.typeval=true;
   }
-
-
-  viewsPresc() {
-    //this.images = [['api/slsinv/viewPresImage?search=' + this.registerForm.get('prescpath').value]];
   
-    this.showimage=true;
-    this.showeye=false;
-    this.showeyeslash=true;
+  searchCustomer(searchValue: any) {
+    var frmdata = { frmint1: '', frmstr1: this.dateformat.transform05(Date.now()), createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid,searchvalue: searchValue };
+    this.userService.viewCustomers(JSON.stringify(frmdata)).subscribe(data => {
+      this.customers1 = [];
+      for (let j = 0; j < data.length; j++) {
+        this.customers1.push({ value: data[j][7], label: data[j][1] });
+      }
+    },
+      err => {
+        console.log('Error occured On searchProduct()');
+      });
+  }
+ 
+  viewsPresc() {
+   // this.images = [['api/slsinv/viewPresImage?search=' + this.registerForm.get('prescpath').value]];
+
+   this.showimage=true;
+   this.showeye=false;
+   this.showeyeslash=true;
   }
 
   ClosePresc() {
@@ -273,7 +286,7 @@ export class slsInvSaveComponent implements OnInit {
     this.showeye=true;
   //this.message="";
   }
-  
+
   autofocusin() {
     this.autoincr = setInterval(() => {
       if (this.registerForm.get('autonamenew').value) {
@@ -293,7 +306,6 @@ export class slsInvSaveComponent implements OnInit {
       }
     }, 1010);
   }
-
   autofocusout() {
     if (this.registerForm.get('autonamenew').value) {
     } else {
@@ -301,12 +313,8 @@ export class slsInvSaveComponent implements OnInit {
     }
     clearInterval(this.autoincr);
   }
-
   autokeyselect(event: KeyboardEvent, articleId: number) {
-
-   
     var autoincrflag: number;
-
     if (event.keyCode == 38) {
       var autoincrflag = articleId - 1;
       if (autoincrflag == 1) {
@@ -327,10 +335,10 @@ export class slsInvSaveComponent implements OnInit {
       $('#autolistnew  ul   li:nth-child(1)   input:nth-child(1) ').focus();
       $(document).unbind('scroll');
     }
-
     this.barcodeflag = 0;
   }
 
+  
   //mobile click drug load
   mobselect(event, articleId: number){
       
@@ -361,7 +369,6 @@ export class slsInvSaveComponent implements OnInit {
       }
     }, 610);
   }
-
   autofocusout1() {
     if (this.registerForm.get('autonamenew1').value) {
     } else {
@@ -369,9 +376,7 @@ export class slsInvSaveComponent implements OnInit {
     }
     clearInterval(this.autoincr1);
   }
-
   autokeyselect1(event: KeyboardEvent, articleId: number) {
-    
     var autoincrflag: number;
     if (event.keyCode == 38) {
       autoincrflag = articleId - 1;
@@ -381,12 +386,10 @@ export class slsInvSaveComponent implements OnInit {
         $("#autolist1 li:nth-child(" + autoincrflag + ") input").focus();
       }
     }
-
     if (event.keyCode == 40) {
       autoincrflag = articleId + 1;
       $("#autolist1 li:nth-child(" + autoincrflag + ") input").focus();
     }
-
     if (event.keyCode == 13) {
       this.drgid1 = articleId - 2;
       this.autodatacopy1 = this.autodata1;
@@ -394,23 +397,19 @@ export class slsInvSaveComponent implements OnInit {
       $('.boxname').show();
       $('#autolistnew  ul   li:nth-child(1)   input:nth-child(1) ').focus();
     }
-
     this.barcodeflag = 2;
   }
-
   viewStock(event: KeyboardEvent, stktype: number) {
+    if(this.registerForm.get('customerrefid').value){
     var autoincrflag: number;
-
     if (event.keyCode == 38) {
       autoincrflag = stktype - 1;
       $("#autolistnew li:nth-child(" + autoincrflag + ") input").focus();
     }
-
     if (event.keyCode == 40) {
       autoincrflag = stktype + 1;
       $("#autolistnew li:nth-child(" + autoincrflag + ") input").focus();
     }
-
     if (event.keyCode == 13) {
       if (this.barcodeflag == 0) {
         var drg = this.autodatacopy[this.drgid][1];
@@ -422,16 +421,14 @@ export class slsInvSaveComponent implements OnInit {
         $('.boxname ').hide();
         this.registerForm.get('autonamenew').setValue('');
         this.autodatacopy = [];
-      } 
-      else if (this.barcodeflag == 1) {
+      } else if (this.barcodeflag == 1) {
         var frmdata1 = { frmint1: '', frmstr1: this.registerForm.get('barcode').value, createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
         this.userService.viewBarCodeProd(JSON.stringify(frmdata1)).subscribe(data => { this.viewServWareHouseStock(data, stktype) },
           errorCode => console.log(errorCode));
         $('.boxname ').hide();
         $(".barcode").focus();
         this.registerForm.get('barcode').setValue('');
-      }
-       else if (this.barcodeflag == 2) {
+      } else if (this.barcodeflag == 2) {
         var drg1 = this.autodatacopy1[this.drgid1][1];
         var bth1 = this.autodatacopy1[this.drgid1][2];
         var frmdata2 = { frmint1: drg1, frmint2: bth1, frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
@@ -443,43 +440,47 @@ export class slsInvSaveComponent implements OnInit {
         this.autodatacopy1 = [];
       }
     }
-
   }
+  else {
+    this.notificationsComponent.addToast({ title: 'Error', msg: 'Please Select Customer', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
+  }
+}
 
-  //mobile click box strip tab
-  mobview (event,  stktype: number) {
+//mobile click box strip tab
+mobview (event,  stktype: number) {
   
-    if (this.barcodeflag == 0) {
-      var drg = this.autodatacopy[this.drgid][1];
-      var bth = this.autodatacopy[this.drgid][2];
-      var frmdata = { frmint1: drg, frmint2: bth, frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
-      this.userService.viewSIProductName(JSON.stringify(frmdata)).subscribe(data => { this.viewServWareHouseStock(data, stktype) },
-        errorCode => console.log(errorCode));
-      $("#autoname").focus();
-      $('.boxname ').hide();
-      this.registerForm.get('autonamenew').setValue('');
-      this.autodatacopy = [];
-    } 
-    else if (this.barcodeflag == 1) {
-      var frmdata1 = { frmint1: '', frmstr1: this.registerForm.get('barcode').value, createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
-      this.userService.viewBarCodeProd(JSON.stringify(frmdata1)).subscribe(data => { this.viewServWareHouseStock(data, stktype) },
-        errorCode => console.log(errorCode));
-      $('.boxname ').hide();
-      $(".barcode").focus();
-      this.registerForm.get('barcode').setValue('');
-    }
-     else if (this.barcodeflag == 2) {
-      var drg1 = this.autodatacopy1[this.drgid1][1];
-      var bth1 = this.autodatacopy1[this.drgid1][2];
-      var frmdata2 = { frmint1: drg1, frmint2: bth1, frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
-      this.userService.viewSIProductName(JSON.stringify(frmdata2)).subscribe(data => { this.viewServWareHouseStock(data, stktype) },
-        errorCode => console.log(errorCode));
-      $("#autoname1").focus();
-      $('.boxname').hide();
-      this.registerForm.get('autonamenew1').setValue('');
-      this.autodatacopy1 = [];
-    }
+  if (this.barcodeflag == 0) {
+    var drg = this.autodatacopy[this.drgid][1];
+    var bth = this.autodatacopy[this.drgid][2];
+    var frmdata = { frmint1: drg, frmint2: bth, frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
+    this.userService.viewSIProductName(JSON.stringify(frmdata)).subscribe(data => { this.viewServWareHouseStock(data, stktype) },
+      errorCode => console.log(errorCode));
+    $("#autoname").focus();
+    $('.boxname ').hide();
+    this.registerForm.get('autonamenew').setValue('');
+    this.autodatacopy = [];
+  } 
+  else if (this.barcodeflag == 1) {
+    var frmdata1 = { frmint1: '', frmstr1: this.registerForm.get('barcode').value, createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
+    this.userService.viewBarCodeProd(JSON.stringify(frmdata1)).subscribe(data => { this.viewServWareHouseStock(data, stktype) },
+      errorCode => console.log(errorCode));
+    $('.boxname ').hide();
+    $(".barcode").focus();
+    this.registerForm.get('barcode').setValue('');
   }
+   else if (this.barcodeflag == 2) {
+    var drg1 = this.autodatacopy1[this.drgid1][1];
+    var bth1 = this.autodatacopy1[this.drgid1][2];
+    var frmdata2 = { frmint1: drg1, frmint2: bth1, frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
+    this.userService.viewSIProductName(JSON.stringify(frmdata2)).subscribe(data => { this.viewServWareHouseStock(data, stktype) },
+      errorCode => console.log(errorCode));
+    $("#autoname1").focus();
+    $('.boxname').hide();
+    this.registerForm.get('autonamenew1').setValue('');
+    this.autodatacopy1 = [];
+  }
+}
+
 
   viewvalue(data: any) {
     var r = 0;
@@ -515,44 +516,30 @@ export class slsInvSaveComponent implements OnInit {
       //productid:['1',[]]
     });
   }
-
   addnewprod(event) {
-
     if (event.keyCode == 9) {
       this.initformarray();
       const control = <FormArray>this.registerForm.controls['newproduct'];
       control.push(this.initformarray());
-
     }
   }
-
   getNewProduct() {
-
     this.initformarray();
     const control = <FormArray>this.registerForm.controls['newproduct'];
     control.controls = [];
     control.push(this.initformarray());
-
-
-
   }
   j;
-
-
-
   saveNewProduct(c) {
-
-
     const saveData = this.registerForm.controls['newproduct'];
-
     this.userService.saveNewProduct(JSON.stringify(saveData.value)).
       subscribe(data => { c('Close click') },
-
         err => console.log(err));
-
   }
-
   viewSalesOrderProd() {
+    var frmdata1 = { frmint1: '', frmstr1: this.dateformat.transform05(Date.now()), createdby: '', locrefid: this.selobj.locrefid, locname: this.selobj.locname, companyid: this.selobj.companyid };
+    this.userService.viewsoCustomers(JSON.stringify(frmdata1)).subscribe(data => { this.customers = data },
+      errorCode => console.log(errorCode));
     this.registerForm.get('salesorderrefid').setValue(this.sorders[this.registerForm.get('sotempflag').value][0]);
     this.registerForm.get('customerrefid').setValue(this.sorders[this.registerForm.get('sotempflag').value][2]);
     this.registerForm.get('scitizenflag').setValue(this.sorders[this.registerForm.get('sotempflag').value][4]);
@@ -677,6 +664,7 @@ export class slsInvSaveComponent implements OnInit {
         batchname: [data[this.i][21], []],
         availfreeqty: [data[this.i][23], []],
         stkmainrefid: [data[this.i][24], []],
+        salesorderrefid:[this.registerForm.get('salesorderrefid').value,[]]
       }));
     }
   }
@@ -730,6 +718,7 @@ export class slsInvSaveComponent implements OnInit {
         soqty: [, []],
         soremainqty: [, []],
         batchname: [, []],
+        salesorderrefid:['',[]]
       }));
     }
   }
@@ -834,6 +823,7 @@ export class slsInvSaveComponent implements OnInit {
         batchname: [data[this.i][19], []],
         availfreeqty: [data[this.i][21], []],
         stkmainrefid: [data[this.i][22], []],
+        salesorderrefid:[this.registerForm.get('salesorderrefid').value,[]]
       }));
     }
   }
@@ -848,11 +838,9 @@ export class slsInvSaveComponent implements OnInit {
     else{
       this.refillset=0;
       this.registerForm.get('refilldays').disable();
-   
     }
 
   }
-
 
      
   devicedetails(){
@@ -878,7 +866,7 @@ export class slsInvSaveComponent implements OnInit {
 }
 
 
-  onSubmit() {
+  onSubmit():Boolean{
     //  alert(JSON.stringify(this.registerForm.value));
     var valflag: Number = 0;
     //    this.addscheme()  ;
@@ -894,17 +882,21 @@ export class slsInvSaveComponent implements OnInit {
         this.registerForm.get('salesorderrefid').setValue(0);
       }
       this.registerForm.get('refillcus').setValue(this.refillset);
-      this.userService.saveSalesInvoice(JSON.stringify(this.registerForm.value)).subscribe(data => { this.saveSIProducts(data), this.saveSISalesJournal(data), this.saveSIReceipt(data) },
+      this.userService.saveSalesInvoice(JSON.stringify(this.registerForm.value)).subscribe(data => {
+         this.saveSIProducts(data), this.saveSISalesJournal(data), this.saveSIReceipt(data) 
+      },
         errorCode => console.log(errorCode));
     }
+    return true;
   }
-
+  
   poprint() {
-    this.onSubmit();
+    this.pop = this.onSubmit();
+    if(this.pop  == true){
     if (this.soid != undefined || null || '') {
       this.notificationsComponent.addToast({ title: 'ALERT MESSAGE', msg: 'Value not fetching', timeout: 5000, theme: 'default', position: 'bottom-right', type: 'error' });
     }
-    else {
+    else if(this.registerForm.get('disctaxflag').value == true) {
       // let companyurl: string="http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/BillPrint_PurchaseOrder/Billprnt_PO.rptdesign&Companyrefid="+this.locname;
       setTimeout(() => {
         window.location.href = "http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Vtaexpt/Bill_Vatexpt.rptdesign&salesrefid=" + this.soid + "&__format=PDF";
@@ -912,57 +904,48 @@ export class slsInvSaveComponent implements OnInit {
       //   setTimeout(() => {
       //    this.router.navigateByUrl('http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/BillPrint_PurchaseOrder/Billprnt_PO.rptdesign&branchrefid={{branchid}}&Locname={{locname}}&Locrefid={{locrefid}}&Companyrefid={{companyrefid}}&porefid={{poid}}&POID={{poid}}&ShopID={{shopid}}&__format=PDF');
       //  }, 2000);
-
     }
-
+    else{
+      setTimeout(() => {
+        window.location.href = "http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Bill_CashPrint123/Cash_Bill.rptdesign&salesrefid=" + this.soid + "&__format=PDF";
+      }, 7000);
+    }
+  }
   }
 
   saveSIProducts(data: any) {
-
     const control = <FormArray>this.registerForm.controls['invoice'];
     if (data == 1) {
       this.userService.saveSIProducts(JSON.stringify(control.value)).subscribe(data => {
         let res = data.res;
+        this.pop =res[0];
         this.soid = res[1];
-        this.saveEmailAttach()
-      
+        this.saveEmailAttach();
+
         this.devicedetails();
         this.deviceObj.apiname="api/slsinv/saveSalesInvoice";
         this.deviceObj.description="SalesInvoice Created";
 
-        this.userService.adddevicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+        this.userService.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
 
         this.notificationsComponent.addToast({ title: 'Success', msg: 'Data  Saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
         this.clear();
-
       },
-
         errorCode => console.log(errorCode));
     }
-
   }
 
   saveEmailAttach() {
-
     this.url = "http://204.93.193.244:8082/birt/frameset?__report=MedeilReports/Vtaexpt/Bill_Vatexpt.rptdesign&salesrefid=" + this.soid + "&__format=PDF";
     var obj = {
-
       customername: this.registerForm.get('customername').value,
-
       custinvoiceno: this.registerForm.get('custinvoiceno').value,
-
       url: this.url,
-
       email: this.registerForm.get('email').value,
-
       grandtotal: this.registerForm.get('grandtotal').value,
-
-
     }
-
     this.userService.sendMailAttachment(JSON.stringify(obj)).subscribe(data => { },
       errorCode => console.log(errorCode));
-
   }
   // saveSIProducts(data: any) {
   //   const control = <FormArray>this.registerForm.controls['invoice'];
@@ -980,7 +963,6 @@ export class slsInvSaveComponent implements OnInit {
     this.userService.saveSISalesJournal(JSON.stringify(this.registerForm1.value)).subscribe(data => { },
       errorCode => console.log(errorCode));
   }
-
   saveSIReceipt(data: any) {
     this.registerForm2.patchValue({
       debitamount: this.registerForm.get('paidamt').value,
@@ -992,13 +974,11 @@ export class slsInvSaveComponent implements OnInit {
         errorCode => console.log(errorCode));
     }
   }
-
   calc(e) {
     if (e.keyCode == 9) {
       this.calcGST();
     }
   }
-  
   setDiscAmt() {
     var custdiscamt: number = 0;
     const control = <FormArray>this.registerForm.controls['invoice'];
@@ -1264,12 +1244,11 @@ export class slsInvSaveComponent implements OnInit {
     reader.onload = (_event) => { 
       this.images = [reader.result]; 
     }
-
+    
       this.userService.savePresImage(formData).subscribe(data => { this.registerForm.get('prescpath').setValue(data) },
         errorCode => console.log(errorCode));
     }
   }
- 
 
   private isValidFileExtension(files) {
     var extensions = (this.fileExt.split(','))
@@ -1282,8 +1261,6 @@ export class slsInvSaveComponent implements OnInit {
       }
     }
   }
-
-
   remove() {
     const control = <FormArray>this.registerForm.controls['invoice'];
     const controlrem = <FormArray>this.registerForm.controls['dummy'];
@@ -1368,7 +1345,6 @@ export class slsInvSaveComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-
   newprodopen(content2, id: number) {
     this.registerForm.get('cashamtflag').setValue(id);
     this.modalService.open(content2).result.then((result) => {
@@ -1377,9 +1353,7 @@ export class slsInvSaveComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-
   open(event, content, id: number) {
-
     if (event.target.checked) {
       this.registerForm.get('cashamtflag').setValue(id);
       this.modalService.open(content).result.then((result) => {
@@ -1388,25 +1362,19 @@ export class slsInvSaveComponent implements OnInit {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       });
     }
-
     if (id == 0) {
       this.registerForm.get('creditcheck').setValue(false);
       this.registerForm.get('debitcheck').setValue(false);
     }
-
     else if (id == 1) {
-
       this.registerForm.get('cashcheck').setValue(false);
       this.registerForm.get('debitcheck').setValue(false);
     }
-
     else if (id == 3) {
       this.registerForm.get('cashcheck').setValue(false);
       this.registerForm.get('creditcheck').setValue(false);
     }
-
   }
-
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -1417,7 +1385,7 @@ export class slsInvSaveComponent implements OnInit {
     }
   }
   viewCustOutstandingTot() {
-
+   
     this.registerForm.get('customerrefid').setValue(this.customers[this.registerForm.get('custdummyid').value][0]);
     this.registerForm.get('scitizenflag').setValue(this.customers[this.registerForm.get('custdummyid').value][3]);
     this.registerForm.get('phycapflag').setValue(this.customers[this.registerForm.get('custdummyid').value][4]);
@@ -1436,19 +1404,18 @@ export class slsInvSaveComponent implements OnInit {
       this.userService.viewCustAmt(JSON.stringify(frmdata)).subscribe(data => { this.custprevamt = data, this.calcpoints(data) },
         errorCode => console.log(errorCode));
     }
-
   }
 
   getcustemail() {
-
+  
     this.userService.getcustemail(this.registerForm.get('customerrefid').value).subscribe(
       data => {
-
+        alert(data);
         this.cusname=data[0][1];
-        this.registerForm.get('customername').setValue(data[0][1]),
-        this.registerForm.get('email').setValue(data[0][2])
+        this.registerForm.get('customername').setValue(data[0][1]);
+        this.registerForm.get('email').setValue(data[0][2]);
 
-          if(data[0][3]==12){
+          if(data[0][3]==1){
             this.refillcheck=false;
             this.refill=true;
             this.clsrefill=false;
@@ -1466,10 +1433,9 @@ export class slsInvSaveComponent implements OnInit {
             this.registerForm.get('refilldays').disable();
           }
 
+          
       });
-
   }
-
 
   addscheme() {
     if (this.scheme[0][6] == 1) {
@@ -1486,7 +1452,6 @@ export class slsInvSaveComponent implements OnInit {
       }
     }
   }
-
   calcpoints(data: any) {
     var points;
     var custprevamt;
@@ -1521,12 +1486,13 @@ export class slsInvSaveComponent implements OnInit {
     }
   }
 
+  
   openrefill(){
     this.refillcheck=true;
     this.refill=true;
     this.clsrefill=true;
     this.opnrefill=false;
-    this.setcusname=false;
+    this.setcusname=true;
   }
 
   closerefill(){
@@ -1540,5 +1506,4 @@ export class slsInvSaveComponent implements OnInit {
   clear() {
     this.ngOnInit();
   }
-
 }
