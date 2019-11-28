@@ -16,6 +16,8 @@ export class addInvoicesessionService {
     private sessView = 'api/getpurcSessionview';
     private saveURL = 'api/savePurcsession';
     private psessURL = 'api/savePurcsessionproducts';
+
+    private hqtableURL = 'api/hqtabledata';
     constructor(private http: Http) { }
 
 
@@ -46,7 +48,11 @@ export class addInvoicesessionService {
     getPurcSessionshop(sid: any, cid: any, bid: any, locname: any, locrefid: any) {
         return this.http.get(this.tablesshopURL + '/' + sid + '/' + cid + '/' + bid + '/' + locname + '/' + locrefid).map(res => res.json());
     }
+ //get hq data
+ gethqdata(sid:any,cid:any, bid: any, locname: any, locrefid: any) {
+    return this.http.get(this.hqtableURL + '/' + sid + '/' + cid + '/' + bid + '/' + locname + '/' + locrefid).map(res => res.json());
 
+}
     
     getPurcSessionwarehouse(wid: any, cid: any, bid: any, locname: any, locrefid: any) {
         return this.http.get(this.tablewarehouseURL + '/' + wid + '/' + cid + '/' + bid + '/' + locname + '/' + locrefid).map(res => res.json());
