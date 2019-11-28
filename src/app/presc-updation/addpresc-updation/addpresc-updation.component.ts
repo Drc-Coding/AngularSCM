@@ -236,7 +236,7 @@ getdoctor(){
 getemployee(){
 
   this.prescuploadservice.getemployee(AppComponent.companyID,AppComponent.branchID,AppComponent.locRefName1,AppComponent.locrefID1).subscribe(
-    data => {this.employee = data,(alert(data))
+    data => {this.employee = data
 
     })
 }
