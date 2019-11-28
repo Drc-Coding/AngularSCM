@@ -34,6 +34,7 @@ export class DistributorViewComponent implements OnInit {
   selobj ;
 
   testArray = [{id: 1, name: 'Test 1'}, {id: 2, name: 'Test 2'}, {id: 3, name: 'Test 3'}];
+  gifFail: boolean=true;
 
 
   constructor(private userService: DistributorViewService) {
@@ -70,10 +71,11 @@ export class DistributorViewComponent implements OnInit {
   viewAll() {
 
     var   frmdata={ frmint1 : '' ,  frmstr1  :'', createdby  :'' , locrefid  :this.selobj.locrefid , locname  :this.selobj.locname   } ;
+    setTimeout(() => {
     this.userService.patientView(JSON.stringify(frmdata)).subscribe(data => this.data = data,
       errorCode => console.log(errorCode));
-
-
+      this.gifFail=false;
+    },3000);
 
   }
 

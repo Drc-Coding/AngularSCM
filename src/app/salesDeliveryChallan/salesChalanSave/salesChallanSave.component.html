@@ -18,7 +18,9 @@
                        
                             <div class="col-sm-3">
 
-                                    <label for="email" class="form-label">Location Type</label>
+                                    <label for="email" class="form-label">Location Type
+                                        <span style="color:red">*</span>
+                                    </label>
 
                                     <select class="select2"    class="form-control" 
                                     (change)="getFirm()"   formControlName="tolocname"  > 
@@ -35,7 +37,9 @@
                             
                             <div class="col-sm-3">
 
-                                    <label for="password" class="form-label">Location Name</label>
+                                    <label for="password" class="form-label">Location Name
+                                        <span style="color:red">*</span>
+                                    </label>
                                     <select   class="form-control"
                                     formControlName="tolocrefid">
                                     <option  value="opt1" disabled>----Select Location Name----</option> 
@@ -54,9 +58,11 @@
 
                            
                             <div class="col-sm-3">
-                                    <label for="stock"  class="form-label">Sales Invoice No#</label>
+                                    <label for="stock"  class="form-label">Sales Invoice No
+                                        <span style="color:red">*</span>
+                                    </label>
 
-                           <ng-select [options]="distributors"  formControlName="stockno" placeholder="Search Invoice Number" (click)="getSalesNumber()" (click)="getSalesNumber()" (input)="getSales($event.target.value)">
+                           <ng-select [options]="distributors"  formControlName="stockno" placeholder="Type: SLS/INV/SH_00/0000" (click)="getSalesNumber()" (click)="getSalesNumber()" (input)="getSales($event.target.value)">
                            </ng-select>
                           </div>   
 

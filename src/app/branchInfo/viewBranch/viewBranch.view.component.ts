@@ -16,13 +16,18 @@ export class viewbranchComponent implements OnInit {
   public filterQuery: string = "";
   public sortBy: string = "";
   public sortOrder: string = "desc";
+  gifFail: boolean=true;
   constructor(private viewBranch: branchviewService, private router: Router, private notificationsComponent: NotificationsComponent) { }
 
   ngOnInit() {
+
+    setTimeout(() => {
     this.viewBranch.viewBranch().subscribe(data => { this.data = data },
       err => {
         console.log('Error get values from services in Branch Component');
       });
+      this.gifFail=false;
+    },3000);
   }
 
   // deleteBranch(id: number) {

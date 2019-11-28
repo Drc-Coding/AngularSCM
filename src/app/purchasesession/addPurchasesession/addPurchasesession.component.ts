@@ -333,6 +333,7 @@ export class addInvocesessionComponent implements OnInit, AfterViewInit {
 
   getPurchaseSession() {
     this.shop = this.purchasesession.get('shopid').value;
+    for (this.g = 0; this.g < this.shop.length; this.g++) {
     // this.warehouse = this.purchasesession.get('warehouseid').value;
     // this.hosp = this.purchasesession.get('hospitalid').value;
     if (this.shop == "") {
@@ -353,6 +354,21 @@ export class addInvocesessionComponent implements OnInit, AfterViewInit {
 
 
     else {
+      if(this.purchasesession.get('locrefid').value == 18 && this.shop[this.g].id == "18"){
+        alert(this.shop[this.g].id)
+        alert("shop1")
+        for (this.g = 0; this.g < this.shop.length; this.g++) {
+        this.sessionService.gethqdata(this.shop[this.g].id,
+            this.purchasesession.get('companyrefid').value,
+            this.purchasesession.get('branchrefid').value,
+            this.purchasesession.get('locname').value,
+            this.purchasesession.get('locrefid').value).subscribe (data => { this.getTabledata(data) },
+              error => {
+                console.log("Error Occured from getPurcSessiontable()");
+              });
+            }
+      }
+      else{
       if (this.shop != "") {
         for (this.g = 0; this.g < this.shop.length; this.g++) {
           this.sessionService.getPurcSessionshop(this.shop[this.g].id,
@@ -367,8 +383,8 @@ export class addInvocesessionComponent implements OnInit, AfterViewInit {
         }
       }
 
-
-
+    }
+  }
       // if (this.warehouse != "") {
       //   for (this.g = 0; this.g < this.warehouse.length; this.g++) {
       //     this.sessionService.getPurcSessionwarehouse(this.warehouse[this.g].id,

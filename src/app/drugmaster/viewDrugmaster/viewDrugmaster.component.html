@@ -98,11 +98,11 @@
 
 	.searchanimate:focus {
 		width: 65%;
-		border: 2px solid green;
+		
 	}
 
 	.stylelab {
-		margin-right: 19px;
+		margin-right: 9px;
 		font-size: 20px;
 		color: #5aa02c;
 		font-family: Montserrat;
@@ -130,6 +130,7 @@
 <app-card>
 	<div class="bform">
 	<br>
+	<!-- Puthiran -->
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-sm-12 col-md-6"></div>
 		<div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
@@ -146,7 +147,7 @@
 
 	</div><br>
 	<div align="center">
-		<img [src]="imagePath" height="100px" *ngIf="gifFail">
+		<img src="assets/images/loading.gif" height="100px" *ngIf="gifFail">
 	</div><br>
 
 	<form [formGroup]="drugForm">
@@ -158,7 +159,7 @@
 		</div>
 	</form><br>
 
-	<div class="container">
+	<div class="contain">
 
 		<span (click)="getvalue(getval1)" #getval1 [ngStyle]="{'color':'A'==bindvalue?'red': '#5aa02c'}"
 			class="stylelab">A</span>
@@ -213,6 +214,36 @@
 		<span (click)="getvalue(getval26)" #getval26 [ngStyle]="{'color':'Z'==bindvalue?'red': '#5aa02c'}"
 			class="stylelab">Z</span>
 
+
+		<span (click)="getvalue(getval00)" #getval00 [ngStyle]="{'color':'0'==bindvalue?'red': '#5aa02c'}"
+			class="stylelab ml-3">0</span>
+		<span (click)="getvalue(getval01)" #getval01 [ngStyle]="{'color':'1'==bindvalue?'red': '#5aa02c'}"
+			class="stylelab">1</span>
+		<span (click)="getvalue(getval02)" #getval02 [ngStyle]="{'color':'2'==bindvalue?'red': '#5aa02c'}"
+			class="stylelab">2</span>
+		<span (click)="getvalue(getval03)" #getval03 [ngStyle]="{'color':'3'==bindvalue?'red': '#5aa02c'}"
+			class="stylelab">3</span>
+		<span (click)="getvalue(getval04)" #getval04 [ngStyle]="{'color':'4'==bindvalue?'red': '#5aa02c'}"
+			class="stylelab">4</span>
+		<span (click)="getvalue(getval05)" #getval05 [ngStyle]="{'color':'5'==bindvalue?'red': '#5aa02c'}"
+			class="stylelab">5</span>
+		<span (click)="getvalue(getval06)" #getval06 [ngStyle]="{'color':'6'==bindvalue?'red': '#5aa02c'}"
+			class="stylelab">6</span>
+		<span (click)="getvalue(getval07)" #getval07 [ngStyle]="{'color':'7'==bindvalue?'red': '#5aa02c'}"
+			class="stylelab">7</span>
+		<span (click)="getvalue(getval08)" #getval08 [ngStyle]="{'color':'8'==bindvalue?'red': '#5aa02c'}"
+			class="stylelab">8</span>
+		<span (click)="getvalue(getval09)" #getval09 [ngStyle]="{'color':'9'==bindvalue?'red': '#5aa02c'}"
+			class="stylelab">9</span>
+
+
+		<span (click)="getvalue(getvalap)" #getvalap [ngStyle]="{'color':'α'==bindvalue?'red': '#5aa02c'}"
+			class="stylelab ml-3">α</span>
+		<span (click)="getvalue(getvalba)" #getvalba [ngStyle]="{'color':'β'==bindvalue?'red': '#5aa02c'}"
+			class="stylelab">β</span>
+		<span (click)="getvalue(getvalca)" #getvalca [ngStyle]="{'color':'γ'==bindvalue?'red': '#5aa02c'}"
+			class="stylelab">γ</span>
+
 	</div><br>
 
 
@@ -224,7 +255,6 @@
 
 
 					<th>Product Code</th>
-
 					<th>Product Name</th>
 					<th>Generic Name</th>
 					<th>Dosage</th>

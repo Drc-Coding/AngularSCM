@@ -1,6 +1,6 @@
 <style>
     #swidth{
-        width:300px;
+        width:350px;
     }
 </style>
 <app-card>
@@ -32,9 +32,15 @@
                                       
                                     
                                         </div> 
+                            
+                            <div class="col-lg-8"></div>
         
                         </div><br><br>   <!-- rrghghf 1-->
            
+                        <div align="center">
+                            <img src="assets/images/loading.gif" height="100px" *ngIf="gifFail">
+                          </div><br>
+
                     <div class="row">
 
                             <div class="col-lg-1"></div>
@@ -58,7 +64,7 @@
                          <td><input   value={{i+1}} id="width2" readonly/></td>
                                                            
 
-                            <td><input   readonly   formControlName="drugprdid" id="width5"/></td>
+                            <td><input   readonly   formControlName="drugprdid" id="width4"/></td>
                             <td><input    readonly   formControlName="productname" id="swidth" style="text-align:left"  /></td>
                             <td><input     readonly formControlName="distprice" /></td>
 

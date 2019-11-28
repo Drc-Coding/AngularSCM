@@ -71,7 +71,7 @@ export const AppRoutes: Routes = [{
       loadChildren: './usersetting/usersetting.module#AddModules'
     }, {
       path: 'warehouse',
-      loadChildren: './warehouse/warehouse.module#WarehouseModules'
+      loadChildren: './warehouse/warehouse.module#WarehouseModule'
     }, {
       path: 'StockEntryForm',
       loadChildren: './stocks/stocks.module#StocksModule'
@@ -226,7 +226,6 @@ export const AppRoutes: Routes = [{
 
 
 
-
     //prasad
     {
       path: 'Patient',
@@ -291,10 +290,8 @@ export const AppRoutes: Routes = [{
     },
  
     
-    
-    
-    
-    
+  
+
     {
       path: 'Ledger',
       loadChildren: './accounts/ledger/ledger.module#ledgerModule'
@@ -355,6 +352,14 @@ export const AppRoutes: Routes = [{
       loadChildren: './custrack/custrack.module#CustrackModule'
     },
     {
+      path:'usertask',
+      loadChildren: './usertask/usertask.module#UsertaskModule'
+    },
+    {
+      path:'Department',
+      loadChildren: './department/department.module#DepartmentModule'
+    },
+    {
 
       path: 'Basic',
       loadChildren: './invoiceprint/invoiceprint.module#InvoiceModule'
@@ -362,14 +367,7 @@ export const AppRoutes: Routes = [{
     },
 
 
-   
-     
-
-
-
-
-
-
+  
   ]
 }, {
   path: '',

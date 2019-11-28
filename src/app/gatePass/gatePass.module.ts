@@ -6,6 +6,7 @@ import { gatePassRoutes } from './gatePass.routing';
 import { gatePassSaveComponent } from './gatePassSave/gatePassSave.component'; 
 import { gatePassEditComponent } from './gatePassEdit/gatePassEdit.component';
 import { gatePassViewComponent } from './gatePassView/gatePassView.component';
+import {CategoryPipe}from './gatePassView/gatePassView.pipe';
 import { DxDataGridModule,
   DxSparklineModule,
   DxTemplateModule } from 'devextreme-angular';
@@ -22,7 +23,7 @@ import { DxDataGridModule,
     RouterModule.forChild(gatePassRoutes),
    SharedModule
   ],
-  declarations: [ gatePassSaveComponent  , gatePassEditComponent   ,  gatePassViewComponent ],
+  declarations: [ gatePassSaveComponent  , gatePassEditComponent   ,  CategoryPipe  ,  gatePassViewComponent ],
   
 
   bootstrap: [gatePassSaveComponent]

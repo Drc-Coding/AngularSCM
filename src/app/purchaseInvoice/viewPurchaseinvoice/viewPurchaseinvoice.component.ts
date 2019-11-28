@@ -15,31 +15,39 @@ export class viewinvoiceComponent implements OnInit {
   data: Array<any>;
   eid: any;
   number;
+  gifFail: boolean=true;
+  
   constructor(private viewPurc: viewinvoiceService, private router: Router) {
     this.data = new Array<any>();
   }
   ngOnInit() {
 
     if (AppComponent.shopID != 0) {
+      setTimeout(() => {
       this.viewPurc.viewPurchase(AppComponent.companyID, AppComponent.branchID, AppComponent.shopID, AppComponent.locrefID).subscribe(data => { this.data = data },
         error => {
           console.log('Error ocuured On viewPurchase()');
-        }
-      );
+        });
+        this.gifFail=false;
+      },3000);
     }
     if (AppComponent.warehouseID != 0) {
+      setTimeout(() => {
       this.viewPurc.viewPurchase(AppComponent.companyID, AppComponent.branchID, AppComponent.warehouseID, AppComponent.locrefID).subscribe(data => { this.data = data },
         error => {
           console.log('Error ocuured On viewPurchase()');
-        }
-      );
+        });
+        this.gifFail=false;
+      },3000);
     }
     if (AppComponent.hospitalID != 0) {
+      setTimeout(() => {
       this.viewPurc.viewPurchase(AppComponent.companyID, AppComponent.branchID, AppComponent.hospitalID, AppComponent.locrefID).subscribe(data => { this.data = data },
         error => {
           console.log('Error ocuured On viewPurchase()');
-        }
-      );
+        });
+        this.gifFail=false;
+      },3000);
     }
   }
   /* EDIT PURCHASE INVOICE  */

@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { dateFormatPipe } from './notifications/notifications.datepipe';
+import { AppService } from './app.service';
 //***decrypt***/
 import * as CryptoJS from 'crypto-js';
+
 var key = CryptoJS.enc.Utf8.parse('7061737323313233');
 var iv = CryptoJS.enc.Utf8.parse('7061737323313233');
 @Component({
   selector: 'app-root',
   template: '<router-outlet><spinner></spinner></router-outlet>',
-  providers: [dateFormatPipe]
+  providers: [AppService,dateFormatPipe]
 })
 export class AppComponent implements OnInit {
+
   menu = [];
   modLabel = [];
   static date: any;
@@ -35,7 +38,10 @@ export class AppComponent implements OnInit {
   static TabDispFlag: any = '';
 
   localList: any;
-  constructor(private router: Router, private dateformatPipe: dateFormatPipe) { }
+  ipAddress: any;
+
+  constructor(private router: Router, private dateformatPipe: dateFormatPipe,
+    private appservice: AppService ) { }
   
   ngOnInit() {
     this.menu = JSON.parse(sessionStorage.getItem("user"));
@@ -47,7 +53,19 @@ export class AppComponent implements OnInit {
     let dates: any = new Date();
     AppComponent.date = this.dateformatPipe.transform(dates);
     this.getDecrypt();
+    this.getIP();
   }
+
+  getIP()
+  {
+    this.appservice.getIPAddress().subscribe(data=>{
+        this.ipAddress=JSON.stringify(data);
+       
+  });
+  }
+
+
+   
   getDecrypt(): any {
     let decrypted: any = localStorage.getItem("u1s2e3r4");
     var decry = CryptoJS.AES.decrypt(decrypted, key, {

@@ -17,6 +17,16 @@ export class addEmployeeService{
   constructor(private http: Http) {}
 
 
+
+
+
+  getDepartment(department: number) {
+    return this.http.get('api/dept/CreatedeptRec' + '/' + department).map(response => response.json());
+  }
+
+
+
+
    getCompany() {
     //Get Companies
     return this.http.get(this.getCompanies).map(response => response.json());
@@ -37,6 +47,8 @@ export class addEmployeeService{
       () => {console.log(employeecreate)}
       );
   }
+
+
 
 
   

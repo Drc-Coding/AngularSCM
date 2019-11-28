@@ -46,49 +46,54 @@
               <div class="form-inline justify-content-end" >
 	
                 <strong class="searchstyle">Search :</strong>
-                <input type="search" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Search Doctor Name" autofocus>
+                <input type="search" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Search Doctor Name & Mobile No" autofocus>
               
             </div>
 
             </div>
           </div><br>
-          <!-- <div class="panel-heading">User information</div>-->
+
+            <div align="center">
+              <img src="assets/images/loading.gif" height="100px" *ngIf="gifFail">
+            </div><br>
+              
+        
           <div style="overflow-x:auto">
           <table class="table table-striped table-bordered table-responsive full-data-table" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable"
                  [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
             <thead>
             <tr> 
               <th> 
-                <mfDefaultSorter by="sno">S.No</mfDefaultSorter>
+                S.No
               </th>
               <th>
-                <mfDefaultSorter  by="doctorname">Doctor Name</mfDefaultSorter>
+               Doctor Name
               </th>
             
               <th>
-                <mfDefaultSorter by="gender">Gender</mfDefaultSorter>
+               Gender
               </th> 
               <th>
-                <mfDefaultSorter by="country">Country Name</mfDefaultSorter>
+                Country Name
               </th>    
               <th>
-                <mfDefaultSorter  by="state">State Name</mfDefaultSorter>
+              State Name
               </th>
               <th>
-                <mfDefaultSorter  by="address">Address</mfDefaultSorter>
+               Address
               </th>
               <th>
-                <mfDefaultSorter by="mobile">Mobile</mfDefaultSorter>
+               Mobile
               </th>
               <th>
-                <mfDefaultSorter  by="email">Email Id</mfDefaultSorter>
+                Email Id
               </th>
             
              <!-- <th>
                 <mfDefaultSorter  by="aadhar"><h6>Aadhar Card Number</h6></mfDefaultSorter>
               </th>-->            
               <th>
-                  <mfDefaultSorter  by="action">Action</mfDefaultSorter>
+                 Action
                 </th>                           
             </tr>
             <tr>
