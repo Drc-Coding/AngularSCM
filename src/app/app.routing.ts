@@ -189,6 +189,12 @@ export const AppRoutes: Routes = [{
       path: 'Picking',
       loadChildren: './sales-pick/salespicking.module#salespickingModule'
     },
+    {
+      path:'PrescUpdation',
+      loadChildren: './presc-updation/prescupdation.module#PrescriptionUpdationModule'
+    },
+
+
     //Mani
     {
       path: 'StockChecking',
