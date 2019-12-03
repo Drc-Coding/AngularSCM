@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateWarehouseComponent } from './create-warehouse.component';
+import { AddqrcodeComponent } from './addqrcode.component';
 
-describe('CreateWarehouseComponent', () => {
-  let component: CreateWarehouseComponent;
-  let fixture: ComponentFixture<CreateWarehouseComponent>;
+describe('AddqrcodeComponent', () => {
+  let component: AddqrcodeComponent;
+  let fixture: ComponentFixture<AddqrcodeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateWarehouseComponent ]
+      declarations: [ AddqrcodeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreateWarehouseComponent);
+    fixture = TestBed.createComponent(AddqrcodeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

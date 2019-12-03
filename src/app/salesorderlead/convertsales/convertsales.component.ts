@@ -26,6 +26,7 @@ export class ConvertsalesComponent implements OnInit {
   constructor(private solead: SalesorderleadService, private fb: FormBuilder, private route: ActivatedRoute, 
     private notificationsComponent: NotificationsComponent, private router: Router, 
     private datepipe: dateFormatPipe, private appComponent: AppComponent) {
+
     this.salesorderlead = this.fb.group({
       patientid: ['', []],
       contactno: ['', []],

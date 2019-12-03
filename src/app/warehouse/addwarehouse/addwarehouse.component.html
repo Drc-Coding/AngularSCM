@@ -1,0 +1,351 @@
+<app-card [title]='"Warehouse Registration"'>
+
+
+    <div class="sub-title">Warehouse Details
+        <i class="fa fa-user ficon"></i>
+    </div><br>
+
+    <form [formGroup]="warehouseform" (ngSubmit)="onSubmit()">
+
+
+        <div class="box-typical box-typical padding">
+
+            <div class="row">
+
+
+
+                <div class="col-lg-4" style="display: none;">
+
+                    <fieldset class="form-group">
+                        <label class="form-label semibold" for="exampleInput"> Warehouse ID </label>
+                        <input type="text" name="warehouseid" class="form-control" id="warehid" placeholder=""
+                            formControlName="warehouseid">
+                    </fieldset>
+                </div>
+
+
+
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class=" form-label" for="exampleInput"> Warehouse Name </label>
+                        <input type="text" name="warehousename" class="form-control" id="warehousename" placeholder=""
+                            formControlName="warehousename">
+                    </fieldset>
+
+                    <p class="messages text-danger marginzero"
+                        *ngIf="warehouseform.controls.warehousename.errors?.required">
+                        Select Warehouse Name
+                    </p>
+
+                </div>
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> Warehouse Code </label>
+                        <input type="text" name="warehousecode" class="form-control" id="warehousecode" placeholder=""
+                            formControlName="warehousecode">
+                    </fieldset>
+                    <p class="messages text-danger marginzero"
+                        *ngIf="warehouseform.controls.warehousecode.errors?.required">
+                        Select Warehouse Code
+                    </p>
+
+                </div>
+
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> Owner Name </label>
+                        <input type="text" name="owner_name" class="form-control" id="owner_name" placeholder=""
+                            formControlName="owner_name">
+                    </fieldset>
+
+                    <p class="messages text-danger marginzero"
+                        *ngIf="warehouseform.controls.owner_name.errors?.required">Select Owner Name
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> Address 1 </label>
+                        <input type="text" name="address1" class="form-control" id="address1" placeholder=""
+                            formControlName="address1">
+                    </fieldset>
+                </div>
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> Address 2</label>
+                        <input type="text" name="address2" class="form-control" id="address2" placeholder=""
+                            formControlName="address2">
+                    </fieldset>
+                </div>
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> Address 3 </label>
+                        <input type="text" name="address3" class="form-control" id="address3" placeholder=""
+                            formControlName="address3">
+                    </fieldset>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="col-form-label">Country
+                        </label>
+                        <select name="select" class="form-control" placeholder="Select Main Group"
+                            formControlName="country" (change)="getState()">
+                            <option disabled value="0">---Select Country---</option>
+                            <option *ngFor="let country of countries" value={{country[0]}}>{{country[1]}}</option>
+                        </select>
+                    </fieldset>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label">
+                            <h6>State</h6>
+                        </label>
+                        <select name="select" class="form-control" formControlName="state" (change)="getCity()">
+                            <option disabled value="0">---Select State---</option>
+                            <option *ngFor="let state of states" value={{state[0]}}>{{state[2]}}</option>
+                        </select>
+                    </fieldset>
+                </div>
+
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label">
+                            <h6>City</h6>
+                        </label>
+                        <select name="select" class="form-control" formControlName="city">
+                            <option disabled value="0">---Select City---</option>
+                            <option *ngFor="let city of cities" value={{city[0]}}>{{city[1]}}</option>
+                        </select>
+                    </fieldset>
+                </div>
+
+
+
+
+
+
+            </div>
+
+
+
+
+            <div class="row">
+
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> PIN Code </label>
+                        <input type="text" name="pincode" class="form-control" id="pincode" placeholder=""
+                            formControlName="pincode">
+                    </fieldset>
+                </div>
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> Contact Number </label>
+                        <input type="number" name="contact_no1" class="form-control" id="contact_no1" placeholder=""
+                            formControlName="contact_no1">
+                    </fieldset>
+
+                    <p class="messages text-danger marginzero"
+                        *ngIf="warehouseform.controls.contact_no1.errors?.required">Select Contact Number
+                    </p>
+                </div>
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> Mobile Number </label>
+                        <input type="number" name="mobile_no" class="form-control" id="mobile_no" placeholder=""
+                            formControlName="mobile_no">
+                    </fieldset>
+
+                    <p class="messages text-danger marginzero"
+                        *ngIf="warehouseform.controls.mobile_no.errors?.required">Select Mobile Number
+                    </p>
+                </div>
+
+
+            </div>
+
+
+            <div class="row">
+
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> Email ID </label>
+                        <input type="text" name="email_id" class="form-control" id="email_id" placeholder=""
+                            formControlName="email_id">
+                    </fieldset>
+
+                    <div class="messages text-danger" *ngIf="warehouseform.controls.email_id.errors?.pattern">Invalid Email..</div>
+                </div>
+
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> License Holder </label>
+                        <input type="text" name="license_holder" class="form-control" id="license_holder" placeholder=""
+                            formControlName="license_holder">
+                    </fieldset>
+                </div>
+
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> Tin Number </label>
+                        <input type="text" name="tinno" class="form-control" id="tinno" placeholder=""
+                            formControlName="tinno">
+                    </fieldset>
+                </div>
+
+
+            </div>
+
+
+            <div class="row">
+
+
+
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> PAN Number </label>
+                        <input type="text" name="panno" class="form-control" id="panno" placeholder=""
+                            formControlName="panno">
+                    </fieldset>
+                </div>
+
+
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> GST Number </label>
+                        <input type="text" name="gstno" class="form-control" id="gstno" placeholder=""
+                            formControlName="gstno">
+                    </fieldset>
+                </div>
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> Cold Storage </label>
+                        <input type="text" name="coldstorage" class="form-control" id="coldstorage" placeholder=""
+                            formControlName="coldstorage">
+                    </fieldset>
+                </div>
+
+                
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput">  User Name </label>
+                        <input type="text" name="username" class="form-control" id="coldstorage" placeholder=""
+                            formControlName="username">
+                    </fieldset>
+                </div>
+
+
+                
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput"> Password  </label>
+                        <input type="password" name="password" class="form-control" id="coldstorage" placeholder=""
+                            formControlName="password">
+                    </fieldset>
+                </div>
+
+
+            </div>
+
+
+            <!-- <div class="row">
+              <div class="col-lg-4">
+                        <fieldset class="form-group">
+                            <label class="form-label" for="exampleInput"> Status </label>
+                            <input type="text" name="status" class="form-control" id="status" placeholder=""
+                                formControlName="status">
+                        </fieldset>
+                    </div>
+  
+            </div> -->
+
+
+
+
+
+
+
+
+            <div class="row">
+
+
+                <div class="col-lg-3">
+
+                    <div class="col-lg-3">
+
+                        <div class="form-group">
+
+                            <button type="submit" class="btn btn-round" title="please fill the fields"
+                                [disabled]="!warehouseform.valid">
+                                Save </button>
+
+
+
+
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+        </div>
+
+    </form>
+
+
+
+
+
+</app-card>
+<ng2-toasty [position]="position"></ng2-toasty>

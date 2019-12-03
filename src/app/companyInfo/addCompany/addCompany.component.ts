@@ -94,6 +94,8 @@ export class AddcompanyComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    
     this.cmpinfo.getCountry().subscribe(data => this.countries = data,
       err => {
         console.log('Error Occured ');

@@ -1,57 +1,109 @@
-<div class="card">
-  <div class="card-header">
-    <h5>List Of Warehouses</h5>
+<style>
+  .nodata {
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    font-size: 25px;
+    color: red;
+    font-family: Arial;
+  }
+</style>
+
+<app-card>
+  <br>
+  <div class="row">
+
+    <div class="col-md-6"></div>
+
+    <div class="col-md-6">
+      <div class="form-inline justify-content-end">
+        <strong class="searchstyle">Search:</strong>
+        <input type="text" [(ngModel)]="filterQuery" class="form-control w-50" placeholder="Search By Warehouse Name"
+          autofocus />
+      </div>
+    </div>
+
+  </div><br>
+
+  <div class="dt-responsive" style="overflow: auto;">
+    <table class="table table-striped table-bordered table-responsive full-data-table"
+      [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy"
+      [(mfSortOrder)]="sortOrder">
+
+      <thead>
+        <tr>
+
+
+
+          <th>S.No</th>
+          <th>Warehouse Name </th>
+          <th>Warehouse Code</th>
+          <th> Owner Name </th>
+          <th> Address </th>
+          <th>Mobile Number</th>
+          <th>Action</th>
+
+        </tr>
+
+      </thead>
+      <tbody>
+        <tr *ngIf="(data | dataFilter: filterQuery) === 0">
+
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="nodata">No matching Records found....</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+
+
+        <tr *ngFor="let item of mf.data;let i=index">
+          <td>{{i+1}}</td>
+          <td>{{item[5]}}</td>
+          <td>{{item[6]}}</td>
+          <td>{{item[7]}}</td>
+          <td>{{item[8]}}</td>
+          <td>{{item[17]}}</td>
+
+
+
+          <td ngbDropdown class="text-center">
+
+            <span ngbDropdownToggle class="dropdown-toggle addon-btn" data-toggle="dropdown" aria-expanded="true">
+              <i class="icofont icofont-ui-settings"></i>
+            </span>
+
+            <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+
+              <span class="dropdown-item" href="javascript:;" [routerLink]="['/warehouse/editWarehouse',item[0]]"
+                 style="cursor: pointer">
+                <i class="icofont icofont-ui-edit"></i>Edit</span>
+
+              <!-- <span class="dropdown-item" href="javascript:;" (click)="employeeDelete(val[0])" style="cursor:pointer">
+                <i class="icofont icofont-attachment"></i>Delete</span> -->
+
+            </div>
+          </td>
+          <!-- <td style="text-align: center">{{item[4]}}</td> -->
+
+
+
+        </tr>
+
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <!-- <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event" style="float: right;"></pagination-controls> -->
+            <mfBootstrapPaginator class="pagination-main f-right"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
   </div>
-          <table class="table table-striped table-responsive table-bordered">
-            <thead>
-            <tr>
-              <th>
-                Id
-              </th>
-              <th>
-                Warehouse Name
-              </th>
-              <th>
-                Warehouse Code
-              </th>
-              <th>
-               Owner Name
-              
-              <th>
-               Address1
-              </th>
-              <th>
-              Action
-              </th>
-            </tr>
-            <tr>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let cust of warehouseview" 
-           [class.selected]="cust === selectedWarehouse">
-           
-             
-              <td>{{cust.warehouseid}}</td>
-              <td>{{cust.warehousename}}</td>
-              <td>{{cust.warehousecode}}</td>
-              <td>{{cust.owner_name}}</td>
-              <td>{{cust.address1}}</td>
-            
-<!--               <td class="action-icon"> -->
-<!--                 <button class="m-r-15 crm-action-edit text-muted text-primary"><i class="icofont icofont-ui-edit"></i></button> -->
-                <button class="crm-action-delete text-muted text-danger" (click)="onSelect(cust)"><i class="icofont icofont-ui-edit"></i>Update</button> 
-<!--                 <button class="btn btn-danger" (onclick)="delete()">Delete</button>  -->
-<!--               </td> -->
- 
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- Edit table -->
-        
-       
- <warehouse-details [warehouse]="selectedWarehouse"></warehouse-details>
- 
- 
- 
+</app-card>

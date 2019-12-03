@@ -1,29 +1,52 @@
-import { CreateWarehouseComponent } from './create-warehouse/create-warehouse.component';
-import { ViewwarehouseComponent } from './viewwarehouse/viewwarehouse.component';
-import { Routes } from '@angular/router';
-export const WarehouseRoutes: Routes = [
-    {
- path: '',
+import { Routes } from "@angular/router";
+import { Addwarehousecomponent } from "./addwarehouse/addwarehouse.component";
+import { ViewWarehouseComponent } from "./viewwarehouse/viewwarehouse.component";
+
+
+
+
+
+export const warehouseRoutes: Routes = [{
+
+
+
+    path: '',
+
+
+    children: [{
+
+        path: 'AddWarehouse',
+
+        component: Addwarehousecomponent,
+
         data: {
-            breadcrumb: 'Add Warehouse',
-            status: false
-        },
-        children: [
-           {
-                path: 'create-warehouse',
-                component: CreateWarehouseComponent,
-                data: {
-                    breadcrumb: 'Warehouse',
-                    status: true
-                }                                                 // viewwarehouse
-          },
-          {
-                path: 'viewwarehouse',
-                component: ViewwarehouseComponent,
-                data: {
-                    breadcrumb: 'View Warehouse',
-                    status: true
-                }
-          }
-        ]
-}]
+
+
+            breadcrumb: 'AddWarehouse'
+        }
+    },
+
+
+    {
+
+    path: 'ViewWarehouse',
+
+    component: ViewWarehouseComponent,
+
+    data: {
+
+
+        breadcrumb: 'ViewWarehouse'
+    }
+},
+
+
+
+
+    ]
+
+
+
+
+
+}];

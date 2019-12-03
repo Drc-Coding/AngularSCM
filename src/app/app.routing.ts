@@ -71,7 +71,7 @@ export const AppRoutes: Routes = [{
       loadChildren: './usersetting/usersetting.module#AddModules'
     }, {
       path: 'warehouse',
-      loadChildren: './warehouse/warehouse.module#WarehouseModules'
+      loadChildren: './warehouse/warehouse.module#WarehouseModule'
     }, {
       path: 'StockEntryForm',
       loadChildren: './stocks/stocks.module#StocksModule'
@@ -190,6 +190,12 @@ export const AppRoutes: Routes = [{
       path: 'ranking',
       loadChildren: './moduleranking/moduleranking.module#RankingModule'
     },
+
+    {
+      path:'PrescUpdation',
+      loadChildren: './presc-updation/prescupdation.module#PrescriptionUpdationModule'
+    },
+
 
     //Mani
     {
