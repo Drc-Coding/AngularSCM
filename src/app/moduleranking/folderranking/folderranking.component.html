@@ -1,0 +1,103 @@
+    
+    <app-card>
+        <div class="sub-title">Folder Ranking
+            <i class="fa fa-star ficon"></i>
+        </div><br>
+<div class="container">
+
+        <div class="conditions">
+
+            <h5 style="font-weight: bold;font-family: Montserrat;">Conditions for Give Ranking:</h5><br><br>
+            <ol style="font-size: 16px;font-family: Montserrat;">
+                    <li>Ranking Value Not to be Empty (or) Null</li>
+                    <li>Ranking Value Not to be Zero</li>
+                    <li>Ranking Value Not to be Higher than your Module Count (eg: If S.No 15 Value Must be 15 or Below)</li>
+                    <li>Ranking Value Not to be Duplicated</li>
+            </ol> 
+
+        </div><br>
+    <div class="row">
+
+        <div class="col-lg-3"></div> 
+        
+    <div class="col-lg-6">
+    <form [formGroup]="folderrankForm" (ngSubmit)="onSubmit()">
+     
+        <div class="flow" formArrayName="folderDetails">
+            <table rz-table class="table styletab">
+                <thead class="stylehead">
+                    <tr>
+                    
+                        <th>S.No</th>
+                        <th>Folder Name</th>
+                        <th>Ranking</th>
+                    </tr>
+                </thead>
+                <tbody class="stylebody">
+        
+                    <tr *ngFor="let rank of folderrankForm.controls.folderDetails.controls; let i = index"
+                    [formGroupName]="i">
+                    
+                        <td id="width2">{{i+1}}</td>
+                        <td>
+                            <input formControlName="label" style="text-align:left" id="width6" readonly>
+                            
+                        </td>
+
+                        <td>
+                            <input formControlName="ranking" id="width2">
+                        </td>
+        
+        
+                    </tr>
+                    
+                    
+                
+                    <tr>
+                    
+                        <!-- <td>
+                            <input type="text" id="width2" >
+                        </td>
+                        <td>
+                            <input type="text" id="width6">
+                        </td>
+                        <td>
+                            <input type="text" id="width2" >
+                        </td> -->
+        
+                    </tr>
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>      
+     </div><br>
+                
+                    <div class="col-lg-2 ml-4">
+                        <button type="submit" class="btn btn-round">Save</button>
+                    </div>
+             
+            </form>
+        </div><!--Col-lg-6 End-->
+        <div class="col-lg-3"></div>
+
+        </div><!--Row Complete-->
+     </div><!---Container Complete-->
+    </app-card>
+    <ng2-toasty [position]="position"></ng2-toasty>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

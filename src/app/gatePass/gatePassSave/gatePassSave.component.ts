@@ -44,6 +44,7 @@ export class gatePassSaveComponent implements OnInit, AfterViewInit {
   polist = [];
   coltax: any;
   deviceObj: any;
+
   constructor(private invoiceService: gatePassSaveService, private router: Router, private formBuilder: FormBuilder, private notificationsComponent: NotificationsComponent, 
     private appComponent: AppComponent,private dateformat: dateFormatPipe) {
 
@@ -96,6 +97,7 @@ export class gatePassSaveComponent implements OnInit, AfterViewInit {
     });
 
   }
+  
   ngOnInit() {
     //Auto Increment        
 

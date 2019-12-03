@@ -339,8 +339,6 @@ export class addShipment implements OnInit {
 
     onSubmit() {
 
-        //debugger;
-
         this.retrunFlag = this.basicValidation();
         alert("returnflag"+this.retrunFlag);
         if (this.retrunFlag) {
@@ -666,11 +664,6 @@ export class addShipment implements OnInit {
 
 
     }
-
-
-
-
-
 
 
 

@@ -184,11 +184,13 @@ export const AppRoutes: Routes = [{
       path: 'shipment',
       loadChildren: './shipment/shipment.module#ShipmentModule'
     },
-    //Raja
-    {
-      path: 'Picking',
-      loadChildren: './sales-pick/salespicking.module#salespickingModule'
+    
+     //Puthiran
+     {
+      path: 'ranking',
+      loadChildren: './moduleranking/moduleranking.module#RankingModule'
     },
+
     //Mani
     {
       path: 'StockChecking',

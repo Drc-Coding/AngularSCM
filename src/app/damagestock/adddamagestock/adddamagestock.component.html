@@ -42,13 +42,13 @@
 			</div>
 			<div class="col-lg-4">
 				<label class="form-label">Contact Number</label>
-				<input type="text" class="form-control inputline" placeholder="Enter your Contact Number"
+				<input type="number" class="form-control inputline" placeholder="Enter your Contact Number"
 					formControlName="contactno">
 			</div>
 			<div class="col-lg-4">
 					<label class="form-label">DL Number</label>
 					<input type="text" class="form-control inputline" placeholder="Enter Drug License Number"
-						formControlName="dlno">
+						formControlName="dlno" onkeyup="this.value = this.value.toUpperCase();"> 
 				</div>
 		</div>
 	

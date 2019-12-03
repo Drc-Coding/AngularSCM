@@ -32,6 +32,9 @@ export class DamagestockService {
   private getHeadqtableview ='api/hqdamagetableview';
 
 
+  private deviceurl='api/User/saveUserActivity';
+
+
   //private purchaseUrl = 'api/purchaseinvoice';
 
   private headers = new Headers({ 'Content-Type': 'application/json' });
@@ -100,12 +103,11 @@ export class DamagestockService {
   }
 
   saveProducts(data: String): any {
-    alert('3'+data)
+   
     let head = new Headers({ 'Content-Type': 'application/json' });
-     return this.http.post(this.damagetableURL, data, { headers: head }).map(response => { response.json() })
-     .subscribe(
-      () => { console.log(data) }
-    );
+     return this.http.post(this.damagetableURL, data, { headers: head }).map((res: Response) => { 
+      return { "res": res.json() };
+     });
   }
 
   updateProducts(data: string): any {
@@ -164,4 +166,17 @@ export class DamagestockService {
   getviewdamagetable(cid: any, bid: any, locrefid: any, locname: any,id: number): any {
     return this.http.get(this.getHeadqtableview+ '/' + cid + '/' + bid + '/' + locrefid + '/' + locname + '/' + id).map(resp => resp.json());
   }
+
+
+  
+  devicedetails(data){
+
+    let header = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: header});
+
+    return this.http.post( this.deviceurl, data, options)
+    .map((res: Response) => res.json());
+
+  }
+
 }

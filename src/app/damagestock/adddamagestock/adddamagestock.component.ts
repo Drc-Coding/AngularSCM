@@ -35,6 +35,7 @@ export class AdddamagestockComponent implements OnInit {
   damtax = [];
   sbQuantity = [];
   x;
+  deviceObj: any;
 
 
   constructor(private damagestockService: DamagestockService, private fb: FormBuilder, private notificationsComponent: NotificationsComponent
@@ -72,9 +73,6 @@ export class AdddamagestockComponent implements OnInit {
 
 
   ngOnInit() {
-
-
-
 
 
     this.damagedstockForm.get('companyrefid').setValue(AppComponent.companyID);
@@ -670,47 +668,93 @@ export class AdddamagestockComponent implements OnInit {
 
 
   removeRow(index: number) {
+    var answer = confirm("Delete data?");
+    if (answer) {
     const getData = <FormArray>this.damagedstockForm.controls['proDetails'];
     getData.removeAt(index);
     let removeVal = getData.value;
     if (removeVal == null || removeVal == '') {
       this.damagedstockForm.reset();
      this.ngOnInit();
+     }
     }
-  }
+  } 
+  
+  devicedetails(){
 
+    this.deviceObj = {
+
+        userid: AppComponent.userID,
+        companyrefid: AppComponent.companyID,
+        branchrefid: AppComponent.branchID,
+        locname: AppComponent.locRefName1,
+        locrefid: AppComponent.locrefID1,
+        clientcdate:this.dateformat.transform04(),
+        ipaddress: this.appComponent.ipAddress, 
+        browsertype: this.appComponent.browser,
+        ostype: this.appComponent.os,
+        osversion: this.appComponent.osversion,
+        devicetype: this.appComponent.devicetype,
+        description:'',
+        apiname:''
+
+      };
+  
+}
 
   onSubmit() {
+
     this.returnValid = this.damageDatavalidation();
+
     if (this.returnValid == true) {
       this.appComponent.ngOnInit();
       this.damagedstockForm.get('clientcdate').setValue(AppComponent.date);
       this.damagestockService.saveDamage(JSON.stringify(this.damagedstockForm.value)).subscribe(
         (result: any) => {
           let res = result.res;
+
           if (res == true) {
-            setTimeout(() => {
+            
               const saveData = this.damagedstockForm.controls['proDetails'];
              
-              this.damagestockService.saveProducts(JSON.stringify(saveData.value));
-              this.notificationsComponent.addToast({ title: 'Success', msg: 'Data  Saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
-              saveData.controls = [];
-              this.damagedstockForm.reset();
-            }, 200);
-            this.ngOnInit();
-          //  this.router.navigate(['/DamageStock/DamageStock']);
+              this.damagestockService.saveProducts(JSON.stringify(saveData.value)).subscribe(   
+                (data: any) => {
+                  let res = data.res;
+                  alert(res);
+                  if(res==true){
+
+                    this.devicedetails();           
+                    this.deviceObj.apiname="api/saveDamage";
+                    this.deviceObj.description="Save Damage Stock";
+                   
+                    this.damagestockService.devicedetails(JSON.stringify(this.deviceObj)).subscribe(data => {});
+      
+                    this.notificationsComponent.addToast({ title: 'Success', msg: 'Data  Saved  ', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
+                    saveData.controls = [];
+                    this.damagedstockForm.reset();
+                    this.ngOnInit();
+
+                  }
+                  else {
+
+                    this.notificationsComponent.addToast({ title: 'Error Message', msg: ' Damage Table Products Not Saved....', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
+                  }
+                });
+
           }
-          //this.router.navigate(['/DamageStock/DamageStock']);
+
+          else {
+
+            this.notificationsComponent.addToast({ title: 'Error Message', msg: ' Damage Data Not Saved....', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
+          }
+        
         }, (error: any) => {
           console.log(error['Errors getdamage()']);
         }
       );
     }
-    else {
 
-      this.notificationsComponent.addToast({ title: 'Error Message', msg: ' Damage Data is Invalid....', timeout: 5000, theme: 'default', position: 'top-right', type: 'error' });
-    }
-
+  
   }
 
 }

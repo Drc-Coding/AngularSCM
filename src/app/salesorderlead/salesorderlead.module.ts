@@ -17,8 +17,7 @@ import { RecordCategoryPipe } from "./soleadrecord/soleadrecord.pipe";
     imports: [
       CommonModule,
       RouterModule.forChild(SalesorderleadRoutes),
-      SharedModule, 
-    
+      SharedModule,   
     ],
     declarations: [SalesorderleadComponent,CategoryPipe, SoleadrecordComponent, ConvertsalesComponent,RecordCategoryPipe],
     providers: [SalesorderleadService, NotificationsComponent]
