@@ -26,7 +26,8 @@ export class UsertaskdetailsComponent implements OnInit {
 
   selobj;
 
-  constructor(private usertaskservice: Usertaskservice, private route: ActivatedRoute, private formBuilder: FormBuilder, private notificationsComponent: NotificationsComponent) {
+  constructor(private usertaskservice: Usertaskservice, private route: ActivatedRoute, private formBuilder: FormBuilder,
+     private notificationsComponent: NotificationsComponent,private app:AppComponent) {
   }
 
 
@@ -61,7 +62,8 @@ export class UsertaskdetailsComponent implements OnInit {
    
    
         this.usertaskservice.getAssignedBy(this.taskid).subscribe(data => {
-      if (data) {
+      
+          if (data) {
 
 
         this.usertaskdetails.get('task_assigned_by').setValue(data);
@@ -99,7 +101,7 @@ export class UsertaskdetailsComponent implements OnInit {
 
     });
 
-
+    //this.app.getTaskData();
 
 
   } // ngOnInit end

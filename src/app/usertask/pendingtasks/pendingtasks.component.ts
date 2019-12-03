@@ -10,6 +10,8 @@ import { NotificationsComponent } from 'app/notifications/notifications.componen
   providers: [Usertaskservice, NotificationsComponent]
 })
 export class PendingtasksComponent implements OnInit {
+
+  status =3;
   selobj;
   public data: any;
   public rowsOnPage: number = 10;
@@ -21,38 +23,44 @@ export class PendingtasksComponent implements OnInit {
   ngOnInit() {
 
 
-    this.selobj = { userid: AppComponent.userID, locrefid: AppComponent.locrefID1,
-      locname: AppComponent.locRefName1, companyid: AppComponent.companyID, branchid:AppComponent.branchID };
+    this.selobj = {
+      userid: AppComponent.userID, locrefid: AppComponent.locrefID1,
+      locname: AppComponent.locRefName1, companyid: AppComponent.companyID, branchid: AppComponent.branchID
+    };
 
-this.viewPendingTask();
+    this.viewPendingTask();
 
+
+   
 
   }
 
 
 
-  viewPendingTask(){
+  viewPendingTask() {
+   
 
 
+    var frmdata1 = {
+      frmint1: '', frmstr1: '', createdby: '', locrefid: this.selobj.locrefid,
+      companyrefid: this.selobj.companyid, locname: this.selobj.locname, branchrefid: this.selobj.branchid,status: this.status
+    };
 
-  var frmdata1 = { frmint1: '', frmstr1: '', createdby: '', locrefid: this.selobj.locrefid, 
-  companyrefid:this.selobj.companyid, locname: this.selobj.locname, branchrefid:this.selobj.branchid };
-
-  this.usertaskservice.viewUserTask(JSON.stringify(frmdata1)).subscribe(data => { this.data = data },
-
-
-    errorCode => console.log(errorCode));
+    this.usertaskservice.viewPendingTask(JSON.stringify(frmdata1)).subscribe(data => { this.data = data },
 
 
-
-
-
-
+      errorCode => console.log(errorCode));
 
 
 
 
-}
+
+
+
+
+
+
+  }
 
 
 }

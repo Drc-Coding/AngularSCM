@@ -162,7 +162,7 @@
             <th>Task Start Date</th>
             <th>Task Due Date</th>
             <th>Completed Date</th>
-            <th>Action</th>
+            <!-- <th>Action</th> -->
             <th>Task Details</th>
 
           </tr>
@@ -187,19 +187,22 @@
             <td>{{val[7]}}</td>
             <td>{{val[8]}}</td>
             
-            <td ngbDropdown class="text-center">
+            <!-- <td ngbDropdown class="text-center">
               <a ngbDropdownToggle class="dropdown-toggle addon-btn" data-toggle="dropdown" aria-expanded="true">
                 <i class="icofont icofont-ui-settings"></i>
               </a>
               <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="javascript:;" [routerLink]="['/usertask/editPurchaseOrder',val[0]]"><i
+                <a class="dropdown-item" href="javascript:;" [routerLink]="['/UserTask/Usertaskdetail',val[0]]"><i
                     class="icofont icofont-ui-edit"></i>Edit</a>
-                <!-- <a class="dropdown-item" href="javascript:;"  (click)="usertask(val[0])"><i class="icofont icofont-attachment"></i>Delete</a>                            -->
+                <a class="dropdown-item" href="javascript:;"  (click)="usertask(val[0])"><i class="icofont icofont-attachment"></i>Delete</a>                           
               </div>
-            </td>
+            </td> -->
+
+
+
             <td >
-              <span [routerLink]="['/usertask/Usertaskdetails']"
-                class="btn viewbtn">View Usertask</span>
+              <span [routerLink]="['/UserTask/ViewMyTasks']"
+                class="btn viewbtn"> View Mytask </span>
             </td>
 
           </tr>

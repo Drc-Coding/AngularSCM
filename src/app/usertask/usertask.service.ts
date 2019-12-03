@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Http, Response, Headers, RequestOptions, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Alert } from "selenium-webdriver";
 
@@ -10,6 +11,7 @@ import { Alert } from "selenium-webdriver";
 export class Usertaskservice {
 
   constructor(private http: Http) { }
+ 
 
   // private taskUrl = 'api/saveTaskAssignment';
 
@@ -17,6 +19,7 @@ export class Usertaskservice {
     alert("Service" + obj);
     let head = new Headers({ 'Content-Type': 'application/json' });
     return this.http.post(`api/saveTaskAssignment`, obj, { headers: head }).map(response => response.json());
+
   }
 
   // viewUsertask(cid:any, bid:any, lname:any, lrefid:any){
@@ -103,14 +106,25 @@ export class Usertaskservice {
   viewUserTask(obj: any) {
 
 
-    // let head = new Headers({ 'Content-Type': 'application/json' });
-    // return this.http.post(`api/viewUserTask`, obj, { headers: head }).map(res => res.json());
+
 
     let header = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: header });
     return this.http
       .post(`api/viewUserTask`, obj, options).map((res: Response) => res.json());
   }
+
+
+  
+  viewPendingTask(obj: any) {
+    let header = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: header });
+    return this.http
+      .post(`api/viewPendingTask`, obj, options).map((res: Response) => res.json());
+  }
+
+
+
 
 
 
