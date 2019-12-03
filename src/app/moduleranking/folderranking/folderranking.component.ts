@@ -165,7 +165,7 @@ export class FolderrankingComponent implements OnInit {
       this.folderrank.saverank(JSON.stringify(saveData.value)).subscribe(data => { 
 
         if(data==true){
-          this.notificationsComponent.addToast({ title: 'Success', msg: 'Ranking Data Saved Successfully...', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
+          this.notificationsComponent.addToast({ title: 'Success', msg: 'Data Saved Successfully...', timeout: 5000, theme: 'default', position: 'top-right', type: 'success' });
         }
        },
         error => {
