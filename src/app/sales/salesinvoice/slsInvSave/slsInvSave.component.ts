@@ -148,7 +148,6 @@ export class slsInvSaveComponent implements OnInit {
       cashcheck: [, []],
       creditcheck: [, []],
       debitcheck: [, []],
-      refilldays:[,[]],
       vatdispflag: [this.selobj.vatdispflag, []],
       boxdispflag: [this.selobj.boxdispflag, []],
       stripdispflag: [this.selobj.stripdispflag, []],
@@ -486,7 +485,6 @@ mobview (event,  stktype: number) {
     this.autodatacopy1 = [];
   }
 }
-
   viewvalue(data: any) {
     var r = 0;
     for (this.i = 0; this.i < data.length; this.i++) {
@@ -885,7 +883,6 @@ mobview (event,  stktype: number) {
       };
   
 }
-
   onSubmit():Boolean{
     //  alert(JSON.stringify(this.registerForm.value));
     var valflag: Number = 0;
@@ -903,6 +900,7 @@ mobview (event,  stktype: number) {
       }
 
       this.registerForm.get('refillcus').setValue(this.refillset);
+
       this.userService.saveSalesInvoice(JSON.stringify(this.registerForm.value)).subscribe(data => {
          this.saveSIProducts(data), this.saveSISalesJournal(data), this.saveSIReceipt(data) 
       },
@@ -1265,7 +1263,6 @@ mobview (event,  stktype: number) {
       totalamount: subtotal.toFixed(2),
     });
   }
- 
   fileChange(event) {
     var valflag = 0;
     let fileList: FileList = event.target.files;
@@ -1289,6 +1286,7 @@ mobview (event,  stktype: number) {
         errorCode => console.log(errorCode));
     }
   }
+
 
   private isValidFileExtension(files) {
     var extensions = (this.fileExt.split(','))
@@ -1552,7 +1550,6 @@ mobview (event,  stktype: number) {
     this.opnrefill=true;
     this.setcusname=false;
   }
-
 
   clear() {
     this.ngOnInit();

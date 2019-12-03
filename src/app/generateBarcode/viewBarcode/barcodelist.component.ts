@@ -19,14 +19,9 @@ export class ViewListBarcode implements OnInit {
   }
   getBarcode() {
     if (AppComponent.usertype == "\"SuperAdmin\" ") {
-      setTimeout(() => {
       this.barcodeService.superViewProduct().then(product => { this.data = product});
-      },3000);
-    } 
-    else {
-      setTimeout(() => {
+    } else {
       this.barcodeService.viewProduct(AppComponent.companyID, AppComponent.branchID, AppComponent.locRefName1, AppComponent.locrefID1).then(product => this.data = product);
-      },3000);
     }
   }
   ngOnInit(): void {

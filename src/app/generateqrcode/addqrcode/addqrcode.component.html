@@ -1,0 +1,82 @@
+<app-card>
+  <div class="sub-title">Qrcode Details
+    <i class="fa fa-qrcode ficon"></i>
+  </div><br>
+  
+    <form [formGroup]="QRcodeForm" >
+  
+      <div class="container">
+<div> </div>
+      <div class="form-group row">
+  
+        <div class="col-lg-4">
+          <fieldset class="form-group">
+            <label class="form-label">Product Name</label>
+            <ng-select [options]="characters" placeholder="Search Product" (change)="getCode()" (click)="getCode()" (input)="getProduct($event.target.value)"
+            formControlName="product" style="font-family:Montserrat;font-size:14px">
+            </ng-select>
+          </fieldset>
+          </div>
+  
+        <div class="col-lg-4">
+          <fieldset class="form-group">
+            <label class="form-label">Product Code</label>
+            <input type="text"  class="form-control" placeholder="Shown Barcode" minlength="5" formControlName="pcode" disabled  />
+  
+          </fieldset>
+        </div>
+  
+        <div class="col-lg-4">
+          <fieldset class="form-group">
+            <label class="form-label semibold">Manufacturer Qrcode</label>
+            <input type="text"  class="form-control" placeholder=" " minlength="15" formControlName="mfbarcode"/>
+          </fieldset>
+        </div>
+  
+      </div><br>
+  
+  
+      <div class="form-group row">
+        <div class="col-lg-4">
+          <fieldset class="form-group">
+            <label class="form-label semibold">Supplier Qrcode</label>
+            <input type="text" class="form-control" placeholder="Enter the Barcode" inlength="5" value = "{{QrCode}}" formControlName="spcode"/>
+          </fieldset>
+        </div>
+
+        <div class="col-lg-3">
+          <button class="btn btn-round mt-4" (click)="generateqrrcode()">Auto Generate</button>
+      
+     
+      <!-- <ngx-qrcode [qrc-element-type]="url" [qrc-value] = "value" >
+      </ngx-qrcode> -->
+
+    </div>
+        <div class="col-lg-1">
+      <!-- <div>
+          <qr-code [value]="'All QR Code data goes here!'" [size]="150"></qr-code>
+      </div> -->
+        <qrcode [qrdata]="QrCode" [size]="100" [level]="'M'"></qrcode>
+      </div>
+
+      </div>
+  
+      
+      <div class="form-group row">
+        <div class="col-lg-1"></div>
+  
+          <div class="col-lg-3">
+              <br>
+              <button  (click) = "onSubmit()" class="btn btn-round">Save</button>
+              &nbsp;
+              <!-- <button class="btn btn-round ml-5"  [routerLink]="['/AssignBarcode/ViewBarcode']">View</button>   -->
+          </div>
+        
+      </div>
+      
+
+      
+      </div>
+    </form>
+  </app-card>
+  <ng2-toasty [position]="position"></ng2-toasty>

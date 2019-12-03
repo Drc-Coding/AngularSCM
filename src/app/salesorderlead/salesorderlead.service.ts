@@ -102,5 +102,5 @@ export class SalesorderleadService {
       return this.http.post( this.deviceurl, data, options)
       .map((res: Response) => res.json());
   }
-  
+
 }
